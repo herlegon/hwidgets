@@ -13,4 +13,7 @@
             120
         ]
     },
+    "python.analysis.extraPaths": [
+        "../hutils",
+    ],
 }
