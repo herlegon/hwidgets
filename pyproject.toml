@@ -1,0 +1,38 @@
+[project]
+name = "hwidgets"
+version = "0.1"
+description = "Customized PySide6 widgets"
+readme = "README.md"
+authors = [
+    { name = "Jep Etau", email = "jep.etau@gmail.com" }
+]
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.12",
+]
+dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/JepEtau/hwidgets"
+Documentation = "https://github.com/JepEtau/hwidgets/README.md"
+Repository = "https://github.com/JepEtau/hwidgets"
+"Bug Tracker" = "https://github.com/JepEtau/hwidgets/issues"
+
+[build-system]
+requires = ["setuptools >= 77.0.3", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["hwidgets*"]
+exclude = ["tests*", "scripts"]
+
+[tool.black]
+line-length = 90
+target-version = ['py312']
+
+[tool.ruff]
+exclude = ["*"]
