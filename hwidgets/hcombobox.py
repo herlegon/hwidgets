@@ -88,14 +88,12 @@ from string import Template
 
 
 from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
-sys.path.append(os.path.join(parent_directory(__file__), "hwidgets"))
-
-from hstyle import *
-
-import logging
-hlogger = logging.getLogger("hwidgets")
-logging.disable(logging.CRITICAL)
-
+from .hstyle import (
+    COMBOBOX_HEIGHT, COMBOBOX_PADDING,
+    COMBOBOX_RADIUS, TITLE_BAR_ICON_PATH,
+    HStyle, load_png_icon, load_qss,
+)
+from .logger import hlogger
 
 
 
@@ -223,13 +221,13 @@ class HComboBox(QComboBox):
         self.setCursor(Qt.CursorShape.ArrowCursor)
 
         self.setHeight(COMBOBOX_HEIGHT, COMBOBOX_RADIUS)
-        self.setFixedWidth(230)
+        # self.setFixedWidth(230)
         self.setAcceptDrops(True)
         self.load_dd_icon("keyboard_arrow_down_FILL0_wght500_GRAD0_opsz24.png")
 
         self.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
         self.setSizePolicy(
-            QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+            QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
 
         self.setEditable(True)
@@ -484,54 +482,54 @@ class HComboBox(QComboBox):
 
 
 
-if __name__ == "__main__":
-    import signal
-    from argparse import ArgumentParser
+# if __name__ == "__main__":
+#     import signal
+#     from argparse import ArgumentParser
 
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    parser = ArgumentParser()
-    parser.add_argument("--debug", "-debug", action="store_true", required=False)
-    arguments = parser.parse_args()
-    if arguments.debug:
-        import logging
-        logger: logging.Logger = logging.getLogger("hwidgets")
-        hlogger.addHandler(logging.StreamHandler(sys.stdout))
-        logging.disable(logging.NOTSET)
-        hlogger.setLevel("DEBUG")
+#     signal.signal(signal.SIGINT, signal.SIG_DFL)
+#     parser = ArgumentParser()
+#     parser.add_argument("--debug", "-debug", action="store_true", required=False)
+#     arguments = parser.parse_args()
+#     if arguments.debug:
+#         import logging
+#         logger: logging.Logger = logging.getLogger("hwidgets")
+#         hlogger.addHandler(logging.StreamHandler(sys.stdout))
+#         logging.disable(logging.NOTSET)
+#         hlogger.setLevel("DEBUG")
 
 
-    app = QApplication(sys.argv)
+#     app = QApplication(sys.argv)
 
-    items = [
-        "This is a long text you can select if you want",
-        "Another item to test a very very very long text to display",
-        "Copy me with Ctrl+C you should see some dots in the line",
-        "Right-click won't work"
-    ]
+#     items = [
+#         "This is a long text you can select if you want",
+#         "Another item to test a very very very long text to display",
+#         "Copy me with Ctrl+C you should see some dots in the line",
+#         "Right-click won't work"
+#     ]
 
-    hrl_style = HStyle()
+#     hrl_style = HStyle()
 
-    window = QWidget()
-    window.setStyleSheet(f"""
-        background-color: {hrl_style.window_bgd};
-        color: {hrl_style.text_color};
-    """)
-    p = window.palette()
-    p.setColor(window.backgroundRole(), hrl_style.window_bgd)
-    window.setPalette(p)
+#     window = QWidget()
+#     window.setStyleSheet(f"""
+#         background-color: {hrl_style.window_bgd};
+#         color: {hrl_style.text_color};
+#     """)
+#     p = window.palette()
+#     p.setColor(window.backgroundRole(), hrl_style.window_bgd)
+#     window.setPalette(p)
 
-    main_layout = QGridLayout(window)
-    main_layout.setContentsMargins(50,50,50,300)
-    main_layout.setSpacing(64)
+#     main_layout = QGridLayout(window)
+#     main_layout.setContentsMargins(50,50,50,300)
+#     main_layout.setSpacing(64)
 
-    qcombobox = QComboBox(window)
-    qcombobox.addItems(items)
+#     qcombobox = QComboBox(window)
+#     qcombobox.addItems(items)
 
-    hcombobox = HComboBox(window, hstyle=hrl_style)
-    hcombobox.addItems(items)
+#     hcombobox = HComboBox(window, hstyle=hrl_style)
+#     hcombobox.addItems(items)
 
-    main_layout.addWidget(qcombobox, 0, 0, 1, 1)
-    main_layout.addWidget(hcombobox, 0, 1, 1, 1)
+#     main_layout.addWidget(qcombobox, 0, 0, 1, 1)
+#     main_layout.addWidget(hcombobox, 0, 1, 1, 1)
 
-    window.show()
-    sys.exit(app.exec())
+#     window.show()
+#     sys.exit(app.exec())

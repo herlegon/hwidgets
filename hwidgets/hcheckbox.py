@@ -1,31 +1,13 @@
-from dataclasses import dataclass
-import os
-from pathlib import Path
-from pprint import pprint
-import sys
-import time
-from typing import Any, Literal, Optional, Sequence
+from hutils import (
+    blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
+)
+from .hstyle import HStyle
+
 from PySide6.QtCore import (
-    QCoreApplication,
-    QDate,
-    QDateTime,
-    QLocale,
-    QMetaObject,
-    QObject,
-    QPoint,
-    QRect,
     QRectF,
-    Signal,
     QSize,
-    QTime,
-    QUrl,
-    QObject,
     Qt,
-    QAbstractItemModel,
-    QPersistentModelIndex,
     QSize,
-    QEvent,
-    QTimer,
     QPointF,
 
 )
@@ -33,72 +15,16 @@ from PySide6.QtGui import (
     QPolygonF,
     QBrush,
     QColor,
-    QConicalGradient,
-    QCursor,
-    QDragEnterEvent,
-    QEnterEvent,
-    QFont,
-    QFontDatabase,
-    QGradient,
-    QIcon,
-    QImage,
-    QKeySequence,
-    QLinearGradient,
     QMouseEvent,
     QPainter,
-    QPainterPath,
-    QPalette,
-    QPixmap,
-    QRadialGradient,
-    QRegion,
-    QTransform,
-    QWheelEvent,
-    QFocusEvent,
     QPaintEvent,
-    QContextMenuEvent,
-    QKeyEvent,
-    QResizeEvent,
-    QInputMethodEvent,
-    QValidator,
-    QShowEvent,
-    QHideEvent,
     QPen,
 )
 from PySide6.QtWidgets import (
-    QApplication,
-    QComboBox,
-    QHBoxLayout,
-    QPushButton,
-    QSizePolicy,
-    QStyle,
-    QStyledItemDelegate,
-    QVBoxLayout,
     QWidget,
-    QFileDialog,
-    QLabel,
-    QCompleter,
-    QAbstractItemDelegate,
-    QStyleOptionComboBox,
-    QAbstractItemView,
-    QLineEdit,
-    QGridLayout,
-    QFrame,
-    QListView,
-    QAbstractButton,
-    QRadioButton,
-    QButtonGroup,
     QCheckBox,
 )
-from string import Template
 
-from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
-sys.path.append(os.path.join(parent_directory(__file__), "hwidgets"))
-
-import logging
-
-from hstyle import *
-hlogger = logging.getLogger("hwidgets")
-logging.disable(logging.CRITICAL)
 
 
 class HCheckBox(QCheckBox):
@@ -225,7 +151,7 @@ class HCheckBox(QCheckBox):
             # painter.drawRoundedRect(inner, max(1, self._radius//2), max(1, self._radius//2))
 
             # option 2: draw a checkmark instead (uncomment if you prefer)
-            painter.setPen(QPen(tick_color, 3, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+            painter.setPen(QPen(tick_color, 2, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
             p1 = QPointF(box.left()+box.width()*0.22, box.top()+box.height()*0.52)
             p2 = QPointF(box.left()+box.width()*0.45, box.top()+box.height()*0.75)
             p3 = QPointF(box.left()+box.width()*0.78, box.top()+box.height()*0.28)
@@ -400,49 +326,3 @@ class HCheckBox(QCheckBox):
 
 
 
-
-
-if __name__ == "__main__":
-    import signal
-    from argparse import ArgumentParser
-
-    signal.signal(signal.SIGINT, signal.SIG_DFL)
-    parser = ArgumentParser()
-    parser.add_argument("--debug", "-debug", action="store_true", required=False)
-    arguments = parser.parse_args()
-    if arguments.debug:
-        import logging
-        hlogger: logging.Logger = logging.getLogger("hwidgets")
-        hlogger.addHandler(logging.StreamHandler(sys.stdout))
-        logging.disable(logging.NOTSET)
-        hlogger.setLevel("DEBUG")
-
-
-    app = QApplication(sys.argv)
-
-    hrl_style = HStyle()
-
-
-    window = QWidget()
-    window.setStyleSheet(f"""
-        background-color: {hrl_style.window_bgd};
-        color: {hrl_style.text_color};
-    """)
-    p = window.palette()
-    p.setColor(window.backgroundRole(), hrl_style.window_bgd)
-    window.setPalette(p)
-
-
-    main_layout = QGridLayout(window)
-    main_layout.setContentsMargins(50,50,50,300)
-    main_layout.setSpacing(64)
-
-    qcheckbox = QCheckBox(window)
-    main_layout.addWidget(qcheckbox, 0, 1, 1, 1)
-
-    hcheckbox = HCheckBox(window, hstyle=hrl_style)
-    main_layout.addWidget(hcheckbox, 1, 1, 1, 1, Qt.AlignmentFlag.AlignRight)
-
-    window.show()
-
-    sys.exit(app.exec())

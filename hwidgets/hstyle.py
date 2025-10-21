@@ -61,6 +61,8 @@ def load_qss(qss_fp: str, variant: str = "") -> str:
     common_fp = css_dir.joinpath(
         Path(f"{path_basename(qss_fp)}{variant}.qss")
     )
+    if not common_fp.exists():
+        raise FileNotFoundError(f"missing file: {common_fp}")
     with open(common_fp, 'r') as f:
         qss = f.read()
 
@@ -94,6 +96,8 @@ class HStyle:
     # checkbox
     enabled = "#1565C0"
     disabled = "#424242"
+
+    disabled_bgd = "#3F3F3FFF"
 
 
 
@@ -144,3 +148,7 @@ LINEEDIT_RADIUS = 4
 LINEEDIT_PADDING = 12
 LINEEDIT_MIN_WIDTH = int(64 / dp_to_px)
 
+label_dp_to_px = 1
+LABEL_HEIGHT = COMBOBOX_HEIGHT
+LABEL_MIN_WIDTH = int(64 / label_dp_to_px)
+LABEL_PADDING = int(16 / label_dp_to_px)

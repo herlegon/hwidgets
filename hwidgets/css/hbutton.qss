@@ -1,0 +1,33 @@
+QPushButton {
+    background-color: $widget_bgd;
+    border: none;
+    border-radius: $radius;
+    padding-left: 8px;
+    padding-right: 8px;
+
+    color: $text_color;
+    font-family: "Segoe UI", "Sans Serif";
+    font-size: 10pt;
+}
+
+
+QPushButton:disabled {
+    background-color: $widget_disabled;
+}
+
+
+QPushButton:hover {
+    background-color: $widget_hover;
+    color: $text_color;
+}
+
+
+QPushButton:pressed {
+    background-color: $widget_hover;
+    color: $checked_color
+}
+
+QPushButton:checked {
+    background-color: $widget_hover;
+    color: $checked_color
+}

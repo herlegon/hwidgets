@@ -1,0 +1,11 @@
+QLabel {
+    background-color: $widget_bgd;
+    color: $text_color;
+    font-family: "Segoe UI", "Sans Serif";
+    font-size: 10pt;
+}
+
+
+QLabel:disabled {
+    color: #646468;
+}
