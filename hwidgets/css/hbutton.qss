@@ -13,6 +13,12 @@ QPushButton {
 
 QPushButton:disabled {
     background-color: $widget_disabled;
+    color: $widget_bgd
+}
+
+QPushButton:disabled:checked {
+    background-color: $widget_hover;
+    color: $widget_bgd
 }
 
 
@@ -29,5 +35,5 @@ QPushButton:pressed {
 
 QPushButton:checked {
     background-color: $widget_hover;
-    color: $checked_color
+    color: $checked_text
 }

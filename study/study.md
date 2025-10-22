@@ -1,6 +1,6 @@
 # port from RLG for pynnlib_gui
 
-Group
+GroupBox
 LineEdit
 TextEdit
 SpinBox

@@ -6,6 +6,7 @@ from .hradiobutton import HRadioButton
 from .hcheckbox import HCheckBox
 from .hlabel import HLabel
 from .hbutton import HButton
+from .hgroupbox import HGroupBox
 
 __all__ = [
     "hlogger",
@@ -16,5 +17,6 @@ __all__ = [
     "HComboBox",
     "HLabel",
     "HRadioButton",
+    "HGroupBox",
 
 ]

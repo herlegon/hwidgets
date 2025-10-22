@@ -27,6 +27,7 @@ if __name__ == "__main__":
         "QCheckBox": "HCheckBox",
         "QLabel": "HLabel",
         "QPushButton": "HButton",
+        "QGroupBox": "HGroupBox",
     }
 
 

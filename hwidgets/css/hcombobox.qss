@@ -1,15 +1,7 @@
+/* top, right, bottom, left */
 QFrame {
     background-color: $window_bgd;
     background: $window_bgd;
-    /* background-color: #00ff37;
-    background: #00ff37; */
-    /* border: none; */
-    /* border-radius: $radius; */
-
-    color: $text_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
-
 }
 
 
@@ -25,23 +17,25 @@ QComboBox {
 }
 
 
-QComboBox:on {
-    border-bottom-right-radius: 0px;
-    border-bottom-left-radius: 0px;
-
-    /* Linux */
-    background-color: $hover_bgd;
-}
-
-
 QComboBox:hover {
     background-color: $hover_bgd;
 }
+
+
+QComboBox:on {
+    background-color: $hover_bgd;
+
+    border-bottom-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
 
 QComboBox::down-arrow {
     width: 0px;
     height: 0px;
 }
+
+
 QComboBox::drop-down {
     width: 0px;
     border: none;

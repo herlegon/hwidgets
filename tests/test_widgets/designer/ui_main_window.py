@@ -16,14 +16,15 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QComboBox,
-    QFrame, QHBoxLayout, QLabel, QMainWindow,
-    QPushButton, QRadioButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+    QFrame, QGroupBox, QHBoxLayout, QLabel,
+    QMainWindow, QPushButton, QRadioButton, QSizePolicy,
+    QSpacerItem, QVBoxLayout, QWidget)
 
 from hwidgets import (
     HButton,
     HCheckBox,
     HComboBox,
+    HGroupBox,
     HLabel,
     HRadioButton,
     HStyle,
@@ -33,7 +34,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(903, 595)
+        MainWindow.resize(903, 715)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -183,6 +184,36 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_8)
+
+        self.h_groupbox_layout = QHBoxLayout()
+        self.h_groupbox_layout.setObjectName(u"h_groupbox_layout")
+        self.h_groupbox_layout.setContentsMargins(-1, -1, -1, 40)
+        self.h_groupbox = HGroupBox(self.h_frame, hstyle=hstyle)
+        self.h_groupbox.setObjectName(u"h_groupbox")
+        self.verticalLayout_5 = QVBoxLayout(self.h_groupbox)
+        self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.h_label_groupbox_1 = HLabel(self.h_groupbox, hstyle=hstyle)
+        self.h_label_groupbox_1.setObjectName(u"h_label_groupbox_1")
+
+        self.verticalLayout_5.addWidget(self.h_label_groupbox_1)
+
+
+        self.h_groupbox_layout.addWidget(self.h_groupbox)
+
+        self.h_groupbox_disabled = HGroupBox(self.h_frame, hstyle=hstyle)
+        self.h_groupbox_disabled.setObjectName(u"h_groupbox_disabled")
+        self.verticalLayout_4 = QVBoxLayout(self.h_groupbox_disabled)
+        self.verticalLayout_4.setObjectName(u"verticalLayout_4")
+        self.h_label_groupbox_2 = HLabel(self.h_groupbox_disabled, hstyle=hstyle)
+        self.h_label_groupbox_2.setObjectName(u"h_label_groupbox_2")
+
+        self.verticalLayout_4.addWidget(self.h_label_groupbox_2)
+
+
+        self.h_groupbox_layout.addWidget(self.h_groupbox_disabled)
+
+
+        self.verticalLayout_2.addLayout(self.h_groupbox_layout)
 
         self.verticalSpacer_2 = QSpacerItem(20, 296, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -336,6 +367,37 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_9)
 
+        self.q_groupbox_layout = QHBoxLayout()
+        self.q_groupbox_layout.setObjectName(u"q_groupbox_layout")
+        self.q_groupbox_layout.setContentsMargins(-1, -1, -1, 40)
+        self.q_groupbox = QGroupBox(self.q_frame)
+        self.q_groupbox.setObjectName(u"q_groupbox")
+        self.verticalLayout_6 = QVBoxLayout(self.q_groupbox)
+        self.verticalLayout_6.setObjectName(u"verticalLayout_6")
+        self.q_label_groupbox = QLabel(self.q_groupbox)
+        self.q_label_groupbox.setObjectName(u"q_label_groupbox")
+
+        self.verticalLayout_6.addWidget(self.q_label_groupbox)
+
+
+        self.q_groupbox_layout.addWidget(self.q_groupbox)
+
+        self.q_groupbox_disabled = QGroupBox(self.q_frame)
+        self.q_groupbox_disabled.setObjectName(u"q_groupbox_disabled")
+        self.q_groupbox_disabled.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
+        self.verticalLayout_7 = QVBoxLayout(self.q_groupbox_disabled)
+        self.verticalLayout_7.setObjectName(u"verticalLayout_7")
+        self.q_label_groupbox_2 = QLabel(self.q_groupbox_disabled)
+        self.q_label_groupbox_2.setObjectName(u"q_label_groupbox_2")
+
+        self.verticalLayout_7.addWidget(self.q_label_groupbox_2)
+
+
+        self.q_groupbox_layout.addWidget(self.q_groupbox_disabled)
+
+
+        self.verticalLayout.addLayout(self.q_groupbox_layout)
+
         self.verticalSpacer = QSpacerItem(20, 296, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
@@ -367,6 +429,10 @@ class Ui_MainWindow(object):
         self.h_button_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C)", None))
         self.h_button_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (D)", None))
         self.h_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (C/D)", None))
+        self.h_groupbox.setTitle(QCoreApplication.translate("MainWindow", u"HGroupBox", None))
+        self.h_label_groupbox_1.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
+        self.h_groupbox_disabled.setTitle(QCoreApplication.translate("MainWindow", u"HGroupBox (disabled)", None))
+        self.h_label_groupbox_2.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
         self.q_radiobutton_1.setText("")
         self.q_radiobutton_2.setText("")
         self.q_radiobutton_disabled_1.setText("")
@@ -382,5 +448,9 @@ class Ui_MainWindow(object):
         self.q_button_checked.setText(QCoreApplication.translate("MainWindow", u"QButton (C)", None))
         self.q_button_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (D)", None))
         self.q_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (C/D)", None))
+        self.q_groupbox.setTitle(QCoreApplication.translate("MainWindow", u"QGroupBox", None))
+        self.q_label_groupbox.setText(QCoreApplication.translate("MainWindow", u"A Qlabel", None))
+        self.q_groupbox_disabled.setTitle(QCoreApplication.translate("MainWindow", u"QGroupBox (disabled)", None))
+        self.q_label_groupbox_2.setText(QCoreApplication.translate("MainWindow", u"A Qlabel", None))
     # retranslateUi
 

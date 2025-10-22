@@ -1,6 +1,6 @@
 QListView {
     background: $widget_bgd;
-    padding-top: $radius;
+    padding: 0px;
     padding-bottom: $radius;
     border-bottom-right-radius: $radius;
     border-bottom-left-radius: $radius;

@@ -63,12 +63,15 @@ class HRadioButton(QRadioButton):
         self.setMouseTracking(True)
 
         # Colors
-        self.bgd_color = QColor(hstyle.widget_bgd)
+        self.brush_default: QBrush = QBrush(hstyle.widget_bgd)
         self.border_color = QColor(hstyle.widget_bgd)
-        self.disabled_color = QColor(hstyle.disabled)
 
-        self.hover_border_color = QColor(hstyle.selection_bgd)
-        self.checked_color = QColor(hstyle.checked)
+        self.brush_hover: QBrush = QBrush(hstyle.hover_bgd)
+
+        self.disabled_color = QColor(hstyle.disabled)
+        self.brush_disabled: QBrush = QBrush(hstyle.disabled)
+
+        self.checked_color = QColor(hstyle.selection_bgd)
 
         # Dimensions
         self.radius = RADIO_RADIUS
@@ -158,9 +161,9 @@ class HRadioButton(QRadioButton):
 
         # Determine border color
         if not self.isEnabled():
-            border_col = self.disabled_color
+            border_color = self.disabled_color
         else:
-            border_col = self.hover_border_color if self._hover else self.border_color
+            border_color = self.border_color
 
         # Draw the outer circle
         outer_rect = QRectF(
@@ -169,12 +172,17 @@ class HRadioButton(QRadioButton):
             self.radius*2,
             self.radius*2
         )
-        pen = QPen(border_col, self.border_width)
+        pen = QPen(border_color, self.border_width)
         painter.setPen(pen)
-        painter.setBrush(QBrush(self.bgd_color if self.isEnabled() else self.disabled_color))
+        brush = self.brush_default
+        if self.isEnabled() and not self.isChecked() and self._hover:
+            brush = self.brush_hover
+        else:
+            brush = self.brush_disabled
+        painter.setBrush(brush)
         painter.drawEllipse(outer_rect)
 
-        # Draw the inner circle if checked
+        # Inner circle
         if self.isChecked():
             inner_radius = self.radius / 2 + 1
             inner_rect = QRectF(
@@ -187,72 +195,7 @@ class HRadioButton(QRadioButton):
             painter.setPen(Qt.NoPen)
             painter.drawEllipse(inner_rect)
 
-        # # Draw the text
-        # painter.setPen(QPen(QColor("white") if self.isEnabled() else self.disabled_color))
-        # text_x = self.radio_radius*2 + 8
-        # text_y = 0
-        # text_rect = QRectF(text_x, text_y, self.width() - text_x, self.height())
-        # painter.drawText(text_rect, Qt.AlignVCenter | Qt.AlignLeft, self.text())
-
         painter.end()
 
 
 
-
-# if __name__ == "__main__":
-#     import signal
-#     from argparse import ArgumentParser
-
-#     signal.signal(signal.SIGINT, signal.SIG_DFL)
-#     parser = ArgumentParser()
-#     parser.add_argument("--debug", "-debug", action="store_true", required=False)
-#     arguments = parser.parse_args()
-#     if arguments.debug:
-#         import logging
-#         hlogger: logging.Logger = logging.getLogger("hwidgets")
-#         hlogger.addHandler(logging.StreamHandler(sys.stdout))
-#         logging.disable(logging.NOTSET)
-#         hlogger.setLevel("DEBUG")
-
-
-#     app = QApplication(sys.argv)
-
-#     hrl_style = HStyle()
-
-
-#     window = QWidget()
-#     window.setStyleSheet(f"""
-#         background-color: {hrl_style.window_bgd};
-#         color: {hrl_style.text_color};
-#     """)
-#     p = window.palette()
-#     p.setColor(window.backgroundRole(), hrl_style.window_bgd)
-#     window.setPalette(p)
-
-
-#     main_layout = QGridLayout(window)
-#     main_layout.setContentsMargins(50,50,50,300)
-#     main_layout.setSpacing(64)
-
-#     qradiobutton = QRadioButton(window)
-#     qradiobutton2 = QRadioButton(window)
-#     qbuttonGroup = QButtonGroup(window)
-#     qbuttonGroup.addButton(qradiobutton)
-#     qbuttonGroup.addButton(qradiobutton2)
-#     main_layout.addWidget(qradiobutton, 0, 1, 1, 1)
-#     main_layout.addWidget(qradiobutton2, 0, 0, 1, 1)
-
-#     hradiobutton = HRadioButton(window, hstyle=hrl_style)
-#     hradiobutton2 = HRadioButton(window, hstyle=hrl_style)
-#     hbuttonGroup = QButtonGroup(window)
-#     hbuttonGroup.addButton(hradiobutton)
-#     hbuttonGroup.addButton(hradiobutton2)
-#     main_layout.addWidget(hradiobutton, 1, 1, 1, 1, Qt.AlignmentFlag.AlignRight)
-#     main_layout.addWidget(hradiobutton2, 1, 0, 1, 1, Qt.AlignmentFlag.AlignRight)
-
-#     window.show()
-
-
-
-
-#     sys.exit(app.exec())

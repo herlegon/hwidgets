@@ -6,6 +6,7 @@ from pprint import pprint
 import sys
 import time
 from typing import Any, Literal, Optional, Sequence
+from warnings import warn
 from PySide6.QtCore import (
     QCoreApplication,
     QDate,
@@ -89,7 +90,7 @@ from string import Template
 
 from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
 from .hstyle import (
-    COMBOBOX_HEIGHT, COMBOBOX_PADDING,
+    COMBOBOX_HEIGHT,
     COMBOBOX_RADIUS, TITLE_BAR_ICON_PATH,
     HStyle, load_png_icon, load_qss,
 )
@@ -134,7 +135,7 @@ class RoundedListView(QListView):
         self.setUniformItemSizes(True)
         self.setMouseTracking(True)
         self.viewport().setMouseTracking(True)
-        self.margin_top = 0
+        self.margin_top = COMBOBOX_RADIUS
         self.margin_bottom = COMBOBOX_RADIUS
 
     def paintEvent(self, event):
@@ -223,7 +224,7 @@ class HComboBox(QComboBox):
         self.setHeight(COMBOBOX_HEIGHT, COMBOBOX_RADIUS)
         # self.setFixedWidth(230)
         self.setAcceptDrops(True)
-        self.load_dd_icon("keyboard_arrow_down_FILL0_wght500_GRAD0_opsz24.png")
+        self.load_dd_icon("keyboard_arrow_down_20dp_000000_FILL0_wght400_GRAD0_opsz20.png", hstyle.text_color)
 
         self.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
         self.setSizePolicy(
@@ -255,23 +256,36 @@ class HComboBox(QComboBox):
     def set_stylesheet(self, hstyle: HStyle):
         self.variant = ""
 
-        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-
-        qss_template = Template(load_qss(f"hcombobox_abstractitemview.css", variant=self.variant))
-        self.popup_qss = qss_template.substitute(
-            radius=f"{COMBOBOX_RADIUS}px",
-            padding=f"{COMBOBOX_PADDING}px",
-            margin=f"{COMBOBOX_RADIUS}px",
-            margin_top=f"{COMBOBOX_RADIUS // 2}px",
-            popup_width = f"{self.width()}px",
-            combobox_height=f"{int(1.5 * (COMBOBOX_HEIGHT - COMBOBOX_RADIUS))}px",
-            padding_left=f"{COMBOBOX_RADIUS}px",
+        template_subst: dict = dict(
             window_bgd=hstyle.window_bgd,
             widget_bgd=hstyle.widget_bgd,
-            text_color=hstyle.text_color,
+            hover_bgd=hstyle.hover_bgd,
             selection_bgd=hstyle.selection_bgd,
 
+            text_color=hstyle.text_color,
+
+            radius=f"{COMBOBOX_RADIUS}px",
+            # padding=f"{COMBOBOX_PADDING}px",
+            # margin=f"{COMBOBOX_RADIUS}px",
+            margin_top=f"{COMBOBOX_RADIUS}px",
+            popup_width = f"{self.width()}px",
+            # combobox_height=f"{int(1.5 * (COMBOBOX_HEIGHT - COMBOBOX_RADIUS))}px",
+            padding_left=f"{int(1.5 * COMBOBOX_RADIUS) - 2}px",
+            padding_right=f"{int(1.5 * COMBOBOX_RADIUS)}px",
         )
+
+        qss_template = Template(load_qss(f"hcombobox.css", variant=self.variant))
+        qss = qss_template.substitute(**template_subst)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setStyleSheet(qss)
+
+        qss_template = Template(load_qss(f"hcombobox_lineedit.css", variant=self.variant))
+        qss = qss_template.substitute(**template_subst)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.lineEdit().setStyleSheet(qss)
+
+        qss_template = Template(load_qss(f"hcombobox_abstractitemview.css", variant=self.variant))
+        self.popup_qss = qss_template.substitute(**template_subst)
 
         if sys.platform == 'win32':
             view = RoundedListView(
@@ -284,42 +298,6 @@ class HComboBox(QComboBox):
             self.view().setWindowFlags(Qt.Widget)
         else:
             self.view().setStyleSheet(self.popup_qss)
-
-        qss_template = Template(load_qss(f"hcombobox.css", variant=self.variant))
-        qss = qss_template.substitute(
-            radius=f"{COMBOBOX_RADIUS}px",
-            padding=f"{COMBOBOX_PADDING}px",
-            padding_right=f"{COMBOBOX_PADDING + COMBOBOX_RADIUS}px",
-            padding_left=f"{COMBOBOX_RADIUS}px",
-            arrow_space = f"{24 + COMBOBOX_PADDING}px",
-            combobox_height=f"{COMBOBOX_HEIGHT - COMBOBOX_RADIUS}px",
-            margin=f"{COMBOBOX_RADIUS}px",
-            list_margin=f"{COMBOBOX_RADIUS * 4}px",
-            popup_width = f"{self.width()}px",
-            window_bgd=hstyle.window_bgd,
-            widget_bgd=hstyle.widget_bgd,
-            text_color=hstyle.text_color,
-            selection_bgd=hstyle.selection_bgd,
-            hover_bgd=hstyle.hover_bgd
-        )
-        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        self.setStyleSheet(qss)
-
-        qss_template = Template(load_qss(f"hcombobox_lineedit.css", variant=self.variant))
-        qss = qss_template.substitute(
-            arrow_space = f"{24 + COMBOBOX_PADDING}px",
-            widget_bgd = hstyle.widget_bgd,
-            padding=f"{COMBOBOX_PADDING}px",
-            # padding_left=f"{int(COMBOBOX_RADIUS * 1.5)}px",
-            padding_left=f"{COMBOBOX_RADIUS // 2}px",
-
-            # padding_left=f"0px",
-            padding_right=f"{COMBOBOX_PADDING + COMBOBOX_RADIUS}px",
-            selection_bgd=hstyle.selection_bgd,
-
-        )
-        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        self.lineEdit().setStyleSheet(qss)
 
 
     def showPopup(self):
@@ -451,20 +429,23 @@ class HComboBox(QComboBox):
 
     def setHeight(self, height: int, radius:int) -> None:
         self.radius = radius
-        self.dd_height = height - 2 * radius
+        self.dd_height = height - 4
+        # self.dd_height = height - 2 * radius
         self.dd_width = self.dd_height
         self.dd_size: QSize = QSize(self.dd_width, self.dd_height)
+        print(f"{self.__class__} height: {height}, dd_size: {self.dd_size.toTuple()}")
         return super().setFixedHeight(height)
 
 
-    def load_dd_icon(self, icon: str | Path) -> None:
+    def load_dd_icon(self, icon: str | Path, color: str = "#E1E1E1") -> None:
         filepath = os.path.join(TITLE_BAR_ICON_PATH, icon)
         try:
-            self.dd_pixmap = load_png_icon(filepath, "#E1E1E1")
+            self.dd_pixmap = load_png_icon(filepath, color)
         except:
             raise ValueError(f"{filepath} not found")
 
         if self.dd_pixmap.size() != self.dd_size:
+            warn(f"{self.__class__} resize pixmap")
             self.dd_pixmap = self.dd_pixmap.scaled(
                 self.dd_size,
                 aspectMode=Qt.AspectRatioMode.KeepAspectRatio
@@ -474,7 +455,7 @@ class HComboBox(QComboBox):
     def paintEvent(self, e: QPaintEvent) -> None:
         super().paintEvent(e)
         painter: QPainter = QPainter(self)
-        x = self.width() - self.dd_width - COMBOBOX_PADDING
+        x = self.width() - self.dd_width - int(COMBOBOX_RADIUS * 1.5)
         y = int(self.height() - self.dd_pixmap.height())/2
 
         painter.drawPixmap(QPoint(x, y), self.dd_pixmap)

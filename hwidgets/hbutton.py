@@ -55,10 +55,12 @@ class HButton(QPushButton):
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
             widget_hover=f"{hstyle.hover_bgd}",
-            widget_disabled=f"{hstyle.disabled_bgd}",
+            widget_disabled=f"{hstyle.disabled}",
             text_color=f"{hstyle.text_color}",
             selection_bgd=f"{hstyle.selection_bgd}",
             checked_color=f"{hstyle.enabled}",
             radius=f"{COMBOBOX_RADIUS}px",
+            text_disabled=f"{hstyle.disabled_text}",
+            checked_text=f"{hstyle.checked_text}",
         )
         self.setStyleSheet(qss)

@@ -3,15 +3,12 @@
 QComboBox QLineEdit {
     background: $widget_bgd;
     border: none;
-    padding: 0px $padding_right 0px $padding_left;
-    margin: 0px $padding_right 0px $padding_left;
+    padding: 0px $padding_right 1px 0px;
+    /* margin: 0px $padding_right 1px 0px; */
 }
 
 
+/*
 QComboBox QLineEdit:read-only {
-    background: $widget_bgd;
-    border: none;
-    padding: 0px $padding_right 0px $padding_left;
-    margin: 0px $padding_right 0px $padding_left;
 }
-
+ */
