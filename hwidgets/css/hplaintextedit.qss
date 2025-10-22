@@ -1,6 +1,6 @@
 /* top, right, bottom, left */
 
-QLineEdit {
+QPlainTextEdit {
     background-color: $widget_bgd;
 
     color: $text_color;
@@ -18,26 +18,26 @@ QLineEdit {
 }
 
 
-QLineEdit:read-only,
-QLineEdit:read-only:focus,
-QLineEdit:read-only:hover {
+QPlainTextEdit:read-only,
+QPlainTextEdit:read-only:focus,
+QPlainTextEdit:read-only:hover {
     background-color: $widget_bgd;
     border: 1px solid $border_color;
 }
 
 
-QLineEdit:focus {
+QPlainTextEdit:focus {
     color: $text_color;
     border: 1px solid $editing_border;
 
 }
 
-QLineEdit:hover {
+QPlainTextEdit:hover {
     background-color: $hover_bgd;
 }
 
 
-QLineEdit:disabled {
+QPlainTextEdit:disabled {
     background-color: $disabled_bgd;
     color: $disabled_text;
 }

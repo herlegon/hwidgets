@@ -1,0 +1,5 @@
+QPushButton {
+    background-color: transparent;
+    border: none;
+    /* margin: 2px; */
+}

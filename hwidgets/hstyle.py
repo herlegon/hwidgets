@@ -90,15 +90,19 @@ class HStyle:
     hover_bgd: str = "#505053"
     selection_bgd: str = "#5545bd"
 
+    selected_text: str = "#5545bd"
+
+
+    border: str = "#505053" # same as hover
+
     checked: str = "#6a5bcc"
 
 
     # checkbox
-    enabled = "#1565C0"
-    disabled = "#424242"
+    enabled = "#4B8DD8"
+    disabled_bgd = "#424242"
 
-    disabled_bgd = "#3F3F3FFF"
-    disabled_text = "#424242"
+    disabled_text = "#646468"
     checked_text = "#4632c7"
 
 
@@ -121,42 +125,33 @@ class HStyle:
 # Pressed	#352283	Darker tone for click feedback
 # Disabled	#2d2b3e	Muted, low-contrast desaturation
 
-# 1080p
-dp_to_px = 1.6
-# 1440p
-# dp_to_px = 1.2
-
 
 COMBOBOX_HEIGHT = 24
 COMBOBOX_RADIUS = 7
 # COMBOBOX_PADDING = 10
 
-RADIO_RADIUS = 7
+
+RADIO_RADIUS = 7 # change to COMBOBOX_RADIUS ?
 RADIO_BORDER_WIDTH = 2
 
 
 # STATE_LAYER_SIZE: int = round(48/(2 * dp_to_px)) * 2
-CHECKBOX_STATE_LAYER_SIZE: int = COMBOBOX_HEIGHT
+CHECKBOX_STATE_LAYER_SIZE = COMBOBOX_HEIGHT
 # Icons are from Material website
 CHECKBOX_ICON_SIZE: int = 16
 # blank margin in Material icons -> real button size in icon is 18x18
 CHECKBOX_BUTTON_SIZE: int = 18
 
 
-
-
 LINEEDIT_HEIGHT = COMBOBOX_HEIGHT
 LINEEDIT_RADIUS = COMBOBOX_RADIUS
-LINEEDIT_PADDING = RADIO_RADIUS
-LINEEDIT_MIN_WIDTH = int(64 / dp_to_px)
+LINEEDIT_MIN_WIDTH = 64
 
-label_dp_to_px = 1
-LABEL_HEIGHT = COMBOBOX_HEIGHT
+
 LABEL_MIN_WIDTH = LINEEDIT_MIN_WIDTH
-LABEL_PADDING = RADIO_RADIUS
+LABEL_PADDING = COMBOBOX_RADIUS
 
 
 GROUPBOX_HEIGHT = COMBOBOX_RADIUS * 2 + COMBOBOX_HEIGHT
-GROUPBOX_PADDING = RADIO_RADIUS
-TITLE_PADDING = GROUPBOX_PADDING + 4
-TITLE_HEIGHT = 10
+GROUPBOX_TITLE_PADDING = COMBOBOX_RADIUS + 4
+GROUPBOX_TITLE_HEIGHT = 10

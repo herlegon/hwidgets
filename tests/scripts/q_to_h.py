@@ -28,6 +28,8 @@ if __name__ == "__main__":
         "QLabel": "HLabel",
         "QPushButton": "HButton",
         "QGroupBox": "HGroupBox",
+        "QLineEdit": "HLineEdit",
+        "QPlainTextEdit": "HPlainTextEdit",
     }
 
 

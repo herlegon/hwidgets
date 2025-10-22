@@ -2,6 +2,8 @@
 
 QComboBox QLineEdit {
     background: $widget_bgd;
+    selection-background-color: $selected_text;
+
     border: none;
     padding: 0px $padding_right 1px 0px;
     /* margin: 0px $padding_right 1px 0px; */

@@ -1,5 +1,5 @@
 from string import Template
-from .hstyle import COMBOBOX_RADIUS, LABEL_HEIGHT, LABEL_MIN_WIDTH, HStyle, load_qss
+from .hstyle import COMBOBOX_RADIUS, COMBOBOX_HEIGHT, LABEL_MIN_WIDTH, HStyle, load_qss
 
 from PySide6.QtCore import (
     Qt,
@@ -49,13 +49,13 @@ class HButton(QPushButton):
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
         self.setMinimumWidth(LABEL_MIN_WIDTH)
-        self.setFixedHeight(LABEL_HEIGHT)
+        self.setFixedHeight(COMBOBOX_HEIGHT)
 
         qss_template = Template(load_qss(f"hbutton.qss"))
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
             widget_hover=f"{hstyle.hover_bgd}",
-            widget_disabled=f"{hstyle.disabled}",
+            disabled_bgd=f"{hstyle.disabled_bgd}",
             text_color=f"{hstyle.text_color}",
             selection_bgd=f"{hstyle.selection_bgd}",
             checked_color=f"{hstyle.enabled}",

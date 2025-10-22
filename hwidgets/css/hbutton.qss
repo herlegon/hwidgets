@@ -12,7 +12,7 @@ QPushButton {
 
 
 QPushButton:disabled {
-    background-color: $widget_disabled;
+    background-color: $disabled_bgd;
     color: $widget_bgd
 }
 

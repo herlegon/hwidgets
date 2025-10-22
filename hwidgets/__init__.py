@@ -1,12 +1,16 @@
 from .logger import hlogger
 
-from .hcombobox import HComboBox
 from .hstyle import HStyle
-from .hradiobutton import HRadioButton
+
 from .hcheckbox import HCheckBox
-from .hlabel import HLabel
-from .hbutton import HButton
+from .hcombobox import HComboBox
 from .hgroupbox import HGroupBox
+from .hbutton import HButton
+from .hlabel import HLabel
+from .hlineedit import HLineEdit
+from .hplaintextedit import HPlainTextEdit
+from .hradiobutton import HRadioButton
+
 
 __all__ = [
     "hlogger",
@@ -15,8 +19,10 @@ __all__ = [
     "HButton",
     "HCheckBox",
     "HComboBox",
-    "HLabel",
-    "HRadioButton",
     "HGroupBox",
+    "HLabel",
+    "HLineEdit",
+    "HPlainTextEdit",
+    "HRadioButton",
 
 ]

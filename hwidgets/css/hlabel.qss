@@ -7,5 +7,5 @@ QLabel {
 
 
 QLabel:disabled {
-    color: #646468;
+    color: $disabled_text;
 }

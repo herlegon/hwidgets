@@ -12,13 +12,12 @@ from PySide6.QtWidgets import (
     QHBoxLayout,
     QPushButton,
     QWidget,
-    QLineEdit,
+    QPlainTextEdit,
 )
 
 from .hstyle import (
     COMBOBOX_RADIUS,
-    LINEEDIT_HEIGHT,
-    COMBOBOX_RADIUS,
+    COMBOBOX_HEIGHT,
     HStyle,
     load_png_icon,
     load_qss,
@@ -35,16 +34,22 @@ class _ClearButton(QPushButton):
     ):
         super().__init__(parent)
 
-        self.setFixedSize(QSize(LINEEDIT_HEIGHT, LINEEDIT_HEIGHT))
+        self.setFixedSize(QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT))
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        self.normal_icon = QIcon(load_png_icon("cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.text_color))
-        self.hover_icon = QIcon(load_png_icon("cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.enabled))
+        self.normal_icon = QIcon(load_png_icon(
+            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
+            hstyle.text_color
+        ))
+        self.hover_icon = QIcon(load_png_icon(
+            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
+            hstyle.enabled
+        ))
         self.setIcon(self.normal_icon)
 
-        qss_template = Template(load_qss("hlineedit_button.qss"))
+        qss_template = Template(load_qss("hplaintextedit_button.qss"))
         qss = qss_template.substitute(
             radius=f"{COMBOBOX_RADIUS}px",
             hover_bgd=f"{hstyle.hover_bgd}",
@@ -64,46 +69,42 @@ class _ClearButton(QPushButton):
 
 
 
-class HLineEdit(QLineEdit):
+class HPlainTextEdit(QPlainTextEdit):
 
     def __init__(
         self,
+        text: str,
         /,
         parent: QWidget | None = None,
         *,
         hstyle: HStyle,
-        inputMask: str | None = None,
-        text: str | None = None,
-        maxLength: int | None = None,
-        frame: bool | None = None,
-        echoMode: QLineEdit.EchoMode | None = None,
-        displayText: str | None = None,
-        cursorPosition: int | None = None,
-        alignment:Qt.AlignmentFlag | None = None,
-        modified: bool | None = None,
-        hasSelectedText: bool | None = None,
-        selectedText: str | None = None,
-        dragEnabled: bool | None = None,
+        tabChangesFocus: bool | None = None,
+        documentTitle: str | None = None,
+        undoRedoEnabled: bool | None = None,
+        lineWrapMode: QPlainTextEdit.LineWrapMode | None = None,
         readOnly: bool | None = None,
-        undoAvailable: bool | None = None,
-        redoAvailable: bool | None = None,
-        acceptableInput: bool | None = None,
+        plainText: str | None = None,
+        overwriteMode: bool | None = None,
+        tabStopDistance: float | None = None,
+        cursorWidth: int | None = None,
+        textInteractionFlags: Qt.TextInteractionFlag | None = None,
+        blockCount: int | None = None,
+        maximumBlockCount: int | None = None,
+        backgroundVisible: bool | None = None,
+        centerOnScroll: bool | None = None,
         placeholderText: str | None = None,
-        cursorMoveStyle: Qt.CursorMoveStyle | None = None,
-        clearButtonEnabled: bool | None = None
+        clearButtonEnabled: bool = True,
     ) -> None:
         super().__init__(parent)
 
-        self.setFixedHeight(LINEEDIT_HEIGHT)
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
 
-        # Replace the clear button
         self.main_layout = QHBoxLayout(self)
-        self.main_layout.setContentsMargins(0,0,COMBOBOX_RADIUS,0)
+        self.main_layout.setContentsMargins(0,0,0,0)
         self.main_layout.setSpacing(0)
-        self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
+        self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignBottom)
         self.main_layout.addStretch(1)
         self.clear_button = _ClearButton(self, hstyle=hstyle)
         self.main_layout.addWidget(
@@ -111,7 +112,7 @@ class HLineEdit(QLineEdit):
         )
         self.setLayout(self.main_layout)
 
-        qss_template = Template(load_qss("hlineedit.qss"))
+        qss_template = Template(load_qss("hplaintextedit.qss"))
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
             text_color=f"{hstyle.text_color}",
@@ -125,6 +126,10 @@ class HLineEdit(QLineEdit):
             selected_text=f"{hstyle.selected_text}",
         )
         self.setStyleSheet(qss)
+        # for HLineEdit, it's set in the qss file. here because the button has
+        #   to be moved, it can't be done in the stylesheet
+        self.margin = 2
+
 
         # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
         self.signals_connected = False
@@ -138,7 +143,28 @@ class HLineEdit(QLineEdit):
             self.setClearButtonEnabled(False)
 
         self.clear_button.released.connect(self.clear_button_released)
+
+        # Connect scrollbar events
+        vertical_scrollbar = self.verticalScrollBar()
+        vertical_scrollbar.rangeChanged.connect(self.on_scrollbar_changed)
+        vertical_scrollbar.valueChanged.connect(self.on_scrollbar_changed)
+
+        horitical_scrollbar = self.horizontalScrollBar()
+        horitical_scrollbar.rangeChanged.connect(self.on_scrollbar_changed)
+        horitical_scrollbar.valueChanged.connect(self.on_scrollbar_changed)
+
+        self.update_clear_button_position()
+
         # print(f"{__class__.__name__} Instanciated")
+
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.update_clear_button_position()
+
+
+    def on_scrollbar_changed(self, *args):
+        self.update_clear_button_position()
 
 
     def clear_button_released(self):
@@ -146,8 +172,22 @@ class HLineEdit(QLineEdit):
         self.clear_button.hide()
 
 
-    def event_text_changed(self, text: str) -> None:
-        if len(text) > 0:
+    def update_clear_button_position(self):
+        v_scrollbar = self.verticalScrollBar()
+        adjust: int = v_scrollbar.width() if v_scrollbar.isVisible() else 0
+        x = self.width() - self.clear_button.width() - adjust - self.margin
+
+        h_scrollbar = self.horizontalScrollBar()
+        adjust: int = h_scrollbar.height() if h_scrollbar.isVisible() else 0
+        y = self.height() - self.clear_button.height() - adjust - self.margin
+
+        x0, y0 = self.clear_button.pos().toTuple()
+        if x != x0 or y != y0:
+            self.clear_button.move(x, y)
+
+
+    def event_text_changed(self) -> None:
+        if self.toPlainText():
             self.clear_button.show()
         else:
             self.clear_button.hide()
@@ -156,18 +196,21 @@ class HLineEdit(QLineEdit):
     def setClearButtonEnabled(self, enable: bool) -> None:
         # print(f"{__class__.__name__} set clear button={enable} (ro: {self.isReadOnly()}, enabled: {self.isVisible()})")
         self.blockSignals(True)
-        super().setClearButtonEnabled(False)
         if enable and not self.isReadOnly() and self.isEnabled():
             self.clear_button.show()
             if not self.signals_connected:
                 # print(f"{__class__.__name__}   connect signals")
-                self.textChanged.connect(self.event_text_changed)
-                self.textEdited.connect(self.event_text_changed)
+                for signal in (
+                    self.textChanged,
+                ):
+                    signal.connect(self.event_text_changed)
                 self.signals_connected = True
         else:
             self.clear_button.hide()
             if self.signals_connected:
-                for signal in (self.textChanged, self.textEdited):
+                for signal in (
+                    self.textChanged,
+                ):
                     try:
                         # print(f"{__class__.__name__}   disconnect signal {signal}")
                         signal.disconnect(self.event_text_changed)

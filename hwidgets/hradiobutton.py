@@ -68,8 +68,8 @@ class HRadioButton(QRadioButton):
 
         self.brush_hover: QBrush = QBrush(hstyle.hover_bgd)
 
-        self.disabled_color = QColor(hstyle.disabled)
-        self.brush_disabled: QBrush = QBrush(hstyle.disabled)
+        self.disabled_color = QColor(hstyle.disabled_text)
+        self.brush_disabled: QBrush = QBrush(hstyle.disabled_bgd)
 
         self.checked_color = QColor(hstyle.selection_bgd)
 

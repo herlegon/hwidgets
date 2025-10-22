@@ -57,15 +57,17 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # self.setPalette(p)
 
         for w in (
-            self.q_combobox,
             self.q_combobox_rw,
-            self.h_combobox,
+            self.q_combobox_read_only,
+            self.q_combobox_disabled,
             self.h_combobox_rw,
+            self.h_combobox_read_only,
+            self.h_combobox_disabled,
         ):
             w.addItems(items)
 
         self.setMinimumWidth(800)
-        self.move(QPoint(400,400))
+        self.move(QPoint(400,200))
 
 
 

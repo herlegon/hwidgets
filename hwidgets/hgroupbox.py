@@ -15,7 +15,7 @@ from .hstyle import (
     HStyle,
     load_qss,
     COMBOBOX_RADIUS,
-    TITLE_HEIGHT,
+    GROUPBOX_TITLE_HEIGHT,
 )
 
 
@@ -45,7 +45,7 @@ class HGroupBox(QGroupBox):
             text_color=f"{hstyle.text_color}",
             radius=f"{COMBOBOX_RADIUS}",
             border_color=f"{hstyle.hover_bgd}",
-            margin_top=f"{int(COMBOBOX_RADIUS + TITLE_HEIGHT) - 1}",
+            margin_top=f"{int(COMBOBOX_RADIUS + GROUPBOX_TITLE_HEIGHT) - 1}",
             disabled_text=f"{hstyle.disabled_text}",
             widget_disabled=f"{hstyle.disabled_bgd}",
             padding=f"{COMBOBOX_RADIUS + title_left_adjust}",

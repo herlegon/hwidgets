@@ -263,6 +263,7 @@ class HComboBox(QComboBox):
             selection_bgd=hstyle.selection_bgd,
 
             text_color=hstyle.text_color,
+            selected_text=f"{hstyle.selected_text}",
 
             radius=f"{COMBOBOX_RADIUS}px",
             # padding=f"{COMBOBOX_PADDING}px",
