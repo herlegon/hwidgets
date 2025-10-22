@@ -17,7 +17,7 @@ from PySide6.QtWidgets import (
 
 from .hstyle import (
     COMBOBOX_RADIUS,
-    LINEEDIT_HEIGHT,
+    COMBOBOX_HEIGHT,
     COMBOBOX_RADIUS,
     HStyle,
     load_png_icon,
@@ -35,7 +35,7 @@ class _ClearButton(QPushButton):
     ):
         super().__init__(parent)
 
-        self.setFixedSize(QSize(LINEEDIT_HEIGHT, LINEEDIT_HEIGHT))
+        self.setFixedSize(QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT))
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
@@ -94,7 +94,7 @@ class HLineEdit(QLineEdit):
     ) -> None:
         super().__init__(parent)
 
-        self.setFixedHeight(LINEEDIT_HEIGHT)
+        self.setFixedHeight(COMBOBOX_HEIGHT)
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)

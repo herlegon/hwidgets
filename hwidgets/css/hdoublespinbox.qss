@@ -1,0 +1,46 @@
+/* top, right, bottom, left */
+
+QDoubleSpinBox {
+    background-color: $widget_bgd;
+
+    border: 1px solid $border_color;
+    border-radius: $radius;
+
+    padding: 0px $padding_right 2px 0px;
+
+    selection-background-color: $selected_text;
+    /* selection-color: $selected_text; */
+    selection-color: $text_color;
+
+    color: $text_color;
+    font-family: "Segoe UI", "Sans Serif";
+    font-size: 10pt;
+}
+
+
+QDoubleSpinBox:focus {
+    border-color: $selection_bgd;
+    /* background-color: $hover_bgd; */
+}
+
+
+QDoubleSpinBox:hover {
+    background-color: $hover_bgd;
+}
+
+QDoubleSpinBox:read-only:hover {
+/* QDoubleSpinBox:read-only { */
+    background-color: $widget_bgd;
+}
+
+
+QDoubleSpinBox:disabled {
+    background-color: $disabled_bgd;
+}
+
+
+QPushButton {
+    background-color:green;
+    border: 0px;
+    outline: none;
+}

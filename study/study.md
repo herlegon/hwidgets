@@ -1,6 +1,5 @@
 # port from RLG for pynnlib_gui
 
-TextEdit
 SpinBox
 Icon button (directory)
 Accordion

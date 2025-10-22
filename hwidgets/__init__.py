@@ -10,6 +10,7 @@ from .hlabel import HLabel
 from .hlineedit import HLineEdit
 from .hplaintextedit import HPlainTextEdit
 from .hradiobutton import HRadioButton
+from .hspinbox import HDoubleSpinBox #, HSpinBox
 
 
 __all__ = [
@@ -24,5 +25,7 @@ __all__ = [
     "HLineEdit",
     "HPlainTextEdit",
     "HRadioButton",
+    # "HSpinBox",
+    "HDoubleSpinBox",
 
 ]
