@@ -8,81 +8,28 @@ import time
 from typing import Any, Literal, Optional, Sequence
 from warnings import warn
 from PySide6.QtCore import (
-    QCoreApplication,
-    QDate,
-    QDateTime,
-    QLocale,
-    QMetaObject,
     QObject,
     QPoint,
-    QRect,
-    QRectF,
     Signal,
     QSize,
-    QTime,
-    QUrl,
     QObject,
     Qt,
-    QAbstractItemModel,
-    QPersistentModelIndex,
     QSize,
     QEvent,
-    QTimer,
-
 )
 from PySide6.QtGui import (
-    QPen,
-    QBrush,
     QColor,
-    QConicalGradient,
-    QCursor,
-    QDragEnterEvent,
     QFont,
-    QFontDatabase,
-    QGradient,
-    QIcon,
-    QImage,
-    QKeySequence,
-    QLinearGradient,
-    QMouseEvent,
     QPainter,
     QPainterPath,
-    QPalette,
-    QPixmap,
-    QRadialGradient,
-    QRegion,
-    QTransform,
-    QWheelEvent,
-    QFocusEvent,
     QPaintEvent,
-    QContextMenuEvent,
-    QKeyEvent,
-    QResizeEvent,
-    QInputMethodEvent,
-    QValidator,
-    QShowEvent,
-    QHideEvent,
-    QBitmap,
 )
 from PySide6.QtWidgets import (
-    QApplication,
     QComboBox,
-    QHBoxLayout,
-    QPushButton,
     QSizePolicy,
     QStyle,
     QStyledItemDelegate,
-    QVBoxLayout,
     QWidget,
-    QFileDialog,
-    QLabel,
-    QCompleter,
-    QAbstractItemDelegate,
-    QStyleOptionComboBox,
-    QAbstractItemView,
-    QLineEdit,
-    QGridLayout,
-    QFrame,
     QListView,
 )
 from string import Template
@@ -374,12 +321,13 @@ class HComboBox(QComboBox):
             ):
                 hlogger.debug(lightgreen(f"{int(time.time())} LE MouseButtonPress"))
                 self.lineEdit().deselect()
-                if not self.view().isVisible():
-                    self.can_hide = False
-                    self.showPopup()
-                    # print(f" lets open, can't hide now")
+                if self.isEnabled():
+                    if not self.view().isVisible():
+                        self.can_hide = False
+                        self.showPopup()
+                        # print(f" lets open, can't hide now")
+                        return True
                     return True
-                return True
 
             elif event_type == QEvent.Type.HoverLeave:
                 hlogger.debug(yellow(f"{int(time.time())} lineedit: HoverLeave, can_hide: {self.can_hide}"))
@@ -410,11 +358,12 @@ class HComboBox(QComboBox):
             ):
                 hlogger.debug(lightgreen(f"{int(time.time())} CB MouseButtonPress"))
                 self.lineEdit().deselect()
-                if not self.view().isVisible():
-                    self.can_hide = True
-                    self.showPopup()
-                    # print(f" lets open, can't hide now")
-                    return True
+                if self.isEnabled():
+                    if not self.view().isVisible():
+                        self.can_hide = True
+                        self.showPopup()
+                        # print(f" lets open, can't hide now")
+                        return True
 
             # else:
             #     print(lightcyan(f"{int(time.time())} CB:"), event)

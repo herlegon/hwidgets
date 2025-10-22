@@ -1,6 +1,7 @@
 # port from RLG for pynnlib_gui
 
 SpinBox
+    - hover leave -> save value, do not allow back to previous if escape
 Icon button (directory)
 Accordion
 Title_1
@@ -8,8 +9,9 @@ IndeterminateProgressIndicator
 
 correct QCombobox:
     - when in read write
-    - disabled
-    - keep pushed and release on an item
+    - windows: wrong text size and top margin
+    - Linux Only: keep pushed and release on an item
+
 
 be sure to have arrow and not hands
 

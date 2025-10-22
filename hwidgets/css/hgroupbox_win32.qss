@@ -1,0 +1,22 @@
+QGroupBox {
+    margin-top: 10px;
+}
+
+
+QGroupBox::title {
+    background-color: $widget_bgd;
+    border-radius: 0px;
+
+    color: $text_color;
+    font-family: "Segoe UI", "Sans Serif";
+    font-size: 10pt;
+
+    subcontrol-origin: margin;
+    subcontrol-position: top left;
+
+    left: $padding;
+    top: 0px;
+
+    margin: 0px;
+    padding-top: 0px $title_margins 1px $title_margins;
+}
