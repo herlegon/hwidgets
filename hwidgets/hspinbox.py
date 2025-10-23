@@ -12,6 +12,7 @@ from PySide6.QtCore import (
     QRect,
     QPoint,
     QSize,
+    Signal,
 )
 from PySide6.QtGui import (
     QIcon,
@@ -20,6 +21,7 @@ from PySide6.QtGui import (
     QPixmap,
     QPainterPath,
     QPen,
+    QCursor,
 )
 from PySide6.QtWidgets import (
     QDoubleSpinBox,
@@ -29,7 +31,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QSizePolicy,
     QAbstractSpinBox,
-    QStyle, QStyleOptionSpinBox
+    QStyle, QStyleOptionSpinBox,
 )
 
 from .hstyle import (
@@ -44,6 +46,8 @@ from .hstyle import (
 
 
 class HSpinBoxButton(QPushButton):
+    hovered = Signal(bool)  # True when entered, False when left
+
     def __init__(
         self,
         /,
@@ -155,7 +159,16 @@ class HSpinBoxButton(QPushButton):
             self.pixmaps[f"{self.kind}_{state}"] = pixmap
 
 
-    def paintEvent(self, event):
+    def enterEvent(self, event: QEvent):
+        self.hovered.emit(True)
+        super().enterEvent(event)
+
+    def leaveEvent(self, event: QEvent):
+        self.hovered.emit(False)
+        super().leaveEvent(event)
+
+
+    def paintEvent(self, event: QEvent):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
@@ -199,16 +212,12 @@ class HDoubleSpinBox(QDoubleSpinBox):
         self.setButtonSymbols(QDoubleSpinBox.ButtonSymbols.NoButtons)
 
         self.lineEdit().setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.setFocusPolicy(Qt.StrongFocus)
-
-        # self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        # self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setFocusPolicy(Qt.FocusPolicy.WheelFocus)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
 
-
         self.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
         self.setFixedHeight(COMBOBOX_HEIGHT)
-
 
         self.setAlignment(
             Qt.AlignmentFlag.AlignRight
@@ -227,26 +236,12 @@ class HDoubleSpinBox(QDoubleSpinBox):
         self.plus_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.plus_button.setFlat(True)
         self.plus_button.setFixedSize(button_size)
-        # icon_plus = QIcon()
-        # icon_plus.addPixmap(
-        #     load_png_icon("add_FILL0_wght500_GRAD0_opsz20.png", hstyle.text_color),
-        #     QIcon.Mode.Normal, QIcon.State.Off
-        # )
-        # self.plus_button.setIconSize(icon_size)
-        # self.plus_button.setIcon(icon_plus)
         self.plus_button.setAutoRepeat(True)
 
         self.minus_button = HSpinBoxButton(self, kind='minus', hstyle=hstyle, size=button_size)
         self.minus_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.minus_button.setFlat(True)
         self.minus_button.setFixedSize(button_size)
-        # icon_minus = QIcon()
-        # icon_minus.addPixmap(
-        #     load_png_icon("remove_FILL0_wght500_GRAD0_opsz20.png", hstyle.text_color),
-        #     QIcon.Mode.Normal, QIcon.State.Off
-        # )
-        # self.minus_button.setIconSize(icon_size)
-        # self.minus_button.setIcon(icon_minus)
         self.minus_button.setAutoRepeat(True)
 
         button_layout = QVBoxLayout()
@@ -283,32 +278,17 @@ class HDoubleSpinBox(QDoubleSpinBox):
         )
         self.setStyleSheet(qss)
 
-
         self._last_valid_value = self.value()
         self._editing = False
-        self._hovered = False
         self.lineEdit().deselect()
-
-
-        # # Track hover and editing state
-        # self.setMouseTracking(True)
-        # self.installEventFilter(self)
-
-
-
-        self._editing = False
         self._saved_value = self.value()
         # When focus in/out happens the QLineEdit will emit signals and generate events.
-
-
         self._hovered = None
         self._pressed = None
-        # self.setMouseTracking(True)
 
         self.lineEdit().installEventFilter(self)
 
         self._user_selecting = False
-
         self.plus_button.pressed.connect(self.event_value_changed)
         self.minus_button.pressed.connect(self.event_value_changed)
         self.plus_button.released.connect(self.event_value_changed)
@@ -316,60 +296,147 @@ class HDoubleSpinBox(QDoubleSpinBox):
         self.valueChanged.connect(self.event_value_changed)
 
 
+        self._hovering_main_area = False
+        self._button_hover = False
+        self.setMouseTracking(True)
+        # self.setMouseTracking(True)
+        # ensure we get hover events even when children are under the cursor
+        self.setAttribute(Qt.WidgetAttribute.WA_Hover, True)
 
-    def mousePressEvent(self, event):
-        # Mark that the user is starting to select text
-        if event.button() == Qt.LeftButton:
-            self._user_selecting = True
-        super().mousePressEvent(event)
-
-
-    def mouseReleaseEvent(self, event):
-        # Once released, give a tiny delay before allowing deselection again
-        if event.button() == Qt.LeftButton:
-            QTimer.singleShot(150, lambda: setattr(self, "_user_selecting", False))
-        super().mouseReleaseEvent(event)
+        for btn in (self.plus_button, self.minus_button):
+            btn.hovered.connect(self._on_button_hover_changed)
 
 
-    def focusInEvent(self, event):
-        super().focusInEvent(event)
-        # Don’t auto-select on focus
-        self.lineEdit().deselect()
+    def enterEvent(self, event):
+        if not self._button_hover:
+            self._set_hover(True)
+        super().enterEvent(event)
+
+    def leaveEvent(self, event):
+        self._set_hover(False)
+        super().leaveEvent(event)
+
+    def _on_button_hover_changed(self, hovered: bool):
+        self._button_hover = hovered
+        # Disable hover color when any button is hovered
+        self._set_hover(not hovered)
+
+    def _set_hover(self, hover: bool):
+        if hover == self.property("hover"):
+            return
+        self.setProperty("hover", hover)
+        style = self.style()
+        style.unpolish(self)
+        style.polish(self)
+        self.update()
+
+
+
+
+    # def enterEvent(self, event):
+    #     # force an immediate hover recalculation
+    #     self._update_hover_state()
+    #     super().enterEvent(event)
+
+    # def leaveEvent(self, event):
+    #     # if cursor completely left the widget, clear hover
+    #     # (use mapFromGlobal; if outside widget rect -> not hovering)
+    #     pos = self.mapFromGlobal(QCursor.pos())
+    #     if not self.rect().contains(pos):
+    #         if self._hovering_main_area:
+    #             self._hovering_main_area = False
+    #             self._update_style(normal=True)
+    #     super().leaveEvent(event)
+
+
+
+    # def mouseMoveEvent(self, event):
+    #     """Update hover status continuously."""
+    #     self._update_hover_state(event)
+    #     super().mouseMoveEvent(event)
+
+    # def _update_hover_state(self, event: QEvent):
+    #     """Check whether mouse is over main area or button area."""
+    #     pos = event.position().toPoint()
+
+    #     over_plus = self.plus_button.geometry().contains(pos)
+    #     over_minus = self.minus_button.geometry().contains(pos)
+    #     print(f"  contains? plus:{over_plus}, minus:{over_minus}")
+
+    #     hovering_main = not (over_plus or over_minus)
+
+    #     if hovering_main != self._hovering_main_area:
+    #         self._hovering_main_area = hovering_main
+    #         print(f"hovering_main: {hovering_main}")
+    #         if hovering_main:
+    #             self._update_style(hover=True)
+    #         else:
+    #             self._update_style(normal=True)
+
+    # def _update_style(self, hover=False, normal=False):
+    #     """Toggle hover/normal style via dynamic property."""
+    #     self.setProperty("hover", hover)
+    #     self.style().unpolish(self)
+    #     self.style().polish(self)
+
+
+    def setButtonSymbols(self, bs: QAbstractSpinBox.ButtonSymbols) -> None:
+        warn(f"{__class__.__name__} Ignoring \'setButtonSymbols\'")
+        super().setButtonSymbols(QDoubleSpinBox.ButtonSymbols.NoButtons)
+
+
+
+    # def mousePressEvent(self, event):
+    #     # Mark that the user is starting to select text
+    #     if event.button() == Qt.LeftButton:
+    #         self._user_selecting = True
+    #     super().mousePressEvent(event)
+
+
+    # def mouseReleaseEvent(self, event):
+    #     # Once released, give a tiny delay before allowing deselection again
+    #     if event.button() == Qt.LeftButton:
+    #         QTimer.singleShot(150, lambda: setattr(self, "_user_selecting", False))
+    #     super().mouseReleaseEvent(event)
+
+
+    # def focusInEvent(self, event):
+    #     print(f"focus in")
+    #     super().focusInEvent(event)
+    #     # Don’t auto-select on focus
+    #     self.lineEdit().deselect()
+
+
+    # def focusOutEvent(self, event):
+    #     print(f"focus out")
+    #     super().focusOutEvent(event)
+
 
 
     def event_value_changed(self, value=0):
-        """
-        Deselect the text only if the user is not actively selecting it.
-        """
         print("_on_value_changed")
         QTimer.singleShot(0, self.deselect_value)
 
 
-
     def wheelEvent(self, event):
-        # Let QSpinBox handle the wheel normally first
         super().wheelEvent(event)
-        # Ensure deselection after wheel-induced value change
         QTimer.singleShot(0, self.deselect_value)
 
 
-    def deselect_value(self, event_type: str = '') -> None:
-        print(f"deselect: reason={event_type}")
+    def deselect_value(self) -> None:
+        print(f"deselect lineedit")
         line_edit = self.lineEdit()
         line_edit.blockSignals(True)
         cursor_pos = len(line_edit.text())
         line_edit.setSelection(cursor_pos, 0)
         line_edit.setCursorPosition(cursor_pos)
         line_edit.deselect()
-
-        # line_edit.clearFocus()
-        # self.setFocus()
         line_edit.blockSignals(False)
+
 
     def deselect_all(self):
         self.deselect_value()
         self.lineEdit().clearFocus()
-        # self.setFocus()
 
 
     def _validate_value(self):
@@ -387,8 +454,6 @@ class HDoubleSpinBox(QDoubleSpinBox):
         self.blockSignals(False)
         self.deselect_value()
         self._editing = False
-
-
 
     def keyPressEvent(self, event: QEvent) -> None:
         key = event.key()
@@ -534,11 +599,6 @@ class HDoubleSpinBox(QDoubleSpinBox):
     # def setReadOnly(self, state: bool):
     #     super().setReadOnly(state)
     #     self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, state)
-
-
-    # def setButtonSymbols(self, bs: QAbstractSpinBox.ButtonSymbols) -> None:
-    #     warn(f"{__class__.__name__} Ignoring \'setButtonSymbols\'")
-    #     super().setButtonSymbols(QDoubleSpinBox.ButtonSymbols.NoButtons)
 
 
 

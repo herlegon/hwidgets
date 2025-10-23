@@ -20,9 +20,9 @@ QDoubleSpinBox {
 /* } */
 
 
-QDoubleSpinBox:hover {
+/* QDoubleSpinBox:hover {
     background-color: $hover_bgd;
-}
+} */
 
 QDoubleSpinBox:read-only:hover {
 /* QDoubleSpinBox:read-only { */
@@ -34,3 +34,10 @@ QDoubleSpinBox:disabled {
     background-color: $disabled_bgd;
 }
 
+HDoubleSpinBox[hover="true"] {
+    background-color: $hover_bgd;
+}
+
+HDoubleSpinBox {
+    background-color: $widget_bgd;
+}
