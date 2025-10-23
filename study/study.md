@@ -1,19 +1,24 @@
 # port from RLG for pynnlib_gui
 
-SpinBox
-    - hover leave -> save value, do not allow back to previous if escape
 Icon button (directory)
 Accordion
 Title_1
 IndeterminateProgressIndicator
 
-correct QCombobox:
+- correct QCombobox:
     - when in read write
     - windows: wrong text size and top margin
     - Linux Only: keep pushed and release on an item
+    - edition doesn't work because it should put the cursor and not open the popup
 
 
-be sure to have arrow and not hands
+- be sure to have arrow and not hands on widgets
+- hbutton: bottom margin different from windows/linux
+- SpinBox:
+    - clean
+    - align right
+    - escape
+
 
 # Later
 Scrollbar
@@ -25,3 +30,7 @@ Tooltip
 
 Links:
 https://www.figma.com/community/file/1143831050419793062/apple-macos-12-design-system-for-figma
+
+
+Qspinbox:
+customize minus/plus buttons to be rounded on the upper right and bottom right because default are squares
