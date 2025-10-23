@@ -31,6 +31,7 @@ if __name__ == "__main__":
         "QLineEdit": "HLineEdit",
         "QPlainTextEdit": "HPlainTextEdit",
         "QDoubleSpinBox": "HDoubleSpinBox",
+        "QSpinBox": "HSpinBox",
     }
 
 

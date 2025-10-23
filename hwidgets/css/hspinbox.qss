@@ -1,10 +1,12 @@
+QSpinBox,
 QDoubleSpinBox {
     background-color: $widget_bgd;
 
     border-radius: $radius;
+    margin: 0px;
     padding: 0px $padding_right 2px 0px;
 
-    selection-background-color: yellow;
+    selection-background-color: $selection_bgd;
     /* selection-background-color: transparent; */
     selection-color: $text_color;
 
@@ -14,30 +16,20 @@ QDoubleSpinBox {
 }
 
 
-/* QDoubleSpinBox:focus { */
-    /* border-color: $selection_bgd; */
-    /* background-color: $hover_bgd; */
-/* } */
-
-
-/* QDoubleSpinBox:hover {
-    background-color: $hover_bgd;
-} */
-
+QSpinBox:read-only:hover,
 QDoubleSpinBox:read-only:hover {
 /* QDoubleSpinBox:read-only { */
     background-color: $widget_bgd;
 }
 
 
+QSpinBox:disabled,
 QDoubleSpinBox:disabled {
     background-color: $disabled_bgd;
 }
 
+
+HSpinBox[hover="true"],
 HDoubleSpinBox[hover="true"] {
     background-color: $hover_bgd;
-}
-
-HDoubleSpinBox {
-    background-color: $widget_bgd;
 }

@@ -31,6 +31,7 @@ from hwidgets import (
     HLineEdit,
     HPlainTextEdit,
     HRadioButton,
+    HSpinBox,
     HStyle,
 )
 
@@ -643,28 +644,28 @@ class Ui_MainWindow(object):
 
         self.h_spinbox_layout = QHBoxLayout()
         self.h_spinbox_layout.setObjectName(u"h_spinbox_layout")
-        self.h_spinbox_no_button = QSpinBox(self.h_frame)
+        self.h_spinbox_no_button = HSpinBox(self.h_frame, hstyle=hstyle)
         self.h_spinbox_no_button.setObjectName(u"h_spinbox_no_button")
         self.h_spinbox_no_button.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_spinbox_no_button.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
 
         self.h_spinbox_layout.addWidget(self.h_spinbox_no_button)
 
-        self.h_spinbox_rw = QSpinBox(self.h_frame)
+        self.h_spinbox_rw = HSpinBox(self.h_frame, hstyle=hstyle)
         self.h_spinbox_rw.setObjectName(u"h_spinbox_rw")
         self.h_spinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_spinbox_rw.setMinimum(10)
 
         self.h_spinbox_layout.addWidget(self.h_spinbox_rw)
 
-        self.h_spinbox_ro = QSpinBox(self.h_frame)
+        self.h_spinbox_ro = HSpinBox(self.h_frame, hstyle=hstyle)
         self.h_spinbox_ro.setObjectName(u"h_spinbox_ro")
         self.h_spinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_spinbox_ro.setReadOnly(True)
 
         self.h_spinbox_layout.addWidget(self.h_spinbox_ro)
 
-        self.h_spinbox_disabled = QSpinBox(self.h_frame)
+        self.h_spinbox_disabled = HSpinBox(self.h_frame, hstyle=hstyle)
         self.h_spinbox_disabled.setObjectName(u"h_spinbox_disabled")
         self.h_spinbox_disabled.setEnabled(False)
         self.h_spinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)

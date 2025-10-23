@@ -14,10 +14,6 @@ IndeterminateProgressIndicator
 
 - be sure to have arrow and not hands on widgets
 - hbutton: bottom margin different from windows/linux
-- SpinBox:
-    - clean
-    - align right
-    - escape
 
 
 # Later
@@ -32,5 +28,3 @@ Links:
 https://www.figma.com/community/file/1143831050419793062/apple-macos-12-design-system-for-figma
 
 
-Qspinbox:
-customize minus/plus buttons to be rounded on the upper right and bottom right because default are squares
