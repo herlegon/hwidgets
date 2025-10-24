@@ -1,6 +1,5 @@
 # port from RLG for pynnlib_gui
 
-Icon button (directory)
 Accordion
 Title_1
 IndeterminateProgressIndicator
@@ -23,7 +22,6 @@ IndeterminateProgressIndicator
 # Later
 Scrollbar
 ProgressIndicator
-Switch
 Tooltip
 
 
@@ -32,5 +30,3 @@ Links:
 https://www.figma.com/community/file/1143831050419793062/apple-macos-12-design-system-for-figma
 
 
-Qspinbox:
-customize minus/plus buttons to be rounded on the upper right and bottom right because default are squares

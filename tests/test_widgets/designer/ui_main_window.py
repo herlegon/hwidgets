@@ -31,6 +31,8 @@ from hwidgets import (
     HLineEdit,
     HPlainTextEdit,
     HRadioButton,
+    HDivider,
+    HSwitch,
     HStyle,
 )
 
@@ -38,7 +40,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1358, 766)
+        MainWindow.resize(1358, 819)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -433,6 +435,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.q_spinbox_layout)
 
+        self.q_line = QFrame(self.q_frame)
+        self.q_line.setObjectName(u"q_line")
+        self.q_line.setFrameShape(QFrame.Shape.HLine)
+        self.q_line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout.addWidget(self.q_line)
+
         self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer)
@@ -563,6 +572,31 @@ class Ui_MainWindow(object):
         self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
+
+        self.h_switch = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch.setObjectName(u"h_switch")
+
+        self.horizontalLayout_4.addWidget(self.h_switch)
+
+        self.h_switch_checked = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_checked.setObjectName(u"h_switch_checked")
+        self.h_switch_checked.setChecked(True)
+
+        self.horizontalLayout_4.addWidget(self.h_switch_checked)
+
+        self.h_switch_disabled = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_disabled.setObjectName(u"h_switch_disabled")
+        self.h_switch_disabled.setEnabled(False)
+        self.h_switch_disabled.setCheckable(True)
+
+        self.horizontalLayout_4.addWidget(self.h_switch_disabled)
+
+        self.h_switch_disabled_checked = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_disabled_checked.setObjectName(u"h_switch_disabled_checked")
+        self.h_switch_disabled_checked.setEnabled(False)
+        self.h_switch_disabled_checked.setChecked(True)
+
+        self.horizontalLayout_4.addWidget(self.h_switch_disabled_checked)
 
 
         self.verticalLayout_2.addLayout(self.horizontalLayout_4)
@@ -823,6 +857,13 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addLayout(self.h_spinbox_layout)
 
+        self.h_divider = HDivider(self.h_frame, hstyle=hstyle)
+        self.h_divider.setObjectName(u"h_divider")
+        self.h_divider.setFrameShape(QFrame.Shape.HLine)
+        self.h_divider.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout_2.addWidget(self.h_divider)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer_2)
@@ -896,6 +937,10 @@ class Ui_MainWindow(object):
         self.h_checkbox_clicked.setText("")
         self.h_checkbox_disabled.setText("")
         self.h_checkbox_disabled_clicked.setText("")
+        self.h_switch.setText("")
+        self.h_switch_checked.setText("")
+        self.h_switch_disabled.setText("")
+        self.h_switch_disabled_checked.setText("")
         self.h_text_button.setText(QCoreApplication.translate("MainWindow", u"HButton", None))
         self.h_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C)", None))
         self.h_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (D)", None))

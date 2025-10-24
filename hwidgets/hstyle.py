@@ -100,12 +100,12 @@ class HStyle:
 
     # checkbox
     enabled = "#4B8DD8"
-    disabled_bgd = "#424242"
+    disabled_bgd = "#313131"
 
     disabled_text = "#4E4E4E"
     checked_text = "#4632c7"
 
-
+    divider: str = "#505053" # same as hover
 
 
     # Accent (hover)	"#4e83c2"	 # Slightly lighter for hover feedback
@@ -155,6 +155,47 @@ GROUPBOX_TITLE_HEIGHT = 10
 SPINBOX_RADIUS = COMBOBOX_RADIUS
 SPINBOX_PADDING = 12
 SPINBOX_MIN_WIDTH = 50
+
+
+
+DIVIDER_THICKNESS = 1
+DIVIDER_MIN_LENGTH = 40
+DIVIDER_PADDING = 16
+
+
+
+# M3 material
+# Track
+#     Height  32dp
+#     Width       52dp
+#     Outline width       2dp
+#     Shape       md.sys.shape.corner.full
+# Handle
+#     Height (unselected)     16dp
+#     Height - with icon      24dp  <-
+#     Height (selected)       24dp
+#     Height (pressed)        28dp
+#     Width (unselected)      16dp
+#     Width - with icon       24dp
+#     Width (selected)        24dp
+#     Width (pressed)     28dp
+#     Shape       md.sys.shape.corner.full
+# State layer
+#     Size    40dp
+#     Shape       md.sys.shape.corner.full
+# Target      Size    48dp
+# Icon        Size (selected)     16dp
+# Icon        Size (unselected)       16dp
+
+
+TRACK_WIDTH: int = 40
+TRACK_HEIGHT: int = COMBOBOX_HEIGHT
+# Note: Track outline width is currently not used
+TRACK_OUTLINE_WIDTH = 0
+HANDLE_RADIUS: int = 16
+TRACK_MARGIN = (TRACK_HEIGHT - HANDLE_RADIUS) // 2
+TRACK_HEIGHT = TRACK_MARGIN * 2 + HANDLE_RADIUS
+
 
 
 
