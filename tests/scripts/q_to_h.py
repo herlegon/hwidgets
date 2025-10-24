@@ -48,8 +48,6 @@ if __name__ == "__main__":
     hwidgets_to_import = sorted(WIDGET_MAP.values())
     hwidgets_to_import.append("HStyle")
 
-    pprint(hwidgets_to_import)
-
     grouped_import = "from hwidgets import (\n" + "".join(
         [f"    {cls},\n" for cls in hwidgets_to_import]
     ) + ")\n"
@@ -82,4 +80,4 @@ if __name__ == "__main__":
 
 
     Path(ui_path).write_text(text, encoding="utf-8")
-    print("✅ Patched")
+    print("✅ Replaced QWidgets by HWidgets")

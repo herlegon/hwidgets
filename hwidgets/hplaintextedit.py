@@ -34,6 +34,8 @@ class _ClearButton(QPushButton):
     ):
         super().__init__(parent)
 
+        self.setCursor(Qt.CursorShape.ArrowCursor)
+
         self.setFixedSize(QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT))
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)

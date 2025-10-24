@@ -10,6 +10,10 @@ QGroupBox {
     font-size: 10pt;
 }
 
+
+QGroupBox:disabled {
+    border: 1px solid $disabled_text;
+}
 /*
 Linux, no need for that, other platforms?
 QGroupBox::title {
@@ -36,3 +40,6 @@ QGroupBox:disabled {
     background-color: $widget_disabled;
 }
 
+QGroupBox::title:disabled {
+    background-color: $window_bgd;
+}

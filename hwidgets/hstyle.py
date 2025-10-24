@@ -84,10 +84,10 @@ class HStyle:
     window_bgd: str = "#181819"
 
     # Combobox
-    widget_bgd: str = "#353538"
+    widget_bgd: str = "#4F4D53"
     text_color: str = "#d4d4d8"
     # selection_bgd: str = "#454546"
-    hover_bgd: str = "#505053"
+    hover_bgd: str = "#66636D"
     selection_bgd: str = "#5545bd"
 
     selected_text: str = "#5545bd"
@@ -102,7 +102,7 @@ class HStyle:
     enabled = "#4B8DD8"
     disabled_bgd = "#424242"
 
-    disabled_text = "#646468"
+    disabled_text = "#4E4E4E"
     checked_text = "#4632c7"
 
 

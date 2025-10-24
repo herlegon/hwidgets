@@ -226,14 +226,14 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_9">
          <item>
-          <widget class="QPushButton" name="q_button">
+          <widget class="QPushButton" name="q_text_button">
            <property name="text">
             <string>QButton</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="q_button_checked">
+          <widget class="QPushButton" name="q_text_button_checked">
            <property name="text">
             <string>QButton (C)</string>
            </property>
@@ -246,7 +246,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="q_button_disabled">
+          <widget class="QPushButton" name="q_text_button_disabled">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -256,7 +256,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="q_button_checked_disabled">
+          <widget class="QPushButton" name="q_text_button_checked_disabled">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -270,6 +270,151 @@
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="q_button_layout">
+         <item>
+          <widget class="QPushButton" name="q_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="q_button_checked">
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="q_button_disabled">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="q_button_disabled_checked">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="q_button_spacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
@@ -293,6 +438,9 @@
          </item>
          <item>
           <widget class="QGroupBox" name="q_groupbox_disabled">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="title">
             <string>QGroupBox (disabled)</string>
            </property>
@@ -800,14 +948,14 @@ of vertical text
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_8">
          <item>
-          <widget class="QPushButton" name="h_button">
+          <widget class="QPushButton" name="h_text_button">
            <property name="text">
             <string>HButton</string>
            </property>
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="h_button_checked">
+          <widget class="QPushButton" name="h_text_button_checked">
            <property name="text">
             <string>HButton (C)</string>
            </property>
@@ -820,7 +968,7 @@ of vertical text
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="h_button_disabled">
+          <widget class="QPushButton" name="h_text_button_disabled">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -830,7 +978,7 @@ of vertical text
           </widget>
          </item>
          <item>
-          <widget class="QPushButton" name="h_button_checked_disabled">
+          <widget class="QPushButton" name="h_text_button_disabled_checked">
            <property name="enabled">
             <bool>false</bool>
            </property>
@@ -844,6 +992,151 @@ of vertical text
             <bool>true</bool>
            </property>
           </widget>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="h_button_layout">
+         <item>
+          <widget class="QPushButton" name="h_button">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="h_button_checked">
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="h_button_disabled">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="h_button_disabled_checked">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
+           <property name="maximumSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="text">
+            <string/>
+           </property>
+           <property name="icon">
+            <iconset>
+             <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+           </property>
+           <property name="iconSize">
+            <size>
+             <width>24</width>
+             <height>24</height>
+            </size>
+           </property>
+           <property name="checkable">
+            <bool>true</bool>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+           <property name="flat">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="h_button_spacer">
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
@@ -867,6 +1160,9 @@ of vertical text
          </item>
          <item>
           <widget class="QGroupBox" name="h_groupbox_disabled">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="title">
             <string>HGroupBox (disabled)</string>
            </property>
@@ -1169,9 +1465,9 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

@@ -173,34 +173,92 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.q_text_button = QPushButton(self.q_frame)
+        self.q_text_button.setObjectName(u"q_text_button")
+
+        self.horizontalLayout_9.addWidget(self.q_text_button)
+
+        self.q_text_button_checked = QPushButton(self.q_frame)
+        self.q_text_button_checked.setObjectName(u"q_text_button_checked")
+        self.q_text_button_checked.setCheckable(True)
+        self.q_text_button_checked.setChecked(True)
+
+        self.horizontalLayout_9.addWidget(self.q_text_button_checked)
+
+        self.q_text_button_disabled = QPushButton(self.q_frame)
+        self.q_text_button_disabled.setObjectName(u"q_text_button_disabled")
+        self.q_text_button_disabled.setEnabled(False)
+
+        self.horizontalLayout_9.addWidget(self.q_text_button_disabled)
+
+        self.q_text_button_checked_disabled = QPushButton(self.q_frame)
+        self.q_text_button_checked_disabled.setObjectName(u"q_text_button_checked_disabled")
+        self.q_text_button_checked_disabled.setEnabled(False)
+        self.q_text_button_checked_disabled.setCheckable(True)
+        self.q_text_button_checked_disabled.setChecked(True)
+
+        self.horizontalLayout_9.addWidget(self.q_text_button_checked_disabled)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_9)
+
+        self.q_button_layout = QHBoxLayout()
+        self.q_button_layout.setObjectName(u"q_button_layout")
         self.q_button = QPushButton(self.q_frame)
         self.q_button.setObjectName(u"q_button")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.q_button.sizePolicy().hasHeightForWidth())
+        self.q_button.setSizePolicy(sizePolicy)
+        self.q_button.setMaximumSize(QSize(24, 24))
+        icon = QIcon()
+        icon.addFile(u"../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.q_button.setIcon(icon)
+        self.q_button.setIconSize(QSize(24, 24))
+        self.q_button.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button)
+        self.q_button_layout.addWidget(self.q_button)
 
         self.q_button_checked = QPushButton(self.q_frame)
         self.q_button_checked.setObjectName(u"q_button_checked")
+        self.q_button_checked.setMaximumSize(QSize(24, 24))
+        self.q_button_checked.setIcon(icon)
+        self.q_button_checked.setIconSize(QSize(24, 24))
         self.q_button_checked.setCheckable(True)
         self.q_button_checked.setChecked(True)
+        self.q_button_checked.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button_checked)
+        self.q_button_layout.addWidget(self.q_button_checked)
 
         self.q_button_disabled = QPushButton(self.q_frame)
         self.q_button_disabled.setObjectName(u"q_button_disabled")
         self.q_button_disabled.setEnabled(False)
+        self.q_button_disabled.setMaximumSize(QSize(24, 24))
+        self.q_button_disabled.setIcon(icon)
+        self.q_button_disabled.setIconSize(QSize(24, 24))
+        self.q_button_disabled.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button_disabled)
+        self.q_button_layout.addWidget(self.q_button_disabled)
 
-        self.q_button_checked_disabled = QPushButton(self.q_frame)
-        self.q_button_checked_disabled.setObjectName(u"q_button_checked_disabled")
-        self.q_button_checked_disabled.setEnabled(False)
-        self.q_button_checked_disabled.setCheckable(True)
-        self.q_button_checked_disabled.setChecked(True)
+        self.q_button_disabled_checked = QPushButton(self.q_frame)
+        self.q_button_disabled_checked.setObjectName(u"q_button_disabled_checked")
+        self.q_button_disabled_checked.setEnabled(False)
+        self.q_button_disabled_checked.setMaximumSize(QSize(24, 24))
+        self.q_button_disabled_checked.setIcon(icon)
+        self.q_button_disabled_checked.setIconSize(QSize(24, 24))
+        self.q_button_disabled_checked.setCheckable(True)
+        self.q_button_disabled_checked.setChecked(True)
+        self.q_button_disabled_checked.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button_checked_disabled)
+        self.q_button_layout.addWidget(self.q_button_disabled_checked)
+
+        self.q_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.q_button_layout.addItem(self.q_button_spacer)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_9)
+        self.verticalLayout.addLayout(self.q_button_layout)
 
         self.q_groupbox_layout = QHBoxLayout()
         self.q_groupbox_layout.setObjectName(u"q_groupbox_layout")
@@ -218,6 +276,7 @@ class Ui_MainWindow(object):
 
         self.q_groupbox_disabled = QGroupBox(self.q_frame)
         self.q_groupbox_disabled.setObjectName(u"q_groupbox_disabled")
+        self.q_groupbox_disabled.setEnabled(False)
         self.q_groupbox_disabled.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.verticalLayout_7 = QVBoxLayout(self.q_groupbox_disabled)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
@@ -510,34 +569,87 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.h_text_button = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button.setObjectName(u"h_text_button")
+
+        self.horizontalLayout_8.addWidget(self.h_text_button)
+
+        self.h_text_button_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_checked.setObjectName(u"h_text_button_checked")
+        self.h_text_button_checked.setCheckable(True)
+        self.h_text_button_checked.setChecked(True)
+
+        self.horizontalLayout_8.addWidget(self.h_text_button_checked)
+
+        self.h_text_button_disabled = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_disabled.setObjectName(u"h_text_button_disabled")
+        self.h_text_button_disabled.setEnabled(False)
+
+        self.horizontalLayout_8.addWidget(self.h_text_button_disabled)
+
+        self.h_text_button_disabled_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_disabled_checked.setObjectName(u"h_text_button_disabled_checked")
+        self.h_text_button_disabled_checked.setEnabled(False)
+        self.h_text_button_disabled_checked.setCheckable(True)
+        self.h_text_button_disabled_checked.setChecked(True)
+
+        self.horizontalLayout_8.addWidget(self.h_text_button_disabled_checked)
+
+
+        self.verticalLayout_2.addLayout(self.horizontalLayout_8)
+
+        self.h_button_layout = QHBoxLayout()
+        self.h_button_layout.setObjectName(u"h_button_layout")
         self.h_button = HButton(self.h_frame, hstyle=hstyle)
         self.h_button.setObjectName(u"h_button")
+        sizePolicy.setHeightForWidth(self.h_button.sizePolicy().hasHeightForWidth())
+        self.h_button.setSizePolicy(sizePolicy)
+        self.h_button.setMaximumSize(QSize(24, 24))
+        self.h_button.setIcon(icon)
+        self.h_button.setIconSize(QSize(24, 24))
+        self.h_button.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button)
+        self.h_button_layout.addWidget(self.h_button)
 
         self.h_button_checked = HButton(self.h_frame, hstyle=hstyle)
         self.h_button_checked.setObjectName(u"h_button_checked")
+        self.h_button_checked.setMaximumSize(QSize(24, 24))
+        self.h_button_checked.setIcon(icon)
+        self.h_button_checked.setIconSize(QSize(24, 24))
         self.h_button_checked.setCheckable(True)
         self.h_button_checked.setChecked(True)
+        self.h_button_checked.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button_checked)
+        self.h_button_layout.addWidget(self.h_button_checked)
 
         self.h_button_disabled = HButton(self.h_frame, hstyle=hstyle)
         self.h_button_disabled.setObjectName(u"h_button_disabled")
         self.h_button_disabled.setEnabled(False)
+        self.h_button_disabled.setMaximumSize(QSize(24, 24))
+        self.h_button_disabled.setIcon(icon)
+        self.h_button_disabled.setIconSize(QSize(24, 24))
+        self.h_button_disabled.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button_disabled)
+        self.h_button_layout.addWidget(self.h_button_disabled)
 
-        self.h_button_checked_disabled = HButton(self.h_frame, hstyle=hstyle)
-        self.h_button_checked_disabled.setObjectName(u"h_button_checked_disabled")
-        self.h_button_checked_disabled.setEnabled(False)
-        self.h_button_checked_disabled.setCheckable(True)
-        self.h_button_checked_disabled.setChecked(True)
+        self.h_button_disabled_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_button_disabled_checked.setObjectName(u"h_button_disabled_checked")
+        self.h_button_disabled_checked.setEnabled(False)
+        self.h_button_disabled_checked.setMaximumSize(QSize(24, 24))
+        self.h_button_disabled_checked.setIcon(icon)
+        self.h_button_disabled_checked.setIconSize(QSize(24, 24))
+        self.h_button_disabled_checked.setCheckable(True)
+        self.h_button_disabled_checked.setChecked(True)
+        self.h_button_disabled_checked.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button_checked_disabled)
+        self.h_button_layout.addWidget(self.h_button_disabled_checked)
+
+        self.h_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.h_button_layout.addItem(self.h_button_spacer)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_8)
+        self.verticalLayout_2.addLayout(self.h_button_layout)
 
         self.h_groupbox_layout = QHBoxLayout()
         self.h_groupbox_layout.setObjectName(u"h_groupbox_layout")
@@ -555,6 +667,7 @@ class Ui_MainWindow(object):
 
         self.h_groupbox_disabled = HGroupBox(self.h_frame, hstyle=hstyle)
         self.h_groupbox_disabled.setObjectName(u"h_groupbox_disabled")
+        self.h_groupbox_disabled.setEnabled(False)
         self.verticalLayout_4 = QVBoxLayout(self.h_groupbox_disabled)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.h_label_groupbox_2 = HLabel(self.h_groupbox_disabled, hstyle=hstyle)
@@ -737,10 +850,14 @@ class Ui_MainWindow(object):
         self.q_checkbox_clicked.setText("")
         self.q_checkbox_disabled.setText("")
         self.q_checkbox_disabled_clicked.setText("")
-        self.q_button.setText(QCoreApplication.translate("MainWindow", u"QButton", None))
-        self.q_button_checked.setText(QCoreApplication.translate("MainWindow", u"QButton (C)", None))
-        self.q_button_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (D)", None))
-        self.q_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (C/D)", None))
+        self.q_text_button.setText(QCoreApplication.translate("MainWindow", u"QButton", None))
+        self.q_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"QButton (C)", None))
+        self.q_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (D)", None))
+        self.q_text_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (C/D)", None))
+        self.q_button.setText("")
+        self.q_button_checked.setText("")
+        self.q_button_disabled.setText("")
+        self.q_button_disabled_checked.setText("")
         self.q_groupbox.setTitle(QCoreApplication.translate("MainWindow", u"QGroupBox", None))
         self.q_label_groupbox.setText(QCoreApplication.translate("MainWindow", u"A Qlabel", None))
         self.q_groupbox_disabled.setTitle(QCoreApplication.translate("MainWindow", u"QGroupBox (disabled)", None))
@@ -779,10 +896,14 @@ class Ui_MainWindow(object):
         self.h_checkbox_clicked.setText("")
         self.h_checkbox_disabled.setText("")
         self.h_checkbox_disabled_clicked.setText("")
-        self.h_button.setText(QCoreApplication.translate("MainWindow", u"HButton", None))
-        self.h_button_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C)", None))
-        self.h_button_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (D)", None))
-        self.h_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (C/D)", None))
+        self.h_text_button.setText(QCoreApplication.translate("MainWindow", u"HButton", None))
+        self.h_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C)", None))
+        self.h_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (D)", None))
+        self.h_text_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C/D)", None))
+        self.h_button.setText("")
+        self.h_button_checked.setText("")
+        self.h_button_disabled.setText("")
+        self.h_button_disabled_checked.setText("")
         self.h_groupbox.setTitle(QCoreApplication.translate("MainWindow", u"HGroupBox", None))
         self.h_label_groupbox_1.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
         self.h_groupbox_disabled.setTitle(QCoreApplication.translate("MainWindow", u"HGroupBox (disabled)", None))

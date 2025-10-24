@@ -179,24 +179,21 @@ class HComboBox(QComboBox):
         )
 
         self.setEditable(True)
-        self.lineEdit().setReadOnly(True)
+        if self.lineEdit():
+            self.lineEdit().setReadOnly(True)
+            self.lineEdit().setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+            self.lineEdit().setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
+            self.lineEdit().setCursor(Qt.CursorShape.ArrowCursor)
+            self.lineEdit().setReadOnly(True)
+
         self.set_stylesheet(hstyle=hstyle)
-
-        self.lineEdit().setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-        self.lineEdit().setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
-        self.lineEdit().setCursor(Qt.CursorShape.PointingHandCursor)
-
 
         self.can_hide: bool = False
         self.is_popup_visible = False
         self.counter: int = 0
 
-        # Install event filter on the line edit
         if self.lineEdit():
             self.lineEdit().installEventFilter(self)
-            self.lineEdit().setReadOnly(True)
-        # self.setEditable(True)
-        # self.setEditable(True)
         self.installEventFilter(self)
 
 

@@ -12,12 +12,12 @@ IndeterminateProgressIndicator
     - edition doesn't work because it should put the cursor and not open the popup
 
 
-- be sure to have arrow and not hands on widgets
-- hbutton: bottom margin different from windows/linux
-- SpinBox:
-    - clean
-    - align right
-    - escape
+- HLineEdit
+    * when enter key: validate current text, deselect (and focus next widget)
+    * escape: undo modifications, deselect and focus out
+
+- HButton (icon)
+    * use an internal check state: rewrite
 
 
 # Later

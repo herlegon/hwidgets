@@ -341,7 +341,7 @@ class HDoubleSpinBox(QDoubleSpinBox):
         """
         Deselect the text only if the user is not actively selecting it.
         """
-        print("_on_value_changed")
+
         QTimer.singleShot(0, self.deselect_value)
 
 
@@ -354,7 +354,7 @@ class HDoubleSpinBox(QDoubleSpinBox):
 
 
     def deselect_value(self, event_type: str = '') -> None:
-        print(f"deselect: reason={event_type}")
+
         line_edit = self.lineEdit()
         line_edit.blockSignals(True)
         cursor_pos = len(line_edit.text())
@@ -395,7 +395,7 @@ class HDoubleSpinBox(QDoubleSpinBox):
 
         if key in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
             if self.lineEdit().hasFocus():
-                print("entered")
+
                 # self._validate_value()
                 # self.deselect_value()
                 # self.lineEdit().clearFocus()
@@ -674,7 +674,7 @@ class HDoubleSpinBox(QDoubleSpinBox):
     #     # self.valueChanged.connect(self.event_value_modified)
 
     # # def event_value_modified(self, value: float | int) -> None:
-    # #     print(f"modified")
+
     # #     self.blockSignals(True)
     # #     self.lineEdit().deselect()
     # #     self.lineEdit().clearFocus()

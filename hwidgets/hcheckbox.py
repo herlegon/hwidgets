@@ -45,10 +45,7 @@ class HCheckBox(QCheckBox):
         border_color: str = "#3a3d44"    # normal border
         disabled_color: str = "#4a4a4a"   # disabled tint
 
-
         super().__init__(parent)
-        self.setCursor(Qt.PointingHandCursor)
-        self.setMouseTracking(True)
 
         # geometry & style parameters
         self._size = size
@@ -66,6 +63,10 @@ class HCheckBox(QCheckBox):
 
         # make widget small—sizeHint will be used by layouts
         self.setMinimumSize(self.sizeHint())
+
+        self.setCursor(Qt.CursorShape.ArrowCursor)
+        self.setMouseTracking(True)
+
 
     def sizeHint(self) -> QSize:
         # width reserves space for little box + spacing (no text, or can adapt)
