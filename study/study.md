@@ -1,6 +1,5 @@
 # port from RLG for pynnlib_gui
 
-Accordion
 IndeterminateProgressIndicator
 
 - correct QCombobox:
@@ -17,11 +16,13 @@ IndeterminateProgressIndicator
 - HButton (icon)
     * use an internal check state: rewrite
 
+- scrollbar in PlainText Area
+
 
 # Later
-Scrollbar
 ProgressIndicator
 Tooltip
+Accordion
 
 
 

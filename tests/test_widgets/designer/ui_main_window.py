@@ -18,8 +18,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCheckBox,
     QComboBox, QDoubleSpinBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPlainTextEdit, QPushButton, QRadioButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QVBoxLayout, QWidget)
+    QPlainTextEdit, QPushButton, QRadioButton, QScrollBar,
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+    QWidget)
 
 from hwidgets import (
     HButton,
@@ -31,6 +32,7 @@ from hwidgets import (
     HLineEdit,
     HPlainTextEdit,
     HRadioButton,
+    HScrollBar,
     HDivider,
     HSwitch,
     HTitle1,
@@ -41,7 +43,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1358, 819)
+        MainWindow.resize(1414, 813)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -51,10 +53,19 @@ class Ui_MainWindow(object):
         self.q_frame.setObjectName(u"q_frame")
         self.q_frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.q_frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout = QVBoxLayout(self.q_frame)
-        self.verticalLayout.setSpacing(12)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(18, 18, 18, 18)
+        self.q_widgets_main_layout = QHBoxLayout(self.q_frame)
+        self.q_widgets_main_layout.setSpacing(9)
+        self.q_widgets_main_layout.setObjectName(u"q_widgets_main_layout")
+        self.q_widgets_main_layout.setContentsMargins(12, 18, 18, 18)
+        self.q_line = QFrame(self.q_frame)
+        self.q_line.setObjectName(u"q_line")
+        self.q_line.setFrameShape(QFrame.Shape.HLine)
+        self.q_line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.q_widgets_main_layout.addWidget(self.q_line)
+
+        self.q_widgets_sub_layout = QVBoxLayout()
+        self.q_widgets_sub_layout.setObjectName(u"q_widgets_sub_layout")
         self.q_combobox_layout = QVBoxLayout()
         self.q_combobox_layout.setObjectName(u"q_combobox_layout")
         self.q_combobox_rw = QComboBox(self.q_frame)
@@ -76,7 +87,7 @@ class Ui_MainWindow(object):
         self.q_combobox_layout.addWidget(self.q_combobox_disabled)
 
 
-        self.verticalLayout.addLayout(self.q_combobox_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_combobox_layout)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
@@ -117,7 +128,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
@@ -134,7 +145,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addWidget(self.q_label_disabled)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_7)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_7)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
@@ -172,7 +183,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addItem(self.horizontalSpacer_4)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_5)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_5)
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
@@ -203,7 +214,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_9.addWidget(self.q_text_button_checked_disabled)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_9)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_9)
 
         self.q_button_layout = QHBoxLayout()
         self.q_button_layout.setObjectName(u"q_button_layout")
@@ -261,7 +272,7 @@ class Ui_MainWindow(object):
         self.q_button_layout.addItem(self.q_button_spacer)
 
 
-        self.verticalLayout.addLayout(self.q_button_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_button_layout)
 
         self.q_groupbox_layout = QHBoxLayout()
         self.q_groupbox_layout.setObjectName(u"q_groupbox_layout")
@@ -292,7 +303,7 @@ class Ui_MainWindow(object):
         self.q_groupbox_layout.addWidget(self.q_groupbox_disabled)
 
 
-        self.verticalLayout.addLayout(self.q_groupbox_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_groupbox_layout)
 
         self.htextedit_layout_2 = QVBoxLayout()
         self.htextedit_layout_2.setObjectName(u"htextedit_layout_2")
@@ -323,7 +334,7 @@ class Ui_MainWindow(object):
         self.htextedit_layout_2.addWidget(self.q_lineedit_disabled)
 
 
-        self.verticalLayout.addLayout(self.htextedit_layout_2)
+        self.q_widgets_sub_layout.addLayout(self.htextedit_layout_2)
 
         self.q_plaintextedit_layout = QHBoxLayout()
         self.q_plaintextedit_layout.setObjectName(u"q_plaintextedit_layout")
@@ -365,7 +376,7 @@ class Ui_MainWindow(object):
         self.q_plaintextedit_layout.addItem(self.horizontalSpacer_5)
 
 
-        self.verticalLayout.addLayout(self.q_plaintextedit_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_plaintextedit_layout)
 
         self.q_spinbox_layout = QHBoxLayout()
         self.q_spinbox_layout.setObjectName(u"q_spinbox_layout")
@@ -434,24 +445,26 @@ class Ui_MainWindow(object):
         self.q_spinbox_layout.addWidget(self.q_doublespinbox_disabled)
 
 
-        self.verticalLayout.addLayout(self.q_spinbox_layout)
-
-        self.q_line = QFrame(self.q_frame)
-        self.q_line.setObjectName(u"q_line")
-        self.q_line.setFrameShape(QFrame.Shape.HLine)
-        self.q_line.setFrameShadow(QFrame.Shadow.Sunken)
-
-        self.verticalLayout.addWidget(self.q_line)
+        self.q_widgets_sub_layout.addLayout(self.q_spinbox_layout)
 
         self.horizontalLayout_11 = QHBoxLayout()
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
-        self.horizontalLayout_11.setContentsMargins(-1, -1, -1, 24)
+        self.horizontalLayout_11.setContentsMargins(-1, -1, -1, 60)
 
-        self.verticalLayout.addLayout(self.horizontalLayout_11)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_11)
 
         self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout.addItem(self.verticalSpacer)
+        self.q_widgets_sub_layout.addItem(self.verticalSpacer)
+
+
+        self.q_widgets_main_layout.addLayout(self.q_widgets_sub_layout)
+
+        self.q_vertical_scrollbar = QScrollBar(self.q_frame)
+        self.q_vertical_scrollbar.setObjectName(u"q_vertical_scrollbar")
+        self.q_vertical_scrollbar.setOrientation(Qt.Orientation.Vertical)
+
+        self.q_widgets_main_layout.addWidget(self.q_vertical_scrollbar)
 
 
         self.horizontalLayout.addWidget(self.q_frame)
@@ -460,10 +473,18 @@ class Ui_MainWindow(object):
         self.h_frame.setObjectName(u"h_frame")
         self.h_frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.h_frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.h_frame)
-        self.verticalLayout_2.setSpacing(12)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(18, 18, 18, 18)
+        self.horizontalLayout_10 = QHBoxLayout(self.h_frame)
+        self.horizontalLayout_10.setSpacing(12)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(18, 18, 18, 18)
+        self.h_vertical_scrollbar = HScrollBar(self.h_frame, hstyle=hstyle)
+        self.h_vertical_scrollbar.setObjectName(u"h_vertical_scrollbar")
+        self.h_vertical_scrollbar.setOrientation(Qt.Orientation.Vertical)
+
+        self.horizontalLayout_10.addWidget(self.h_vertical_scrollbar)
+
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.h_combobox_layout = QVBoxLayout()
         self.h_combobox_layout.setObjectName(u"h_combobox_layout")
         self.h_combobox_rw = HComboBox(self.h_frame, hstyle=hstyle)
@@ -485,7 +506,7 @@ class Ui_MainWindow(object):
         self.h_combobox_layout.addWidget(self.h_combobox_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.h_combobox_layout)
+        self.verticalLayout.addLayout(self.h_combobox_layout)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -526,7 +547,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
@@ -543,7 +564,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.addWidget(self.h_label_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
+        self.verticalLayout.addLayout(self.horizontalLayout_6)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -606,7 +627,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addWidget(self.h_switch_disabled_checked)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+        self.verticalLayout.addLayout(self.horizontalLayout_4)
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
@@ -637,7 +658,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_8.addWidget(self.h_text_button_disabled_checked)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_8)
+        self.verticalLayout.addLayout(self.horizontalLayout_8)
 
         self.h_button_layout = QHBoxLayout()
         self.h_button_layout.setObjectName(u"h_button_layout")
@@ -690,7 +711,7 @@ class Ui_MainWindow(object):
         self.h_button_layout.addItem(self.h_button_spacer)
 
 
-        self.verticalLayout_2.addLayout(self.h_button_layout)
+        self.verticalLayout.addLayout(self.h_button_layout)
 
         self.h_groupbox_layout = QHBoxLayout()
         self.h_groupbox_layout.setObjectName(u"h_groupbox_layout")
@@ -720,7 +741,7 @@ class Ui_MainWindow(object):
         self.h_groupbox_layout.addWidget(self.h_groupbox_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.h_groupbox_layout)
+        self.verticalLayout.addLayout(self.h_groupbox_layout)
 
         self.htextedit_layout = QVBoxLayout()
         self.htextedit_layout.setObjectName(u"htextedit_layout")
@@ -751,7 +772,7 @@ class Ui_MainWindow(object):
         self.htextedit_layout.addWidget(self.h_lineedit_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.htextedit_layout)
+        self.verticalLayout.addLayout(self.htextedit_layout)
 
         self.h_plaintextedit_layout = QHBoxLayout()
         self.h_plaintextedit_layout.setObjectName(u"h_plaintextedit_layout")
@@ -793,7 +814,7 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_layout.addItem(self.horizontalSpacer_6)
 
 
-        self.verticalLayout_2.addLayout(self.h_plaintextedit_layout)
+        self.verticalLayout.addLayout(self.h_plaintextedit_layout)
 
         self.h_spinbox_layout = QHBoxLayout()
         self.h_spinbox_layout.setObjectName(u"h_spinbox_layout")
@@ -862,14 +883,14 @@ class Ui_MainWindow(object):
         self.h_spinbox_layout.addWidget(self.h_doublespinbox_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.h_spinbox_layout)
+        self.verticalLayout.addLayout(self.h_spinbox_layout)
 
         self.h_divider = HDivider(self.h_frame, hstyle=hstyle)
         self.h_divider.setObjectName(u"h_divider")
         self.h_divider.setFrameShape(QFrame.Shape.HLine)
         self.h_divider.setFrameShadow(QFrame.Shadow.Sunken)
 
-        self.verticalLayout_2.addWidget(self.h_divider)
+        self.verticalLayout.addWidget(self.h_divider)
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
@@ -885,11 +906,14 @@ class Ui_MainWindow(object):
         self.verticalLayout_3.addWidget(self.h_title1_2)
 
 
-        self.verticalLayout_2.addLayout(self.verticalLayout_3)
+        self.verticalLayout.addLayout(self.verticalLayout_3)
 
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_2.addItem(self.verticalSpacer_2)
+        self.verticalLayout.addItem(self.verticalSpacer_2)
+
+
+        self.horizontalLayout_10.addLayout(self.verticalLayout)
 
 
         self.horizontalLayout.addWidget(self.h_frame)
@@ -1000,6 +1024,6 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
         self.h_title1.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle1 widget without icon", None))
-        self.h_title1_2.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle1 with icon", None))
+        self.h_title1_2.setText("")
     # retranslateUi
 
