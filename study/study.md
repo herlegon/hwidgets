@@ -1,7 +1,6 @@
 # port from RLG for pynnlib_gui
 
 Accordion
-Title_1
 IndeterminateProgressIndicator
 
 - correct QCombobox:

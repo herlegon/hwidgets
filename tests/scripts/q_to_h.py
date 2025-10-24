@@ -36,6 +36,7 @@ if __name__ == "__main__":
     WIDGET_NAME_MAP = {
         "h_divider": "HDivider",
         "h_switch": "HSwitch",
+        "h_title1": "HTitle1"
     }
 
 

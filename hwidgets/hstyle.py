@@ -39,6 +39,30 @@ def load_png_icon(filename: str, color: str) -> QPixmap:
     return QPixmap(qimage)
 
 
+# def png_to_pixmap(filename: str, color: str, w: int = 24) -> QPixmap:
+#     filepath = os.path.join(TITLE_BAR_ICON_PATH, filename)
+#     if not os.path.exists(filepath):
+#         raise ValueError(f"image {filepath} does not exist")
+#     qimage: QImage = QImage(filepath)
+#     color = QColor(color)
+
+#     painter: QPainter = QPainter()
+#     painter.begin(qimage)
+#     painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+#     painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
+#     painter.setBrush(color)
+#     painter.setPen(color)
+#     painter.drawRect(qimage.rect())
+#     painter.end()
+#     pixmap = QPixmap(qimage)
+#     # if pixmap.width() != w:
+#     #     return pixmap.scaled(
+#     #             w,
+#     #             w,
+#     #             aspectMode=Qt.AspectRatioMode.KeepAspectRatio,
+#     #             # mode=Qt.TransformationMode.SmoothTransformation
+#     #         )
+#     return pixmap
 
 
 
@@ -197,5 +221,7 @@ TRACK_MARGIN = (TRACK_HEIGHT - HANDLE_RADIUS) // 2
 TRACK_HEIGHT = TRACK_MARGIN * 2 + HANDLE_RADIUS
 
 
-
+TITLE_1_HEIGHT = COMBOBOX_HEIGHT
+TITLE_1_FONT_SIZE = 14
+TITLE_1_BOLD = True
 

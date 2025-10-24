@@ -33,6 +33,7 @@ from hwidgets import (
     HRadioButton,
     HDivider,
     HSwitch,
+    HTitle1,
     HStyle,
 )
 
@@ -441,6 +442,12 @@ class Ui_MainWindow(object):
         self.q_line.setFrameShadow(QFrame.Shadow.Sunken)
 
         self.verticalLayout.addWidget(self.q_line)
+
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.horizontalLayout_11.setContentsMargins(-1, -1, -1, 24)
+
+        self.verticalLayout.addLayout(self.horizontalLayout_11)
 
         self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -864,6 +871,22 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_2.addWidget(self.h_divider)
 
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.h_title1 = HTitle1(self.h_frame, hstyle=hstyle)
+        self.h_title1.setObjectName(u"h_title1")
+
+        self.verticalLayout_3.addWidget(self.h_title1)
+
+        self.h_title1_2 = HTitle1(self.h_frame, hstyle=hstyle)
+        self.h_title1_2.setObjectName(u"h_title1_2")
+        self.h_title1_2.setPixmap(QPixmap(u"../../hwidgets/icons/gpu.png"))
+
+        self.verticalLayout_3.addWidget(self.h_title1_2)
+
+
+        self.verticalLayout_2.addLayout(self.verticalLayout_3)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_2.addItem(self.verticalSpacer_2)
@@ -976,5 +999,7 @@ class Ui_MainWindow(object):
 "", None))
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
+        self.h_title1.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle1 widget without icon", None))
+        self.h_title1_2.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle1 with icon", None))
     # retranslateUi
 

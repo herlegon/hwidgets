@@ -13,6 +13,8 @@ from .hplaintextedit import HPlainTextEdit
 from .hradiobutton import HRadioButton
 from .hspinbox import HDoubleSpinBox #, HSpinBox
 from .hswitch import HSwitch
+from .htitles import HTitle1
+
 
 __all__ = [
     "hlogger",
@@ -30,5 +32,5 @@ __all__ = [
     "HRadioButton",
     # "HSpinBox",
     "HSwitch",
-
+    "HTitle1",
 ]
