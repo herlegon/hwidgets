@@ -1,5 +1,5 @@
 QLabel {
-    background-color: $widget_bgd;
+    background-color: transparent;
     color: $text_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;

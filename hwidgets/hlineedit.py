@@ -94,6 +94,8 @@ class HLineEdit(QLineEdit):
     ) -> None:
         super().__init__(parent)
 
+        self.setCursor(Qt.CursorShape.ArrowCursor)
+
         self.setFixedHeight(COMBOBOX_HEIGHT)
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 

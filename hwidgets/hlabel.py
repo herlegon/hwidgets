@@ -42,6 +42,7 @@ class HLabel(QLabel):
         selectedText: str | None = None,
     ) -> None:
         super().__init__(parent)
+        self.setCursor(Qt.CursorShape.ArrowCursor)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         if text is not None:
             self.setText(text)
@@ -53,7 +54,8 @@ class HLabel(QLabel):
 
         qss_template = Template(load_qss(f"hlabel.css"))
         qss = qss_template.substitute(
-            widget_bgd=f"{hstyle.window_bgd}",
+            window_bgd=f"{hstyle.window_bgd}",
+            widget_bgd=f"{hstyle.widget_bgd}",
             text_color=f"{hstyle.text_color}",
             radius=f"{COMBOBOX_RADIUS}px",
             disabled_text=f"{hstyle.disabled_text}",

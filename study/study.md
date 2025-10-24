@@ -1,8 +1,5 @@
 # port from RLG for pynnlib_gui
 
-Icon button (directory)
-Accordion
-Title_1
 IndeterminateProgressIndicator
 
 - correct QCombobox:
@@ -12,15 +9,20 @@ IndeterminateProgressIndicator
     - edition doesn't work because it should put the cursor and not open the popup
 
 
-- be sure to have arrow and not hands on widgets
-- hbutton: bottom margin different from windows/linux
+- HLineEdit
+    * when enter key: validate current text, deselect (and focus next widget)
+    * escape: undo modifications, deselect and focus out
+
+- HButton (icon)
+    * use an internal check state: rewrite
+
+- scrollbar in PlainText Area
 
 
 # Later
-Scrollbar
 ProgressIndicator
-Switch
 Tooltip
+Accordion
 
 
 

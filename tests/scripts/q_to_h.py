@@ -31,7 +31,13 @@ if __name__ == "__main__":
         "QLineEdit": "HLineEdit",
         "QPlainTextEdit": "HPlainTextEdit",
         "QDoubleSpinBox": "HDoubleSpinBox",
-        "QSpinBox": "HSpinBox",
+        "QScrollBar": "HScrollBar",
+    }
+
+    WIDGET_NAME_MAP = {
+        "h_divider": "HDivider",
+        "h_switch": "HSwitch",
+        "h_title1": "HTitle1"
     }
 
 
@@ -44,12 +50,10 @@ if __name__ == "__main__":
             return f"from PySide6.QtWidgets import ({', '.join(filtered)})"
         text = qt_import_re.sub(_clean_qt_imports, text)
 
-
     # Add imports
     hwidgets_to_import = sorted(WIDGET_MAP.values())
+    hwidgets_to_import.extend(sorted(WIDGET_NAME_MAP.values()))
     hwidgets_to_import.append("HStyle")
-
-    pprint(hwidgets_to_import)
 
     grouped_import = "from hwidgets import (\n" + "".join(
         [f"    {cls},\n" for cls in hwidgets_to_import]
@@ -70,17 +74,17 @@ if __name__ == "__main__":
         text,
     )
 
-    # Replace only widgets whose variable name DOES NOT start with 'q'
-    # for q_widget, h_widget in WIDGET_MAP.items():
-    #     pattern = rf"(\s*self\.\w+\s*=\s*){q_widget}\((.*?)\)"
-    #     replacement = rf"\1{h_widget}(\2, hstyle=hstyle)"
-    #     text = re.sub(pattern, replacement, text)
+    # Replace by widget name
+    for widget_name, h_widget in WIDGET_NAME_MAP.items():
+        pattern = rf"(\s*self\.{widget_name}\w*\s*=\s*)(?!q)\w*\((.*?)\)"
+        replacement = rf"\1{h_widget}(\2, hstyle=hstyle)"
+        text = re.sub(pattern, replacement, text)
 
+    # Replace by class name
     for q_widget, h_widget in WIDGET_MAP.items():
         pattern = rf"(\s*self\.(?!q)\w*\s*=\s*){q_widget}\((.*?)\)"
         replacement = rf"\1{h_widget}(\2, hstyle=hstyle)"
         text = re.sub(pattern, replacement, text)
 
-
     Path(ui_path).write_text(text, encoding="utf-8")
-    print("✅ Patched")
+    print("✅ Replaced QWidgets by HWidgets")

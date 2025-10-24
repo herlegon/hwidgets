@@ -18,8 +18,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCheckBox,
     QComboBox, QDoubleSpinBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPlainTextEdit, QPushButton, QRadioButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QVBoxLayout, QWidget)
+    QPlainTextEdit, QPushButton, QRadioButton, QScrollBar,
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+    QWidget)
 
 from hwidgets import (
     HButton,
@@ -31,7 +32,10 @@ from hwidgets import (
     HLineEdit,
     HPlainTextEdit,
     HRadioButton,
-    HSpinBox,
+    HScrollBar,
+    HDivider,
+    HSwitch,
+    HTitle1,
     HStyle,
 )
 
@@ -39,7 +43,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1358, 766)
+        MainWindow.resize(1414, 813)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -49,10 +53,19 @@ class Ui_MainWindow(object):
         self.q_frame.setObjectName(u"q_frame")
         self.q_frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.q_frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout = QVBoxLayout(self.q_frame)
-        self.verticalLayout.setSpacing(12)
-        self.verticalLayout.setObjectName(u"verticalLayout")
-        self.verticalLayout.setContentsMargins(18, 18, 18, 18)
+        self.q_widgets_main_layout = QHBoxLayout(self.q_frame)
+        self.q_widgets_main_layout.setSpacing(9)
+        self.q_widgets_main_layout.setObjectName(u"q_widgets_main_layout")
+        self.q_widgets_main_layout.setContentsMargins(12, 18, 18, 18)
+        self.q_line = QFrame(self.q_frame)
+        self.q_line.setObjectName(u"q_line")
+        self.q_line.setFrameShape(QFrame.Shape.HLine)
+        self.q_line.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.q_widgets_main_layout.addWidget(self.q_line)
+
+        self.q_widgets_sub_layout = QVBoxLayout()
+        self.q_widgets_sub_layout.setObjectName(u"q_widgets_sub_layout")
         self.q_combobox_layout = QVBoxLayout()
         self.q_combobox_layout.setObjectName(u"q_combobox_layout")
         self.q_combobox_rw = QComboBox(self.q_frame)
@@ -74,7 +87,7 @@ class Ui_MainWindow(object):
         self.q_combobox_layout.addWidget(self.q_combobox_disabled)
 
 
-        self.verticalLayout.addLayout(self.q_combobox_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_combobox_layout)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
@@ -115,7 +128,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_3.addItem(self.horizontalSpacer_2)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_3)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
@@ -132,7 +145,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_7.addWidget(self.q_label_disabled)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_7)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_7)
 
         self.horizontalLayout_5 = QHBoxLayout()
         self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
@@ -170,38 +183,96 @@ class Ui_MainWindow(object):
         self.horizontalLayout_5.addItem(self.horizontalSpacer_4)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_5)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_5)
 
         self.horizontalLayout_9 = QHBoxLayout()
         self.horizontalLayout_9.setObjectName(u"horizontalLayout_9")
+        self.q_text_button = QPushButton(self.q_frame)
+        self.q_text_button.setObjectName(u"q_text_button")
+
+        self.horizontalLayout_9.addWidget(self.q_text_button)
+
+        self.q_text_button_checked = QPushButton(self.q_frame)
+        self.q_text_button_checked.setObjectName(u"q_text_button_checked")
+        self.q_text_button_checked.setCheckable(True)
+        self.q_text_button_checked.setChecked(True)
+
+        self.horizontalLayout_9.addWidget(self.q_text_button_checked)
+
+        self.q_text_button_disabled = QPushButton(self.q_frame)
+        self.q_text_button_disabled.setObjectName(u"q_text_button_disabled")
+        self.q_text_button_disabled.setEnabled(False)
+
+        self.horizontalLayout_9.addWidget(self.q_text_button_disabled)
+
+        self.q_text_button_checked_disabled = QPushButton(self.q_frame)
+        self.q_text_button_checked_disabled.setObjectName(u"q_text_button_checked_disabled")
+        self.q_text_button_checked_disabled.setEnabled(False)
+        self.q_text_button_checked_disabled.setCheckable(True)
+        self.q_text_button_checked_disabled.setChecked(True)
+
+        self.horizontalLayout_9.addWidget(self.q_text_button_checked_disabled)
+
+
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_9)
+
+        self.q_button_layout = QHBoxLayout()
+        self.q_button_layout.setObjectName(u"q_button_layout")
         self.q_button = QPushButton(self.q_frame)
         self.q_button.setObjectName(u"q_button")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.q_button.sizePolicy().hasHeightForWidth())
+        self.q_button.setSizePolicy(sizePolicy)
+        self.q_button.setMaximumSize(QSize(24, 24))
+        icon = QIcon()
+        icon.addFile(u"../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.q_button.setIcon(icon)
+        self.q_button.setIconSize(QSize(24, 24))
+        self.q_button.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button)
+        self.q_button_layout.addWidget(self.q_button)
 
         self.q_button_checked = QPushButton(self.q_frame)
         self.q_button_checked.setObjectName(u"q_button_checked")
+        self.q_button_checked.setMaximumSize(QSize(24, 24))
+        self.q_button_checked.setIcon(icon)
+        self.q_button_checked.setIconSize(QSize(24, 24))
         self.q_button_checked.setCheckable(True)
         self.q_button_checked.setChecked(True)
+        self.q_button_checked.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button_checked)
+        self.q_button_layout.addWidget(self.q_button_checked)
 
         self.q_button_disabled = QPushButton(self.q_frame)
         self.q_button_disabled.setObjectName(u"q_button_disabled")
         self.q_button_disabled.setEnabled(False)
+        self.q_button_disabled.setMaximumSize(QSize(24, 24))
+        self.q_button_disabled.setIcon(icon)
+        self.q_button_disabled.setIconSize(QSize(24, 24))
+        self.q_button_disabled.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button_disabled)
+        self.q_button_layout.addWidget(self.q_button_disabled)
 
-        self.q_button_checked_disabled = QPushButton(self.q_frame)
-        self.q_button_checked_disabled.setObjectName(u"q_button_checked_disabled")
-        self.q_button_checked_disabled.setEnabled(False)
-        self.q_button_checked_disabled.setCheckable(True)
-        self.q_button_checked_disabled.setChecked(True)
+        self.q_button_disabled_checked = QPushButton(self.q_frame)
+        self.q_button_disabled_checked.setObjectName(u"q_button_disabled_checked")
+        self.q_button_disabled_checked.setEnabled(False)
+        self.q_button_disabled_checked.setMaximumSize(QSize(24, 24))
+        self.q_button_disabled_checked.setIcon(icon)
+        self.q_button_disabled_checked.setIconSize(QSize(24, 24))
+        self.q_button_disabled_checked.setCheckable(True)
+        self.q_button_disabled_checked.setChecked(True)
+        self.q_button_disabled_checked.setFlat(True)
 
-        self.horizontalLayout_9.addWidget(self.q_button_checked_disabled)
+        self.q_button_layout.addWidget(self.q_button_disabled_checked)
+
+        self.q_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.q_button_layout.addItem(self.q_button_spacer)
 
 
-        self.verticalLayout.addLayout(self.horizontalLayout_9)
+        self.q_widgets_sub_layout.addLayout(self.q_button_layout)
 
         self.q_groupbox_layout = QHBoxLayout()
         self.q_groupbox_layout.setObjectName(u"q_groupbox_layout")
@@ -219,6 +290,7 @@ class Ui_MainWindow(object):
 
         self.q_groupbox_disabled = QGroupBox(self.q_frame)
         self.q_groupbox_disabled.setObjectName(u"q_groupbox_disabled")
+        self.q_groupbox_disabled.setEnabled(False)
         self.q_groupbox_disabled.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
         self.verticalLayout_7 = QVBoxLayout(self.q_groupbox_disabled)
         self.verticalLayout_7.setObjectName(u"verticalLayout_7")
@@ -231,7 +303,7 @@ class Ui_MainWindow(object):
         self.q_groupbox_layout.addWidget(self.q_groupbox_disabled)
 
 
-        self.verticalLayout.addLayout(self.q_groupbox_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_groupbox_layout)
 
         self.htextedit_layout_2 = QVBoxLayout()
         self.htextedit_layout_2.setObjectName(u"htextedit_layout_2")
@@ -262,7 +334,7 @@ class Ui_MainWindow(object):
         self.htextedit_layout_2.addWidget(self.q_lineedit_disabled)
 
 
-        self.verticalLayout.addLayout(self.htextedit_layout_2)
+        self.q_widgets_sub_layout.addLayout(self.htextedit_layout_2)
 
         self.q_plaintextedit_layout = QHBoxLayout()
         self.q_plaintextedit_layout.setObjectName(u"q_plaintextedit_layout")
@@ -304,7 +376,7 @@ class Ui_MainWindow(object):
         self.q_plaintextedit_layout.addItem(self.horizontalSpacer_5)
 
 
-        self.verticalLayout.addLayout(self.q_plaintextedit_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_plaintextedit_layout)
 
         self.q_spinbox_layout = QHBoxLayout()
         self.q_spinbox_layout.setObjectName(u"q_spinbox_layout")
@@ -373,11 +445,26 @@ class Ui_MainWindow(object):
         self.q_spinbox_layout.addWidget(self.q_doublespinbox_disabled)
 
 
-        self.verticalLayout.addLayout(self.q_spinbox_layout)
+        self.q_widgets_sub_layout.addLayout(self.q_spinbox_layout)
+
+        self.horizontalLayout_11 = QHBoxLayout()
+        self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
+        self.horizontalLayout_11.setContentsMargins(-1, -1, -1, 60)
+
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_11)
 
         self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout.addItem(self.verticalSpacer)
+        self.q_widgets_sub_layout.addItem(self.verticalSpacer)
+
+
+        self.q_widgets_main_layout.addLayout(self.q_widgets_sub_layout)
+
+        self.q_vertical_scrollbar = QScrollBar(self.q_frame)
+        self.q_vertical_scrollbar.setObjectName(u"q_vertical_scrollbar")
+        self.q_vertical_scrollbar.setOrientation(Qt.Orientation.Vertical)
+
+        self.q_widgets_main_layout.addWidget(self.q_vertical_scrollbar)
 
 
         self.horizontalLayout.addWidget(self.q_frame)
@@ -386,10 +473,18 @@ class Ui_MainWindow(object):
         self.h_frame.setObjectName(u"h_frame")
         self.h_frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.h_frame.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.h_frame)
-        self.verticalLayout_2.setSpacing(12)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.verticalLayout_2.setContentsMargins(18, 18, 18, 18)
+        self.horizontalLayout_10 = QHBoxLayout(self.h_frame)
+        self.horizontalLayout_10.setSpacing(12)
+        self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
+        self.horizontalLayout_10.setContentsMargins(18, 18, 18, 18)
+        self.h_vertical_scrollbar = HScrollBar(self.h_frame, hstyle=hstyle)
+        self.h_vertical_scrollbar.setObjectName(u"h_vertical_scrollbar")
+        self.h_vertical_scrollbar.setOrientation(Qt.Orientation.Vertical)
+
+        self.horizontalLayout_10.addWidget(self.h_vertical_scrollbar)
+
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.h_combobox_layout = QVBoxLayout()
         self.h_combobox_layout.setObjectName(u"h_combobox_layout")
         self.h_combobox_rw = HComboBox(self.h_frame, hstyle=hstyle)
@@ -411,7 +506,7 @@ class Ui_MainWindow(object):
         self.h_combobox_layout.addWidget(self.h_combobox_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.h_combobox_layout)
+        self.verticalLayout.addLayout(self.h_combobox_layout)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
@@ -452,7 +547,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2.addItem(self.horizontalSpacer)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_2)
+        self.verticalLayout.addLayout(self.horizontalLayout_2)
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
@@ -469,7 +564,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_6.addWidget(self.h_label_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_6)
+        self.verticalLayout.addLayout(self.horizontalLayout_6)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -506,39 +601,117 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
 
+        self.h_switch = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch.setObjectName(u"h_switch")
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
+        self.horizontalLayout_4.addWidget(self.h_switch)
+
+        self.h_switch_checked = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_checked.setObjectName(u"h_switch_checked")
+        self.h_switch_checked.setChecked(True)
+
+        self.horizontalLayout_4.addWidget(self.h_switch_checked)
+
+        self.h_switch_disabled = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_disabled.setObjectName(u"h_switch_disabled")
+        self.h_switch_disabled.setEnabled(False)
+        self.h_switch_disabled.setCheckable(True)
+
+        self.horizontalLayout_4.addWidget(self.h_switch_disabled)
+
+        self.h_switch_disabled_checked = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_disabled_checked.setObjectName(u"h_switch_disabled_checked")
+        self.h_switch_disabled_checked.setEnabled(False)
+        self.h_switch_disabled_checked.setChecked(True)
+
+        self.horizontalLayout_4.addWidget(self.h_switch_disabled_checked)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_4)
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
+        self.h_text_button = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button.setObjectName(u"h_text_button")
+
+        self.horizontalLayout_8.addWidget(self.h_text_button)
+
+        self.h_text_button_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_checked.setObjectName(u"h_text_button_checked")
+        self.h_text_button_checked.setCheckable(True)
+        self.h_text_button_checked.setChecked(True)
+
+        self.horizontalLayout_8.addWidget(self.h_text_button_checked)
+
+        self.h_text_button_disabled = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_disabled.setObjectName(u"h_text_button_disabled")
+        self.h_text_button_disabled.setEnabled(False)
+
+        self.horizontalLayout_8.addWidget(self.h_text_button_disabled)
+
+        self.h_text_button_disabled_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_disabled_checked.setObjectName(u"h_text_button_disabled_checked")
+        self.h_text_button_disabled_checked.setEnabled(False)
+        self.h_text_button_disabled_checked.setCheckable(True)
+        self.h_text_button_disabled_checked.setChecked(True)
+
+        self.horizontalLayout_8.addWidget(self.h_text_button_disabled_checked)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_8)
+
+        self.h_button_layout = QHBoxLayout()
+        self.h_button_layout.setObjectName(u"h_button_layout")
         self.h_button = HButton(self.h_frame, hstyle=hstyle)
         self.h_button.setObjectName(u"h_button")
+        sizePolicy.setHeightForWidth(self.h_button.sizePolicy().hasHeightForWidth())
+        self.h_button.setSizePolicy(sizePolicy)
+        self.h_button.setMaximumSize(QSize(24, 24))
+        self.h_button.setIcon(icon)
+        self.h_button.setIconSize(QSize(24, 24))
+        self.h_button.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button)
+        self.h_button_layout.addWidget(self.h_button)
 
         self.h_button_checked = HButton(self.h_frame, hstyle=hstyle)
         self.h_button_checked.setObjectName(u"h_button_checked")
+        self.h_button_checked.setMaximumSize(QSize(24, 24))
+        self.h_button_checked.setIcon(icon)
+        self.h_button_checked.setIconSize(QSize(24, 24))
         self.h_button_checked.setCheckable(True)
         self.h_button_checked.setChecked(True)
+        self.h_button_checked.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button_checked)
+        self.h_button_layout.addWidget(self.h_button_checked)
 
         self.h_button_disabled = HButton(self.h_frame, hstyle=hstyle)
         self.h_button_disabled.setObjectName(u"h_button_disabled")
         self.h_button_disabled.setEnabled(False)
+        self.h_button_disabled.setMaximumSize(QSize(24, 24))
+        self.h_button_disabled.setIcon(icon)
+        self.h_button_disabled.setIconSize(QSize(24, 24))
+        self.h_button_disabled.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button_disabled)
+        self.h_button_layout.addWidget(self.h_button_disabled)
 
-        self.h_button_checked_disabled = HButton(self.h_frame, hstyle=hstyle)
-        self.h_button_checked_disabled.setObjectName(u"h_button_checked_disabled")
-        self.h_button_checked_disabled.setEnabled(False)
-        self.h_button_checked_disabled.setCheckable(True)
-        self.h_button_checked_disabled.setChecked(True)
+        self.h_button_disabled_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_button_disabled_checked.setObjectName(u"h_button_disabled_checked")
+        self.h_button_disabled_checked.setEnabled(False)
+        self.h_button_disabled_checked.setMaximumSize(QSize(24, 24))
+        self.h_button_disabled_checked.setIcon(icon)
+        self.h_button_disabled_checked.setIconSize(QSize(24, 24))
+        self.h_button_disabled_checked.setCheckable(True)
+        self.h_button_disabled_checked.setChecked(True)
+        self.h_button_disabled_checked.setFlat(True)
 
-        self.horizontalLayout_8.addWidget(self.h_button_checked_disabled)
+        self.h_button_layout.addWidget(self.h_button_disabled_checked)
+
+        self.h_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.h_button_layout.addItem(self.h_button_spacer)
 
 
-        self.verticalLayout_2.addLayout(self.horizontalLayout_8)
+        self.verticalLayout.addLayout(self.h_button_layout)
 
         self.h_groupbox_layout = QHBoxLayout()
         self.h_groupbox_layout.setObjectName(u"h_groupbox_layout")
@@ -556,6 +729,7 @@ class Ui_MainWindow(object):
 
         self.h_groupbox_disabled = HGroupBox(self.h_frame, hstyle=hstyle)
         self.h_groupbox_disabled.setObjectName(u"h_groupbox_disabled")
+        self.h_groupbox_disabled.setEnabled(False)
         self.verticalLayout_4 = QVBoxLayout(self.h_groupbox_disabled)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
         self.h_label_groupbox_2 = HLabel(self.h_groupbox_disabled, hstyle=hstyle)
@@ -567,7 +741,7 @@ class Ui_MainWindow(object):
         self.h_groupbox_layout.addWidget(self.h_groupbox_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.h_groupbox_layout)
+        self.verticalLayout.addLayout(self.h_groupbox_layout)
 
         self.htextedit_layout = QVBoxLayout()
         self.htextedit_layout.setObjectName(u"htextedit_layout")
@@ -598,7 +772,7 @@ class Ui_MainWindow(object):
         self.htextedit_layout.addWidget(self.h_lineedit_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.htextedit_layout)
+        self.verticalLayout.addLayout(self.htextedit_layout)
 
         self.h_plaintextedit_layout = QHBoxLayout()
         self.h_plaintextedit_layout.setObjectName(u"h_plaintextedit_layout")
@@ -640,7 +814,7 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_layout.addItem(self.horizontalSpacer_6)
 
 
-        self.verticalLayout_2.addLayout(self.h_plaintextedit_layout)
+        self.verticalLayout.addLayout(self.h_plaintextedit_layout)
 
         self.h_spinbox_layout = QHBoxLayout()
         self.h_spinbox_layout.setObjectName(u"h_spinbox_layout")
@@ -709,11 +883,37 @@ class Ui_MainWindow(object):
         self.h_spinbox_layout.addWidget(self.h_doublespinbox_disabled)
 
 
-        self.verticalLayout_2.addLayout(self.h_spinbox_layout)
+        self.verticalLayout.addLayout(self.h_spinbox_layout)
+
+        self.h_divider = HDivider(self.h_frame, hstyle=hstyle)
+        self.h_divider.setObjectName(u"h_divider")
+        self.h_divider.setFrameShape(QFrame.Shape.HLine)
+        self.h_divider.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.verticalLayout.addWidget(self.h_divider)
+
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.h_title1 = HTitle1(self.h_frame, hstyle=hstyle)
+        self.h_title1.setObjectName(u"h_title1")
+
+        self.verticalLayout_3.addWidget(self.h_title1)
+
+        self.h_title1_2 = HTitle1(self.h_frame, hstyle=hstyle)
+        self.h_title1_2.setObjectName(u"h_title1_2")
+        self.h_title1_2.setPixmap(QPixmap(u"../../hwidgets/icons/gpu.png"))
+
+        self.verticalLayout_3.addWidget(self.h_title1_2)
+
+
+        self.verticalLayout.addLayout(self.verticalLayout_3)
 
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_2.addItem(self.verticalSpacer_2)
+        self.verticalLayout.addItem(self.verticalSpacer_2)
+
+
+        self.horizontalLayout_10.addLayout(self.verticalLayout)
 
 
         self.horizontalLayout.addWidget(self.h_frame)
@@ -738,10 +938,14 @@ class Ui_MainWindow(object):
         self.q_checkbox_clicked.setText("")
         self.q_checkbox_disabled.setText("")
         self.q_checkbox_disabled_clicked.setText("")
-        self.q_button.setText(QCoreApplication.translate("MainWindow", u"QButton", None))
-        self.q_button_checked.setText(QCoreApplication.translate("MainWindow", u"QButton (C)", None))
-        self.q_button_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (D)", None))
-        self.q_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (C/D)", None))
+        self.q_text_button.setText(QCoreApplication.translate("MainWindow", u"QButton", None))
+        self.q_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"QButton (C)", None))
+        self.q_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (D)", None))
+        self.q_text_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"QButton (C/D)", None))
+        self.q_button.setText("")
+        self.q_button_checked.setText("")
+        self.q_button_disabled.setText("")
+        self.q_button_disabled_checked.setText("")
         self.q_groupbox.setTitle(QCoreApplication.translate("MainWindow", u"QGroupBox", None))
         self.q_label_groupbox.setText(QCoreApplication.translate("MainWindow", u"A Qlabel", None))
         self.q_groupbox_disabled.setTitle(QCoreApplication.translate("MainWindow", u"QGroupBox (disabled)", None))
@@ -780,10 +984,18 @@ class Ui_MainWindow(object):
         self.h_checkbox_clicked.setText("")
         self.h_checkbox_disabled.setText("")
         self.h_checkbox_disabled_clicked.setText("")
-        self.h_button.setText(QCoreApplication.translate("MainWindow", u"HButton", None))
-        self.h_button_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C)", None))
-        self.h_button_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (D)", None))
-        self.h_button_checked_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (C/D)", None))
+        self.h_switch.setText("")
+        self.h_switch_checked.setText("")
+        self.h_switch_disabled.setText("")
+        self.h_switch_disabled_checked.setText("")
+        self.h_text_button.setText(QCoreApplication.translate("MainWindow", u"HButton", None))
+        self.h_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C)", None))
+        self.h_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"HButton (D)", None))
+        self.h_text_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"HButton (C/D)", None))
+        self.h_button.setText("")
+        self.h_button_checked.setText("")
+        self.h_button_disabled.setText("")
+        self.h_button_disabled_checked.setText("")
         self.h_groupbox.setTitle(QCoreApplication.translate("MainWindow", u"HGroupBox", None))
         self.h_label_groupbox_1.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
         self.h_groupbox_disabled.setTitle(QCoreApplication.translate("MainWindow", u"HGroupBox (disabled)", None))
@@ -811,5 +1023,7 @@ class Ui_MainWindow(object):
 "", None))
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
+        self.h_title1.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle1 widget without icon", None))
+        self.h_title1_2.setText("")
     # retranslateUi
 

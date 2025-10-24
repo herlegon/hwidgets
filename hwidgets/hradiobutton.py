@@ -58,11 +58,11 @@ class HRadioButton(QRadioButton):
     ) -> None:
 
         super().__init__(parent)
-        self.setCursor(Qt.CursorShape.ArrowCursor)
         self._hover = False
-        self.setMouseTracking(True)
 
-        # Colors
+        self.radius = RADIO_RADIUS
+        self.border_width = RADIO_BORDER_WIDTH
+
         self.brush_default: QBrush = QBrush(hstyle.widget_bgd)
         self.border_color = QColor(hstyle.widget_bgd)
 
@@ -73,9 +73,8 @@ class HRadioButton(QRadioButton):
 
         self.checked_color = QColor(hstyle.selection_bgd)
 
-        # Dimensions
-        self.radius = RADIO_RADIUS
-        self.border_width = RADIO_BORDER_WIDTH
+        self.setCursor(Qt.CursorShape.ArrowCursor)
+        self.setMouseTracking(True)
 
 
     def sizeHint(self):

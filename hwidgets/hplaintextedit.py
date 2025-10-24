@@ -15,6 +15,8 @@ from PySide6.QtWidgets import (
     QPlainTextEdit,
 )
 
+from hwidgets.hscrollbar import HScrollBar
+
 from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
@@ -33,6 +35,7 @@ class _ClearButton(QPushButton):
         hstyle: HStyle
     ):
         super().__init__(parent)
+        self.setCursor(Qt.CursorShape.ArrowCursor)
 
         self.setFixedSize(QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT))
         self.setFlat(True)
@@ -100,6 +103,18 @@ class HPlainTextEdit(QPlainTextEdit):
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
+
+
+        # Replace the default scrollbars
+        self.vbar = HScrollBar(self, hstyle=hstyle)
+        self.vbar.setOrientation(Qt.Orientation.Vertical)
+        self.setVerticalScrollBar(self.vbar)
+
+        # hbar = HScrollBar(self)
+        # self.setHorizontalScrollBar(hbar)
+
+
 
         self.main_layout = QHBoxLayout(self)
         self.main_layout.setContentsMargins(0,0,0,0)
@@ -160,6 +175,7 @@ class HPlainTextEdit(QPlainTextEdit):
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
+        # self.vbar.updateGeometryRelativeToParent()
         self.update_clear_button_position()
 
 
