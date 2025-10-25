@@ -111,8 +111,8 @@ class HStyle:
     widget_bgd: str = "#4F4D53"
     text_color: str = "#d4d4d8"
     # selection_bgd: str = "#454546"
-    # hover_bgd: str = "#66636D"
-    hover_bgd: str ="#77f"
+    hover_bgd: str = "#66636D"
+    # hover_bgd: str ="#77f"
     selection_bgd: str = "#5545bd"
 
     selected_text: str = "#5545bd"
@@ -121,6 +121,8 @@ class HStyle:
     border: str = "#505053" # same as hover
 
     checked: str = "#6a5bcc"
+
+    selected: str = "#77f"
 
 
     # checkbox
@@ -156,7 +158,7 @@ COMBOBOX_RADIUS = 8
 # COMBOBOX_PADDING = 10
 
 
-RADIO_RADIUS = COMBOBOX_RADIUS # change to COMBOBOX_RADIUS ?
+RADIO_RADIUS = COMBOBOX_RADIUS + 1 # change to COMBOBOX_RADIUS ?
 RADIO_BORDER_WIDTH = 2
 
 

@@ -1,33 +1,16 @@
+from .logger import hlogger
+from .hstyle import (
+    RADIO_BORDER_WIDTH,
+    RADIO_RADIUS,
+    HStyle,
+)
 
-from dataclasses import dataclass
-import os
-from pathlib import Path
-from pprint import pprint
-import sys
-import time
-from typing import Any, Literal, Optional, Sequence
 from PySide6.QtCore import (
-    QCoreApplication,
-    QDate,
-    QDateTime,
-    QLocale,
-    QMetaObject,
-    QObject,
-    QPoint,
-    QRect,
     QRectF,
-    Signal,
     QSize,
-    QTime,
-    QUrl,
-    QObject,
     Qt,
-    QAbstractItemModel,
-    QPersistentModelIndex,
     QSize,
     QEvent,
-    QTimer,
-
 )
 from PySide6.QtGui import (
     QBrush,
@@ -42,9 +25,6 @@ from PySide6.QtWidgets import (
 )
 from string import Template
 
-from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
-from .logger import hlogger
-from .hstyle import RADIO_BORDER_WIDTH, RADIO_RADIUS, HStyle
 
 
 class HRadioButton(QRadioButton):
@@ -73,6 +53,7 @@ class HRadioButton(QRadioButton):
 
         self.checked_color = QColor(hstyle.selection_bgd)
 
+        self.hstyle = hstyle
         self.setCursor(Qt.CursorShape.ArrowCursor)
         self.setMouseTracking(True)
 
@@ -94,7 +75,8 @@ class HRadioButton(QRadioButton):
 
     def enterEvent(self, event: QEvent):
         hlogger.debug(f"{self.__class__}: over")
-        self._hover = True
+        if self.isEnabled():
+            self._hover = True
         self.update()
         super().enterEvent(event)
 
@@ -103,6 +85,13 @@ class HRadioButton(QRadioButton):
         hlogger.debug(f"{self.__class__}: clicked")
         if self._hover:
             self.click()
+        return super().mouseReleaseEvent(event)
+
+
+    def mousePressEvent(self, event: QMouseEvent) -> None:
+        hlogger.debug(f"{self.__class__}: pressed")
+        self._hover = False
+        self.click()
         return super().mouseReleaseEvent(event)
 
 
@@ -159,10 +148,10 @@ class HRadioButton(QRadioButton):
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
         # Determine border color
-        if not self.isEnabled():
-            border_color = self.disabled_color
-        else:
+        if self.isEnabled():
             border_color = self.border_color
+        else:
+            border_color = self.disabled_color
 
         # Draw the outer circle
         outer_rect = QRectF(
@@ -174,15 +163,21 @@ class HRadioButton(QRadioButton):
         pen = QPen(border_color, self.border_width)
         painter.setPen(pen)
         brush = self.brush_default
-        if self.isEnabled() and not self.isChecked() and self._hover:
-            brush = self.brush_hover
-        else:
-            brush = self.brush_disabled
+        brush = self.brush_disabled
+        if self.isEnabled():
+            brush = QColor(self.hstyle.window_bgd)
+
+
         painter.setBrush(brush)
         painter.drawEllipse(outer_rect)
 
-        # Inner circle
+        if self._hover:
+            brush = QColor(self.hstyle.hover_bgd)
         if self.isChecked():
+            brush = QColor(self.checked_color)
+
+        # Inner circle
+        if self.isChecked() or self._hover:
             inner_radius = self.radius / 2 + 1
             inner_rect = QRectF(
                 outer_rect.center().x() - inner_radius,
@@ -190,9 +185,15 @@ class HRadioButton(QRadioButton):
                 inner_radius*2,
                 inner_radius*2
             )
-            painter.setBrush(QBrush(self.checked_color if self.isEnabled() else self.disabled_color))
+            if not self.isEnabled() and self.isChecked():
+                brush = self.disabled_color
+            elif self._hover:
+                brush = QColor(self.hstyle.hover_bgd)
+
+            painter.setBrush(QBrush(brush))
             painter.setPen(Qt.NoPen)
             painter.drawEllipse(inner_rect)
+
 
         painter.end()
 

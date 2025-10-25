@@ -20,3 +20,8 @@ QGroupBox::title {
     margin: 0px;
     padding-top: 0px $title_margins 1px $title_margins;
 }
+
+
+QGroupBox::title:disabled {
+    color: $disabled_text;
+}

@@ -40,8 +40,12 @@ class _ClearButton(QPushButton):
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        self.normal_icon = QIcon(load_png_icon("cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.text_color))
-        self.hover_icon = QIcon(load_png_icon("cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.enabled))
+        self.normal_icon = QIcon(load_png_icon(
+            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.text_color
+        ))
+        self.hover_icon = QIcon(load_png_icon(
+            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.selected
+        ))
         self.setIcon(self.normal_icon)
 
         qss_template = Template(load_qss("hlineedit_button.qss"))
@@ -49,6 +53,7 @@ class _ClearButton(QPushButton):
             radius=f"{COMBOBOX_RADIUS}px",
             hover_bgd=f"{hstyle.hover_bgd}",
             selection_bgd=f"{hstyle.selection_bgd}",
+            selected=f"{hstyle.selected}",
         )
         self.setStyleSheet(qss)
 
@@ -123,8 +128,9 @@ class HLineEdit(QLineEdit):
             disabled_bgd=f"{hstyle.disabled_bgd}",
             disabled_text=f"{hstyle.disabled_text}",
             padding_right=f"{COMBOBOX_RADIUS}px",
-            editing_border=f"{hstyle.checked}",
+            editing_border=f"{hstyle.selected}",
             selected_text=f"{hstyle.selected_text}",
+            selected=f"{hstyle.selected}",
         )
         self.setStyleSheet(qss)
 

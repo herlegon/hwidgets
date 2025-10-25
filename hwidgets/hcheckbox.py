@@ -40,8 +40,6 @@ class HCheckBox(QCheckBox):
         size: int = 16
         radius: int = 3
         border_width: int = 2
-        accent_color: str = "#422ca1"    # checked / accent
-        bg_color: str = "#2a2d32"       # unchecked background
         border_color: str = "#3a3d44"    # normal border
         disabled_color: str = "#4a4a4a"   # disabled tint
 
@@ -54,12 +52,13 @@ class HCheckBox(QCheckBox):
 
         # Colors (QColor objects for speed)
         self._accent = QColor(hstyle.widget_bgd)
-        self.checked = QColor(hstyle.text_color)
+        self.checked = QColor(hstyle.selected)
         self._bg = QColor(hstyle.widget_bgd)
         self._border = QColor(border_color)
         self._disabled = QColor(disabled_color)
         self._hover = False
         self._pressed = False
+        self.hstyle = hstyle
 
         # make widget small—sizeHint will be used by layouts
         self.setMinimumSize(self.sizeHint())
@@ -126,18 +125,21 @@ class HCheckBox(QCheckBox):
         box = QRectF(x, y, self._size, self._size)
 
         # choose colors depending on state
-        if not self.isEnabled():
-            border_col = self._disabled
-            fill_col = self._disabled
-            tick_color = self.checked.darker(140)
-        else:
-            border_col = self._accent if (self._hover and not self.isChecked()) else self._border
+        if self.isEnabled():
+            # border_col = self._accent if (self._hover and not self.isChecked()) else self._border
             # when checked we fill with accent, else background
-            fill_col = self._accent if self.isChecked() else self._bg
+            fill_col = QColor(self.hstyle.widget_bgd)
+            # self._accent if self.isChecked() else QColor(self.hstyle.disabled_bgd)
             tick_color = self.checked if self.isChecked() else QColor("transparent")
 
+        else:
+            border_col = self._disabled
+            fill_col = QColor(self.hstyle.widget_bgd)
+            tick_color = self.checked.darker(140)
+
+
         # draw outer rounded rect (background)
-        pen = QPen(border_col, self._border_width)
+        pen = QPen(fill_col, self._border_width)
         painter.setPen(pen)
         painter.setBrush(QBrush(fill_col))
         painter.drawRoundedRect(box, self._radius, self._radius)
@@ -165,14 +167,14 @@ class HCheckBox(QCheckBox):
             painter.drawPolyline(QPolygonF([p1, p2, p3]))
 
         # optionally draw focus rectangle or extra hover stroke
-        if self._hover and self.isEnabled(): # and not self.isChecked():
-            glow_pen = QPen(self._accent, 1.2)
-            glow_pen.setColor(self._accent.lighter(130))
-            painter.setPen(glow_pen)
-            # slight outer stroke to indicate hover
-            outer = QRectF(box.left()-1, box.top()-1, box.width()+2, box.height()+2)
-            painter.setBrush(Qt.NoBrush)
-            painter.drawRoundedRect(outer, self._radius+1, self._radius+1)
+        # if self._hover and self.isEnabled(): # and not self.isChecked():
+        #     glow_pen = QPen(self._accent, 1.2)
+        #     glow_pen.setColor(self._accent.lighter(130))
+        #     painter.setPen(glow_pen)
+        #     # slight outer stroke to indicate hover
+        #     outer = QRectF(box.left()-1, box.top()-1, box.width()+2, box.height()+2)
+        #     painter.setBrush(Qt.NoBrush)
+        #     painter.drawRoundedRect(outer, self._radius+1, self._radius+1)
 
         painter.end()
 

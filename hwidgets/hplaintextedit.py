@@ -57,7 +57,7 @@ class _ClearButton(QPushButton):
         ))
         self.hover_icon = QIcon(load_png_icon(
             "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
-            hstyle.hover_bgd
+            hstyle.selected
         ))
         self.setIcon(self.normal_icon)
 
@@ -260,7 +260,6 @@ class HPlainTextEdit(QPlainTextEdit):
 
         self.overlay_vbar = OverlayVScrollBar(
             self, corner_radius=COMBOBOX_RADIUS, width=COMBOBOX_RADIUS)
-        self.overlay_vbar.reposition_and_resize()
 
         # use QTimer to throttle updates for smoother scrolling
         self._update_timer = QTimer(self)
@@ -301,6 +300,7 @@ class HPlainTextEdit(QPlainTextEdit):
             padding_right=f"{COMBOBOX_RADIUS}px",
             editing_border=f"{hstyle.checked}",
             selected_text=f"{hstyle.selected_text}",
+            selected=f"{hstyle.selected}",
         )
         self.setStyleSheet(qss)
 
@@ -331,6 +331,7 @@ class HPlainTextEdit(QPlainTextEdit):
         # horitical_scrollbar.rangeChanged.connect(self.on_scrollbar_changed)
         # horitical_scrollbar.valueChanged.connect(self.on_scrollbar_changed)
 
+        self.overlay_vbar.leaveEvent(None)
         self.update_clear_button_position()
 
         # print(f"{__class__.__name__} Instanciated")

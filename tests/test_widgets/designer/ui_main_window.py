@@ -1025,6 +1025,6 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
         self.h_title1.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle1 widget without icon", None))
-        self.h_title1_2.setText("")
+        self.h_title1_2.setText(QCoreApplication.translate("MainWindow", u"This is a text with icon", None))
     # retranslateUi
 

@@ -252,6 +252,7 @@ class HCommonSpinBox:
             selection_bgd=f"{hstyle.selection_bgd}",
             margin_right=f"{COMBOBOX_RADIUS+12}px",
             button_width=f"{20}px",
+            selected=f"{hstyle.selected}"
         )
         self.setStyleSheet(qss)
 

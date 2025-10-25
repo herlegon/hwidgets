@@ -30,7 +30,7 @@ QPlainTextEdit:read-only:hover {
 
 QPlainTextEdit:focus {
     color: $text_color;
-    border: 1px solid $hover_bgd;
+    border: 1px solid $selected;
 
 }
 

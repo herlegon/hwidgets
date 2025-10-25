@@ -1539,7 +1539,7 @@ of vertical text
            <item>
             <widget class="QLabel" name="h_title1_2">
              <property name="text">
-              <string/>
+              <string>This is a text with icon</string>
              </property>
              <property name="pixmap">
               <pixmap>../../../hwidgets/icons/gpu.png</pixmap>

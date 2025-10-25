@@ -15,6 +15,7 @@ QDoubleSpinBox {
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
     min-width: 40px;
+    border: 1px solid $widget_bgd;
 }
 
 
@@ -22,16 +23,26 @@ QSpinBox:read-only:hover,
 QDoubleSpinBox:read-only:hover {
 /* QDoubleSpinBox:read-only { */
     background-color: $widget_bgd;
+    border: 1px solid $widget_bgd;
 }
 
 
 QSpinBox:disabled,
 QDoubleSpinBox:disabled {
     background-color: $disabled_bgd;
+    border: 1px solid $disabled_bgd;
 }
 
 
 HSpinBox[hover="true"],
 HDoubleSpinBox[hover="true"] {
     background-color: $hover_bgd;
+    border: 1px solid $hover_bgd;
+}
+
+
+QSpinBox:focus,
+QDoubleSpinBox:focus{
+    border: 1px solid $selected;
+
 }
