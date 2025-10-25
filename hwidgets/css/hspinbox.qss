@@ -4,6 +4,7 @@ QDoubleSpinBox {
 
     border-radius: $radius;
     margin: 0px;
+    /* margin-right: $margin_right; */
     padding: 0px $padding_right 2px 0px;
 
     selection-background-color: $selection_bgd;
@@ -13,6 +14,7 @@ QDoubleSpinBox {
     color: $text_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
+    min-width: 40px;
 }
 
 

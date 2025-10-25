@@ -14,7 +14,7 @@ from .hradiobutton import HRadioButton
 from .hscrollbar import (
     HScrollBar
 )
-from .hspinbox import HDoubleSpinBox #, HSpinBox
+from .hspinbox import HDoubleSpinBox, HSpinBox
 from .hswitch import HSwitch
 from .htitles import HTitle1
 
@@ -34,7 +34,7 @@ __all__ = [
     "HPlainTextEdit",
     "HRadioButton",
     "HScrollbar",
-    # "HSpinBox",
+    "HSpinBox",
     "HSwitch",
     "HTitle1",
 ]

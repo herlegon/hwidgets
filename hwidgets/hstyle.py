@@ -111,7 +111,8 @@ class HStyle:
     widget_bgd: str = "#4F4D53"
     text_color: str = "#d4d4d8"
     # selection_bgd: str = "#454546"
-    hover_bgd: str = "#66636D"
+    # hover_bgd: str = "#66636D"
+    hover_bgd: str ="#77f"
     selection_bgd: str = "#5545bd"
 
     selected_text: str = "#5545bd"

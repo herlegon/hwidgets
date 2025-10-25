@@ -8,14 +8,15 @@ QPlainTextEdit {
     font-size: 10pt;
 
     border: 1px solid $border_color;
-    border-radius: $radius;
+    border-radius: 12px;
 
     selection-background-color: $selected_text;
 
     padding-left: $radius;
     padding-bottom: 2px;
     padding-top: 0px;
-    padding-right: 4px;
+    padding-right: 12px;
+
 }
 
 
@@ -23,19 +24,19 @@ QPlainTextEdit:read-only,
 QPlainTextEdit:read-only:focus,
 QPlainTextEdit:read-only:hover {
     background-color: $widget_bgd;
-    border: 1px solid $border_color;
+    border: none;
 }
 
 
 QPlainTextEdit:focus {
     color: $text_color;
-    border: 1px solid $editing_border;
+    border: 1px solid $hover_bgd;
 
 }
 
-QPlainTextEdit:hover {
+/* QPlainTextEdit:hover {
     background-color: $hover_bgd;
-}
+} */
 
 
 QPlainTextEdit:disabled {

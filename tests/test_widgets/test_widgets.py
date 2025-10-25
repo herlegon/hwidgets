@@ -30,8 +30,8 @@ def main():
         hlogger.setLevel("DEBUG")
 
 
+    QApplication.setStyle("Fusion")
     application = QApplication(sys.argv)
-    # application.setStyle("Windows11")
     main_window = MainWindow()
     main_window.show()
     sys.exit(application.exec())

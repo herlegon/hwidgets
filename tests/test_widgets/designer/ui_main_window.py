@@ -33,6 +33,7 @@ from hwidgets import (
     HPlainTextEdit,
     HRadioButton,
     HScrollBar,
+    HSpinBox,
     HDivider,
     HSwitch,
     HTitle1,
@@ -791,7 +792,7 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_editable_scrollbars = HPlainTextEdit(self.h_frame, hstyle=hstyle)
         self.h_plaintextedit_editable_scrollbars.setObjectName(u"h_plaintextedit_editable_scrollbars")
         self.h_plaintextedit_editable_scrollbars.setMaximumSize(QSize(150, 150))
-        self.h_plaintextedit_editable_scrollbars.setLineWrapMode(QPlainTextEdit.LineWrapMode.NoWrap)
+        self.h_plaintextedit_editable_scrollbars.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
 
         self.h_plaintextedit_layout.addWidget(self.h_plaintextedit_editable_scrollbars)
 

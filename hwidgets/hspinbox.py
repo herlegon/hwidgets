@@ -245,11 +245,12 @@ class HCommonSpinBox:
             border_color=f"{hstyle.border}",
             disabled_bgd=f"{hstyle.disabled_bgd}",
             disabled_text=f"{hstyle.disabled_text}",
-            padding_right=f"{self.height() // 2 + 2}px",
+            padding_right=f"{COMBOBOX_RADIUS + 12}px",
             editing_border=f"{hstyle.checked}",
             selected_text=f"{hstyle.selected_text}",
             padding=f"{COMBOBOX_RADIUS}px",
             selection_bgd=f"{hstyle.selection_bgd}",
+            margin_right=f"{COMBOBOX_RADIUS+12}px",
             button_width=f"{20}px",
         )
         self.setStyleSheet(qss)

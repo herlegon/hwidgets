@@ -1348,7 +1348,7 @@ with test
               </size>
              </property>
              <property name="lineWrapMode">
-              <enum>QPlainTextEdit::LineWrapMode::NoWrap</enum>
+              <enum>QPlainTextEdit::LineWrapMode::WidgetWidth</enum>
              </property>
              <property name="plainText">
               <string>editable
@@ -1572,9 +1572,9 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_3"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>
