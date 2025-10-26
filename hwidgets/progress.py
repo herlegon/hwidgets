@@ -1,15 +1,15 @@
-import math
-import time
-from typing import Final
+from .hstyle import (
+    HStyle,
+    TRACK_Y,
+    CAP_OFFSET,
+    TRACK_THICKNESS,
+)
+
 from PySide6.QtCore import (
-    QEasingCurve,
     Qt,
     QPropertyAnimation,
     Property,
-    QParallelAnimationGroup,
-    QSequentialAnimationGroup,
     QPoint,
-    QPointF,
 )
 from PySide6.QtGui import (
     QPaintEvent,
@@ -21,43 +21,6 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QWidget,
 )
-
-from .hstyle import (
-    TRACK_MARGIN,
-    TRACK_Y,
-    CAP_OFFSET,
-    TRACK_THICKNESS,
-    HStyle,
-)
-
-
-# Indeterminate linear indicator transition specs
-
-# Total duration for one cycle
-LinearAnimationDuration = 1800
-
-# Duration of the head and tail animations for both lines
-FirstLineHeadDuration = 750
-FirstLineTailDuration = 850
-SecondLineHeadDuration = 567
-SecondLineTailDuration = 533
-
-# Delay before the start of the head and tail animations for both lines
-FirstLineHeadDelay = 0
-FirstLineTailDelay = 333
-SecondLineHeadDelay = 1000
-SecondLineTailDelay = 1267
-
-# FirstLineHeadEasing = CubicBezierEasing(0.2, 0, 0.8, 1)
-# FirstLineTailEasing = CubicBezierEasing(0.4, 0, 1, 1)
-# SecondLineHeadEasing = CubicBezierEasing(0, 0, 0.65, 1)
-# SecondLineTailEasing = CubicBezierEasing(0.1, 0, 0.45, 1)
-
-FirstLineHeadEasing = ((0.2, 0), (0.8, 1))
-FirstLineTailEasing = ((0.4, 0), (1, 1))
-SecondLineHeadEasing = ((0, 0), (0.65, 1))
-SecondLineTailEasing = ((0.1, 0), (0.45, 1))
-
 
 
 
@@ -81,24 +44,27 @@ class HProgress(QProgressBar):
         textDirection: QProgressBar.Direction | None = None,
         format: str | None = None,
     ):
-
         super().__init__(parent)
-        self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
-        self._progress = 0
 
         self.setFixedHeight(TRACK_THICKNESS)
-        self.set_colors(
-            hstyle.widget_bgd,
-            hstyle.selected
-        )
+
+        self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
+        self.set_colors(track=hstyle.widget_bgd, bar=hstyle.selected)
+
+        self._progress = 0
+        self.setMinimum(0)
+        self.setMaximum(100)
+        self.setValue(0)
 
         self.animation = QPropertyAnimation(self, b'progress', self)
         self.animation.setDuration(200)
 
-        self.setMinimum(0)
-        self.setMaximum(100)
-        self.setValue(0)
         self.valueChanged.connect(self.value_changed)
+
+
+    def set_colors(self, track: str, bar: str) -> None:
+        self.track_color: QColor = QColor(track)
+        self.bar_color: QColor = QColor(bar)
 
 
     @Property(int)
@@ -119,14 +85,10 @@ class HProgress(QProgressBar):
         super().setValue(value)
 
 
-    def set_colors(self, track: str, active: str) -> None:
-        self.track_color = QColor(track)
-        self.active_color = QColor(active)
-
-
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QPainter(self)
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
+
         track_x0 = CAP_OFFSET
         track_x1 = float(self.width() - CAP_OFFSET)
         track_length = track_x1 - track_x0
@@ -136,7 +98,7 @@ class HProgress(QProgressBar):
         pen = QPen()
         pen.setWidth(TRACK_THICKNESS)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-        pen.setColor(self.active_color)
+        pen.setColor(self.bar_color)
         painter.setPen(pen)
 
         # Active
@@ -148,14 +110,11 @@ class HProgress(QProgressBar):
             pen.setColor(self.track_color)
             painter.setPen(pen)
             painter.drawLine(
-                x,
-                TRACK_Y,
-                track_x1 - int(TRACK_THICKNESS/2),
-                TRACK_Y
+                x, TRACK_Y, track_x1 - int(TRACK_THICKNESS/2), TRACK_Y
             )
 
         pen.setWidth(TRACK_THICKNESS)
-        pen.setColor(self.active_color)
+        pen.setColor(self.bar_color)
         painter.setPen(pen)
         painter.drawPoint(QPoint(track_x1, TRACK_Y))
         painter.drawPoint(QPoint(track_x0, TRACK_Y))

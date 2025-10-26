@@ -1,6 +1,10 @@
-import math
-import time
-from typing import Final
+from .hstyle import (
+    HStyle,
+    TRACK_Y,
+    CAP_OFFSET,
+    TRACK_THICKNESS,
+)
+
 from PySide6.QtCore import (
     QEasingCurve,
     Qt,
@@ -8,29 +12,17 @@ from PySide6.QtCore import (
     Property,
     QParallelAnimationGroup,
     QSequentialAnimationGroup,
-    QPoint,
     QPointF,
-    QRect,
 )
 from PySide6.QtGui import (
     QPaintEvent,
     QPainter,
     QColor,
     QPen,
-    QBrush,
 )
 from PySide6.QtWidgets import (
     QProgressBar,
     QWidget,
-)
-
-from hutils import darkgrey, red, yellow
-
-from .hstyle import (
-    HStyle,
-    TRACK_Y,
-    CAP_OFFSET,
-    TRACK_THICKNESS,
 )
 
 
@@ -58,15 +50,12 @@ class HIndeterminateProgress(QProgressBar):
     ):
 
         super().__init__(parent)
-        is_m2 = False
+        self.setFixedHeight(TRACK_THICKNESS)
+        self.setMinimumWidth(CAP_OFFSET + TRACK_THICKNESS)
+
+        self.set_colors(track=hstyle.widget_bgd, bar=hstyle.selected)
 
         self._progress = 0
-        self.hstyle = hstyle
-
-        self.setFixedHeight(TRACK_THICKNESS)
-        # self.setFixedWidth(240+16*2)
-        self.setFixedWidth(512)
-        self.set_colors('green', 'red')
         self.setMinimum(0)
         self.setMaximum(1.0)
         self.setValue(0)
@@ -131,7 +120,6 @@ class HIndeterminateProgress(QProgressBar):
             FirstLineTailEasing = ((0.4, 0), (1, 1))
             SecondLineHeadEasing = ((0, 0), (0.65, 1))
             SecondLineTailEasing = ((0.1, 0), (0.45, 1))
-
 
         curve_flh = QEasingCurve(QEasingCurve.Type.BezierSpline)
         curve_flh.addCubicBezierSegment(
@@ -212,26 +200,17 @@ class HIndeterminateProgress(QProgressBar):
         self.animations.finished.connect(self.animations_finished)
 
 
+    def set_colors(self, track: str, bar: str) -> None:
+        self.track_color: QColor = QColor(track)
+        self.bar_color: QColor = QColor(bar)
+
+
     def animations_finished(self):
         self._flh = 0.
         self._flt = 0.
         self._slh = 0.
         self._slt = 0.
-        # self.animation_flh.setCurrentTime(0)
-        # self.animation_flt.setCurrentTime(0)
-        # self.animation_slh.setCurrentTime(0)
-        # self.animation_slt.setCurrentTime(0)
         self.animations.start()
-
-    # def timerEvent(self, event: QTimerEvent) -> None:
-    #     self.animations[self.timer_no].stop()
-    #     self.timer_no = (self.timer_no + 1) % 4
-    #     animation = self.animations[self.timer_no]
-    #     animation.setEndValue(1.)
-    #     animation.start()
-    #     msec = self.timer_start + self.timings[self.timer_no] - int(time.time() * 1000)
-    #     print(f"start animation no. {self.timer_no}, {msec}ms")
-    #     self.timer.start(msec, self)
 
 
     def stop(self) -> bool:
@@ -284,11 +263,6 @@ class HIndeterminateProgress(QProgressBar):
         self.repaint()
 
 
-    def set_colors(self, track: str, active: str) -> None:
-        self.track_color = QColor(track)
-        self.active_color = QColor(active)
-
-
     # def enterEvent(self, event):
     #     self.animations.pause()
     #     return super().enterEvent(event)
@@ -328,20 +302,18 @@ class HIndeterminateProgress(QProgressBar):
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
 
         # Track
-        pen.setColor(QColor(self.hstyle.widget_bgd))
+        pen.setColor(self.track_color)
         painter.setPen(pen)
         painter.drawLine(track_x0, TRACK_Y, track_x1, TRACK_Y)
 
         # Progress bars
         if not all([x in (0, 1)  for x in [self.flh, self.flt, self.slh, self.slt]]):
-            pen.setColor(QColor(self.hstyle.selected))
+            pen.setColor(self.bar_color)
             painter.setPen(pen)
 
             # 1st progress bar
             track_start = track_x0 + x_h1
             if track_start < track_x1:
-                pen.setColor(QColor(self.hstyle.selected))
-                painter.setPen(pen)
                 painter.drawLine(track_start, TRACK_Y, track_x1, TRACK_Y)
 
             if x_h2 <= track_x0:

@@ -1,15 +1,15 @@
+from .hstyle import (
+    HStyle,
+    TRACK_Y,
+    CAP_OFFSET,
+    TRACK_THICKNESS,
+)
+
 import math
-import time
-from typing import Final
 from PySide6.QtCore import (
-    QEasingCurve,
     Qt,
-    QPropertyAnimation,
     Property,
-    QParallelAnimationGroup,
-    QSequentialAnimationGroup,
-    QPoint,
-    QPointF,
+    QRect,
 )
 from PySide6.QtGui import (
     QPaintEvent,
@@ -21,17 +21,6 @@ from PySide6.QtWidgets import (
     QProgressBar,
     QWidget,
 )
-
-from .hstyle import (
-    TRACK_MARGIN,
-    TRACK_Y,
-    CAP_OFFSET,
-    TRACK_THICKNESS,
-)
-
-
-
-
 
 
 # internal object CircularProgressIndicatorTokens {
@@ -50,7 +39,7 @@ from .hstyle import (
 # Diameter of the indicator circle
 CircularProgressIndicatorTokens_Size = 48
 CircularProgressIndicatorTokens_ActiveIndicatorWidth = 4
-CircularIndicatorDiameter = CircularProgressIndicatorTokens_Size - CircularProgressIndicatorTokens_ActiveIndicatorWidth * 2
+indicator_diameter = CircularProgressIndicatorTokens_Size - CircularProgressIndicatorTokens_ActiveIndicatorWidth * 2
 
 # The animation comprises of 5 rotations around the circle forming a 5 pointed star.
 # After the 5th rotation, we are back at the beginning of the circle.
@@ -88,18 +77,39 @@ size_width = 4
 
 
 
-class IndeterminateCircularProgress(QProgressBar):
+class HIndeterminateCircularProgress(QProgressBar):
     """A circular progress bar from 0 to 100
     """
 
-    def __init__(self, parent: QWidget, is_m2: bool = False):
+    def __init__(
+        self,
+        /,
+        parent: QWidget | None = None,
+        *,
+        hstyle: HStyle,
+        is_m2: bool = False,
+        minimum: int | None = None,
+        maximum: int | None = None,
+        text: str | None = None,
+        value: int | None = None,
+        alignment: Qt.AlignmentFlag | None = None,
+        textVisible: bool | None = None,
+        orientation: Qt.Orientation | None = None,
+        invertedAppearance: bool | None = None,
+        textDirection: QProgressBar.Direction | None = None,
+        format: str | None = None,
+    ):
         super().__init__(parent)
         # self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
         self._progress = 0
 
-        self.setFixedHeight(4)
-        self.setFixedWidth(240+16*2)
-        self.set_colors('green', 'red')
+        width = 240 + 16 * 2
+        self.setFixedHeight(width)
+        self.setFixedWidth(width)
+        self.set_colors(
+            track=hstyle.widget_bgd,
+            bar=hstyle.selected,
+        )
         self.setMinimum(0)
         self.setMaximum(1.0)
         self.setValue(0)
@@ -110,42 +120,48 @@ class IndeterminateCircularProgress(QProgressBar):
         self._currentRotation = 0
 
 
-    def set_colors(self, track: str, active: str) -> None:
+    def set_colors(self, track: str, bar: str) -> None:
         self.track_color = QColor(track)
-        self.active_color = QColor(active)
-
+        self.active_color = QColor(bar)
 
 
     @Property(float)
     def startAngle(self) -> float:
         return self._startAngle
 
+
     @startAngle.setter
     def startAngle(self, value: float) -> None:
         self._startAngle = value
         self.repaint()
 
+
     @Property(float)
     def endAngle(self) -> float:
         return self._endAngle
+
 
     @endAngle.setter
     def endAngle(self, value: float) -> None:
         self._endAngle = value
         self.repaint()
 
+
     @Property(float)
     def baseRotation(self) -> float:
         return self._baseRotation
+
 
     @baseRotation.setter
     def baseRotation(self, value: float) -> None:
         self._baseRotation = value
         self.repaint()
 
+
     @Property(float)
     def currentRotation(self) -> float:
         return self._currentRotation
+
 
     @currentRotation.setter
     def currentRotation(self, value: float) -> None:
@@ -153,7 +169,8 @@ class IndeterminateCircularProgress(QProgressBar):
         self.repaint()
 
 
-    def drawCircularIndicator(self,
+    def drawCircularIndicator(
+        self,
         painter: QPainter,
         startAngle: float,
         sweep: float,
@@ -176,42 +193,58 @@ class IndeterminateCircularProgress(QProgressBar):
         # )
 
 
-    def drawIndeterminateCircularIndicator(self,
-        startAngle: float,
+    def drawIndeterminateCircularIndicator(
+        self,
+        painter: QPainter,
+        start_angle: float,
         sweep: float,
     ):
         # Length of arc is angle * radius
         # Angle (radians) is length / radius
         # The length should be the same as the stroke width for calculating the min angle
-        strokeCapOffset = float(180.0 / math.pi) * (TRACK_THICKNESS / (CircularIndicatorDiameter / 2.)) / 2.
-
+        stroke_cap_offset = (
+            float(180.0 / math.pi)
+            * (TRACK_THICKNESS / (indicator_diameter / 2.)) / 2.
+        )
 
         # Adding a stroke cap draws half the stroke width behind the start point, so we want to
         # move it forward by that amount so the arc visually appears in the correct place
-        adjustedStartAngle = startAngle + strokeCapOffset
+        adjusted_start_angle = start_angle + stroke_cap_offset
 
         # When the start and end angles are in the same place, we still want to draw a small sweep, so
         # the stroke caps get added on both ends and we draw the correct minimum length arc
-        adjustedSweep = max(sweep, 0.1)
+        adjusted_sweep = max(sweep, 0.1)
 
-        self.drawCircularIndicator(adjustedStartAngle, adjustedSweep)
+        self.drawCircularIndicator(painter, adjusted_start_angle, adjusted_sweep)
 
 
 
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QPainter(self)
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
-
-
         pen = QPen()
+
+        # for debug
+        pen.setWidth(1)
+        pen.setColor(QColor("white"))
+        painter.setPen(pen)
+        painter.drawRect(0, 0, self.width(), self.height())
+
         pen.setWidth(TRACK_THICKNESS)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-        pen.setWidth(TRACK_THICKNESS)
-
-        pen.setColor(QColor(80,240,80))
+        pen.setColor(self.track_color)
         painter.setPen(pen)
-
-        # self.drawCircularIndicatorTrack(trackColor, stroke)
+        # 1/16th of a degree
+        painter.drawArc(
+            QRect(
+                CAP_OFFSET,
+                CAP_OFFSET,
+                self.width() - 2 * CAP_OFFSET,
+                self.width() - 2 * CAP_OFFSET
+            ),
+            0,
+            360 * 16,
+        )
 
         currentRotationAngleOffset = (self.currentRotation * RotationAngleOffset) % 360
 
@@ -221,6 +254,7 @@ class IndeterminateCircularProgress(QProgressBar):
         # Offset by the constant offset and the per rotation offset
         offset = StartAngleOffset + currentRotationAngleOffset + self.baseRotation
         self.drawIndeterminateCircularIndicator(
+            painter,
             self.startAngle + offset,
             sweep,
         )

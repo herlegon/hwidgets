@@ -41,6 +41,7 @@ if __name__ == "__main__":
         "h_title1": "HTitle1",
         "h_progress": "HProgress",
         "h_indeterminate_progress": "HIndeterminateProgress",
+        "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
     }
 
 
