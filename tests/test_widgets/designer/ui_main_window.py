@@ -38,6 +38,7 @@ from hwidgets import (
     HIndeterminateCircularProgress,
     HIndeterminateProgress,
     HProgress,
+    HRadialProgress,
     HSwitch,
     HTitle1,
     HStyle,
@@ -961,26 +962,33 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_14 = QHBoxLayout()
         self.horizontalLayout_14.setObjectName(u"horizontalLayout_14")
-        self.h_indeterminate_circular_progress = HIndeterminateCircularProgress(self.h_frame, hstyle=hstyle)
-        self.h_indeterminate_circular_progress.setObjectName(u"h_indeterminate_circular_progress")
-        self.h_indeterminate_circular_progress.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_indeterminate_circular_progress.setValue(24)
+        self.h_radial_progress_1 = HRadialProgress(self.h_frame, hstyle=hstyle)
+        self.h_radial_progress_1.setObjectName(u"h_radial_progress_1")
+        self.h_radial_progress_1.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_1.setValue(24)
 
-        self.horizontalLayout_14.addWidget(self.h_indeterminate_circular_progress)
+        self.horizontalLayout_14.addWidget(self.h_radial_progress_1)
 
-        self.h_indeterminate_circular_progress_2 = HIndeterminateCircularProgress(self.h_frame, hstyle=hstyle)
-        self.h_indeterminate_circular_progress_2.setObjectName(u"h_indeterminate_circular_progress_2")
-        self.h_indeterminate_circular_progress_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_indeterminate_circular_progress_2.setValue(50)
+        self.h_radial_progress_2 = HRadialProgress(self.h_frame, hstyle=hstyle)
+        self.h_radial_progress_2.setObjectName(u"h_radial_progress_2")
+        self.h_radial_progress_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_2.setValue(51)
 
-        self.horizontalLayout_14.addWidget(self.h_indeterminate_circular_progress_2)
+        self.horizontalLayout_14.addWidget(self.h_radial_progress_2)
 
-        self.h_indeterminate_circular_progress_3 = HIndeterminateCircularProgress(self.h_frame, hstyle=hstyle)
-        self.h_indeterminate_circular_progress_3.setObjectName(u"h_indeterminate_circular_progress_3")
-        self.h_indeterminate_circular_progress_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_indeterminate_circular_progress_3.setValue(75)
+        self.h_radial_progress_3 = HRadialProgress(self.h_frame, hstyle=hstyle)
+        self.h_radial_progress_3.setObjectName(u"h_radial_progress_3")
+        self.h_radial_progress_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_3.setValue(76)
 
-        self.horizontalLayout_14.addWidget(self.h_indeterminate_circular_progress_3)
+        self.horizontalLayout_14.addWidget(self.h_radial_progress_3)
+
+        self.h_radial_progress_4 = HRadialProgress(self.h_frame, hstyle=hstyle)
+        self.h_radial_progress_4.setObjectName(u"h_radial_progress_4")
+        self.h_radial_progress_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_4.setValue(100)
+
+        self.horizontalLayout_14.addWidget(self.h_radial_progress_4)
 
         self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 

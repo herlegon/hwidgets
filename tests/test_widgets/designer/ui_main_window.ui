@@ -1616,7 +1616,7 @@ of vertical text
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_14">
            <item>
-            <widget class="QProgressBar" name="h_indeterminate_circular_progress">
+            <widget class="QProgressBar" name="h_radial_progress_1">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(231, 253, 255);</string>
              </property>
@@ -1626,22 +1626,32 @@ of vertical text
             </widget>
            </item>
            <item>
-            <widget class="QProgressBar" name="h_indeterminate_circular_progress_2">
+            <widget class="QProgressBar" name="h_radial_progress_2">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(231, 253, 255);</string>
              </property>
              <property name="value">
-              <number>50</number>
+              <number>51</number>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QProgressBar" name="h_indeterminate_circular_progress_3">
+            <widget class="QProgressBar" name="h_radial_progress_3">
              <property name="styleSheet">
               <string notr="true">background-color: rgb(231, 253, 255);</string>
              </property>
              <property name="value">
-              <number>75</number>
+              <number>76</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_4">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>100</number>
              </property>
             </widget>
            </item>
@@ -1685,8 +1695,8 @@ of vertical text
  <connections/>
  <buttongroups>
   <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup"/>
  </buttongroups>
 </ui>

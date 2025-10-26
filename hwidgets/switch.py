@@ -43,7 +43,7 @@ class HSwitch(QCheckBox):
         self.track_height = TRACK_HEIGHT - 4
         self.track_radius = self.track_height // 2
         self.handle_radius = HANDLE_RADIUS
-        self.margin = TRACK_MARGIN - 2
+        self.margin = TRACK_MARGIN - 1
 
         self.setFixedSize(track_width, self.track_height)
         self.handle_position_off = self.margin
@@ -83,7 +83,8 @@ class HSwitch(QCheckBox):
         self.blockSignals(True)
         super().setChecked(checked)
         self.handle_position = (
-            self.handle_position_on if checked else self.handle_position_off)
+            self.handle_position_on if checked else self.handle_position_off
+        )
         self.blockSignals(False)
 
 
@@ -126,17 +127,19 @@ class HSwitch(QCheckBox):
             track_brush = self.disabled_track
             handle_brush = self.disabled_handle
 
-        p = QPainter(self)
-        p.setRenderHint(QPainter.RenderHint.Antialiasing)
-        p.setPen(Qt.PenStyle.NoPen)
-        p.setBrush(track_brush)
-        p.drawRoundedRect(
-            0, 0, self.width(), self.height(), self.track_radius, self.track_radius)
-        p.setBrush(QColor(handle_brush))
-        p.drawEllipse(
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(track_brush)
+        painter.drawRoundedRect(
+            0, 0, self.width(), self.height(),
+            self.track_radius, self.track_radius
+        )
+        painter.setBrush(QColor(handle_brush))
+        painter.drawEllipse(
             self.handle_position,
             self.margin,
             self.handle_radius,
             self.handle_radius
         )
-        p.end()
+        painter.end()

@@ -46,8 +46,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             "Right-click won't work"
         ]
 
-
-
         self.h_frame.setStyleSheet(f"""
             background-color: {hrl_style.window_bgd};
             color: {hrl_style.text_color};
@@ -65,6 +63,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.h_combobox_disabled,
         ):
             w.addItems(items)
+
+        self.h_radial_progress_1.set_standard_triggers()
+        self.h_radial_progress_2.set_standard_triggers()
+        self.h_radial_progress_3.set_standard_triggers()
+        self.h_radial_progress_4.set_standard_triggers()
+
+        self.h_radial_progress_1.set_legend_text("GPU")
+        self.h_radial_progress_1.set_label_text("label")
+        from PySide6.QtCore import QSize
+        self.h_radial_progress_1.setFixedSize(QSize(100,100))
+        self.h_radial_progress_1.set_thickness(8)
+
 
         self.setMinimumWidth(800)
         self.move(QPoint(400,200))

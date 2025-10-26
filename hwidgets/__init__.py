@@ -7,8 +7,9 @@ from .combobox import HComboBox
 from .divider import HDivider
 from .groupbox import HGroupBox
 from .button import HButton
+from .radial_progress_bar import HRadialProgress
 from .indeterminate_progress import HIndeterminateProgress
-from .indeterminate_circular_progress import HIndeterminateCircularProgress
+from .indeterminate_circular_progress import HIndeterminateCircularProgress # Not yet supported
 from .label import HLabel
 from .lineedit import HLineEdit
 from .plaintextedit import HPlainTextEdit
@@ -29,12 +30,13 @@ __all__ = [
     "HDivider",
     "HDoubleSpinBox",
     "HGroupBox",
-    "HIndeterminateCircularProgress",
+    # "HIndeterminateCircularProgress",
     "HIndeterminateProgress",
     "HLabel",
     "HLineEdit",
     "HPlainTextEdit",
     "HProgress",
+    "HRadialProgress",
     "HRadioButton",
     "HScrollbar",
     "HSpinBox",

@@ -67,6 +67,16 @@ class HCheckBox(QCheckBox):
         self.setMouseTracking(True)
 
 
+    def setAccentColor(self, hexcolor: str):
+        self._accent = QColor(hexcolor)
+        self.update()
+
+
+    def setBackgroundColor(self, hexcolor: str):
+        self._bg = QColor(hexcolor)
+        self.update()
+
+
     def sizeHint(self) -> QSize:
         # width reserves space for little box + spacing (no text, or can adapt)
         extra = 4
@@ -117,75 +127,39 @@ class HCheckBox(QCheckBox):
 
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        # compute rect for checkbox
-        x = self._border_width/2
+        # Checkbox
+        x = self._border_width / 2
         y = (self.height() - self._size) / 2.0
         box = QRectF(x, y, self._size, self._size)
 
-        # choose colors depending on state
         if self.isEnabled():
-            # border_col = self._accent if (self._hover and not self.isChecked()) else self._border
-            # when checked we fill with accent, else background
-            fill_col = QColor(self.hstyle.widget_bgd)
-            # self._accent if self.isChecked() else QColor(self.hstyle.disabled_bgd)
+            bgd_color = (
+                self.hstyle.hover_bgd if self._hover else self.hstyle.widget_bgd
+            )
             tick_color = self.checked if self.isChecked() else QColor("transparent")
 
         else:
             border_col = self._disabled
-            fill_col = QColor(self.hstyle.widget_bgd)
+            bgd_color = QColor(self.hstyle.widget_bgd)
             tick_color = self.checked.darker(140)
 
-
-        # draw outer rounded rect (background)
-        pen = QPen(fill_col, self._border_width)
-        painter.setPen(pen)
-        painter.setBrush(QBrush(fill_col))
+        # Box
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(QBrush(QColor(bgd_color)))
         painter.drawRoundedRect(box, self._radius, self._radius)
 
-        # draw inner tick or check mark when checked
+        # Tick
         if self.isChecked():
-            # option 1: filled smaller rounded rect (block style)
-            # inset = max(2, int(self._size * 0.22))
-            # inner = QRectF(box.left()+inset, box.top()+inset, box.width()-2*inset, box.height()-2*inset)
-            # painter.setPen(Qt.NoPen)
-            # painter.setBrush(QBrush(check_col))
-            # painter.drawRoundedRect(inner, max(1, self._radius//2), max(1, self._radius//2))
-
-            # option 2: draw a checkmark instead (uncomment if you prefer)
             painter.setPen(QPen(tick_color, 2, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
             p1 = QPointF(box.left()+box.width()*0.22, box.top()+box.height()*0.52)
             p2 = QPointF(box.left()+box.width()*0.45, box.top()+box.height()*0.75)
             p3 = QPointF(box.left()+box.width()*0.78, box.top()+box.height()*0.28)
-
-            # painter.drawLine(p1, p2)
-            # painter.drawLine(p2, p3)
-            # # painter.setBrush(color)
-            # painter.drawEllipse(p2, 1, 1)
-
             painter.drawPolyline(QPolygonF([p1, p2, p3]))
-
-        # optionally draw focus rectangle or extra hover stroke
-        # if self._hover and self.isEnabled(): # and not self.isChecked():
-        #     glow_pen = QPen(self._accent, 1.2)
-        #     glow_pen.setColor(self._accent.lighter(130))
-        #     painter.setPen(glow_pen)
-        #     # slight outer stroke to indicate hover
-        #     outer = QRectF(box.left()-1, box.top()-1, box.width()+2, box.height()+2)
-        #     painter.setBrush(Qt.NoBrush)
-        #     painter.drawRoundedRect(outer, self._radius+1, self._radius+1)
 
         painter.end()
 
-    # convenience setters to tweak theme at runtime
-    def setAccentColor(self, hexcolor: str):
-        self._accent = QColor(hexcolor)
-        self.update()
-
-    def setBackgroundColor(self, hexcolor: str):
-        self._bg = QColor(hexcolor)
-        self.update()
 
 
 
