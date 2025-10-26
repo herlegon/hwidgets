@@ -24,8 +24,8 @@ from PySide6.QtWidgets import (
 
 from .hstyle import (
     TRACK_MARGIN,
-    TRACK_POSITION_Y,
-    TRACK_START_X,
+    TRACK_Y,
+    CAP_OFFSET,
     TRACK_THICKNESS,
 )
 

@@ -28,9 +28,8 @@ from hutils import darkgrey, red, yellow
 
 from .hstyle import (
     HStyle,
-    TRACK_MARGIN,
-    TRACK_POSITION_Y,
-    TRACK_START_X,
+    TRACK_Y,
+    CAP_OFFSET,
     TRACK_THICKNESS,
 )
 
@@ -59,12 +58,12 @@ class HIndeterminateProgress(QProgressBar):
     ):
 
         super().__init__(parent)
-        # self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
+        is_m2 = False
 
-        # self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
         self._progress = 0
+        self.hstyle = hstyle
 
-        self.setFixedHeight(4)
+        self.setFixedHeight(TRACK_THICKNESS)
         # self.setFixedWidth(240+16*2)
         self.setFixedWidth(512)
         self.set_colors('green', 'red')
@@ -79,7 +78,7 @@ class HIndeterminateProgress(QProgressBar):
 
         LinearAnimationDuration = 1800
 
-        speed_r = 8
+        speed_r = 1.5
         last_pause = 435 * speed_r
         last_pause = 0
 
@@ -214,7 +213,6 @@ class HIndeterminateProgress(QProgressBar):
 
 
     def animations_finished(self):
-        print("finished")
         self._flh = 0.
         self._flt = 0.
         self._slh = 0.
@@ -291,52 +289,14 @@ class HIndeterminateProgress(QProgressBar):
         self.active_color = QColor(active)
 
 
+    # def enterEvent(self, event):
+    #     self.animations.pause()
+    #     return super().enterEvent(event)
 
-    # def drawLinearIndicator(self,
-    #     painter: QPainter,
-    #     pen: QPen,
-    #     startFraction: float,
-    #     endFraction: float,
-    # ):
-    #     print("drawLinearIndicatordrawLinearIndicatordrawLinearIndicator")
-    #     track_length = float(self.width() - (2 * TRACK_MARGIN + TRACK_THICKNESS))
-    #     barStart = int(startFraction * track_length + TRACK_START_X)
-    #     barEnd = int(endFraction * track_length + TRACK_START_X)
 
-    #     if abs(endFraction - startFraction) > 0:
-    #         if True:
-    #             if self.timer_start == 0: self.timer_start = int(time.time() * 1000)
-    #         #     # print(f"{int(time.time()*1000) - self.timer_start}: {self.flh:.03f}\t{self.flt:.03f}\t{self.slh:.03f}\t{self.slt:.03f}")
-    #             print(f"{int(time.time()*1000) - self.timer_start}: ({startFraction:.02f}, {endFraction:.02f}){barStart} ({abs(barEnd - barStart)})")
-
-    #         # green
-    #         pen.setColor(QColor("#E65FF0"))
-    #         painter.setPen(pen)
-    #         painter.drawLine(
-    #             barStart, TRACK_POSITION_Y,
-    #             barEnd, TRACK_POSITION_Y
-    #         )
-
-    #         if barEnd >= TRACK_MARGIN + TRACK_THICKNESS + TRACK_START_X:
-    #             track_end = barEnd - (TRACK_MARGIN + TRACK_THICKNESS)
-    #             track_start = TRACK_START_X
-    #             pen.setColor(QColor('grey'))
-    #             painter.setPen(pen)
-    #             painter.drawLine(
-    #                 track_start, TRACK_POSITION_Y,
-    #                 track_end, TRACK_POSITION_Y
-    #             )
-
-    #         if barStart < track_length:
-    #             track_start = barStart + TRACK_MARGIN + TRACK_THICKNESS
-    #             track_end = track_length
-    #             pen.setColor(QColor('grey'))
-    #             painter.setPen(pen)
-    #             painter.drawLine(
-    #                 track_start, TRACK_POSITION_Y,
-    #                 track_end, TRACK_POSITION_Y
-    #             )
-
+    # def leaveEvent(self, event):
+    #     self.animations.resume()
+    #     return super().leaveEvent(event)
 
 
     # https://github.com/droiddevtips/droiddevtipsExample/blob/main/masteringcomposetheme/src/main/java/com/droiddevtips/masteringcomposetheme/feature/progress/ui/Material3Progress.kt
@@ -345,18 +305,10 @@ class HIndeterminateProgress(QProgressBar):
         painter = QPainter(self)
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
-        # background, for debug
-        # painter.fillRect(self.rect(), QBrush(QColor("#7AFF9E")))
-
         # track is widget width - 2 x margin - 2 x track thickness for rounded cap
-        track_length = float(self.width() - (2 * TRACK_MARGIN + TRACK_THICKNESS))
-
-        # current_position = int(progress * track_length / 100)
-        # print(f"{progress} -> {current_position}")
-        if False:
-            if self.timer_start == 0: self.timer_start = int(time.time() * 1000)
-            # print(f"{int(time.time()*1000) - self.timer_start}: {self.flh:.03f}\t{self.flt:.03f}\t{self.slh:.03f}\t{self.slt:.03f}")
-            print(f"{int(time.time()*1000) - self.timer_start}: {self.flh-self.flt:.03f}\t{self.slh-self.slt:.03f}")
+        track_x0 = CAP_OFFSET
+        track_x1 = float(self.width() - CAP_OFFSET)
+        track_length = track_x1 - track_x0
 
         # For debug
         # pen = QPen()
@@ -366,137 +318,50 @@ class HIndeterminateProgress(QProgressBar):
         # painter.setPen(pen)
         # painter.drawLine(0, 0, self.width(), 0)
 
-
-        x_h1 = int(self.flh * track_length + TRACK_START_X)
-        x_t1 = int(self.flt * track_length + TRACK_START_X)
-        x_h2 = int(self.slh * track_length + TRACK_START_X)
-        x_t2 = int(self.slt * track_length + TRACK_START_X)
+        x_h1 = int(track_x0 + self.flh * track_length)
+        x_t1 = int(track_x0 + self.flt * track_length)
+        x_h2 = int(track_x0 + self.slh * track_length)
+        x_t2 = int(track_x0 + self.slt * track_length)
 
         pen = QPen()
         pen.setWidth(TRACK_THICKNESS)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
 
-        print(f"{self.flh}, {self.flt}, {self.slh}, {self.slt}")
-        if all([x in (0, 1)  for x in [self.flh, self.flt, self.slh, self.slt]]):
-            # Initial and end
-            print(red("-----------------------------------------------"))
-            pen.setColor(QColor("red"))
-            painter.setPen(pen)
-            painter.drawLine(
-                TRACK_START_X,
-                TRACK_POSITION_Y,
-                TRACK_START_X + track_length,
-                TRACK_POSITION_Y
-            )
+        # Track
+        pen.setColor(QColor(self.hstyle.widget_bgd))
+        painter.setPen(pen)
+        painter.drawLine(track_x0, TRACK_Y, track_x1, TRACK_Y)
 
-        else:
-            # handle
-            if False:
-                pen.setColor(QColor(80,240,80))
-                painter.setPen(pen)
-                if x_h1 - x_t1 > 0:
-                    painter.drawLine(x_t1, TRACK_POSITION_Y, x_h1, TRACK_POSITION_Y)
-                if x_h2 - x_t2 > 0:
-                    painter.drawLine(x_h2, TRACK_POSITION_Y, x_t2, TRACK_POSITION_Y)
-
-            pen.setColor(QColor('grey'))
+        # Progress bars
+        if not all([x in (0, 1)  for x in [self.flh, self.flt, self.slh, self.slt]]):
+            pen.setColor(QColor(self.hstyle.selected))
             painter.setPen(pen)
 
-            if x_h2 <= TRACK_START_X:
-                print(yellow(f"{x_h2} < {TRACK_START_X}"))
-                pen.setColor(QColor('yellow'))
+            # 1st progress bar
+            track_start = track_x0 + x_h1
+            if track_start < track_x1:
+                pen.setColor(QColor(self.hstyle.selected))
                 painter.setPen(pen)
-                # tail
-                track_start = TRACK_START_X
-                track_end = max(TRACK_START_X, x_t1 - TRACK_MARGIN - TRACK_THICKNESS)
-                # print(f"tail: ({x0}, {x1}) {track_start} -> {track_end} ({track_end - track_start})")
-                if track_end - track_start:
-                    # print(f"\tpaint {track_start} -> {track_end}")
-                    painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
-                # if x1 - TRACK_MARGIN - TRACK_THICKNESS == TRACK_START_X:
-                #     painter.drawLine(track_start - TRACK_THICKNESS, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
+                painter.drawLine(track_start, TRACK_Y, track_x1, TRACK_Y)
 
-                if False:
-                    if self.timer_start == 0: self.timer_start = int(time.time() * 1000)
-                    # print(f"{int(time.time()*1000) - self.timer_start}: {self.flh:.03f}\t{self.flt:.03f}\t{self.slh:.03f}\t{self.slt:.03f}")
-                    print(f"{int(time.time()*1000) - self.timer_start}: ({x_t1} -> {x_h1}) {track_start} -> {track_end}")
-
-                track_start = x_h1 + TRACK_MARGIN + TRACK_THICKNESS
-                track_end = TRACK_START_X + track_length
-                print(f"track start/end: {track_start}/{track_end}")
-                if track_end > track_start:
-                    print(red("show"))
-                    pen.setColor(QColor('red'))
-                    painter.setPen(pen)
-                    painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
-                else:
-                    print(red("hide"))
-
-                # elif track_end - track_start - TRACK_THICKNESS / 2> 0:
-                #     painter.drawLine(track_start - TRACK_THICKNESS / 2, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
-                # # head
-                # track_start = x0 + (TRACK_MARGIN + TRACK_THICKNESS)
-                # track_end = track_length + TRACK_START_X
-                # if track_end > track_start:
-                #     painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
+            if x_h2 <= track_x0:
+                # Before progress2 is moving
+                progress2_x0 = track_x0
+                progress2_x1 = max(track_x0, x_t1  - track_x0)
+                if progress2_x1 - progress2_x0:
+                    painter.drawLine(progress2_x0, TRACK_Y, progress2_x1, TRACK_Y)
 
             else:
-                print(darkgrey(f"x2: {x_h2} > {TRACK_START_X}"))
-                # 2nd
-                pen.setColor(QColor('grey'))
-                painter.setPen(pen)
-                # tail
-                track_start = TRACK_START_X
-                track_end = max(TRACK_START_X, x_t2 - TRACK_MARGIN - TRACK_THICKNESS)
-                if track_end - track_start >= 0:
-                    painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
+                # Progress 2 is moving
+                progress2_x0 = track_x0
+                progress2_x1 = max(track_x0, x_t2)
+                if progress2_x1 - progress2_x0 >= 0:
+                    painter.drawLine(progress2_x0, TRACK_Y, progress2_x1, TRACK_Y)
 
-                track_start = x_h2 + TRACK_MARGIN + TRACK_THICKNESS
-                track_end = min(x_t1 - (TRACK_MARGIN + TRACK_THICKNESS), TRACK_START_X + track_length)
-                if track_end > track_start:
-                    painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
-
-
-
-            # # track_start = max(x3, TRACK_START_X)
-            # # track_end = min(x1, TRACK_START_X + track_length)
-            # # painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
-            # if x2 >= TRACK_START_X:
-            #     track_start = max(x2, TRACK_START_X) + TRACK_MARGIN + TRACK_THICKNESS
-            #     track_end = min(x1, track_length + TRACK_START_X)
-            # else:
-            #     track_start = max(x0, TRACK_START_X) + TRACK_MARGIN + TRACK_THICKNESS
-            #     track_end = track_length + TRACK_START_X
-
-            # if track_end > track_start and x3 > TRACK_START_X:
-            #     painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
-
-                if False:
-                    if self.timer_start == 0: self.timer_start = int(time.time() * 1000)
-                    # print(f"{int(time.time()*1000) - self.timer_start}: {self.flh:.03f}\t{self.flt:.03f}\t{self.slh:.03f}\t{self.slt:.03f}")
-                    print(f"{int(time.time()*1000) - self.timer_start}: ({track_length}) {track_start} -> {track_end}")
-
-            # if x3 > TRACK_START_X:
-            #     track_start = TRACK_START_X
-            #     track_end = max(x2 - (TRACK_MARGIN + TRACK_THICKNESS), track_length + TRACK_START_X)
-            # else:
-            #     track_start = TRACK_START_X
-            #     track_end = x1 - (TRACK_START_X + TRACK_MARGIN)
-
-            # if track_end > track_start:
-            #     painter.drawLine(track_start, TRACK_POSITION_Y, track_end, TRACK_POSITION_Y)
-
-        # pen = QPen()
-        # pen.setWidth(TRACK_THICKNESS)
-        # pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-        # pen.setColor(self.active_color)
-        # painter.setPen(pen)
-        # painter.drawLine(
-        #     TRACK_START_X,
-        #     TRACK_POSITION_Y,
-        #     TRACK_START_X + current_position,
-        #     TRACK_POSITION_Y
-        # )
+                progress2_x0 = x_h2
+                progress2_x1 = min(x_t1, track_x1)
+                if progress2_x1 > progress2_x0:
+                    painter.drawLine(progress2_x0, TRACK_Y, progress2_x1, TRACK_Y)
 
         painter.end()
 

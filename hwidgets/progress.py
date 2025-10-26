@@ -24,8 +24,8 @@ from PySide6.QtWidgets import (
 
 from .hstyle import (
     TRACK_MARGIN,
-    TRACK_POSITION_Y,
-    TRACK_START_X,
+    TRACK_Y,
+    CAP_OFFSET,
     TRACK_THICKNESS,
     HStyle,
 )
@@ -86,7 +86,7 @@ class HProgress(QProgressBar):
         self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
         self._progress = 0
 
-        self.setFixedHeight(4)
+        self.setFixedHeight(TRACK_THICKNESS)
         self.set_colors(
             hstyle.widget_bgd,
             hstyle.selected
@@ -127,38 +127,38 @@ class HProgress(QProgressBar):
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QPainter(self)
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
-        track_length = self.width() - (2 * TRACK_MARGIN + TRACK_THICKNESS)
-        current_position = int(self._progress * track_length / 100)
+        track_x0 = CAP_OFFSET
+        track_x1 = float(self.width() - CAP_OFFSET)
+        track_length = track_x1 - track_x0
+
+        track_x = CAP_OFFSET + int(self._progress * track_length / 100)
 
         pen = QPen()
         pen.setWidth(TRACK_THICKNESS)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
         pen.setColor(self.active_color)
         painter.setPen(pen)
-        painter.drawLine(
-            TRACK_START_X,
-            TRACK_POSITION_Y,
-            TRACK_START_X + current_position,
-            TRACK_POSITION_Y
-        )
 
-        x = current_position + 2 * TRACK_MARGIN + int(3*TRACK_THICKNESS/2)
-        track_stop_point_x = self.width() - TRACK_START_X
-        if x < track_stop_point_x:
+        # Active
+        painter.drawLine(track_x0, TRACK_Y, track_x, TRACK_Y)
+
+        # Inactive
+        x = (track_x + CAP_OFFSET) + (4 + CAP_OFFSET)
+        if x < track_x1:
             pen.setColor(self.track_color)
             painter.setPen(pen)
-            if current_position == 0: x = TRACK_START_X
             painter.drawLine(
                 x,
-                TRACK_POSITION_Y,
-                track_stop_point_x - int(TRACK_THICKNESS/2),
-                TRACK_POSITION_Y
+                TRACK_Y,
+                track_x1 - int(TRACK_THICKNESS/2),
+                TRACK_Y
             )
 
         pen.setWidth(TRACK_THICKNESS)
         pen.setColor(self.active_color)
         painter.setPen(pen)
-        painter.drawPoint(QPoint(track_stop_point_x, TRACK_POSITION_Y))
+        painter.drawPoint(QPoint(track_x1, TRACK_Y))
+        painter.drawPoint(QPoint(track_x0, TRACK_Y))
 
         painter.end()
 
