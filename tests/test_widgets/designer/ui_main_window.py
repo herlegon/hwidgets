@@ -18,9 +18,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCheckBox,
     QComboBox, QDoubleSpinBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPlainTextEdit, QPushButton, QRadioButton, QScrollBar,
-    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
-    QWidget)
+    QPlainTextEdit, QProgressBar, QPushButton, QRadioButton,
+    QScrollBar, QSizePolicy, QSpacerItem, QSpinBox,
+    QVBoxLayout, QWidget)
 
 from hwidgets import (
     HButton,
@@ -35,6 +35,8 @@ from hwidgets import (
     HScrollBar,
     HSpinBox,
     HDivider,
+    HIndeterminateProgress,
+    HProgress,
     HSwitch,
     HTitle1,
     HStyle,
@@ -44,7 +46,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1414, 813)
+        MainWindow.resize(1410, 859)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -451,6 +453,13 @@ class Ui_MainWindow(object):
         self.horizontalLayout_11 = QHBoxLayout()
         self.horizontalLayout_11.setObjectName(u"horizontalLayout_11")
         self.horizontalLayout_11.setContentsMargins(-1, -1, -1, 60)
+        self.q_indeterminate_progress = QProgressBar(self.q_frame)
+        self.q_indeterminate_progress.setObjectName(u"q_indeterminate_progress")
+        self.q_indeterminate_progress.setMaximum(0)
+        self.q_indeterminate_progress.setValue(0)
+
+        self.horizontalLayout_11.addWidget(self.q_indeterminate_progress)
+
 
         self.q_widgets_sub_layout.addLayout(self.horizontalLayout_11)
 
@@ -909,6 +918,52 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.verticalLayout_3)
 
+        self.horizontalLayout_12 = QHBoxLayout()
+        self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
+        self.h_indeterminate_progress = HIndeterminateProgress(self.h_frame, hstyle=hstyle)
+        self.h_indeterminate_progress.setObjectName(u"h_indeterminate_progress")
+        self.h_indeterminate_progress.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_indeterminate_progress.setValue(24)
+
+        self.horizontalLayout_12.addWidget(self.h_indeterminate_progress)
+
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_12.addItem(self.horizontalSpacer_8)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_12)
+
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setSpacing(3)
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.h_progress_0 = HProgress(self.h_frame, hstyle=hstyle)
+        self.h_progress_0.setObjectName(u"h_progress_0")
+        self.h_progress_0.setValue(0)
+
+        self.verticalLayout_2.addWidget(self.h_progress_0)
+
+        self.h_progress_25 = HProgress(self.h_frame, hstyle=hstyle)
+        self.h_progress_25.setObjectName(u"h_progress_25")
+        self.h_progress_25.setValue(25)
+
+        self.verticalLayout_2.addWidget(self.h_progress_25)
+
+        self.h_progress_100 = HProgress(self.h_frame, hstyle=hstyle)
+        self.h_progress_100.setObjectName(u"h_progress_100")
+        self.h_progress_100.setValue(100)
+
+        self.verticalLayout_2.addWidget(self.h_progress_100)
+
+        self.h_indeterminate_circular_progress = QProgressBar(self.h_frame)
+        self.h_indeterminate_circular_progress.setObjectName(u"h_indeterminate_circular_progress")
+        self.h_indeterminate_circular_progress.setValue(24)
+
+        self.verticalLayout_2.addWidget(self.h_indeterminate_circular_progress)
+
+
+        self.verticalLayout.addLayout(self.verticalLayout_2)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
@@ -1025,6 +1080,6 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
         self.h_title1.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle1 widget without icon", None))
-        self.h_title1_2.setText(QCoreApplication.translate("MainWindow", u"This is a text with icon", None))
+        self.h_title1_2.setText("")
     # retranslateUi
 

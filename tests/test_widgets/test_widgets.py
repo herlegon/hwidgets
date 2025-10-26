@@ -153,7 +153,7 @@ from string import Template
 
 from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
 
-from hwidgets.hcombobox import HComboBox
+from hwidgets.combobox import HComboBox
 from hwidgets.hstyle import *
 from hwidgets.logger import hlogger
 

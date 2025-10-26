@@ -2,6 +2,7 @@ from dataclasses import dataclass
 import os
 from pathlib import Path
 import sys
+from typing import Final
 # from PySide6.QtCore import (
 # )
 from PySide6.QtGui import (
@@ -229,3 +230,11 @@ TITLE_1_FONT_SIZE = 14
 TITLE_1_BOLD = True
 
 SCROLLBAR_TRACK_WIDTH = 8
+
+
+
+TRACK_THICKNESS: Final[int] = 4
+TRACK_MARGIN: Final[int] = 4
+TRACK_POSITION_Y: Final[int] = int(TRACK_THICKNESS/2)
+TRACK_START_X: Final[int] = int(TRACK_MARGIN + TRACK_THICKNESS/2)
+

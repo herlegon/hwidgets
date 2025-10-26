@@ -24,7 +24,7 @@ from PySide6.QtWidgets import (
     QPlainTextEdit,
 )
 
-from hwidgets.hscrollbar import HScrollBar
+from hwidgets.scrollbar import HScrollBar
 
 from .hstyle import (
     COMBOBOX_RADIUS,

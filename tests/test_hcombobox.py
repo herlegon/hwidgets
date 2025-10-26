@@ -15,7 +15,7 @@ from hutils import (
     purple, yellow,
 )
 
-from hwidgets.hcombobox import HComboBox
+from hwidgets.combobox import HComboBox
 from hwidgets.hstyle import *
 from hwidgets.logger import hlogger
 
