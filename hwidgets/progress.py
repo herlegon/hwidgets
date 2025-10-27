@@ -1,8 +1,10 @@
 from .hstyle import (
+    DEBUG_GEOMETRY,
     HStyle,
     TRACK_Y,
     CAP_OFFSET,
     TRACK_THICKNESS,
+    draw_widget_rect,
 )
 
 from PySide6.QtCore import (
@@ -87,6 +89,8 @@ class HProgress(QProgressBar):
 
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QPainter(self)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
         track_x0 = CAP_OFFSET

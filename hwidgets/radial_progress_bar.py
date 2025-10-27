@@ -3,8 +3,10 @@ import math
 from typing import overload
 
 from .hstyle import (
+    DEBUG_GEOMETRY,
     HStyle,
     TRACK_THICKNESS,
+    draw_widget_rect,
 )
 
 from PySide6.QtCore import (
@@ -284,14 +286,10 @@ class HRadialProgress(QProgressBar):
     def paintEvent(self, event: QPaintEvent) -> None:
         percent = self.percent
         painter = QPainter(self)
-        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
 
-        # debug
-        # pen = QPen()
-        # pen.setWidth(1)
-        # pen.setColor(QColor("white"))
-        # painter.setPen(pen)
-        # painter.drawRect(0, 0, self.width(), self.height())
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
         pen = QPen(
             self.track_color if self.isEnabled() else self.track_color_disable,

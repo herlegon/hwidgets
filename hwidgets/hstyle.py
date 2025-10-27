@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import os
 from pathlib import Path
 import sys
-from typing import Final
+from typing import Final, Type
 # from PySide6.QtCore import (
 # )
 from PySide6.QtGui import (
@@ -15,6 +15,7 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import (
     QStyle,
     QStyledItemDelegate,
+    QWidget,
 )
 from hutils import parent_directory, path_basename
 
@@ -135,6 +136,8 @@ class HStyle:
 
     divider: str = "#505053" # same as hover
 
+    pressed: str = "#66636D" # same as hover
+
 
     # Accent (hover)	"#4e83c2"	 # Slightly lighter for hover feedback
     # Accent (pressed)	"#345d8a"	# Darker variant for pressed/active states
@@ -159,16 +162,12 @@ COMBOBOX_RADIUS = 8
 # COMBOBOX_PADDING = 10
 
 
-RADIO_RADIUS = COMBOBOX_RADIUS + 1 # change to COMBOBOX_RADIUS ?
+RADIO_SIZE: int = 14
+RADIO_RADIUS = COMBOBOX_RADIUS - 1
 RADIO_BORDER_WIDTH = 2
 
 
-# STATE_LAYER_SIZE: int = round(48/(2 * dp_to_px)) * 2
-CHECKBOX_STATE_LAYER_SIZE = COMBOBOX_HEIGHT
-# Icons are from Material website
-CHECKBOX_ICON_SIZE: int = 16
-# blank margin in Material icons -> real button size in icon is 18x18
-CHECKBOX_BUTTON_SIZE: int = 18
+CHECKBOX_SIZE: int = 14
 
 
 LABEL_PADDING = COMBOBOX_RADIUS
@@ -235,4 +234,24 @@ TRACK_THICKNESS: Final[int] = 6
 TRACK_MARGIN = TRACK_THICKNESS // 2
 TRACK_Y: Final[int] = TRACK_THICKNESS // 2
 CAP_OFFSET: Final[int] = TRACK_THICKNESS // 2
+
+
+
+DEBUG_GEOMETRY: bool = True
+from PySide6.QtGui import (
+    QColor,
+    QPainter,
+    QPen,
+)
+def draw_widget_rect(w: Type[QWidget], painter: QPainter):
+    """Draw around a widget without clipping
+    """
+    painter.save()
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing, on=False)
+    pen = QPen()
+    pen.setWidth(1)
+    pen.setColor(QColor("#d4d4d4"))
+    painter.setPen(pen)
+    painter.drawRect(0, 0, w.width() - 1, w.height() - 1)
+    painter.restore()
 

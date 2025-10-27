@@ -1,8 +1,12 @@
 from .logger import hlogger
 from .hstyle import (
+    COMBOBOX_HEIGHT,
+    DEBUG_GEOMETRY,
     RADIO_BORDER_WIDTH,
     RADIO_RADIUS,
+    RADIO_SIZE,
     HStyle,
+    draw_widget_rect,
 )
 
 from PySide6.QtCore import (
@@ -11,6 +15,7 @@ from PySide6.QtCore import (
     Qt,
     QSize,
     QEvent,
+    QPoint,
 )
 from PySide6.QtGui import (
     QBrush,
@@ -22,8 +27,9 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import (
     QWidget,
     QRadioButton,
+    QStyleOptionButton,
+    QStyle,
 )
-from string import Template
 
 
 
@@ -36,164 +42,84 @@ class HRadioButton(QRadioButton):
         *,
         hstyle: HStyle,
     ) -> None:
-
         super().__init__(parent)
-        self._hover = False
 
-        self.radius = RADIO_RADIUS
+        self._margin = (COMBOBOX_HEIGHT - RADIO_SIZE) / 2
+        self._radius = RADIO_RADIUS
         self.border_width = RADIO_BORDER_WIDTH
 
-        self.brush_default: QBrush = QBrush(hstyle.widget_bgd)
-        self.border_color = QColor(hstyle.widget_bgd)
-
-        self.brush_hover: QBrush = QBrush(hstyle.hover_bgd)
-
-        self.disabled_color = QColor(hstyle.disabled_text)
-        self.brush_disabled: QBrush = QBrush(hstyle.disabled_bgd)
-
-        self.checked_color = QColor(hstyle.selection_bgd)
-
         self.hstyle = hstyle
-        self.setCursor(Qt.CursorShape.ArrowCursor)
-        self.setMouseTracking(True)
 
 
-    def sizeHint(self):
-        # Only the circle size matters
-        return QSize(
-            self.radius*2 + self.border_width*2,
-            self.radius*2 + self.border_width*2
+    def sizeHint(self) -> QSize:
+        return QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
+
+
+    def mouseMoveEvent(self, event: QMouseEvent):
+        if self.hitButton(event.pos()):
+            self.setCursor(Qt.CursorShape.PointingHandCursor)
+        else:
+            self.unsetCursor()
+        super().mouseMoveEvent(event)
+
+
+    def hitButton(self, pos: QPoint) -> bool:
+        """Only accept clicks inside the visible 16x16 box"""
+        click_rect = QRectF(
+            self._margin, self._margin, RADIO_SIZE, RADIO_SIZE,
         )
-
-
-    def leaveEvent(self, event: QEvent):
-        hlogger.debug(f"{self.__class__}: leave")
-        self._hover = False
-        self.update()
-        super().leaveEvent(event)
-
-
-    def enterEvent(self, event: QEvent):
-        hlogger.debug(f"{self.__class__}: over")
-        if self.isEnabled():
-            self._hover = True
-        self.update()
-        super().enterEvent(event)
-
-
-    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        hlogger.debug(f"{self.__class__}: clicked")
-        if self._hover:
-            self.click()
-        return super().mouseReleaseEvent(event)
-
-
-    def mousePressEvent(self, event: QMouseEvent) -> None:
-        hlogger.debug(f"{self.__class__}: pressed")
-        self._hover = False
-        self.click()
-        return super().mouseReleaseEvent(event)
-
-
-    # To use if we want to detect mouse inside the circle and not the outer rect
-    #  might have a speed impact and "frustrating" with small radio buttons
-    #
-    # def hitButton(self, pos):
-    #     """Only toggle if click is inside the circle.
-    #     The probleme is that the hover is done when in the rectangle. If hovered,
-    #     with this method, the mouse click button doesn't work
-    #     """
-    #     center = self.rect().center()
-    #     radius = self.radio_radius + self.border_width / 2
-    #     dx = pos.x() - center.x()
-    #     dy = pos.y() - center.y()
-    #     return dx*dx + dy*dy <= radius*radius
-    #
-    #
-    # def _is_inside_circle(self, x, y):
-    #     """Check if point (x, y) is inside the circular area of the button."""
-    #     radius = min(self.width(), self.height()) / 2
-    #     dx = x - self.width() / 2
-    #     dy = y - self.height() / 2
-    #     return dx*dx + dy*dy <= radius*radius
-    #
-    #
-    # def leaveEvent(self, event: QEvent):
-    #     hlogger.debug(f"{self.__class__}: leave")
-    #     pos = self.mapFromGlobal(self.cursor().pos())
-    #     if not self._is_inside_circle(pos.x(), pos.y()):
-    #         self._hover = True
-    #         self.update()
-    #     super().leaveEvent(event)
-    #
-    #
-    # def enterEvent(self, event: QEnterEvent):
-    #     pos = self.mapFromGlobal(self.cursor().pos())
-    #     if self._is_inside_circle(pos.x(), pos.y()):
-    #         self._hover = True
-    #         self.update()
-    #     super().enterEvent(event)
-    #
-    #
-    # def mouseMoveEvent(self, event: QMouseEvent):
-    #     inside = self._is_inside_circle(event.position().x(), event.position().y())
-    #     if inside != self._hover:
-    #         self._hover = inside
-    #         self.update()
-    #     super().mouseMoveEvent(event)
+        return click_rect.contains(pos)
 
 
     def paintEvent(self, event: QEvent):
         painter = QPainter(self)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
+
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        # Determine border color
-        if self.isEnabled():
-            border_color = self.border_color
+        option: QStyleOptionButton = QStyleOptionButton()
+        self.initStyleOption(option)
+        enabled = bool(option.state & QStyle.StateFlag.State_Enabled)
+        pressed = bool(option.state & QStyle.StateFlag.State_Sunken)
+        checked = bool(option.state & QStyle.StateFlag.State_On)
+
+        if not enabled:
+            outer_line_color = self.hstyle.disabled_bgd
+            brush = self.hstyle.disabled_bgd
+        elif checked:
+            outer_line_color = self.hstyle.checked
+            brush = self.hstyle.checked
+        elif pressed:
+            outer_line_color = self.hstyle.hover_bgd
+            brush = self.hstyle.hover_bgd
         else:
-            border_color = self.disabled_color
+            outer_line_color = self.hstyle.widget_bgd
+            brush = self.hstyle.widget_bgd
 
         # Draw the outer circle
-        outer_rect = QRectF(
-            1,
-            (self.height() - self.radius*2)/2,
-            self.radius*2,
-            self.radius*2
-        )
-        pen = QPen(border_color, self.border_width)
+        box = QRectF(self._margin, self._margin, RADIO_SIZE, RADIO_SIZE)
+
+        pen = QPen()
+        pen.setWidth(self.border_width)
+        pen.setColor(QColor(outer_line_color))
         painter.setPen(pen)
-        brush = self.brush_default
-        brush = self.brush_disabled
-        if self.isEnabled():
-            brush = QColor(self.hstyle.window_bgd)
+        painter.drawEllipse(box)
 
-
-        painter.setBrush(brush)
-        painter.drawEllipse(outer_rect)
-
-        if self._hover:
-            brush = QColor(self.hstyle.hover_bgd)
-        if self.isChecked():
-            brush = QColor(self.checked_color)
-
-        # Inner circle
-        if self.isChecked() or self._hover:
-            inner_radius = self.radius / 2 + 1
+        # Draw inner cercle when pressed, checked
+        draw_inner: bool = enabled or (not enabled and checked)
+        if draw_inner:
+            inner_radius = self._radius / 2 + 1
             inner_rect = QRectF(
-                outer_rect.center().x() - inner_radius,
-                outer_rect.center().y() - inner_radius,
-                inner_radius*2,
-                inner_radius*2
+                box.center().x() - inner_radius,
+                box.center().y() - inner_radius,
+                inner_radius * 2,
+                inner_radius * 2
             )
-            if not self.isEnabled() and self.isChecked():
-                brush = self.disabled_color
-            elif self._hover:
-                brush = QColor(self.hstyle.hover_bgd)
 
-            painter.setBrush(QBrush(brush))
-            painter.setPen(Qt.NoPen)
+            painter.setPen(Qt.PenStyle.NoPen)
+            painter.setBrush(QBrush(QColor(brush)))
             painter.drawEllipse(inner_rect)
-
 
         painter.end()
 

@@ -1,7 +1,13 @@
 from hutils import (
     blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
 )
-from .hstyle import HStyle
+from .hstyle import (
+    CHECKBOX_SIZE,
+    COMBOBOX_HEIGHT,
+    DEBUG_GEOMETRY,
+    HStyle,
+    draw_widget_rect,
+)
 
 from PySide6.QtCore import (
     QRectF,
@@ -9,7 +15,7 @@ from PySide6.QtCore import (
     Qt,
     QSize,
     QPointF,
-
+    QPoint,
 )
 from PySide6.QtGui import (
     QPolygonF,
@@ -23,6 +29,8 @@ from PySide6.QtGui import (
 from PySide6.QtWidgets import (
     QWidget,
     QCheckBox,
+    QStyleOptionButton,
+    QStyle,
 )
 
 
@@ -35,271 +43,109 @@ class HCheckBox(QCheckBox):
         parent: QWidget | None = None,
         *,
         hstyle: HStyle,
+        tristate: bool | None = None,
     ) -> None:
-
-        size: int = 16
-        radius: int = 3
-        border_width: int = 2
-        border_color: str = "#3a3d44"    # normal border
-        disabled_color: str = "#4a4a4a"   # disabled tint
-
         super().__init__(parent)
 
-        # geometry & style parameters
-        self._size = size
-        self._radius = radius
-        self._border_width = border_width
+        self._margin = (COMBOBOX_HEIGHT - CHECKBOX_SIZE) / 2
+        self._radius: int = 1
+        self._border_width = 2
 
         # Colors (QColor objects for speed)
-        self._accent = QColor(hstyle.widget_bgd)
         self.checked = QColor(hstyle.selected)
-        self._bg = QColor(hstyle.widget_bgd)
-        self._border = QColor(border_color)
-        self._disabled = QColor(disabled_color)
+        self._border = QColor(hstyle.widget_bgd)
+        self._disabled = QColor(hstyle.disabled_bgd)
         self._hover = False
         self._pressed = False
         self.hstyle = hstyle
+        self._hover_enabled: bool = True
 
-        # make widget small—sizeHint will be used by layouts
+        self.setContentsMargins(0, 0, 0, 0)
         self.setMinimumSize(self.sizeHint())
-
-        self.setCursor(Qt.CursorShape.ArrowCursor)
-        self.setMouseTracking(True)
-
-
-    def setAccentColor(self, hexcolor: str):
-        self._accent = QColor(hexcolor)
-        self.update()
-
-
-    def setBackgroundColor(self, hexcolor: str):
-        self._bg = QColor(hexcolor)
-        self.update()
 
 
     def sizeHint(self) -> QSize:
-        # width reserves space for little box + spacing (no text, or can adapt)
-        extra = 4
-        return QSize(self._size + extra, self._size + extra)
+        """Return a fixed height, width = checkbox + margins"""
+        return QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
 
-    # ---- hit test: accept clicks inside the rounded rect (or a slightly larger area) ----
-    def _inside_box(self, x: float, y: float) -> bool:
-        # box rectangle
-        r = QRectF(
-            self._border_width/2 - 1,
-            self._border_width/2 - 1,
-            self._size + 2,
-            self._size + 2
+
+    def mouseMoveEvent(self, event):
+        # Change cursor only if inside the drawn checkbox
+        if self.hitButton(event.pos()):
+            self.setCursor(Qt.PointingHandCursor)
+        else:
+            self.unsetCursor()
+        super().mouseMoveEvent(event)
+
+
+    def hitButton(self, pos: QPoint) -> bool:
+        """Only accept clicks inside the visible 16x16 box"""
+        click_rect = QRectF(
+            self._margin, self._margin, CHECKBOX_SIZE, CHECKBOX_SIZE,
         )
-        # simple bounding-box test first
-        if not r.contains(x, y):
-            return False
-        # optional: allow rectangle hits (common) or do circular/rounded hit test
-        # We'll just accept bounding rectangle for easier UX (you can tighten it)
-        return True
+        click_rect = click_rect.adjusted(-2, -2, 2, 2)
+        return click_rect.contains(pos)
 
-    def mousePressEvent(self, event: QMouseEvent) -> None:
-        if event.button() == Qt.LeftButton:
-            self._pressed = True
-            self.update()
-        super().mousePressEvent(event)
-
-    def mouseReleaseEvent(self, event: QMouseEvent) -> None:
-        if event.button() == Qt.LeftButton:
-            # toggle only when released inside the box area
-            pos = event.position()
-            if self._inside_box(pos.x(), pos.y()):
-                # call toggle through click() to emit signals normally
-                self.click()
-            self._pressed = False
-            self.update()
-        super().mouseReleaseEvent(event)
-
-    def enterEvent(self, event):
-        self._hover = True
-        self.update()
-        super().enterEvent(event)
-
-    def leaveEvent(self, event):
-        self._hover = False
-        self.update()
-        super().leaveEvent(event)
 
     def paintEvent(self, event: QPaintEvent) -> None:
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
 
-        # Checkbox
-        x = self._border_width / 2
-        y = (self.height() - self._size) / 2.0
-        box = QRectF(x, y, self._size, self._size)
+        # Use this only to get current states (hover, pressed, checked)
+        option: QStyleOptionButton = QStyleOptionButton()
+        self.initStyleOption(option)
+        pressed = bool(option.state & QStyle.StateFlag.State_Sunken)
+        checked = bool(option.state & QStyle.StateFlag.State_On)
 
-        if self.isEnabled():
-            bgd_color = (
-                self.hstyle.hover_bgd if self._hover else self.hstyle.widget_bgd
-            )
-            tick_color = self.checked if self.isChecked() else QColor("transparent")
+        # Checkbox itself
+        box = QRectF(self._margin, self._margin, CHECKBOX_SIZE, CHECKBOX_SIZE)
 
-        else:
-            border_col = self._disabled
-            bgd_color = QColor(self.hstyle.widget_bgd)
-            tick_color = self.checked.darker(140)
-
-        # Box
-        painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(QBrush(QColor(bgd_color)))
+        # Draw box
+        pen = QPen()
+        pen.setWidth(2)
+        box_line_color = (
+            self.hstyle.hover_bgd if pressed else self.hstyle.widget_bgd
+        )
+        pen.setColor(QColor(box_line_color))
+        painter.setPen(pen)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
         painter.drawRoundedRect(box, self._radius, self._radius)
 
-        # Tick
-        if self.isChecked():
-            painter.setPen(QPen(tick_color, 2, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
-            p1 = QPointF(box.left()+box.width()*0.22, box.top()+box.height()*0.52)
-            p2 = QPointF(box.left()+box.width()*0.45, box.top()+box.height()*0.75)
-            p3 = QPointF(box.left()+box.width()*0.78, box.top()+box.height()*0.28)
+        pen = QPen()
+        pen.setWidth(2)
+        pen.setColor(QColor(box_line_color))
+        painter.setPen(pen)
+        painter.drawRoundedRect(box, self._radius, self._radius)
+
+        # Draw inner rect when pressed
+        if pressed:
+            painter.setPen(Qt.PenStyle.NoPen)
+            painter.setBrush(QBrush(QColor(self.hstyle.widget_bgd)))
+            painter.drawRoundedRect(
+                self._margin + self._border_width - 1,
+                self._margin + self._border_width - 1,
+                CHECKBOX_SIZE - self._border_width,
+                CHECKBOX_SIZE - self._border_width,
+                self._radius, self._radius
+            )
+
+        # Check mark
+        if checked:
+            tick_color = self.checked if self.isEnabled() else self.checked.darker(140)
+
+            painter.setPen(QPen(
+                tick_color,
+                2,
+                Qt.PenStyle.SolidLine,
+                Qt.PenCapStyle.RoundCap,
+                Qt.PenJoinStyle.RoundJoin
+            ))
+            p1 = QPointF(box.left() + box.width() * 0.22, box.top() + box.height() * 0.52)
+            p2 = QPointF(box.left() + box.width() * 0.45, box.top() + box.height() * 0.75)
+            p3 = QPointF(box.left() + box.width() * 0.78, box.top() + box.height() * 0.28)
             painter.drawPolyline(QPolygonF([p1, p2, p3]))
 
         painter.end()
-
-
-
-
-# class HCheckBox(QWidget):
-
-#     class _HCheckbox(QAbstractButton):
-
-#         def __init__(self, parent: QWidget | None = ...) -> None:
-#             super().__init__(parent)
-
-#         def paintEvent(self, e: QPaintEvent) -> None:
-#             return
-
-
-#     def __init__(
-#         self,
-#         text: str,
-#         /,
-#         parent: QWidget | None = None,
-#         *,
-#         hstyle: HStyle,
-#         tristate: bool = False,
-#     ) -> None:
-
-#         super().__init__(parent)
-#         self.setCursor(Qt.CursorShape.PointingHandCursor)
-
-#         self.is_tristate: bool = tristate
-#         self.state: Qt.CheckState = Qt.CheckState.Unchecked
-
-#         unchecked = "check_box_outline_blank_FILL0_wght500_GRAD0_opsz24.png"
-#         partially = "indeterminate_check_box_FILL0_wght500_GRAD0_opsz24.png"
-#         checked = "check_box_FILL0_wght500_GRAD0_opsz24.png"
-
-#         self.pixmaps: dict[Qt.CheckState, dict[bool, QPixmap]] = {
-#             Qt.CheckState.Unchecked: {
-#                 True: self._generate_pixmap(filename=unchecked, color=hstyle.enabled),
-#                 False: self._generate_pixmap(filename=unchecked, color=hstyle.disabled),
-#             },
-#             Qt.CheckState.PartiallyChecked: {
-#                 True: self._generate_pixmap(filename=partially, color=hstyle.enabled),
-#                 False: self._generate_pixmap(filename=partially, color=hstyle.disabled),
-#             },
-#             Qt.CheckState.Checked: {
-#                 True: self._generate_pixmap(filename=checked, color=hstyle.enabled),
-#                 False: self._generate_pixmap(filename=checked, color=hstyle.disabled),
-#             },
-#         }
-
-#         self.setFixedSize(QSize(CHECKBOX_STATE_LAYER_SIZE, CHECKBOX_STATE_LAYER_SIZE))
-
-#         layout = QHBoxLayout(self)
-#         self.button = self._HCheckbox(self)
-#         self.button.setFixedSize(QSize(CHECKBOX_BUTTON_SIZE, CHECKBOX_BUTTON_SIZE))
-#         margins = [int((CHECKBOX_STATE_LAYER_SIZE - CHECKBOX_BUTTON_SIZE)/2) ] * 4
-#         layout.setContentsMargins(*margins)
-#         layout.addWidget(self.button, 0, Qt.AlignmentFlag.AlignTop | Qt.AlignmentFlag.AlignLeft)
-#         self.setLayout(layout)
-
-#         origin = [int((CHECKBOX_STATE_LAYER_SIZE - CHECKBOX_ICON_SIZE)/2)] * 2
-#         self.pixmap_origin = QPoint(*origin)
-#         self.painter = QPainter()
-
-#         self.button.clicked[bool].connect(self.clicked_event)
-#         self.button.pressed.connect(self.pressed_event)
-#         self.button.released.connect(self.released_event)
-#         self.button.toggled[bool].connect(self.toggled_event)
-
-
-#     def _generate_pixmap(self, filename: str, color: str) -> QPixmap:
-#         filepath = os.path.join(TITLE_BAR_ICON_PATH, filename)
-#         if not os.path.exists(filepath):
-#             raise ValueError(f"image {filepath} does not exist")
-#         qimage: QImage = QImage(filepath)
-#         color = QColor(color)
-
-#         painter: QPainter = QPainter()
-#         painter.begin(qimage)
-#         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
-#         painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
-#         painter.setBrush(color)
-#         painter.setPen(color)
-#         painter.drawRect(qimage.rect())
-#         painter.end()
-#         return QPixmap(qimage)
-
-
-#     def checkState(self) -> Qt.CheckState:
-#         return self.state
-
-
-#     # def hitButton(self, pos: QPoint) -> bool:
-#     #     return self.checkbox.hitButton(pos)
-
-
-#     def setCheckState(self, state: Qt.CheckState) -> None:
-#         self.state = state
-
-
-#     def setTristate(self, enabled: bool) -> None:
-#         self.is_tristate = enabled
-
-
-#     def isTristate(self) -> bool:
-#         return self.is_tristate
-
-
-#     def clicked_event(self, state: bool) -> None:
-#         pass
-
-
-#     def pressed_event(self) -> None:
-#         pass
-
-
-#     def released_event(self) -> None:
-#         state: int = self.state.value
-#         state = (state + 1) % 3 if self.is_tristate else ~state & 0x2
-#         self.state: Qt.CheckState = Qt.CheckState._value2member_map_[state]
-#         self.repaint()
-
-
-#     def toggled_event(self, state: bool) -> None:
-#         pass
-
-
-#     def paintEvent(self, event: QPaintEvent) -> None:
-#         pixmap = self.pixmaps[self.checkState()][self.isEnabled()]
-#         self.painter.begin(self)
-#         self.painter.drawPixmap(self.pixmap_origin, pixmap)
-
-#         # For debug:
-#         # pen = QPen('red')
-#         # pen.setWidth(1)
-#         # self.painter.setPen(pen)
-#         # layer_rect = QRect(0, 0, CHECKBOX_WIDGET_SIZE-1, CHECKBOX_WIDGET_SIZE-1)
-#         # self.painter.drawRect(layer_rect)
-
-#         self.painter.end()
-
-
-
 

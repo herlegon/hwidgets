@@ -1,9 +1,11 @@
 from .hstyle import (
+    DEBUG_GEOMETRY,
     HANDLE_RADIUS,
     TRACK_HEIGHT,
     TRACK_MARGIN,
     TRACK_WIDTH,
     HStyle,
+    draw_widget_rect,
 )
 
 from PySide6.QtCore import (
@@ -128,6 +130,8 @@ class HSwitch(QCheckBox):
             handle_brush = self.disabled_handle
 
         painter = QPainter(self)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(track_brush)
