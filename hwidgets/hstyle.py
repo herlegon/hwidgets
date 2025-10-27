@@ -103,6 +103,25 @@ def load_qss(qss_fp: str, variant: str = "") -> str:
 
 
 
+DEBUG_GEOMETRY: bool = False
+from PySide6.QtGui import (
+    QColor,
+    QPainter,
+    QPen,
+)
+def draw_widget_rect(w: Type[QWidget], painter: QPainter):
+    """Draw around a widget without clipping
+    """
+    painter.save()
+    painter.setRenderHint(QPainter.RenderHint.Antialiasing, on=False)
+    pen = QPen()
+    pen.setWidth(1)
+    pen.setColor(QColor("#d4d4d4"))
+    painter.setPen(pen)
+    painter.drawRect(0, 0, w.width() - 1, w.height() - 1)
+    painter.restore()
+
+
 
 
 @dataclass(slots=True)
@@ -237,21 +256,4 @@ CAP_OFFSET: Final[int] = TRACK_THICKNESS // 2
 
 
 
-DEBUG_GEOMETRY: bool = True
-from PySide6.QtGui import (
-    QColor,
-    QPainter,
-    QPen,
-)
-def draw_widget_rect(w: Type[QWidget], painter: QPainter):
-    """Draw around a widget without clipping
-    """
-    painter.save()
-    painter.setRenderHint(QPainter.RenderHint.Antialiasing, on=False)
-    pen = QPen()
-    pen.setWidth(1)
-    pen.setColor(QColor("#d4d4d4"))
-    painter.setPen(pen)
-    painter.drawRect(0, 0, w.width() - 1, w.height() - 1)
-    painter.restore()
 
