@@ -272,7 +272,5 @@ class HTitle1(QWidget):
             self._icon: QLabel = QLabel(self)
             self._layout.insertWidget(0, self._icon)
         self._icon.setPixmap(pixmap)
-        print(self._icon.size())
         self._icon.setFixedSize(pixmap.size())
-        print(pixmap.size())
-        print(self._icon.size())
+

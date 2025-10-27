@@ -1,6 +1,5 @@
 # port from RLG for pynnlib_gui
 
-IndeterminateProgressIndicator
 
 - correct QCombobox:
     - when in read write
@@ -13,17 +12,11 @@ IndeterminateProgressIndicator
     * when enter key: validate current text, deselect (and focus next widget)
     * escape: undo modifications, deselect and focus out
 
-- HButton (icon)
-    * use an internal check state: rewrite
-
-- scrollbar in PlainText Area
-
 
 # Later
-ProgressIndicator
 Tooltip
 Accordion
-
+- horizontal scrollbar in PlainText Area
 
 
 Links:

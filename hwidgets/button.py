@@ -9,17 +9,21 @@ from .hstyle import (
 from PySide6.QtCore import (
     Qt,
     QSize,
+    QEvent,
 )
 from PySide6.QtGui import (
     QIcon,
     QPixmap,
     QPainter,
     QColor,
+    QMouseEvent,
 )
 from PySide6.QtWidgets import (
     QPushButton,
     QSizePolicy,
     QWidget,
+    QStyleOptionButton,
+    QStyle,
 )
 
 
@@ -37,13 +41,10 @@ class HButton(QPushButton):
         default: bool | None = None,
         flat: bool | None = True,
     ) -> None:
-
         super().__init__(parent)
+
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
-        if text is not None:
-            self.setText(text)
-        if icon is not None:
-            self.setIcon(icon)
+        self.hstyle = hstyle
 
         self.setFlat(True)
         self.setSizePolicy(
@@ -52,6 +53,7 @@ class HButton(QPushButton):
         self.setMinimumWidth(COMBOBOX_HEIGHT)
         self.setFixedHeight(COMBOBOX_HEIGHT)
 
+        self._pixmaps = {}
 
         qss_template = Template(load_qss(f"hbutton.qss"))
         qss = qss_template.substitute(
@@ -68,13 +70,18 @@ class HButton(QPushButton):
         )
         self.setStyleSheet(qss)
 
-        self.hstyle = hstyle
-        self._base_icon = None
-        self._icons = {}  # {"normal": QIcon, "hover": QIcon, "pressed": QIcon}
-        self._current_state = "normal"
+        if text is not None:
+            self.setText(text)
+
+        if icon is not None:
+            self.setIcon(icon)
 
 
-    def _make_tinted_icon(self, base_icon, pixmap, color):
+    def _make_tinted_pixmap(
+        self,
+        pixmap: QPixmap,
+        color: QColor | str
+    ) -> QPixmap:
         """Return a QIcon tinted to the given color."""
         tinted_pixmap = QPixmap(pixmap.size())
         tinted_pixmap.fill(Qt.GlobalColor.transparent)
@@ -85,9 +92,12 @@ class HButton(QPushButton):
         painter.fillRect(pixmap.rect(), color)
         painter.end()
 
-        new_icon = QIcon(base_icon)
-        new_icon.addPixmap(tinted_pixmap, QIcon.Mode.Normal, QIcon.State.Off)
-        return new_icon
+        return tinted_pixmap
+
+
+    def setIconSize(self, size):
+        # return super().setIconSize(size)
+        return
 
 
     def setIcon(self, icon: QIcon | QPixmap) -> None:
@@ -113,79 +123,194 @@ class HButton(QPushButton):
         )
         self.setFixedWidth(COMBOBOX_HEIGHT)
 
-
-        self._base_icon = icon
-        size = icon.availableSizes()[0]
-
-        pixmap = icon.pixmap(size, QIcon.Mode.Normal, QIcon.State.Off)
-        if pixmap.isNull():
-            pixmap = icon.pixmap(size)
-
-        if pixmap.isNull():
-            return super().setIcon(icon)
-
         # Create tinted icons for each state
-        self._icons["normal"] = self._make_tinted_icon(icon, pixmap, self.hstyle.widget_bgd)
-        self._icons["hover"] = self._make_tinted_icon(icon, pixmap, self.hstyle.hover_bgd)
-        self._icons["pressed"] = self._make_tinted_icon(icon, pixmap, self.hstyle.checked)
-        self._icons["checked"] = self._make_tinted_icon(icon, pixmap, self.hstyle.checked)
-
-        super().setIcon(self._icons["normal"])
-
-
-    def enterEvent(self, event):
-        if self.isEnabled():
-            if self._current_state == "checked":
-                self._set_state("checked")
-            else:
-                self._set_state("hover")
-        super().enterEvent(event)
+        self.pixmap_size = icon.availableSizes()[0]
+        pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
+        self._pixmaps: dict[str, QPixmap] = {
+            "normal" : self._make_tinted_pixmap(pixmap, hstyle.widget_bgd),
+            "hover" : self._make_tinted_pixmap(pixmap, hstyle.hover_bgd),
+            "pressed" : self._make_tinted_pixmap(pixmap, hstyle.checked),
+            "checked" : self._make_tinted_pixmap(pixmap, hstyle.checked),
+            "disabled" : self._make_tinted_pixmap(pixmap, hstyle.disabled_bgd),
+            # Disabled + check should never occurs. bad UI
+            "disabled_checked": self._make_tinted_pixmap(pixmap, hstyle.disabled_text),
+        }
 
 
-    def leaveEvent(self, event):
-        # print(f"{__class__.__name__} leaveEvent: checked:{self.isChecked()}")
-        if self._current_state == "checked":
-            self._set_state("checked")
-        else:
-            self._set_state("normal")
-        super().leaveEvent(event)
+    def paintEvent(self, event):
+        opt = QStyleOptionButton()
+        self.initStyleOption(opt)
 
+        painter = QPainter(self)
 
-    def mousePressEvent(self, event):
-        print(f"{__class__.__name__} release: checked:{self.isChecked()}")
-        if event.button() == Qt.MouseButton.LeftButton:
-            self._set_state("pressed")
-        super().mousePressEvent(event)
+        # This button is a text button
+        self.style().drawControl(QStyle.ControlElement.CE_PushButtonBevel, opt, painter, self)
+        self.style().drawControl(QStyle.ControlElement.CE_PushButtonLabel, opt, painter, self)
 
-
-    def mouseReleaseEvent(self, event):
-        print(f"{__class__.__name__} release: checked:{self.isChecked()}")
-        if self.isCheckable():
-            self._set_state("checked")
-
-        elif self.rect().contains(event.pos()):
-            self._set_state("hover")
-        else:
-            if self.isChecked():
-                self._set_state("checked")
-            else:
-                self._set_state("normal")
-        super().mouseReleaseEvent(event)
-
-
-    def setChecked(self, b: bool) -> None:
-        print(f"{__class__.__name__} release: checked:{self.isChecked()}, b={b}")
-        if b or self._current_state == "checked":
-            self._set_state("checked")
-        else:
-            self._set_state("normal")
-        return super().setChecked(b)
-
-
-    def _set_state(self, state):
-        """Switch icon based on interaction state."""
-        if state not in self._icons:
+        if not self._pixmaps:
+            painter.end()
             return
-        self._current_state = state
-        super().setIcon(self._icons[state])
+
+        # This button is an icon
+        state = opt.state
+        if not (state & QStyle.StateFlag.State_Enabled):
+            if state & QStyle.StateFlag.State_On:
+                pixmap = self._pixmaps["disabled_checked"]
+            else:
+                pixmap = self._pixmaps["disabled"]
+
+        elif state & QStyle.StateFlag.State_Sunken:
+            pixmap = self._pixmaps["pressed"]
+
+        elif state & QStyle.StateFlag.State_On:
+            pixmap = self._pixmaps["checked"]
+
+        elif state & QStyle.StateFlag.State_MouseOver:
+            pixmap = self._pixmaps["hover"]
+
+        else:
+            pixmap = self._pixmaps["normal"]
+
+        # Draw centered pixmap
+        x = (self.width() - self.pixmap_size.width()) // 2
+        y = (self.height() - self.pixmap_size.height()) // 2
+        painter.drawPixmap(x, y, pixmap)
+        painter.end()
+
+
+
+
+    # def _update_icon_state(self) -> None:
+    #     """Sets the icon based on the button's current state."""
+    #     # Don't do anything if icons haven't been generated yet
+    #     if not self._icons:
+    #         return
+
+    #     if not self.isEnabled():
+    #         super().setIcon(self._icons["disabled"])
+
+    #     elif self.isDown(): # and not self.isChecked():
+    #         super().setIcon(self._icons["checked"])
+
+    #     elif self.isChecked():
+    #         super().setIcon(self._icons["checked"])
+
+    #     elif self.underMouse():
+    #         super().setIcon(self._icons["hover"])
+
+    #     else:
+    #         super().setIcon(self._icons["normal"])
+
+
+    # def enterEvent(self, event):
+    #     if not self.isEnabled():
+    #         return
+    #     if not self.isDown() and not self.isChecked():
+    #         self._update_icon_state("hover")
+    #     super().enterEvent(event)
+
+
+    # def leaveEvent(self, event):
+    #     if not self.isEnabled():
+    #         return
+    #     if not self.isDown() and not self.isChecked():
+    #         self._update_icon_state("normal")
+    #     super().leaveEvent(event)
+
+
+    # def mousePressEvent(self, event):
+    #     if event.button() == Qt.MouseButton.LeftButton and self.isEnabled():
+    #         self._update_icon_state("pressed")
+    #     super().mousePressEvent(event)
+
+
+    # def mouseReleaseEvent(self, event):
+    #     if self.isEnabled():
+    #         if self.isChecked():
+    #             self._update_icon_state("checked")
+    #         else:
+    #             self._update_icon_state("hover" if self.rect().contains(event.pos()) else "normal")
+    #     super().mouseReleaseEvent(event)
+
+
+    # def changeEvent(self, event: QEvent) -> None:
+    #     """Handle state changes like enabled/disabled."""
+    #     super().changeEvent(event)
+    #     if event.type() == QEvent.Type.EnabledChange:
+    #         self._update_icon_state()
+
+
+    # def changeEvent(self, event):
+    #     """Handle enable/disable and checked state changes."""
+    #     if event.type() == QEvent.Type.EnabledChange:
+    #         self._update_icon_state("normal" if self.isEnabled() else "disabled")
+    #     elif event.type() == QEvent.Type.StyleChange:
+    #         self._update_icon_state("checked" if self.isChecked() else "normal")
+    #     super().changeEvent(event)
+
+
+    # def _update_icon_state(self, state: str):
+    #     """Switch the displayed icon according to the state."""
+    #     if self._icons and state not in self._icons:
+    #         state = "normal"
+    #         self._current_state = state
+    #         super().setIcon(self._icons[state])
+
+
+    # def _set_state(self, state):
+    #     """Switch icon based on interaction state."""
+    #     if state not in self._icons:
+    #         return
+    #     self._current_state = state
+    #     super().setIcon(self._icons[state])
+
+
+
+    # def enterEvent(self, event):
+    #     if self.isEnabled():
+    #         if self._current_state == "checked":
+    #             self._set_state("checked")
+    #         else:
+    #             self._set_state("hover")
+    #     super().enterEvent(event)
+
+
+    # def leaveEvent(self, event):
+    #     print(f"{__class__.__name__} leaveEvent: checked:{self.isChecked()}")
+    #     if self._current_state == "checked":
+    #         self._set_state("checked")
+    #     else:
+    #         self._set_state("normal")
+    #     super().leaveEvent(event)
+
+
+    # def mousePressEvent(self, event):
+    #     print(f"{__class__.__name__} press: current checked:{self.isChecked()}")
+    #     if event.button() == Qt.MouseButton.LeftButton:
+    #         self._set_state("pressed")
+    #     super().mousePressEvent(event)
+
+
+    # def mouseReleaseEvent(self, event):
+    #     print(f"{__class__.__name__} release: checked:{self.isChecked()}")
+    #     if self.isCheckable():
+    #         self._set_state("checked")
+
+    #     elif self.rect().contains(event.pos()):
+    #         self._set_state("hover")
+    #     else:
+    #         if self.isChecked():
+    #             self._set_state("checked")
+    #         else:
+    #             self._set_state("normal")
+    #     super().mouseReleaseEvent(event)
+
+
+    # def setChecked(self, b: bool) -> None:
+    #     print(f"{__class__.__name__} setChecked: checked:{self.isChecked()}, b={b}")
+    #     if b or self._current_state == "checked":
+    #         self._set_state("checked")
+    #     else:
+    #         self._set_state("normal")
+    #     return super().setChecked(b)
 
