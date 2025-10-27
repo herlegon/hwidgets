@@ -19,8 +19,8 @@ from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCh
     QComboBox, QDoubleSpinBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
     QPlainTextEdit, QProgressBar, QPushButton, QRadioButton,
-    QScrollBar, QSizePolicy, QSpacerItem, QSpinBox,
-    QVBoxLayout, QWidget)
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+    QWidget)
 
 from hwidgets import (
     HButton,
@@ -34,6 +34,7 @@ from hwidgets import (
     HRadioButton,
     HScrollBar,
     HSpinBox,
+    HButtonGroup,
     HDivider,
     HIndeterminateCircularProgress,
     HIndeterminateProgress,
@@ -48,12 +49,12 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1410, 891)
+        MainWindow.resize(1333, 848)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
-        self.horizontalLayout.setSpacing(20)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
+        self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.q_frame = QFrame(self.centralwidget)
         self.q_frame.setObjectName(u"q_frame")
         self.q_frame.setFrameShape(QFrame.Shape.StyledPanel)
@@ -137,7 +138,6 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_7 = QHBoxLayout()
         self.horizontalLayout_7.setObjectName(u"horizontalLayout_7")
-        self.horizontalLayout_7.setContentsMargins(-1, -1, -1, 20)
         self.q_label = QLabel(self.q_frame)
         self.q_label.setObjectName(u"q_label")
 
@@ -310,36 +310,36 @@ class Ui_MainWindow(object):
 
         self.q_widgets_sub_layout.addLayout(self.q_groupbox_layout)
 
-        self.htextedit_layout_2 = QVBoxLayout()
-        self.htextedit_layout_2.setObjectName(u"htextedit_layout_2")
+        self.horizontalLayout_16 = QHBoxLayout()
+        self.horizontalLayout_16.setObjectName(u"horizontalLayout_16")
         self.q_lineedit_editable = QLineEdit(self.q_frame)
         self.q_lineedit_editable.setObjectName(u"q_lineedit_editable")
         self.q_lineedit_editable.setClearButtonEnabled(False)
 
-        self.htextedit_layout_2.addWidget(self.q_lineedit_editable)
+        self.horizontalLayout_16.addWidget(self.q_lineedit_editable)
 
         self.q_lineedit_editable_clear_button = QLineEdit(self.q_frame)
         self.q_lineedit_editable_clear_button.setObjectName(u"q_lineedit_editable_clear_button")
         self.q_lineedit_editable_clear_button.setClearButtonEnabled(True)
 
-        self.htextedit_layout_2.addWidget(self.q_lineedit_editable_clear_button)
-
-        self.q_lineedit_read_only = QLineEdit(self.q_frame)
-        self.q_lineedit_read_only.setObjectName(u"q_lineedit_read_only")
-        self.q_lineedit_read_only.setReadOnly(True)
-        self.q_lineedit_read_only.setClearButtonEnabled(True)
-
-        self.htextedit_layout_2.addWidget(self.q_lineedit_read_only)
+        self.horizontalLayout_16.addWidget(self.q_lineedit_editable_clear_button)
 
         self.q_lineedit_disabled = QLineEdit(self.q_frame)
         self.q_lineedit_disabled.setObjectName(u"q_lineedit_disabled")
         self.q_lineedit_disabled.setEnabled(False)
         self.q_lineedit_disabled.setClearButtonEnabled(True)
 
-        self.htextedit_layout_2.addWidget(self.q_lineedit_disabled)
+        self.horizontalLayout_16.addWidget(self.q_lineedit_disabled)
+
+        self.q_lineedit_read_only = QLineEdit(self.q_frame)
+        self.q_lineedit_read_only.setObjectName(u"q_lineedit_read_only")
+        self.q_lineedit_read_only.setReadOnly(True)
+        self.q_lineedit_read_only.setClearButtonEnabled(True)
+
+        self.horizontalLayout_16.addWidget(self.q_lineedit_read_only)
 
 
-        self.q_widgets_sub_layout.addLayout(self.htextedit_layout_2)
+        self.q_widgets_sub_layout.addLayout(self.horizontalLayout_16)
 
         self.q_plaintextedit_layout = QHBoxLayout()
         self.q_plaintextedit_layout.setObjectName(u"q_plaintextedit_layout")
@@ -472,12 +472,6 @@ class Ui_MainWindow(object):
 
         self.q_widgets_main_layout.addLayout(self.q_widgets_sub_layout)
 
-        self.q_vertical_scrollbar = QScrollBar(self.q_frame)
-        self.q_vertical_scrollbar.setObjectName(u"q_vertical_scrollbar")
-        self.q_vertical_scrollbar.setOrientation(Qt.Orientation.Vertical)
-
-        self.q_widgets_main_layout.addWidget(self.q_vertical_scrollbar)
-
 
         self.horizontalLayout.addWidget(self.q_frame)
 
@@ -489,12 +483,6 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10.setSpacing(12)
         self.horizontalLayout_10.setObjectName(u"horizontalLayout_10")
         self.horizontalLayout_10.setContentsMargins(18, 18, 18, 18)
-        self.h_vertical_scrollbar = HScrollBar(self.h_frame, hstyle=hstyle)
-        self.h_vertical_scrollbar.setObjectName(u"h_vertical_scrollbar")
-        self.h_vertical_scrollbar.setOrientation(Qt.Orientation.Vertical)
-
-        self.horizontalLayout_10.addWidget(self.h_vertical_scrollbar)
-
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.h_combobox_layout = QVBoxLayout()
@@ -563,7 +551,6 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.horizontalLayout_6.setContentsMargins(-1, -1, -1, 20)
         self.h_label = HLabel(self.h_frame, hstyle=hstyle)
         self.h_label.setObjectName(u"h_label")
 
@@ -755,36 +742,36 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.h_groupbox_layout)
 
-        self.htextedit_layout = QVBoxLayout()
-        self.htextedit_layout.setObjectName(u"htextedit_layout")
+        self.horizontalLayout_15 = QHBoxLayout()
+        self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
         self.h_lineedit_editable = HLineEdit(self.h_frame, hstyle=hstyle)
         self.h_lineedit_editable.setObjectName(u"h_lineedit_editable")
         self.h_lineedit_editable.setClearButtonEnabled(False)
 
-        self.htextedit_layout.addWidget(self.h_lineedit_editable)
+        self.horizontalLayout_15.addWidget(self.h_lineedit_editable)
 
         self.h_lineedit_editable_clear_button = HLineEdit(self.h_frame, hstyle=hstyle)
         self.h_lineedit_editable_clear_button.setObjectName(u"h_lineedit_editable_clear_button")
         self.h_lineedit_editable_clear_button.setClearButtonEnabled(True)
 
-        self.htextedit_layout.addWidget(self.h_lineedit_editable_clear_button)
-
-        self.h_lineedit_read_only = HLineEdit(self.h_frame, hstyle=hstyle)
-        self.h_lineedit_read_only.setObjectName(u"h_lineedit_read_only")
-        self.h_lineedit_read_only.setReadOnly(True)
-        self.h_lineedit_read_only.setClearButtonEnabled(True)
-
-        self.htextedit_layout.addWidget(self.h_lineedit_read_only)
+        self.horizontalLayout_15.addWidget(self.h_lineedit_editable_clear_button)
 
         self.h_lineedit_disabled = HLineEdit(self.h_frame, hstyle=hstyle)
         self.h_lineedit_disabled.setObjectName(u"h_lineedit_disabled")
         self.h_lineedit_disabled.setEnabled(False)
         self.h_lineedit_disabled.setClearButtonEnabled(True)
 
-        self.htextedit_layout.addWidget(self.h_lineedit_disabled)
+        self.horizontalLayout_15.addWidget(self.h_lineedit_disabled)
+
+        self.h_lineedit_read_only = HLineEdit(self.h_frame, hstyle=hstyle)
+        self.h_lineedit_read_only.setObjectName(u"h_lineedit_read_only")
+        self.h_lineedit_read_only.setReadOnly(True)
+        self.h_lineedit_read_only.setClearButtonEnabled(True)
+
+        self.horizontalLayout_15.addWidget(self.h_lineedit_read_only)
 
 
-        self.verticalLayout.addLayout(self.htextedit_layout)
+        self.verticalLayout.addLayout(self.horizontalLayout_15)
 
         self.h_plaintextedit_layout = QHBoxLayout()
         self.h_plaintextedit_layout.setObjectName(u"h_plaintextedit_layout")
@@ -997,6 +984,16 @@ class Ui_MainWindow(object):
 
         self.verticalLayout.addLayout(self.horizontalLayout_14)
 
+        self.horizontalLayout_13 = QHBoxLayout()
+        self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
+        self.h_button_group = HButtonGroup(self.h_frame, hstyle=hstyle)
+        self.h_button_group.setObjectName(u"h_button_group")
+
+        self.horizontalLayout_13.addWidget(self.h_button_group)
+
+
+        self.verticalLayout.addLayout(self.horizontalLayout_13)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout.addItem(self.verticalSpacer_2)
@@ -1041,8 +1038,8 @@ class Ui_MainWindow(object):
         self.q_label_groupbox_2.setText(QCoreApplication.translate("MainWindow", u"A Qlabel", None))
         self.q_lineedit_editable.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
         self.q_lineedit_editable_clear_button.setText(QCoreApplication.translate("MainWindow", u"Editable with clear button", None))
-        self.q_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
         self.q_lineedit_disabled.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
+        self.q_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
         self.q_plaintextedit_editable.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
 "sdsdc", None))
         self.q_plaintextedit_editable_vscrollbar.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
@@ -1091,8 +1088,8 @@ class Ui_MainWindow(object):
         self.h_label_groupbox_2.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
         self.h_lineedit_editable.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
         self.h_lineedit_editable_clear_button.setText(QCoreApplication.translate("MainWindow", u"Editable with clear button", None))
-        self.h_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
         self.h_lineedit_disabled.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
+        self.h_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
         self.h_plaintextedit_editable.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
 "sdsdc", None))
         self.h_plaintextedit_editable_vscrollbar.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"

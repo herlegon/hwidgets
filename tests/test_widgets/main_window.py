@@ -1,3 +1,4 @@
+import sys
 from hutils import (
     absolute_path,
     get_extension,
@@ -75,9 +76,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.h_radial_progress_1.setFixedSize(QSize(100,100))
         self.h_radial_progress_1.set_thickness(8)
 
+        self.h_button_group.set_buttons([
+            "SafeTensors", "ONNX", "TensorRT", "NCNN"
+        ])
+        self.horizontalLayout_13.setAlignment(self.h_button_group, Qt.AlignCenter)
 
         self.setMinimumWidth(800)
-        self.move(QPoint(400,200))
+        if sys.platform == 'linux':
+            self.move(QPoint(400,50))
+        else:
+            self.move(QPoint(400,200))
 
 
 

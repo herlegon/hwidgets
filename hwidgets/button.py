@@ -2,7 +2,9 @@ from string import Template
 from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
+    DEBUG_GEOMETRY,
     HStyle,
+    draw_widget_rect,
     load_qss,
 )
 
@@ -77,6 +79,14 @@ class HButton(QPushButton):
             self.setIcon(icon)
 
 
+    def sizeHint(self) -> QSize:
+        hint = super().sizeHint()
+        if not self.text() and self._pixmaps:
+            hint.setWidth(COMBOBOX_HEIGHT)
+        hint.setHeight(COMBOBOX_HEIGHT)
+        return hint
+
+
     def _make_tinted_pixmap(
         self,
         pixmap: QPixmap,
@@ -142,6 +152,10 @@ class HButton(QPushButton):
         self.initStyleOption(opt)
 
         painter = QPainter(self)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
+
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
         # This button is a text button
         self.style().drawControl(QStyle.ControlElement.CE_PushButtonBevel, opt, painter, self)

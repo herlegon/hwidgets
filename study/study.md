@@ -1,6 +1,5 @@
 # port from RLG for pynnlib_gui
 
-
 - correct QCombobox:
     - when in read write
     - windows: wrong text size and top margin
@@ -14,8 +13,8 @@
 
 
 # Later
-Tooltip
-Accordion
+- Tooltip
+- Accordion
 - horizontal scrollbar in PlainText Area
 
 

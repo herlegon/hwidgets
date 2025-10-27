@@ -3,8 +3,6 @@ import os
 from pathlib import Path
 import sys
 from typing import Final, Type
-# from PySide6.QtCore import (
-# )
 from PySide6.QtGui import (
     QFont,
     QPainter,

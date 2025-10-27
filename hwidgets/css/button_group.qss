@@ -1,0 +1,62 @@
+QWidget {
+    color: $text_color;
+    font-family: "Segoe UI", "Sans Serif";
+    font-size: 10pt;
+
+}
+
+QToolButton {
+    /* border: 1px solid #BBBBBB; */
+    background-color: $widget_bgd;
+    color: $text_color;
+    padding: 0px $radius 0px $radius;
+    outline: none;
+}
+
+/* --- Unchecked States --- */
+QToolButton:hover {
+    background-color: $widget_hover;
+}
+QToolButton:pressed {
+    background-color: $selected_bgd;
+}
+
+
+QToolButton:checked {
+    background-color: $selected_bgd;
+    color: $text_color;
+}
+
+/* QToolButton:checked:hover {
+    background-color: $checked_color;
+} */
+
+
+
+QToolButton#segment-left {
+    border-top-left-radius: $radius;
+    border-bottom-left-radius: $radius;
+    border-right-width: 0;
+}
+
+QToolButton#segment-center {
+    border-radius: 0;
+    border-right-width: 0;
+}
+
+QToolButton#segment-right {
+    border-top-right-radius: $radius;
+    border-bottom-right-radius: $radius;
+}
+
+/* Restore borders on selected segments */
+/* QToolButton#segment-left:checked {
+    border-right-width: 1px;
+}
+QToolButton#segment-center:checked {
+    border-left-width: 1px;
+    border-right-width: 1px;
+}
+QToolButton#segment-right:checked {
+    border-left-width: 1px;
+} */
