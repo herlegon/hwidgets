@@ -12,8 +12,7 @@ QLineEdit {
 
     selection-background-color: $selected_text;
 
-    padding-left: $radius;
-    padding-bottom: 2px;
+    padding: 0px $padding_right 2px $radius;
 
 }
 

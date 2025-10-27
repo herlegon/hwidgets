@@ -108,7 +108,7 @@ class HLineEdit(QLineEdit):
 
         # Replace the clear button
         self.main_layout = QHBoxLayout(self)
-        self.main_layout.setContentsMargins(0,0,COMBOBOX_RADIUS,0)
+        self.main_layout.setContentsMargins(0,0,0,0)
         self.main_layout.setSpacing(0)
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.main_layout.addStretch(1)
@@ -127,7 +127,7 @@ class HLineEdit(QLineEdit):
             border_color=f"{hstyle.border}",
             disabled_bgd=f"{hstyle.disabled_bgd}",
             disabled_text=f"{hstyle.disabled_text}",
-            padding_right=f"{COMBOBOX_RADIUS}px",
+            padding_right=f"{self.clear_button.width()}px",
             editing_border=f"{hstyle.selected}",
             selected_text=f"{hstyle.selected_text}",
             selected=f"{hstyle.selected}",
