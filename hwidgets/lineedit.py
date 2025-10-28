@@ -48,7 +48,7 @@ class _ClearButton(QPushButton):
         ))
         self.setIcon(self.normal_icon)
 
-        qss_template = Template(load_qss("hlineedit_button.qss"))
+        qss_template = Template(load_qss("lineedit_button.qss"))
         qss = qss_template.substitute(
             radius=f"{COMBOBOX_RADIUS}px",
             hover_bgd=f"{hstyle.hover_bgd}",
@@ -118,7 +118,7 @@ class HLineEdit(QLineEdit):
         )
         self.setLayout(self.main_layout)
 
-        qss_template = Template(load_qss("hlineedit.qss"))
+        qss_template = Template(load_qss("lineedit.qss"))
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
             text_color=f"{hstyle.text_color}",

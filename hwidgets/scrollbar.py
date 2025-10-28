@@ -32,7 +32,7 @@ class HScrollBar(QScrollBar):
         # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
         self.hstyle= hstyle
-        self.qss_template = Template(load_qss("hscrollbar.qss"))
+        self.qss_template = Template(load_qss("scrollbar.qss"))
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
         )

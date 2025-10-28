@@ -39,7 +39,7 @@ class HGroupBox(QGroupBox):
         self.setCheckable(False)
         self.setTitle(title)
 
-        qss_template = Template(load_qss(f"hgroupbox.css"))
+        qss_template = Template(load_qss("groupbox.css"))
         title_left_adjust = 0
         qss = qss_template.substitute(
             window_bgd=f"{hstyle.window_bgd}",

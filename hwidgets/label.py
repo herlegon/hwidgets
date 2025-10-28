@@ -52,7 +52,7 @@ class HLabel(QLabel):
         self.setMinimumWidth(COMBOBOX_HEIGHT)
         self.setFixedHeight(COMBOBOX_HEIGHT)
 
-        qss_template = Template(load_qss(f"hlabel.css"))
+        qss_template = Template(load_qss("label.css"))
         qss = qss_template.substitute(
             window_bgd=f"{hstyle.window_bgd}",
             widget_bgd=f"{hstyle.widget_bgd}",

@@ -236,7 +236,7 @@ class HCommonSpinBox:
         self.main_layout.addLayout(button_layout)
         self.setLayout(self.main_layout)
 
-        qss_template = Template(load_qss("hspinbox.qss"))
+        qss_template = Template(load_qss("spinbox.qss"))
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
             text_color=f"{hstyle.text_color}",

@@ -219,17 +219,17 @@ class HComboBox(QComboBox):
             padding_right=f"{int(1.5 * COMBOBOX_RADIUS)}px",
         )
 
-        qss_template = Template(load_qss(f"hcombobox.css", variant=self.variant))
+        qss_template = Template(load_qss("combobox.qss", variant=self.variant))
         qss = qss_template.substitute(**template_subst)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setStyleSheet(qss)
 
-        qss_template = Template(load_qss(f"hcombobox_lineedit.css", variant=self.variant))
+        qss_template = Template(load_qss("combobox_lineedit.qss", variant=self.variant))
         qss = qss_template.substitute(**template_subst)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.lineEdit().setStyleSheet(qss)
 
-        qss_template = Template(load_qss(f"hcombobox_abstractitemview.css", variant=self.variant))
+        qss_template = Template(load_qss("combobox_abstractitemview.qss", variant=self.variant))
         self.popup_qss = qss_template.substitute(**template_subst)
 
         if sys.platform == 'win32':

@@ -61,7 +61,7 @@ class _ClearButton(QPushButton):
         ))
         self.setIcon(self.normal_icon)
 
-        qss_template = Template(load_qss("hplaintextedit_button.qss"))
+        qss_template = Template(load_qss("plaintextedit_button.qss"))
         qss = qss_template.substitute(
             radius=f"{COMBOBOX_RADIUS}px",
             hover_bgd=f"{hstyle.hover_bgd}",
@@ -288,7 +288,7 @@ class HPlainTextEdit(QPlainTextEdit):
         self.viewport().setAttribute(Qt.WA_StyledBackground, True)
         self.viewport().setStyleSheet("background: transparent;")
 
-        qss_template = Template(load_qss("hplaintextedit.qss"))
+        qss_template = Template(load_qss("plaintextedit.qss"))
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
             text_color=f"{hstyle.text_color}",

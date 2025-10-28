@@ -57,7 +57,7 @@ class HButton(QPushButton):
 
         self._pixmaps = {}
 
-        qss_template = Template(load_qss(f"hbutton.qss"))
+        qss_template = Template(load_qss("button.qss"))
         qss = qss_template.substitute(
             window_bgd=f"{hstyle.window_bgd}",
             widget_bgd=f"{hstyle.widget_bgd}",
@@ -113,7 +113,7 @@ class HButton(QPushButton):
     def setIcon(self, icon: QIcon | QPixmap) -> None:
         hstyle = self.hstyle
 
-        qss_template = Template(load_qss(f"hbutton.qss"))
+        qss_template = Template(load_qss("button.qss"))
         qss = qss_template.substitute(
             window_bgd=f"{hstyle.window_bgd}",
             widget_bgd=f"{hstyle.window_bgd}",
