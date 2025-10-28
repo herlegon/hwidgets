@@ -165,6 +165,16 @@ class HComboBox(QComboBox):
             line_edit.setReadOnly(not editable)
 
 
+    def setMinimumSize(self, size: QSize) -> None:
+        super().setMinimumSize(QSize(size.width(), COMBOBOX_HEIGHT))
+        super().setFixedHeight(COMBOBOX_HEIGHT)
+
+
+    def setMaximumSize(self, size: QSize) -> None:
+        super().setMaximumSize(QSize(size.width(), COMBOBOX_HEIGHT))
+        super().setFixedHeight(COMBOBOX_HEIGHT)
+
+
     def _pixmap_rect(self) -> QRect:
         pixmap = self._pixmaps.get("normal")
         if not pixmap:
