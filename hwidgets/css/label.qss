@@ -3,6 +3,8 @@ QLabel {
     color: $text_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
+    margin: 0px;
+    padding: 0px;
 }
 
 

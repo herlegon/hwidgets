@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1333</width>
-    <height>848</height>
+    <height>885</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,10 +63,23 @@
          <item>
           <layout class="QVBoxLayout" name="q_combobox_layout">
            <item>
-            <widget class="QComboBox" name="q_combobox_rw"/>
+            <widget class="QComboBox" name="q_combobox_rw">
+             <property name="maximumSize">
+              <size>
+               <width>300</width>
+               <height>16777215</height>
+              </size>
+             </property>
+            </widget>
            </item>
            <item>
             <widget class="QComboBox" name="q_combobox_read_only">
+             <property name="maximumSize">
+              <size>
+               <width>300</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="editable">
               <bool>true</bool>
              </property>
@@ -846,6 +859,59 @@ of vertical text
               <bool>true</bool>
              </property>
             </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_17">
+             <item>
+              <widget class="QLineEdit" name="h_lineedit_editable_2">
+               <property name="text">
+                <string>Editable</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="h_combobox_read_only_2">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="h_spinbox_rw_2">
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+               </property>
+               <property name="minimum">
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_9">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>

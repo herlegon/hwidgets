@@ -75,8 +75,8 @@ if __name__ == "__main__":
 
     # Add hstyle argument to the main class
     text = re.sub(
-        r"def setupUi\(self,\s*MainWindow\):",
-        "def setupUi(self, MainWindow, hstyle: HStyle):",
+        r"def setupUi\(self,\s*(\w+)\):",
+        r"def setupUi(self, \1, hstyle: HStyle):",
         text,
     )
 

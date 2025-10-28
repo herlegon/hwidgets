@@ -141,17 +141,7 @@ class HComboBox(QComboBox):
         }
 
         self.setEditable(True)
-        if self.lineEdit():
-            line_edit = self.lineEdit()
-            line_edit.setReadOnly(True)
-            self.set_stylesheet(hstyle=hstyle)
-            line_edit.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-            line_edit.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
-            print("install")
-            line_edit.installEventFilter(self)
-
-        else:
-            self.set_stylesheet(hstyle=hstyle)
+        self.set_stylesheet(hstyle=hstyle)
         self.setEditable(False)
         # if self.lineEdit():
         #     self.lineEdit().setMouseTracking(True)
@@ -160,7 +150,7 @@ class HComboBox(QComboBox):
 
 
     def setEditable(self, editable: bool) -> None:
-        print(f"{self.objectName()} set editable: {editable}")
+        # print(f"{self.objectName()} set editable: {editable}")
         was_editable = self.isEditable()
 
         super().setEditable(editable)
@@ -168,7 +158,6 @@ class HComboBox(QComboBox):
         # Reinstall event filter if lineEdit changed
         if self.lineEdit() and was_editable != editable:
             line_edit = self.lineEdit()
-            print(f"Reinstalling event filter after editable change")
             line_edit.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
             line_edit.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
             line_edit.removeEventFilter(self)

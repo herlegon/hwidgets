@@ -8,14 +8,14 @@ QPlainTextEdit {
     font-size: 10pt;
 
     border: 1px solid $border_color;
-    border-radius: 12px;
+    border-radius: $radius;
 
     selection-background-color: $selected_text;
 
     padding-left: $radius;
     padding-bottom: 2px;
     padding-top: 0px;
-    padding-right: 12px;
+    padding-right: $radius;
 
 }
 

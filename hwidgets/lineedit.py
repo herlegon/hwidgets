@@ -4,6 +4,8 @@ from PySide6.QtCore import (
     QSize,
     Qt,
     QSize,
+    QEvent,
+    QTimer,
 )
 from PySide6.QtGui import (
     QIcon,
@@ -98,6 +100,7 @@ class HLineEdit(QLineEdit):
         clearButtonEnabled: bool | None = None
     ) -> None:
         super().__init__(parent)
+        self.hstyle = hstyle
 
         self.setCursor(Qt.CursorShape.ArrowCursor)
 
@@ -118,8 +121,47 @@ class HLineEdit(QLineEdit):
         )
         self.setLayout(self.main_layout)
 
+
+        # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
+        self.signals_connected = False
+        self.is_clear_button_enabled: bool = False
+        if readOnly is not None and readOnly:
+            self.setReadOnly(True)
+
+        elif clearButtonEnabled is not None and clearButtonEnabled:
+            self.is_clear_button_enabled = True
+            self.setClearButtonEnabled(self.is_clear_button_enabled)
+
+        else:
+            self.setClearButtonEnabled(self.is_clear_button_enabled)
+
+        self.clear_button.setVisible(False)
+        self._update_stylesheet()
+
+        self.clear_button.released.connect(self.clear_button_released)
+        # print(f"{__class__.__name__} Instanciated")
+
+
+    def _update_stylesheet(self) -> None:
+        hstyle = self.hstyle
+
+        if not self.is_clear_button_enabled:
+            self.clear_button.setFixedWidth(0)
+            self.clear_button.hide()
+            self.main_layout.invalidate()
+            padding_left, padding_right = COMBOBOX_RADIUS, COMBOBOX_RADIUS
+
+        else:
+            self.clear_button.show()
+            self.clear_button.setFixedWidth(COMBOBOX_HEIGHT)
+            self.main_layout.invalidate()
+            padding_left, padding_right = COMBOBOX_RADIUS, COMBOBOX_HEIGHT
+
         qss_template = Template(load_qss("lineedit.qss"))
         qss = qss_template.substitute(
+            padding_right=f"{padding_right}px",
+            padding_left=f"{padding_left}px",
+
             widget_bgd=f"{hstyle.widget_bgd}",
             text_color=f"{hstyle.text_color}",
             radius=f"{COMBOBOX_RADIUS}px",
@@ -127,26 +169,12 @@ class HLineEdit(QLineEdit):
             border_color=f"{hstyle.border}",
             disabled_bgd=f"{hstyle.disabled_bgd}",
             disabled_text=f"{hstyle.disabled_text}",
-            padding_right=f"{self.clear_button.width()}px",
             editing_border=f"{hstyle.selected}",
             selected_text=f"{hstyle.selected_text}",
             selected=f"{hstyle.selected}",
         )
         self.setStyleSheet(qss)
 
-        # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
-        self.signals_connected = False
-        if readOnly is not None and readOnly:
-            self.setReadOnly(True)
-
-        elif clearButtonEnabled is not None and clearButtonEnabled:
-            self.setClearButtonEnabled(True)
-
-        else:
-            self.setClearButtonEnabled(False)
-
-        self.clear_button.released.connect(self.clear_button_released)
-        # print(f"{__class__.__name__} Instanciated")
 
 
     def clear_button_released(self):
@@ -160,20 +188,36 @@ class HLineEdit(QLineEdit):
         else:
             self.clear_button.hide()
 
+    def clear(self) -> None:
+        self.clear_button.hide()
+        return super().clear()
+
+
+    def setText(self, text: str) -> None:
+        self.event_text_changed(text)
+        return super().setText(text)
+
 
     def setClearButtonEnabled(self, enable: bool) -> None:
-        # print(f"{__class__.__name__} set clear button={enable} (ro: {self.isReadOnly()}, enabled: {self.isVisible()})")
+        # print(f"{self.objectName()} set clear button={enable} (ro: {self.isReadOnly()}, enabled: {self.isVisible()})")
         self.blockSignals(True)
         super().setClearButtonEnabled(False)
+
         if enable and not self.isReadOnly() and self.isEnabled():
-            self.clear_button.show()
+            self.is_clear_button_enabled = True
+            self._update_stylesheet()
+            self.main_layout.invalidate()
             if not self.signals_connected:
                 # print(f"{__class__.__name__}   connect signals")
                 self.textChanged.connect(self.event_text_changed)
                 self.textEdited.connect(self.event_text_changed)
                 self.signals_connected = True
+
         else:
-            self.clear_button.hide()
+            self.is_clear_button_enabled = False
+            self._update_stylesheet()
+            self.main_layout.invalidate()
+
             if self.signals_connected:
                 for signal in (self.textChanged, self.textEdited):
                     try:
@@ -194,16 +238,49 @@ class HLineEdit(QLineEdit):
             self.setClearButtonEnabled(False)
 
 
-    def setEnabled(self, enable: bool) -> bool:
+    def setEnabled(self, enable: bool) -> None:
         # print(f"{__class__.__name__} set enabled={enable}")
         super().setEnabled(enable)
-        if self.isReadOnly():
-            self.setClearButtonEnabled(False)
+        self.is_clear_button_enabled = (
+            enable if not self.isReadOnly() else False
+        )
+        self.setClearButtonEnabled(self.is_clear_button_enabled)
 
-        else:
-            self.setClearButtonEnabled(enable)
 
-
-    def setDisabled(self, enable: bool) -> bool:
+    def setDisabled(self, enable: bool) -> None:
         # print(f"{__class__.__name__} set disabled={enable}")
         self.setEnabled(not enable)
+
+
+
+    def deselect_and_clear_focus(self):
+        # print(f"{__class__.__name__} deselect and clear focus")
+        self.blockSignals(True)
+        cursor_pos = len(self.text())
+        self.setSelection(cursor_pos, 0)
+        self.setCursorPosition(cursor_pos)
+        self.deselect()
+        self.blockSignals(False)
+        self.clearFocus()
+
+
+    def keyPressEvent(self, event: QEvent) -> None:
+        key = event.key()
+
+        if key in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
+            if self.hasFocus():
+                self._editing = False
+                # print(f"{__class__.__name__} keyPressEvent: enter/return")
+                QTimer.singleShot(0, self.deselect_and_clear_focus)
+                event.accept()
+                return
+
+        elif key == Qt.Key.Key_Escape:
+            if self.hasFocus():
+                self._editing = False
+                # print(f"{__class__.__name__} keyPressEvent: escape")
+                QTimer.singleShot(0, self.deselect_and_clear_focus)
+                event.accept()
+                return
+
+        super().keyPressEvent(event)

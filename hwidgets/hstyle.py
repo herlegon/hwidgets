@@ -158,7 +158,7 @@ def draw_widget_rect(w: Type[QWidget], painter: QPainter):
 
 @dataclass(slots=True)
 class HStyle:
-    window_bgd: str = "#181819"
+    window_bgd: str = "#1B1B1D"
 
     # Combobox
     widget_bgd: str = "#4F4D53"
@@ -209,7 +209,7 @@ class HStyle:
 
 
 COMBOBOX_HEIGHT = 24
-COMBOBOX_RADIUS = 8
+COMBOBOX_RADIUS = 6
 # COMBOBOX_PADDING = 10
 
 
@@ -273,7 +273,7 @@ TRACK_MARGIN = (TRACK_HEIGHT - HANDLE_RADIUS) // 2
 TRACK_HEIGHT = TRACK_MARGIN * 2 + HANDLE_RADIUS
 
 
-TITLE_1_HEIGHT = COMBOBOX_HEIGHT
+TITLE_1_HEIGHT = COMBOBOX_HEIGHT + COMBOBOX_RADIUS
 TITLE_1_FONT_SIZE = 14
 TITLE_1_BOLD = True
 

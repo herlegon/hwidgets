@@ -201,8 +201,8 @@ class HTitle1(QWidget):
         self._layout = QHBoxLayout()
         # M3 margins: https://m3.material.io/components/top-app-bar/specs
         # self._layout.setContentsMargins(16, 4, 12, 4)
-        self._layout.setContentsMargins(12, 0, 12, 0)
-        self._layout.setSpacing(8)
+        self._layout.setContentsMargins(0, 0, 0, 0)
+        self._layout.setSpacing(0)
         self.setLayout(self._layout)
 
         self._icon: QLabel | None = None
@@ -213,9 +213,11 @@ class HTitle1(QWidget):
             self._icon.setPixmap(pixmap)
             self._icon.setFixedSize(pixmap.size())
             self._layout.addWidget(self._icon)
+            self._layout.setSpacing(8)
+
         self._title = QLabel(text, self)
         self._layout.addWidget(
-            self._title, 0, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
+            self._title, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
         )
 
         font = QFont()
@@ -223,19 +225,18 @@ class HTitle1(QWidget):
         font.setUnderline(False)
         font.setItalic(False)
         self._title.setFont(font)
-        # self.setStyleSheet(
-        #     """
-        #         background-color: yellow; border: 1px solid white;
-        #     """
-        # )
+        # for debug:
+        # self.setStyleSheet("background-color: yellow; border: 1px solid white;")
         self._title.setStyleSheet(
             """
                 QLabel{{
                     /* background-color: white; */
+                    /* border: 1px solid red; */
                     color: {color};
                     font-family: {font_family};
                     font-size: {font_size};
-                    /* border: 1px solid red; */
+                    padding: 0px;
+                    margin: 0px;
                 }}
             """.format(
                 color=self.hstyle.text_color,
@@ -261,6 +262,7 @@ class HTitle1(QWidget):
         pixmap: QPixmap = load_png_icon(icon_path, self.hstyle.selection_bgd)
         self._icon.setPixmap(pixmap)
         self._icon.setFixedSize(pixmap.size())
+        self._layout.setSpacing(8)
 
 
     def setPixmap(self, pixmap: QPixmap | QImage) -> None:
@@ -273,4 +275,5 @@ class HTitle1(QWidget):
             self._layout.insertWidget(0, self._icon)
         self._icon.setPixmap(pixmap)
         self._icon.setFixedSize(pixmap.size())
+        self._layout.setSpacing(8)
 

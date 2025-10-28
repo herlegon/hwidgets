@@ -1,21 +1,18 @@
 # port from RLG for pynnlib_gui
 
 - correct QCombobox:
-    - when in read write
     - windows: wrong text size and top margin
-    - Linux Only: keep pushed and release on an item
-    - edition doesn't work because it should put the cursor and not open the popup
 
 
-- HLineEdit
-    * when enter key: validate current text, deselect (and focus next widget)
-    * escape: undo modifications, deselect and focus out
 
 
 # Later
 - Tooltip
 - Accordion
 - horizontal scrollbar in PlainText Area
+
+- HLineEdit
+    * escape: undo modifications, deselect and focus out
 
 
 Links:

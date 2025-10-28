@@ -49,7 +49,7 @@ class HLabel(QLabel):
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
-        self.setMinimumWidth(COMBOBOX_HEIGHT)
+        self.setMinimumWidth(COMBOBOX_RADIUS)
         self.setFixedHeight(COMBOBOX_HEIGHT)
 
         qss_template = Template(load_qss("label.css"))

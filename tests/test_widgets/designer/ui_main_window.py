@@ -49,7 +49,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1333, 848)
+        MainWindow.resize(1333, 885)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -76,11 +76,13 @@ class Ui_MainWindow(object):
         self.q_combobox_layout.setObjectName(u"q_combobox_layout")
         self.q_combobox_rw = QComboBox(self.q_frame)
         self.q_combobox_rw.setObjectName(u"q_combobox_rw")
+        self.q_combobox_rw.setMaximumSize(QSize(300, 16777215))
 
         self.q_combobox_layout.addWidget(self.q_combobox_rw)
 
         self.q_combobox_read_only = QComboBox(self.q_frame)
         self.q_combobox_read_only.setObjectName(u"q_combobox_read_only")
+        self.q_combobox_read_only.setMaximumSize(QSize(300, 16777215))
         self.q_combobox_read_only.setEditable(True)
 
         self.q_combobox_layout.addWidget(self.q_combobox_read_only)
@@ -510,6 +512,36 @@ class Ui_MainWindow(object):
         self.h_combobox_disabled.setEditable(True)
 
         self.h_combobox_layout.addWidget(self.h_combobox_disabled)
+
+        self.horizontalLayout_17 = QHBoxLayout()
+        self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
+        self.h_lineedit_editable_2 = HLineEdit(self.h_frame, hstyle=hstyle)
+        self.h_lineedit_editable_2.setObjectName(u"h_lineedit_editable_2")
+        self.h_lineedit_editable_2.setClearButtonEnabled(False)
+
+        self.horizontalLayout_17.addWidget(self.h_lineedit_editable_2)
+
+        self.h_combobox_read_only_2 = HComboBox(self.h_frame, hstyle=hstyle)
+        self.h_combobox_read_only_2.setObjectName(u"h_combobox_read_only_2")
+        sizePolicy.setHeightForWidth(self.h_combobox_read_only_2.sizePolicy().hasHeightForWidth())
+        self.h_combobox_read_only_2.setSizePolicy(sizePolicy)
+        self.h_combobox_read_only_2.setMaximumSize(QSize(300, 16777215))
+
+        self.horizontalLayout_17.addWidget(self.h_combobox_read_only_2)
+
+        self.h_spinbox_rw_2 = HSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_spinbox_rw_2.setObjectName(u"h_spinbox_rw_2")
+        self.h_spinbox_rw_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_rw_2.setMinimum(10)
+
+        self.horizontalLayout_17.addWidget(self.h_spinbox_rw_2)
+
+        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_17.addItem(self.horizontalSpacer_9)
+
+
+        self.h_combobox_layout.addLayout(self.horizontalLayout_17)
 
 
         self.verticalLayout.addLayout(self.h_combobox_layout)
@@ -1065,6 +1097,7 @@ class Ui_MainWindow(object):
 "", None))
         self.q_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
+        self.h_lineedit_editable_2.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
         self.h_radiobutton_2.setText("")
         self.h_radiobutton_1.setText("")
         self.h_radiobutton_disabled_1.setText("")
