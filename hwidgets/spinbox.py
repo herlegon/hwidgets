@@ -73,7 +73,7 @@ class HSpinBoxButton(QPushButton):
             'normal': hstyle.widget_bgd,
             'hover': hstyle.hover_bgd,
             'pressed': hstyle.checked,
-            'disabled': hstyle.disabled_bgd
+            'disabled': hstyle.disabled_bgd,
         }
 
         self.pixmaps = {}
@@ -86,18 +86,20 @@ class HSpinBoxButton(QPushButton):
             # Draw the background
             path = QPainterPath()
             rect = QRect(0, 0, button_width, button_height)
-            bottom, right = rect.bottom() + 1, rect.right() + 1
-            path.moveTo(0, 0)
+            top = 0
+            bottom, right = rect.bottom(), rect.right() + 1
+            path.moveTo(0, top)
             offset = 5
             if kind == "plus":
-                path.lineTo(right - radius - offset, 0)
+                path.lineTo(right - radius - offset, top)
                 path.arcTo(
-                    right - radius - offset, 0, radius + offset, radius + offset, 90, -90
+                    right - radius - offset, top, radius + offset, radius + offset, 90, -90
                 )
                 path.lineTo(right, bottom)
 
             else:
-                path.lineTo(right, 0)
+                right -= 1
+                path.lineTo(right, top)
                 path.lineTo(right, bottom - radius//2)
                 path.arcTo(right - radius, bottom - radius, radius, radius, 0, -90)
 
@@ -147,19 +149,16 @@ class HSpinBoxButton(QPushButton):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
+        state = 'normal'
         if not self.isEnabled():
             state = 'disabled'
-        elif self.isDown():
-            if self.isReadOnly():
-                state = 'hover'
-            else:
-                state = 'pressed'
-        elif self.underMouse():
+        elif self.isDown() and not self.isReadOnly():
+            state = 'pressed'
+        elif self.underMouse() and not self.isReadOnly():
             state = 'hover'
-        else:
-            state = 'normal'
 
         pixmap = self.pixmaps[f"{self.kind}_{state}"]
+        # top = 1 if self.kind == "plus" else 0
         painter.drawPixmap(0, 0, pixmap)
         painter.end()
 
@@ -225,7 +224,7 @@ class HCommonSpinBox:
 
         button_layout = QVBoxLayout()
         button_layout.setSpacing(0)
-        button_layout.setContentsMargins(0,0,0,0)
+        button_layout.setContentsMargins(0,1,1,2)
         button_layout.addWidget(
             self.plus_button, 0, Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignTop
         )
@@ -339,7 +338,9 @@ class HCommonSpinBox:
 
 
     def _set_hover(self, hover: bool):
-        if hover == self.property("hover"):
+        if self.isReadOnly() or not self.isEnabled():
+            hover = False
+        elif hover == self.property("hover"):
             return
         self.setProperty("hover", hover)
         style = self.style()

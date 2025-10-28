@@ -1,4 +1,4 @@
 import logging
 hlogger = logging.getLogger("hwidgets")
-logging.disable(logging.CRITICAL)
+# logging.disable(logging.CRITICAL)
 

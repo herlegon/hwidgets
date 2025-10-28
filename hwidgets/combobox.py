@@ -1,12 +1,8 @@
 
-from dataclasses import dataclass
 import os
-from pathlib import Path
-from pprint import pprint
 import sys
 import time
-from typing import Any, Literal, Optional, Sequence
-from warnings import warn
+from typing import Any
 from PySide6.QtCore import (
     QObject,
     QPoint,
@@ -16,59 +12,48 @@ from PySide6.QtCore import (
     Qt,
     QSize,
     QEvent,
+    QRect,
+    QSize,
+    QTimer,
 )
 from PySide6.QtGui import (
+    QPen,
     QColor,
     QFont,
     QPainter,
     QPainterPath,
     QPaintEvent,
+    QMouseEvent,
+    QPixmap,
+    QFocusEvent,
+    QShowEvent,
 )
 from PySide6.QtWidgets import (
     QComboBox,
     QSizePolicy,
     QStyle,
-    QStyledItemDelegate,
     QWidget,
     QListView,
+    QStyleOptionComboBox,
+    QStyle,
+    QApplication,
 )
 from string import Template
 
 
-from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
+from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, red, yellow
 from .hstyle import (
     COMBOBOX_HEIGHT,
-    COMBOBOX_RADIUS, TITLE_BAR_ICON_PATH,
-    HStyle, load_png_icon, load_qss,
+    COMBOBOX_RADIUS,
+    DEBUG_GEOMETRY,
+    TITLE_BAR_ICON_PATH,
+    HStyle,
+    draw_widget_rect,
+    load_png_icon,
+    load_qss,
+    make_tinted_pixmap,
 )
 from .logger import hlogger
-
-
-
-
-# def apply_stylesheet(app, dark=False):
-#     qss_file = "fluent_dark.qss" if dark else "fluent.qss"
-#     qss = qss_template.format(
-#         radius=f"{COMBOBOX_RADIUS}",
-#         padding=COMBOBOX_PADDING,
-#         padding_right=COMBOBOX_PADDING + COMBOBOX_RADIUS
-#     )
-
-#     with open(qss_file, "r") as f:
-#         f.read()
-#         app.setStyleSheet()
-
-
-class BoldHoverDelegate(QStyledItemDelegate):
-    def paint(self, painter, option, index):
-        # Make font bold on hover or selection
-        if option.state & QStyle.StateFlag.State_MouseOver or \
-           option.state & QStyle.StateFlag.State_Selected:
-            font = QFont(option.font)
-            font.setBold(True)
-            option.font = font
-        super().paint(painter, option, index)
-
 
 
 
@@ -80,9 +65,7 @@ class RoundedListView(QListView):
         self.setStyleSheet(stylesheet)
         self.setSpacing(0)
         self.setUniformItemSizes(True)
-        self.setMouseTracking(True)
-        self.viewport().setMouseTracking(True)
-        self.margin_top = COMBOBOX_RADIUS
+        self.margin_top = COMBOBOX_HEIGHT + COMBOBOX_RADIUS + 2
         self.margin_bottom = COMBOBOX_RADIUS
 
     def paintEvent(self, event):
@@ -90,7 +73,7 @@ class RoundedListView(QListView):
         painter = QPainter(self.viewport())
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        rect = self.viewport().rect().adjusted(0, self.margin_top, 1, -self.margin_bottom)
+        rect = self.viewport().rect() # .adjusted(0, self.margin_top, 1, -self.margin_bottom)
         path = QPainterPath()
 
         # Only bottom corners rounded
@@ -135,66 +118,166 @@ class HComboBox(QComboBox):
     ) -> None:
         super().__init__(parent)
 
-        # # Apply optional parameters if provided
-        # if editable is not None:
-        #     self.setEditable(editable)
-        # if currentIndex is not None:
-        #     self.setCurrentIndex(currentIndex)
-        # if currentText is not None:
-        #     self.setCurrentText(currentText)
-        # if maxVisibleItems is not None:
-        #     self.setMaxVisibleItems(maxVisibleItems)
-        # if maxCount is not None:
-        #     self.setMaxCount(maxCount)
-        # if insertPolicy is not None:
-        #     self.setInsertPolicy(insertPolicy)
-        # if sizeAdjustPolicy is not None:
-        #     self.setSizeAdjustPolicy(sizeAdjustPolicy)
-        # if minimumContentsLength is not None:
-        #     self.setMinimumContentsLength(minimumContentsLength)
-        # if iconSize is not None:
-        #     self.setIconSize(iconSize)
-        # if placeholderText is not None:
-        #     self.setPlaceholderText(placeholderText)
-        # if duplicatesEnabled is not None:
-        #     self.setDuplicatesEnabled(duplicatesEnabled)
-        # if frame is not None:
-        #     self.setFrame(frame)
-        # if modelColumn is not None:
-        #     self.setModelColumn(modelColumn)
-        # if labelDrawingMode is not None:
-        #     self.setLabelDrawingMode(labelDrawingMode)
-
-
-        self.setCursor(Qt.CursorShape.ArrowCursor)
-
-        self.setHeight(COMBOBOX_HEIGHT, COMBOBOX_RADIUS)
-        # self.setFixedWidth(230)
-        self.setAcceptDrops(True)
-        self.load_dd_icon("keyboard_arrow_down_20dp_000000_FILL0_wght400_GRAD0_opsz20.png", hstyle.text_color)
-
-        self.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
+        self.setFixedHeight(COMBOBOX_HEIGHT)
+
+        self.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
+        self.setAcceptDrops(True)
+
+        self.hstyle = hstyle
+        default_pixmap: QPixmap = load_png_icon(
+            os.path.join(
+                TITLE_BAR_ICON_PATH,
+                "keyboard_arrow_down_20dp_000000_FILL0_wght400_GRAD0_opsz20.png"
+            ),
+            hstyle.text_color
+        )
+
+        self._pixmaps: dict[str, QPixmap] = {
+            "normal" : default_pixmap,
+            "disabled" : make_tinted_pixmap(default_pixmap, hstyle.disabled_text),
+        }
 
         self.setEditable(True)
         if self.lineEdit():
-            self.lineEdit().setReadOnly(True)
-            self.lineEdit().setFocusPolicy(Qt.FocusPolicy.StrongFocus)
-            self.lineEdit().setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
-            self.lineEdit().setCursor(Qt.CursorShape.ArrowCursor)
-            self.lineEdit().setReadOnly(True)
+            line_edit = self.lineEdit()
+            line_edit.setReadOnly(True)
+            self.set_stylesheet(hstyle=hstyle)
+            line_edit.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+            line_edit.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
+            print("install")
+            line_edit.installEventFilter(self)
 
-        self.set_stylesheet(hstyle=hstyle)
+        else:
+            self.set_stylesheet(hstyle=hstyle)
+        self.setEditable(False)
+        # if self.lineEdit():
+        #     self.lineEdit().setMouseTracking(True)
+        #     self.lineEdit().installEventFilter(self)
+        # self.installEventFilter(self)
 
-        self.can_hide: bool = False
-        self.is_popup_visible = False
-        self.counter: int = 0
 
-        if self.lineEdit():
-            self.lineEdit().installEventFilter(self)
-        self.installEventFilter(self)
+    def setEditable(self, editable: bool) -> None:
+        print(f"{self.objectName()} set editable: {editable}")
+        was_editable = self.isEditable()
+
+        super().setEditable(editable)
+
+        # Reinstall event filter if lineEdit changed
+        if self.lineEdit() and was_editable != editable:
+            line_edit = self.lineEdit()
+            print(f"Reinstalling event filter after editable change")
+            line_edit.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
+            line_edit.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
+            line_edit.removeEventFilter(self)
+            line_edit.installEventFilter(self)
+            line_edit.setReadOnly(not editable)
+
+
+    def _pixmap_rect(self) -> QRect:
+        pixmap = self._pixmaps.get("normal")
+        if not pixmap:
+            return QRect()
+
+        x = self.width() - self.height() - COMBOBOX_RADIUS
+        button_rect = QRect(x, 0, self.width() - x, self.height())
+        return button_rect
+
+
+    def mouseMoveEvent(self, event: QMouseEvent) -> None:
+        if self.isEnabled() and self.lineEdit() and not self.lineEdit().isReadOnly():
+            if self._pixmap_rect().contains(event.position().toPoint()):
+                self.setCursor(Qt.CursorShape.ArrowCursor)
+            else:
+                self.setCursor(Qt.CursorShape.IBeamCursor)
+        else:
+            self.setCursor(Qt.CursorShape.ArrowCursor)
+
+        super().mouseMoveEvent(event)
+
+
+    def leaveEvent(self, event: QEvent) -> None:
+        """Reset cursor when leaving the widget"""
+        # print(f"{self.objectName()}: leaveEvent")
+        self.unsetCursor()
+        super().leaveEvent(event)
+
+
+    def showPopup(self):
+        if sys.platform != 'linux':
+            super().showPopup()
+        popup = self.view().window()
+        if not popup:
+            print(red("edrftvgbhynj,k"))
+            return
+
+        # Make the popup a frameless popup and allow transparent background on the window.
+        # On Windows this generally works; on some Linux setups true transparency may be
+        # limited — but we don't require transparency, because the view draws the background.
+        is_editable = self.isEditable()
+        self.setEditable(True)
+        flags = popup.windowFlags()
+        popup.setWindowFlags(flags | Qt.WindowType.Popup | Qt.WindowType.FramelessWindowHint)
+        popup.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        popup.setStyleSheet("QFrame { background: transparent; border: none; }")
+
+        # Resize
+        popup.resize(self.width(), popup.height() + 2 * COMBOBOX_RADIUS)
+
+        self.view().viewport().update()
+
+        if sys.platform == 'linux':
+            QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(0, self.height()))))
+            super().showPopup()
+        else:
+            popup.move(self.mapToGlobal(QPoint(0, self.height())))
+
+        self.setEditable(is_editable)
+
+
+    def eventFilter(self, watched: QObject, event: QEvent) -> bool:
+        event_type: QEvent.Type = event.type()
+
+        # print(watched, event)
+        if watched == self.lineEdit():
+            line_edit = self.lineEdit()
+
+            if line_edit.isReadOnly():
+                if (
+                    event_type == QEvent.Type.Leave
+                    and line_edit.isReadOnly()
+                ):
+                    return True
+
+                if (
+                    event_type == QEvent.Type.MouseButtonPress
+                    and line_edit.isReadOnly()
+                ):
+                    print("show popup")
+                    # pos_in_combo = line_edit.mapTo(self, event.pos())
+                    # new_event = QMouseEvent(
+                    #     QEvent.Type.MouseButtonPress,
+                    #     pos_in_combo,
+                    #     Qt.MouseButton.LeftButton,
+                    #     Qt.MouseButton.LeftButton,
+                    #     Qt.KeyboardModifier.NoModifier,
+                    # )
+                    # QApplication.sendEvent(self, new_event)
+                    QTimer.singleShot(0, self.showPopup)
+                    return True
+
+                if (
+                    event_type == QEvent.Type.MouseButtonRelease
+                    and line_edit.isReadOnly()
+                ):
+                    print("released")
+                    QTimer.singleShot(0, self.showPopup)
+                    return True
+
+
+        return super().eventFilter(watched, event)
 
 
     def set_stylesheet(self, hstyle: HStyle):
@@ -205,16 +288,13 @@ class HComboBox(QComboBox):
             widget_bgd=hstyle.widget_bgd,
             hover_bgd=hstyle.hover_bgd,
             selection_bgd=hstyle.selection_bgd,
-
+            disabled_bgd=hstyle.disabled_bgd,
+            disabled_text=hstyle.disabled_text,
             text_color=hstyle.text_color,
             selected_text=f"{hstyle.selected_text}",
-
             radius=f"{COMBOBOX_RADIUS}px",
-            # padding=f"{COMBOBOX_PADDING}px",
-            # margin=f"{COMBOBOX_RADIUS}px",
             margin_top=f"{COMBOBOX_RADIUS}px",
             popup_width = f"{self.width()}px",
-            # combobox_height=f"{int(1.5 * (COMBOBOX_HEIGHT - COMBOBOX_RADIUS))}px",
             padding_left=f"{int(1.5 * COMBOBOX_RADIUS) - 2}px",
             padding_right=f"{int(1.5 * COMBOBOX_RADIUS)}px",
         )
@@ -232,7 +312,7 @@ class HComboBox(QComboBox):
         qss_template = Template(load_qss("combobox_abstractitemview.qss", variant=self.variant))
         self.popup_qss = qss_template.substitute(**template_subst)
 
-        if sys.platform == 'win32':
+        if sys.platform in ('win32', 'linux'):
             view = RoundedListView(
                 stylesheet=self.popup_qss,
                 radius=COMBOBOX_RADIUS,
@@ -240,224 +320,60 @@ class HComboBox(QComboBox):
                 parent=self
             )
             self.setView(view)
-            self.view().setWindowFlags(Qt.Widget)
+            self.view().setWindowFlags(Qt.WindowType.Widget)
         else:
             self.view().setStyleSheet(self.popup_qss)
 
 
-    def showPopup(self):
-        self.can_hide = False
-
-        if sys.platform == 'win32':
-            self.is_popup_visible = True
-            super().showPopup()
-
-        hlogger.debug(purple(f"{int(time.time())}  OPEN"))
-        popup = self.view().window()
-        if not popup:
-            # print(f" no popup")
-            return
-
-        # Make the popup a frameless popup and allow transparent background on the window.
-        # On Windows this generally works; on some Linux setups true transparency may be
-        # limited — but we don't require transparency, because the view draws the background.
-        flags = popup.windowFlags()
-        popup.setWindowFlags(flags | Qt.WindowType.Popup | Qt.WindowType.FramelessWindowHint)
-        popup.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        popup.setStyleSheet("QFrame { background: transparent; border: none; }")
-        popup.resize(self.width(), popup.height() + 2 * COMBOBOX_RADIUS)
-        self.view().setGeometry(0, 0, popup.width(), popup.height())
-        self.view().viewport().update()
-
-        if sys.platform == 'linux':
-            # self.blockSignals(True)
-            super().showPopup()
-            self.is_popup_visible = True
-
-
-    def hidePopup(self):
-        if not self.can_hide:
-            hlogger.debug(f"  ignore hide, allow for next time")
-            self.can_hide = True
-            return
-        else:
-            hlogger.debug(f"  can hide")
-
-        hlogger.debug(purple(f"{int(time.time())}  HIDE"))
-        # self.view().removeEventFilter(self.view())
-        self.counter = 0
-        super().hidePopup()
-        self.is_popup_visible = False
-
-
-    def eventFilter(self, watched: QObject, event: QEvent) -> bool:
-        event_type: QEvent.Type = event.type()
-        # if watched == self.view():
-        #     if event_type not in (
-        #         QEvent.Type.Paint,
-        #         QEvent.Type.UpdateLater,
-        #     ):
-        #         print(lightgreen(f"{int(time.time())} VIEW:"), event)
-
-        #     else:
-        #         print(lightgreen(f"{int(time.time())} VIEW:"), event)
-
-        if watched == self.lineEdit():
-            if (
-                event_type == QEvent.Type.MouseButtonRelease
-                and event.button() == Qt.MouseButton.LeftButton
-            ):
-                hlogger.debug(lightgreen(f"{int(time.time())} LE MouseButtonRelease"))
-                hlogger.debug(f"\n    can_hide: {self.can_hide}")
-                return True
-
-
-            elif (
-                event_type == QEvent.Type.MouseButtonPress
-                and event.button() == Qt.MouseButton.LeftButton
-            ):
-                hlogger.debug(lightgreen(f"{int(time.time())} LE MouseButtonPress"))
-                self.lineEdit().deselect()
-                if self.isEnabled():
-                    if not self.view().isVisible():
-                        self.can_hide = False
-                        self.showPopup()
-                        # print(f" lets open, can't hide now")
-                        return True
-                    return True
-
-            elif event_type == QEvent.Type.HoverLeave:
-                hlogger.debug(yellow(f"{int(time.time())} lineedit: HoverLeave, can_hide: {self.can_hide}"))
-                if self.view().isVisible():
-                    hlogger.debug(f"  is visible")
-                    self.can_hide = True
-
-            # else:
-            #     print(yellow(f"{int(time.time())} LE:"), event)
-
-        elif watched == self:
-            if event_type == QEvent.Type.InputMethodQuery:
-                hlogger.debug(f"{lightcyan(f"{int(time.time())} CB: InputMethodQuery")}")
-                hlogger.debug(f"{event}")
-                if self.view().isVisible() and self.is_popup_visible:
-                    hlogger.debug(" is visible")
-                    if self.counter > 0:
-                        hlogger.debug(" counter > 1, hide popup")
-                        self.can_hide = True
-                        self.counter = 0
-                        self.hidePopup()
-                    else:
-                        self.counter += 1
-
-            elif (
-                event_type == QEvent.Type.MouseButtonPress
-                and event.button() == Qt.MouseButton.LeftButton
-            ):
-                hlogger.debug(lightgreen(f"{int(time.time())} CB MouseButtonPress"))
-                self.lineEdit().deselect()
-                if self.isEnabled():
-                    if not self.view().isVisible():
-                        self.can_hide = True
-                        self.showPopup()
-                        # print(f" lets open, can't hide now")
-                        return True
-
-            # else:
-            #     print(lightcyan(f"{int(time.time())} CB:"), event)
-
-
-        # else:
-        #     print(blue(f"unknown:"), event)
-
-
-        return super().eventFilter(watched, event)
-
-
-
-    def setHeight(self, height: int, radius:int) -> None:
-        self.radius = radius
-        self.dd_height = height - 4
-        # self.dd_height = height - 2 * radius
-        self.dd_width = self.dd_height
-        self.dd_size: QSize = QSize(self.dd_width, self.dd_height)
-        print(f"{self.__class__} height: {height}, dd_size: {self.dd_size.toTuple()}")
-        return super().setFixedHeight(height)
-
-
-    def load_dd_icon(self, icon: str | Path, color: str = "#E1E1E1") -> None:
-        filepath = os.path.join(TITLE_BAR_ICON_PATH, icon)
-        try:
-            self.dd_pixmap = load_png_icon(filepath, color)
-        except:
-            raise ValueError(f"{filepath} not found")
-
-        if self.dd_pixmap.size() != self.dd_size:
-            warn(f"{self.__class__} resize pixmap")
-            self.dd_pixmap = self.dd_pixmap.scaled(
-                self.dd_size,
-                aspectMode=Qt.AspectRatioMode.KeepAspectRatio
-            )
 
 
     def paintEvent(self, e: QPaintEvent) -> None:
         super().paintEvent(e)
-        painter: QPainter = QPainter(self)
-        x = self.width() - self.dd_width - int(COMBOBOX_RADIUS * 1.5)
-        y = int(self.height() - self.dd_pixmap.height())/2
 
-        painter.drawPixmap(QPoint(x, y), self.dd_pixmap)
+        opt = QStyleOptionComboBox()
+        self.initStyleOption(opt)
 
+        state = opt.state
+        if not (state & QStyle.StateFlag.State_Enabled):
+            pixmap = self._pixmaps["disabled"]
+        else:
+            pixmap = self._pixmaps["normal"]
 
+        # if state & QStyle.StateFlag.State_Sunken:
+        #     print(lightcyan(f"CB pressed"))
 
+        # elif state & QStyle.StateFlag.State_On:
+        #     print(lightcyan(f"CB checked"))
 
-# if __name__ == "__main__":
-#     import signal
-#     from argparse import ArgumentParser
+        # elif state & QStyle.StateFlag.State_MouseOver:
+        #     print(lightcyan(f"CB hover"))
 
-#     signal.signal(signal.SIGINT, signal.SIG_DFL)
-#     parser = ArgumentParser()
-#     parser.add_argument("--debug", "-debug", action="store_true", required=False)
-#     arguments = parser.parse_args()
-#     if arguments.debug:
-#         import logging
-#         logger: logging.Logger = logging.getLogger("hwidgets")
-#         hlogger.addHandler(logging.StreamHandler(sys.stdout))
-#         logging.disable(logging.NOTSET)
-#         hlogger.setLevel("DEBUG")
+        # if state & QStyle.StateFlag.State_Active:
+        #     print(lightcyan(f"Active"))
 
 
-#     app = QApplication(sys.argv)
+        painter = QPainter(self)
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
 
-#     items = [
-#         "This is a long text you can select if you want",
-#         "Another item to test a very very very long text to display",
-#         "Copy me with Ctrl+C you should see some dots in the line",
-#         "Right-click won't work"
-#     ]
+        # Draw centered pixmap
+        x = self.width() - self.height()
+        y = (self.height() - pixmap.height()) // 2
+        painter.drawPixmap(x, y, pixmap)
 
-#     hrl_style = HStyle()
+        if self.lineEdit() and self.lineEdit().hasFocus():
+            # Draw rounded rectangle border
+            border_color = QColor(self.hstyle.selected)
+            border_width = 1
+            pen = QPen(border_color, border_width)
+            painter.setPen(pen)
+            painter.setBrush(Qt.BrushStyle.NoBrush)
+            painter.drawRoundedRect(
+                self.rect(),
+                COMBOBOX_RADIUS,
+                COMBOBOX_RADIUS
+            )
 
-#     window = QWidget()
-#     window.setStyleSheet(f"""
-#         background-color: {hrl_style.window_bgd};
-#         color: {hrl_style.text_color};
-#     """)
-#     p = window.palette()
-#     p.setColor(window.backgroundRole(), hrl_style.window_bgd)
-#     window.setPalette(p)
+        painter.end()
 
-#     main_layout = QGridLayout(window)
-#     main_layout.setContentsMargins(50,50,50,300)
-#     main_layout.setSpacing(64)
-
-#     qcombobox = QComboBox(window)
-#     qcombobox.addItems(items)
-
-#     hcombobox = HComboBox(window, hstyle=hrl_style)
-#     hcombobox.addItems(items)
-
-#     main_layout.addWidget(qcombobox, 0, 0, 1, 1)
-#     main_layout.addWidget(hcombobox, 0, 1, 1, 1)
-
-#     window.show()
-#     sys.exit(app.exec())

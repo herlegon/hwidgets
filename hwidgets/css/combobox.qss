@@ -4,7 +4,6 @@ QFrame {
     background: $window_bgd;
 }
 
-
 QComboBox {
     background-color: $widget_bgd;
 
@@ -12,32 +11,50 @@ QComboBox {
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
 
+    selection-background-color: $selection_bgd;
+    selection-color: $text_color;
+
     border-radius: $radius;
     padding-left: $padding_left;
+    /* padding-right: $padding_right; */
 }
 
 
-QComboBox:hover {
+QComboBox:disabled {
+    background-color: $disabled_bgd;
+    color: $disabled_text;
+}
+
+
+QComboBox:read-only:hover {
     background-color: $hover_bgd;
 }
 
 
 QComboBox:on {
     background-color: $hover_bgd;
-
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
 }
 
-
-QComboBox::down-arrow {
-    width: 0px;
-    height: 0px;
-}
-
-
 QComboBox::drop-down {
-    width: 0px;
+    width: 32px;
     border: none;
 }
 
+
+QComboBox::down-arrow {
+    width: 32px;
+    height: 0px;
+}
+
+QComboBox QLineEdit{
+    margin-bottom: 2px;
+    color: green;
+
+}
+
+
+QComboBox QLineEdit[editing="true"] {
+    border: 2px solid red; /* editing color */
+}

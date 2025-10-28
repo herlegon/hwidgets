@@ -3,6 +3,9 @@ import os
 from pathlib import Path
 import sys
 from typing import Final, Type
+from PySide6.QtCore import (
+    Qt,
+)
 from PySide6.QtGui import (
     QFont,
     QPainter,
@@ -98,6 +101,37 @@ def load_qss(qss_fp: str, variant: str = "") -> str:
             qss += "\n" + f.read()
 
     return qss
+
+
+def make_tinted_pixmap(
+    pixmap: QPixmap,
+    color: QColor | str
+) -> QPixmap:
+    tinted_pixmap = QPixmap(pixmap.size())
+    tinted_pixmap.fill(Qt.GlobalColor.transparent)
+
+    painter = QPainter(tinted_pixmap)
+    painter.drawPixmap(0, 0, pixmap)
+    painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+    painter.fillRect(pixmap.rect(), color)
+    painter.end()
+
+    return tinted_pixmap
+
+
+# def load_dd_icon(self, icon: str | Path, color: str = "#E1E1E1") -> None:
+#     filepath = os.path.join(TITLE_BAR_ICON_PATH, icon)
+#     try:
+#         self.dd_pixmap = load_png_icon(filepath, color)
+#     except:
+#         raise ValueError(f"{filepath} not found")
+
+#     if self.dd_pixmap.size() != self.dd_size:
+#         warn(f"{self.__class__} resize pixmap")
+#         self.dd_pixmap = self.dd_pixmap.scaled(
+#             self.dd_size,
+#             aspectMode=Qt.AspectRatioMode.KeepAspectRatio
+#         )
 
 
 

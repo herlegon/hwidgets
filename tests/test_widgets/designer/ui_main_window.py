@@ -487,16 +487,22 @@ class Ui_MainWindow(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.h_combobox_layout = QVBoxLayout()
         self.h_combobox_layout.setObjectName(u"h_combobox_layout")
-        self.h_combobox_rw = HComboBox(self.h_frame, hstyle=hstyle)
-        self.h_combobox_rw.setObjectName(u"h_combobox_rw")
-
-        self.h_combobox_layout.addWidget(self.h_combobox_rw)
-
         self.h_combobox_read_only = HComboBox(self.h_frame, hstyle=hstyle)
         self.h_combobox_read_only.setObjectName(u"h_combobox_read_only")
-        self.h_combobox_read_only.setEditable(True)
+        sizePolicy.setHeightForWidth(self.h_combobox_read_only.sizePolicy().hasHeightForWidth())
+        self.h_combobox_read_only.setSizePolicy(sizePolicy)
+        self.h_combobox_read_only.setMaximumSize(QSize(300, 16777215))
 
         self.h_combobox_layout.addWidget(self.h_combobox_read_only)
+
+        self.h_combobox_rw = HComboBox(self.h_frame, hstyle=hstyle)
+        self.h_combobox_rw.setObjectName(u"h_combobox_rw")
+        sizePolicy.setHeightForWidth(self.h_combobox_rw.sizePolicy().hasHeightForWidth())
+        self.h_combobox_rw.setSizePolicy(sizePolicy)
+        self.h_combobox_rw.setMaximumSize(QSize(300, 16777215))
+        self.h_combobox_rw.setEditable(True)
+
+        self.h_combobox_layout.addWidget(self.h_combobox_rw)
 
         self.h_combobox_disabled = HComboBox(self.h_frame, hstyle=hstyle)
         self.h_combobox_disabled.setObjectName(u"h_combobox_disabled")

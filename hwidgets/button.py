@@ -6,6 +6,7 @@ from .hstyle import (
     HStyle,
     draw_widget_rect,
     load_qss,
+    make_tinted_pixmap,
 )
 
 from PySide6.QtCore import (
@@ -137,13 +138,13 @@ class HButton(QPushButton):
         self.pixmap_size = icon.availableSizes()[0]
         pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
         self._pixmaps: dict[str, QPixmap] = {
-            "normal" : self._make_tinted_pixmap(pixmap, hstyle.widget_bgd),
-            "hover" : self._make_tinted_pixmap(pixmap, hstyle.hover_bgd),
-            "pressed" : self._make_tinted_pixmap(pixmap, hstyle.checked),
-            "checked" : self._make_tinted_pixmap(pixmap, hstyle.checked),
-            "disabled" : self._make_tinted_pixmap(pixmap, hstyle.disabled_bgd),
+            "normal" : make_tinted_pixmap(pixmap, hstyle.widget_bgd),
+            "hover" : make_tinted_pixmap(pixmap, hstyle.hover_bgd),
+            "pressed" : make_tinted_pixmap(pixmap, hstyle.checked),
+            "checked" : make_tinted_pixmap(pixmap, hstyle.checked),
+            "disabled" : make_tinted_pixmap(pixmap, hstyle.disabled_bgd),
             # Disabled + check should never occurs. bad UI
-            "disabled_checked": self._make_tinted_pixmap(pixmap, hstyle.disabled_text),
+            "disabled_checked": make_tinted_pixmap(pixmap, hstyle.disabled_text),
         }
 
 
@@ -190,141 +191,4 @@ class HButton(QPushButton):
         y = (self.height() - self.pixmap_size.height()) // 2
         painter.drawPixmap(x, y, pixmap)
         painter.end()
-
-
-
-
-    # def _update_icon_state(self) -> None:
-    #     """Sets the icon based on the button's current state."""
-    #     # Don't do anything if icons haven't been generated yet
-    #     if not self._icons:
-    #         return
-
-    #     if not self.isEnabled():
-    #         super().setIcon(self._icons["disabled"])
-
-    #     elif self.isDown(): # and not self.isChecked():
-    #         super().setIcon(self._icons["checked"])
-
-    #     elif self.isChecked():
-    #         super().setIcon(self._icons["checked"])
-
-    #     elif self.underMouse():
-    #         super().setIcon(self._icons["hover"])
-
-    #     else:
-    #         super().setIcon(self._icons["normal"])
-
-
-    # def enterEvent(self, event):
-    #     if not self.isEnabled():
-    #         return
-    #     if not self.isDown() and not self.isChecked():
-    #         self._update_icon_state("hover")
-    #     super().enterEvent(event)
-
-
-    # def leaveEvent(self, event):
-    #     if not self.isEnabled():
-    #         return
-    #     if not self.isDown() and not self.isChecked():
-    #         self._update_icon_state("normal")
-    #     super().leaveEvent(event)
-
-
-    # def mousePressEvent(self, event):
-    #     if event.button() == Qt.MouseButton.LeftButton and self.isEnabled():
-    #         self._update_icon_state("pressed")
-    #     super().mousePressEvent(event)
-
-
-    # def mouseReleaseEvent(self, event):
-    #     if self.isEnabled():
-    #         if self.isChecked():
-    #             self._update_icon_state("checked")
-    #         else:
-    #             self._update_icon_state("hover" if self.rect().contains(event.pos()) else "normal")
-    #     super().mouseReleaseEvent(event)
-
-
-    # def changeEvent(self, event: QEvent) -> None:
-    #     """Handle state changes like enabled/disabled."""
-    #     super().changeEvent(event)
-    #     if event.type() == QEvent.Type.EnabledChange:
-    #         self._update_icon_state()
-
-
-    # def changeEvent(self, event):
-    #     """Handle enable/disable and checked state changes."""
-    #     if event.type() == QEvent.Type.EnabledChange:
-    #         self._update_icon_state("normal" if self.isEnabled() else "disabled")
-    #     elif event.type() == QEvent.Type.StyleChange:
-    #         self._update_icon_state("checked" if self.isChecked() else "normal")
-    #     super().changeEvent(event)
-
-
-    # def _update_icon_state(self, state: str):
-    #     """Switch the displayed icon according to the state."""
-    #     if self._icons and state not in self._icons:
-    #         state = "normal"
-    #         self._current_state = state
-    #         super().setIcon(self._icons[state])
-
-
-    # def _set_state(self, state):
-    #     """Switch icon based on interaction state."""
-    #     if state not in self._icons:
-    #         return
-    #     self._current_state = state
-    #     super().setIcon(self._icons[state])
-
-
-
-    # def enterEvent(self, event):
-    #     if self.isEnabled():
-    #         if self._current_state == "checked":
-    #             self._set_state("checked")
-    #         else:
-    #             self._set_state("hover")
-    #     super().enterEvent(event)
-
-
-    # def leaveEvent(self, event):
-    #     print(f"{__class__.__name__} leaveEvent: checked:{self.isChecked()}")
-    #     if self._current_state == "checked":
-    #         self._set_state("checked")
-    #     else:
-    #         self._set_state("normal")
-    #     super().leaveEvent(event)
-
-
-    # def mousePressEvent(self, event):
-    #     print(f"{__class__.__name__} press: current checked:{self.isChecked()}")
-    #     if event.button() == Qt.MouseButton.LeftButton:
-    #         self._set_state("pressed")
-    #     super().mousePressEvent(event)
-
-
-    # def mouseReleaseEvent(self, event):
-    #     print(f"{__class__.__name__} release: checked:{self.isChecked()}")
-    #     if self.isCheckable():
-    #         self._set_state("checked")
-
-    #     elif self.rect().contains(event.pos()):
-    #         self._set_state("hover")
-    #     else:
-    #         if self.isChecked():
-    #             self._set_state("checked")
-    #         else:
-    #             self._set_state("normal")
-    #     super().mouseReleaseEvent(event)
-
-
-    # def setChecked(self, b: bool) -> None:
-    #     print(f"{__class__.__name__} setChecked: checked:{self.isChecked()}, b={b}")
-    #     if b or self._current_state == "checked":
-    #         self._set_state("checked")
-    #     else:
-    #         self._set_state("normal")
-    #     return super().setChecked(b)
 

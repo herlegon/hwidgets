@@ -5,6 +5,11 @@ QListView {
     border: none;
     outline: none;
     margin: 0px;
+    padding: 0px;
+
+    color: $text_color;
+    font-family: "Segoe UI", "Sans Serif";
+    font-size: 10pt;
 }
 
 QListView::item {
