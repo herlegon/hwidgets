@@ -1,6 +1,6 @@
 [project]
 name = "hwidgets"
-version = "0.1"
+version = "0.2"
 description = "Customized PySide6 widgets"
 readme = "README.md"
 authors = [
@@ -27,8 +27,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["hwidgets*"]
-exclude = ["tests*", "scripts"]
+include = ["hwidgets"]
+exclude = ["tests*", "scripts", "rlg_widgets"]
 
 [tool.black]
 line-length = 90
