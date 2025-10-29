@@ -9,6 +9,7 @@ from .hstyle import (
 )
 from PySide6.QtCore import (
     Qt,
+    QSize,
 )
 from PySide6.QtGui import (
     QPainter,
@@ -39,7 +40,8 @@ class HButtonGroup(QWidget):
         self._layout = QHBoxLayout(self)
         self._layout.setContentsMargins(0, 0, 0, 0)
         self._layout.setSpacing(1)
-        # self.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+        self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        self.setFixedHeight(COMBOBOX_HEIGHT)
 
         # Logical Group
         self.group = QButtonGroup(self)
@@ -51,6 +53,10 @@ class HButtonGroup(QWidget):
             self.set_buttons(buttons)
 
         self.group.buttonClicked.connect(self.on_button_clicked)
+
+    def sizeHint(self) -> QSize:
+        # width = self._buttons[0].width() * len(self._buttons)
+        return QSize(self.width(), COMBOBOX_HEIGHT)
 
 
     def _update_stylesheet(self) -> None:
@@ -76,7 +82,7 @@ class HButtonGroup(QWidget):
         max_width = max(b.sizeHint().width() for b in self._buttons)
         for b in self._buttons:
             b.setFixedWidth(max_width)
-
+        return max_width * len(self._buttons)
 
     def set_buttons(
         self,
@@ -88,7 +94,7 @@ class HButtonGroup(QWidget):
             button = QToolButton()
             button.setText(text)
             button.setCheckable(True)
-            button.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Fixed)
+            button.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
             button.setFixedHeight(COMBOBOX_HEIGHT)
 
             if i == 0:
@@ -109,7 +115,10 @@ class HButtonGroup(QWidget):
 
         self._update_stylesheet()
         # self.adjustSize()
-        self._normalize_button_widths()
+        width = self._normalize_button_widths()
+        self.setSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        self.setFixedWidth(width)
+        self.adjustSize()
 
 
     def on_button_clicked(self, button):
