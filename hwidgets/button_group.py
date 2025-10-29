@@ -1,4 +1,5 @@
 from string import Template
+from typing import overload
 from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
@@ -56,10 +57,11 @@ class HButtonGroup(QWidget):
 
         self.hstyle = hstyle
         self._buttons: list[QToolButton] = []
+        self._button_keys: list[str] = []
         if buttons is not None and buttons:
             self.set_buttons(buttons)
 
-        self._current_button = -1
+        self._current_index = -1
         self.set_current_button(0)
         self.group.buttonClicked.connect(self.on_button_clicked)
 
@@ -108,9 +110,12 @@ class HButtonGroup(QWidget):
 
     def set_buttons(
         self,
-        buttons: list[str] | tuple[str],
-        normalize_widths: bool = False
+        buttons: list[str] | tuple[str] | dict[str, tuple[str, str]],
     ) -> None:
+        """when buttons is dict[str, tuple[str, str]],
+                key: (text, tooltip)
+        """
+
         # Get current selected
         for i, b in enumerate(self._buttons):
             if b.isChecked():
@@ -124,25 +129,38 @@ class HButtonGroup(QWidget):
 
         self._buttons.clear()
 
-        for i, text in enumerate(buttons):
+        is_dict: bool = bool(isinstance(buttons, dict))
+        if is_dict:
+            self._button_keys = list(buttons.keys())
+        else:
+            self._button_keys = buttons.copy()
+
+        for i, k in enumerate(self._button_keys):
             button = QToolButton()
-            button.setText(text)
+            if is_dict:
+                text, tooltip = buttons[k]
+                button.setText(text)
+                button.setToolTip(tooltip)
+            else:
+                button.setText(k)
+            button.key = k
             button.setCheckable(True)
             # button.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-            button.setFixedHeight(COMBOBOX_HEIGHT)
+            button.setFixedHeight(self.height())
 
             if i == 0:
                 button.setObjectName("segment-left")
-
             elif i == len(buttons) - 1:
                 button.setObjectName("segment-right")
-
             else:
                 button.setObjectName("segment-center")
 
             self.group.addButton(button, i)
             self._layout.addWidget(button)
             self._buttons.append(button)
+
+            # signal to get the real current checked button
+            button.clicked.connect(lambda checked, idx=i: self._on_button_checked(idx))
 
         if self.group.buttons():
             try:
@@ -162,24 +180,54 @@ class HButtonGroup(QWidget):
         self.adjustSize()
 
 
-    def button_at(self, index: int) -> QToolButton:
-        return self._buttons[index]
+    @overload
+    def get_button(self, index: int) -> QToolButton: ...
+    @overload
+    def get_button(self, key: str) -> QToolButton: ...
+    def get_button(self, value: int | str) -> QToolButton:
+        if isinstance(value, int):
+            return self._buttons[value]
+        elif isinstance(value, str):
+            try:
+                return self._buttons[self._button_keys.index(value)]
+            except:
+                print("failed")
+                print(self._button_keys)
+
+        #     for btn in self._buttons:
+        #         if getattr(btn, "key", None) == value:
+        #             return btn
+        #     raise KeyError(f"No button with key {value!r}")
+        # else:
+        #     raise TypeError(f"Expected int or str, got {type(value).__name__}")
 
 
     def _update_button_states(self):
         if not self._buttons:
             return
-        if self._current_button != -1:
+        if self._current_index != -1:
             try:
-                self._buttons[i].setChecked(True)
+                self._buttons[self._current_index].setChecked(True)
                 return
             except:
                 pass
         self._buttons[0].setChecked(True)
 
 
-    def current_button(self) -> int:
-        return self._current_button
+    def current_button_index(self) -> int:
+        return self._current_index
+
+
+    def current_button(self) -> QToolButton:
+        return self._buttons[self._current_index]
+
+
+    def _on_button_checked(self, index: int):
+        # Make sure only this one is checked
+        for i, btn in enumerate(self._buttons):
+            btn.setChecked(i == index)
+        self._current_index = index
+        self.signal_selection_changed.emit(index)
 
 
     def set_current_button(self, index: int):
@@ -192,8 +240,10 @@ class HButtonGroup(QWidget):
         if index >= button_count:
             index = button_count - 1 if button_count > 0 else -1
 
-        if self._current_button != index and index >= 0:
-            self._current_button = index
+        if self._current_index != index and index >= 0:
+            self._current_index = index
+            self.signal_selection_changed.emit(index)
+        elif index >= 0:
             self.signal_selection_changed.emit(index)
 
 
@@ -202,7 +252,7 @@ class HButtonGroup(QWidget):
             index = self._buttons.index(b)
         except ValueError:
             index = -1
-        print(index)
+        print(f"{self._current_index} -> {index}")
         self.set_current_button(index)
 
 

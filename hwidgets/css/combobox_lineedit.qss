@@ -3,7 +3,8 @@
 QComboBox QLineEdit {
     /* background: $widget_bgd; */
     border-radius: $radius;
-    /* padding: 0px $padding_right 1px 0px; */
+    /* margin-bottom: 8px;
+    padding-bottom: 8px; */
     /* margin: 0px $padding_right 1px 0px; */
 }
 

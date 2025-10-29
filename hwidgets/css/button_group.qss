@@ -9,7 +9,7 @@ QToolButton {
     /* border: 1px solid #BBBBBB; */
     background-color: $widget_bgd;
     color: $text_color;
-    padding: 0px $radius 0px $radius;
+    padding: 0px $radius 2px $radius;
     outline: none;
 }
 

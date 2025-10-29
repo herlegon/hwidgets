@@ -5,6 +5,7 @@ from hwidgets import HButtonGroup
 from PySide6.QtCore import (
     Slot,
     Signal,
+    Qt,
 )
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import (
@@ -51,6 +52,7 @@ class HButtonGroupTaskMenu(QPyDesignerTaskMenuExtension):
     def _edit_buttons(self):
         """Open a dialog to edit button labels for HButtonGroup."""
         dialog = QDialog()
+        # dialog = QDialog(self._button_group)
         dialog.setWindowTitle("Edit HButtonGroup Buttons")
         dialog.resize(400, 300)
 
@@ -60,7 +62,7 @@ class HButtonGroupTaskMenu(QPyDesignerTaskMenuExtension):
 
         # --- Left: list of buttons ---
         list_widget = QListWidget(dialog)
-        list_widget.addItems(self._button_group.get_buttons())
+        list_widget.addItems([b.text() for b in self._button_group.buttons()])
         list_widget.setSelectionMode(QListWidget.SelectionMode.SingleSelection)
         main_layout.addWidget(list_widget, 3)
 
@@ -127,6 +129,12 @@ class HButtonGroupTaskMenu(QPyDesignerTaskMenuExtension):
         buttons.rejected.connect(dialog.reject)
 
         # === Apply changes ===
+        dialog.setWindowModality(Qt.ApplicationModal)
+        dialog.setWindowFlag(Qt.WindowStaysOnTopHint, True)
+        dialog.activateWindow()
+        dialog.raise_()
+        # dialog.exec()
+
         if dialog.exec() == QDialog.DialogCode.Accepted:
             new_buttons = [list_widget.item(i).text() for i in range(list_widget.count())]
             self._button_group.setButtons(";".join(new_buttons))
