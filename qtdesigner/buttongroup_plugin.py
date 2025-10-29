@@ -26,6 +26,7 @@ class HButtonGroupPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
+        self._task_menus = []  # Keep a reference
 
     def createWidget(self, parent):
         from hwidgets import HStyle
@@ -45,7 +46,7 @@ class HButtonGroupPlugin(QDesignerCustomWidgetInterface):
         return QIcon()
 
     def includeFile(self):
-        return 'button_group'
+        return 'hwidgets'
 
     def initialize(self, form_editor):
         self._form_editor = form_editor

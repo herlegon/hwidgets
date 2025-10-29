@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>560</width>
+    <height>76</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -29,7 +29,11 @@
     </widget>
    </item>
    <item>
-    <widget class="HButtonGroup" name="h_buttongroup"/>
+    <widget class="HButtonGroup" name="h_buttongroup">
+     <property name="current_button" stdset="0">
+      <number>1</number>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

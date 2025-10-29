@@ -237,9 +237,11 @@ class HTitle1(QWidget):
                     font-size: {font_size};
                     padding: 0px;
                     margin: 0px;
+                    padding-bottom: 2px;
+
                 }}
             """.format(
-                color=self.hstyle.text_color,
+                color=self.hstyle.selected,
                 font_family="\"Segoe UI\", \"Sans Serif\"",
                 font_size=f"{TITLE_1_FONT_SIZE}pt",
             )
@@ -252,6 +254,7 @@ class HTitle1(QWidget):
 
     def setText(self, text: str) -> None:
         self._title.setText(text)
+        self.adjustSize()
 
 
     def setIcon(self, icon: Optional[str | Path]):
@@ -259,7 +262,7 @@ class HTitle1(QWidget):
         if self._icon is None:
             self._icon = QLabel(self)
             self._layout.insertWidget(0, self._icon)
-        pixmap: QPixmap = load_png_icon(icon_path, self.hstyle.selection_bgd)
+        pixmap: QPixmap = load_png_icon(icon_path, self.hstyle.selected)
         self._icon.setPixmap(pixmap)
         self._icon.setFixedSize(pixmap.size())
         self._layout.setSpacing(8)
@@ -268,7 +271,7 @@ class HTitle1(QWidget):
     def setPixmap(self, pixmap: QPixmap | QImage) -> None:
         if isinstance(pixmap, QImage):
             pixmap = QPixmap.fromImage(pixmap)
-        pixmap = transform_black_to_blue(pixmap, QColor(self.hstyle.selection_bgd))
+        pixmap = transform_black_to_blue(pixmap, QColor(self.hstyle.selected))
 
         if self._icon is None:
             self._icon: QLabel = QLabel(self)
