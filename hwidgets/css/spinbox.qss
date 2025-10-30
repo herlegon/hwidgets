@@ -30,6 +30,7 @@ QDoubleSpinBox:read-only {
 QSpinBox:disabled,
 QDoubleSpinBox:disabled {
     background-color: $disabled_bgd;
+    color: $disabled_text;
     border: 1px solid $disabled_bgd;
 }
 

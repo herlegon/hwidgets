@@ -70,14 +70,14 @@ class HSpinBoxButton(QPushButton):
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
         states = {
-            'normal': hstyle.widget_bgd,
-            'hover': hstyle.hover_bgd,
-            'pressed': hstyle.checked,
-            'disabled': hstyle.disabled_bgd,
+            'normal': (hstyle.widget_bgd, hstyle.text_color),
+            'hover': (hstyle.hover_bgd, hstyle.text_color),
+            'pressed': (hstyle.checked, hstyle.text_color),
+            'disabled': (hstyle.disabled_bgd, hstyle.disabled_text),
         }
 
         self.pixmaps = {}
-        for state, bgd_color in states.items():
+        for state, (bgd_color, text_color) in states.items():
             pixmap = QPixmap(button_width, button_height)
             pixmap.fill(Qt.GlobalColor.transparent)
             painter = QPainter(pixmap)
@@ -109,7 +109,7 @@ class HSpinBoxButton(QPushButton):
 
             # Draw symbol
             painter.setRenderHint(QPainter.RenderHint.Antialiasing, False)
-            pen = QPen(QColor(hstyle.text_color))
+            pen = QPen(QColor(text_color))
             pen.setWidth(1)
             painter.setPen(pen)
             if kind == 'minus':

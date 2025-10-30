@@ -36,12 +36,14 @@ from hwidgets import (
     HSpinBox,
     HButtonGroup,
     HDivider,
+    HHorizontalDivider,
     HIndeterminateCircularProgress,
     HIndeterminateProgress,
     HProgress,
     HRadialProgress,
     HSwitch,
     HTitle1,
+    HVerticalDivider,
     HStyle,
 )
 

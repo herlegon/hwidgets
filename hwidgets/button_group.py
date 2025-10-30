@@ -30,7 +30,7 @@ from PySide6.QtWidgets import (
 
 class HButtonGroup(QWidget):
     buttons_changed = Signal(list)
-    signal_selection_changed = Signal(int)
+    signal_selection_changed = Signal(str)
 
     def __init__(
         self,
@@ -229,7 +229,7 @@ class HButtonGroup(QWidget):
         for i, btn in enumerate(self._buttons):
             btn.setChecked(i == index)
         self._current_index = index
-        self.signal_selection_changed.emit(index)
+        self.signal_selection_changed.emit(self._buttons[index].key)
 
 
     @overload
@@ -241,7 +241,9 @@ class HButtonGroup(QWidget):
             self.set_current_button_index(value)
         elif isinstance(value, str):
             try:
-                self.get_button(value).setChecked(True)
+                index = self._button_keys.index(value)
+                self.get_button(index).setChecked(True)
+                self._current_index = index
             except:
                 print(f"failed to set button: key=\'{value}\'")
 
@@ -258,9 +260,9 @@ class HButtonGroup(QWidget):
 
         if self._current_index != index and index >= 0:
             self._current_index = index
-            self.signal_selection_changed.emit(index)
+            self.signal_selection_changed.emit(self._buttons[index].key)
         elif index >= 0:
-            self.signal_selection_changed.emit(index)
+            self.signal_selection_changed.emit(self._buttons[index].key)
 
 
     def on_button_clicked(self, b: QToolButton) -> None:
