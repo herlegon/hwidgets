@@ -4,7 +4,11 @@ from .hstyle import HStyle
 
 from .checkbox import HCheckBox
 from .combobox import HComboBox
-from .divider import HDivider
+from .divider import (
+    HDivider,
+    HHorizontalDivider,
+    HVerticalDivider,
+)
 from .button import HButton
 from .button_group import HButtonGroup
 from .groupbox import HGroupBox
@@ -20,6 +24,7 @@ from .spinbox import HDoubleSpinBox, HSpinBox
 from .switch import HSwitch
 from .titles import HTitle1
 from .progress import HProgress
+from .utils import load_png_image
 
 
 __all__ = [
@@ -34,6 +39,8 @@ __all__ = [
     "HDoubleSpinBox",
     "HGroupBox",
     # "HIndeterminateCircularProgress",
+    "HHorizontalDivider",
+    "HVerticalDivider",
     "HIndeterminateProgress",
     "HLabel",
     "HLineEdit",
@@ -41,10 +48,12 @@ __all__ = [
     "HProgress",
     "HRadialProgress",
     "HRadioButton",
-    "HScrollbar",
+    "HScrollBar",
     "HSpinBox",
     "HSwitch",
     "HTitle1",
+
+    "load_png_image",
 ]
 
 __version__ = "0.2"

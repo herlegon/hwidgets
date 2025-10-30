@@ -6,6 +6,8 @@ from .hstyle import (
     DEBUG_GEOMETRY,
     HStyle,
     draw_widget_rect,
+)
+from .utils import (
     load_qss,
 )
 from PySide6.QtCore import (
@@ -230,7 +232,21 @@ class HButtonGroup(QWidget):
         self.signal_selection_changed.emit(index)
 
 
-    def set_current_button(self, index: int):
+    @overload
+    def set_current_button(self, index: int) -> None: ...
+    @overload
+    def set_current_button(self, key: str) -> None: ...
+    def set_current_button(self, value: int | str) -> None:
+        if isinstance(value, int):
+            self.set_current_button_index(value)
+        elif isinstance(value, str):
+            try:
+                self.get_button(value).setChecked(True)
+            except:
+                print(f"failed to set button: key=\'{value}\'")
+
+
+    def set_current_button_index(self, index: int):
         """Set the currently selected button by index."""
         if index < -1:
             index = -1

@@ -3,8 +3,8 @@ from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
     HStyle,
-    load_qss,
 )
+from .utils import load_qss
 
 from PySide6.QtCore import (
     Qt,

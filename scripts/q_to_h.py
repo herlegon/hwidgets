@@ -37,6 +37,8 @@ if __name__ == "__main__":
 
     WIDGET_NAME_MAP = {
         "h_divider": "HDivider",
+        "h_vertical_divider": "HVerticalDivider",
+        "h_horizontal_divider": "HHorizontalDivider",
         "h_switch": "HSwitch",
         "h_title1": "HTitle1",
         "h_progress": "HProgress",

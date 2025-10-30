@@ -30,6 +30,8 @@ from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
     HStyle,
+)
+from .utils import (
     load_png_icon,
     load_qss,
 )

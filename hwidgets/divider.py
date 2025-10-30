@@ -4,10 +4,13 @@ from typing import Literal
 from PySide6.QtCore import (
     Qt,
 )
+from PySide6.QtGui import (
+    QColor,
+)
 from PySide6.QtWidgets import (
     QSizePolicy,
     QWidget,
-    QFrame
+    QFrame,
 )
 from .hstyle import (
     DIVIDER_MIN_LENGTH,
@@ -39,18 +42,19 @@ class HDivider(QFrame):
             self.setMinimumWidth(DIVIDER_MIN_LENGTH)
             self.setFixedHeight(DIVIDER_THICKNESS)
 
-        stylesheet = """
-                QFrame {{
-                    border: 1px solid {divider};
-                }}
-            """.format(
-                divider=hstyle.divider,
-            )
-
-        self.setStyleSheet(stylesheet)
-
-
+        self._update_stylesheet(hstyle.divider)
         self.adjustSize()
+
+
+    def _update_stylesheet(self, line_color: str) -> None:
+        stylesheet = """
+            QFrame {{
+                border: 1px solid {divider};
+            }}
+        """.format(
+            divider=line_color,
+        )
+        self.setStyleSheet(stylesheet)
 
 
     def setFrameShadow(self, shadow: QFrame.Shadow) -> None:
@@ -61,3 +65,38 @@ class HDivider(QFrame):
 
     def setFrameStyle(self, style: int) -> None:
         return
+
+    def set_line_color(self, color: str) -> None:
+        self._update_stylesheet(line_color=color)
+
+
+
+class HVerticalDivider(HDivider):
+    def __init__(
+        self,
+        parent: QWidget,
+        hstyle: HStyle,
+        thickness: int = DIVIDER_THICKNESS,
+    ) -> None:
+        super().__init__(
+            parent=parent,
+            orientation='vertical',
+            hstyle=hstyle,
+        )
+
+
+
+
+class HHorizontalDivider(HDivider):
+    def __init__(
+        self,
+        parent: QWidget,
+        hstyle: HStyle,
+        thickness: int = DIVIDER_THICKNESS,
+    ) -> None:
+        super().__init__(
+            parent=parent,
+            orientation='horizontal',
+            hstyle=hstyle,
+        )
+

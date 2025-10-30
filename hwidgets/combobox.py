@@ -40,15 +40,17 @@ from PySide6.QtWidgets import (
 )
 from string import Template
 
-
 from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, red, yellow
 from .hstyle import (
     COMBOBOX_HEIGHT,
     COMBOBOX_RADIUS,
     DEBUG_GEOMETRY,
-    TITLE_BAR_ICON_PATH,
     HStyle,
     draw_widget_rect,
+
+)
+from .utils import (
+    TITLE_BAR_ICON_PATH,
     load_png_icon,
     load_qss,
     make_tinted_pixmap,

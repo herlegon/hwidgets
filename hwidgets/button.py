@@ -2,13 +2,14 @@ from string import Template
 from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
-    DEBUG_GEOMETRY,
     HStyle,
+    DEBUG_GEOMETRY,
     draw_widget_rect,
+)
+from .utils import (
     load_qss,
     make_tinted_pixmap,
 )
-
 from PySide6.QtCore import (
     Qt,
     QSize,

@@ -22,6 +22,8 @@ from .hstyle import (
     COMBOBOX_HEIGHT,
     COMBOBOX_RADIUS,
     HStyle,
+)
+from .utils import (
     load_png_icon,
     load_qss,
 )

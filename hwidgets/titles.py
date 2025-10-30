@@ -29,8 +29,8 @@ from .hstyle import (
     TITLE_1_HEIGHT,
     TITLE_1_FONT_SIZE,
     TITLE_1_BOLD,
-    load_png_icon,
 )
+from .utils import load_png_icon
 # from .style_types import (
 #     TextStyle,
 #     textstyle_to_font,

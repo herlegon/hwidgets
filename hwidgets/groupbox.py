@@ -13,10 +13,10 @@ from PySide6.QtWidgets import (
 
 from .hstyle import (
     HStyle,
-    load_qss,
     COMBOBOX_RADIUS,
     GROUPBOX_TITLE_HEIGHT,
 )
+from .utils import load_qss
 
 
 class HGroupBox(QGroupBox):
