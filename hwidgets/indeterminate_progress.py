@@ -69,7 +69,7 @@ class HIndeterminateProgress(QProgressBar):
 
         LinearAnimationDuration = 1800
 
-        speed_r = 1.5
+        speed_r = 1
         last_pause = 435 * speed_r
         last_pause = 0
 
@@ -196,10 +196,10 @@ class HIndeterminateProgress(QProgressBar):
         self.animations.addAnimation(self.animation_slt_group)
 
         self.timer_start = 0
+        self._should_restart = True
+        self.animations.finished.connect(self.animations_finished)
         self.animations.setLoopCount(1)
         self.animations.start()
-
-        self.animations.finished.connect(self.animations_finished)
 
 
     def set_colors(self, track: str, bar: str) -> None:
@@ -208,17 +208,45 @@ class HIndeterminateProgress(QProgressBar):
 
 
     def animations_finished(self):
-        self._flh = 0.
-        self._flt = 0.
-        self._slh = 0.
-        self._slt = 0.
+        if self._should_restart:
+            self._flh = 0.
+            self._flt = 0.
+            self._slh = 0.
+            self._slt = 0.
+            self.animations.start()
+        else:
+            self._flh = 1.0
+            self._flt = 1.0
+            self._slh = 1.0
+            self._slt = 1.0
+            self.setValue(1.0)
+            self.repaint()
+
+
+    def stop(self) -> None:
+        """Stop animation after current loop finishes and fill the bar."""
+        self._should_restart = False
+
+        # Jump all sequential groups to end immediately
+        for i in range(self.animations.animationCount()):
+            group = self.animations.animationAt(i)
+            if isinstance(group, QSequentialAnimationGroup):
+                group.setCurrentTime(group.duration())  # jump to end
+            elif isinstance(group, QPropertyAnimation):
+                group.setCurrentTime(group.duration())
+
+        # Ensure all progress values are fully filled
+        self._flh = self._flt = self._slh = self._slt = 1.0
+        self.setValue(1)
+        self.repaint()
+
+
+    def start(self) -> None:
+        """Start or restart the indeterminate animation."""
+        self._should_restart = True
+        self._flh = self._flt = self._slh = self._slt = 0.
+        self.repaint()
         self.animations.start()
-
-
-    def stop(self) -> bool:
-        for animation in self.animations:
-            animation.stop()
-        self.setValue(0)
 
 
     @Property(float)
@@ -339,6 +367,11 @@ class HIndeterminateProgress(QProgressBar):
                 progress2_x1 = min(x_t1, track_x1)
                 if progress2_x1 > progress2_x0:
                     painter.drawLine(progress2_x0, TRACK_Y, progress2_x1, TRACK_Y)
+
+        else:
+            pen.setColor(self.bar_color)
+            painter.setPen(pen)
+            painter.drawLine(track_x0, TRACK_Y, track_x1, TRACK_Y)
 
         painter.end()
 

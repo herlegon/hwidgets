@@ -263,13 +263,13 @@ class HButtonGroup(QWidget):
         if index < 0:
             return
 
-        if self._current_index != index and index >= 0:
-            self._current_index = index
-
         self.blockSignals(True)
         self._buttons[index].setChecked(True)
         self.blockSignals(False)
-        self.signal_selection_changed.emit(self._buttons[index].key)
+
+        if self._current_index != index and index >= 0:
+            self._current_index = index
+            self.signal_selection_changed.emit(self._buttons[index].key)
 
 
     def on_button_clicked(self, b: QToolButton) -> None:
@@ -277,8 +277,8 @@ class HButtonGroup(QWidget):
             index = self._buttons.index(b)
         except ValueError:
             index = -1
-        print(f"{self._current_index} -> {index}")
-        self.set_current_button(index)
+        if index != self._current_index:
+            self.set_current_button(index)
 
 
     def paintEvent(self, event):
