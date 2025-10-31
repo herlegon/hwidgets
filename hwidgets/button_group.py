@@ -242,7 +242,9 @@ class HButtonGroup(QWidget):
         elif isinstance(value, str):
             try:
                 index = self._button_keys.index(value)
+                self.blockSignals(True)
                 self.get_button(index).setChecked(True)
+                self.blockSignals(False)
                 self._current_index = index
             except:
                 print(f"failed to set button: key=\'{value}\'")
@@ -258,11 +260,16 @@ class HButtonGroup(QWidget):
         if index >= button_count:
             index = button_count - 1 if button_count > 0 else -1
 
+        if index < 0:
+            return
+
         if self._current_index != index and index >= 0:
             self._current_index = index
-            self.signal_selection_changed.emit(self._buttons[index].key)
-        elif index >= 0:
-            self.signal_selection_changed.emit(self._buttons[index].key)
+
+        self.blockSignals(True)
+        self._buttons[index].setChecked(True)
+        self.blockSignals(False)
+        self.signal_selection_changed.emit(self._buttons[index].key)
 
 
     def on_button_clicked(self, b: QToolButton) -> None:

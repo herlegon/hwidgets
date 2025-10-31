@@ -136,14 +136,21 @@ class HButton(QPushButton):
         self.setFixedWidth(COMBOBOX_HEIGHT)
 
         # Create tinted icons for each state
-        self.pixmap_size = icon.availableSizes()[0]
+        print(icon.availableSizes())
+        try:
+            self.pixmap_size = icon.availableSizes()[0]
+        except:
+            warn(f"Empty icon for button: {self.objectName()}")
+            self.pixmap_size = QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
         pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
         self._pixmaps: dict[str, QPixmap] = {
-            "normal" : make_tinted_pixmap(pixmap, hstyle.widget_bgd),
-            "hover" : make_tinted_pixmap(pixmap, hstyle.hover_bgd),
-            "pressed" : make_tinted_pixmap(pixmap, hstyle.checked),
-            "checked" : make_tinted_pixmap(pixmap, hstyle.checked),
-            "disabled" : make_tinted_pixmap(pixmap, hstyle.disabled_bgd),
+            "normal" : make_tinted_pixmap(pixmap, hstyle.normal_button),
+            "hover" : make_tinted_pixmap(pixmap, hstyle.hover_button),
+            # "normal" : make_tinted_pixmap(pixmap, hstyle.widget_bgd),
+            # "hover" : make_tinted_pixmap(pixmap, hstyle.hover_bgd),
+            "pressed" : make_tinted_pixmap(pixmap, hstyle.pressed_button),
+            "checked" : make_tinted_pixmap(pixmap, hstyle.pressed_button),
+            "disabled" : make_tinted_pixmap(pixmap, hstyle.disabled_button),
             # Disabled + check should never occurs. bad UI
             "disabled_checked": make_tinted_pixmap(pixmap, hstyle.disabled_text),
         }

@@ -49,13 +49,24 @@ class BoldHoverDelegate(QStyledItemDelegate):
 
 @dataclass(slots=True)
 class HStyle:
-    window_bgd: str = "#1B1B1D"
+    window_bgd: str = "#252528"
 
     # Combobox
     widget_bgd: str = "#4F4D53"
     text_color: str = "#d4d4d8"
     # selection_bgd: str = "#454546"
     hover_bgd: str = "#66636D"
+
+    # normal_button: str = "#5545bd"
+    # hover_button: str = "#6a5bcc"
+    # pressed_button: str = "#4539a0"
+    # disabled_button: str = "#8b88c7"
+
+    normal_button: str = "#5442bd"
+    hover_button: str = "#7777FF"
+    pressed_button: str = "#5555B3"
+    disabled_button: str = "#A3A3D1"
+
     # hover_bgd: str ="#77f"
     selection_bgd: str = "#5545bd"
 
@@ -64,9 +75,9 @@ class HStyle:
 
     border: str = "#505053" # same as hover
 
-    checked: str = "#6a5bcc"
+    checked: str = "#5442bd"
 
-    selected: str = "#77f"
+    selected: str = "#5442bd"
 
 
     # checkbox
@@ -79,6 +90,8 @@ class HStyle:
     divider: str = "#3B3B3B" # same as hover
 
     pressed: str = "#66636D" # same as hover
+
+    title_text: str = "#5442bd"
 
 
     # Accent (hover)	"#4e83c2"	 # Slightly lighter for hover feedback
@@ -165,7 +178,7 @@ TRACK_HEIGHT = TRACK_MARGIN * 2 + HANDLE_RADIUS
 
 
 TITLE_1_HEIGHT = COMBOBOX_HEIGHT + COMBOBOX_RADIUS
-TITLE_1_FONT_SIZE = 14
+TITLE_1_FONT_SIZE = 16
 TITLE_1_BOLD = True
 
 SCROLLBAR_TRACK_WIDTH = 8

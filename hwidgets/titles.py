@@ -241,7 +241,7 @@ class HTitle1(QWidget):
 
                 }}
             """.format(
-                color=self.hstyle.selected,
+                color=self.hstyle.title_text,
                 font_family="\"Segoe UI\", \"Sans Serif\"",
                 font_size=f"{TITLE_1_FONT_SIZE}pt",
             )
