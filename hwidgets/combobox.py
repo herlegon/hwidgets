@@ -23,6 +23,7 @@ from PySide6.QtGui import (
     QMouseEvent,
     QPixmap,
     QFontMetrics,
+    QCursor,
 )
 from PySide6.QtWidgets import (
     QMenu,
@@ -253,12 +254,49 @@ class HComboBox(QComboBox):
 
     def mousePressEvent(self, event: QMouseEvent):
         if event.button() == Qt.MouseButton.RightButton:
+            # Create menu
             menu = QMenu(self)
+            menu.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
+            menu.setWindowFlags(menu.windowFlags() | Qt.WindowType.FramelessWindowHint)
+
+            # Add actions
             copy_action = menu.addAction("Copy")
-            copy_action.triggered.connect(
-                lambda: QApplication.clipboard().setText(self.currentText())
-            )
-            menu.exec(event.globalPos())
+            copy_action.triggered.connect(lambda: QApplication.clipboard().setText(self.currentText()))
+
+            # Style
+            if False:
+                menu.setStyleSheet("""
+                    QMenu {
+                        background-color: #2b2b2b;
+                        border-radius: 8px;
+                        padding: 6px;
+                        border: 1px solid #444;
+                    }
+                    QMenu::item {
+                        color: white;
+                        padding: 6px 16px;
+                        border-radius: 6px;
+                    }
+                    QMenu::item:selected {
+                        background-color: #3c7dd9;
+                    }
+                """)
+
+                # Optional: custom rounded mask for shadowless transparency
+                menu_rect = menu.rect()
+                path = QPainterPath()
+                path.addRoundedRect(menu_rect, 8, 8)
+                region = path.toFillPolygon().toPolygon()
+                menu.setMask(region)
+
+                menu.exec(QCursor.pos())
+            else:
+                menu = QMenu(self)
+                copy_action = menu.addAction("Copy")
+                copy_action.triggered.connect(
+                    lambda: QApplication.clipboard().setText(self.currentText())
+                )
+                menu.exec(event.globalPos())
             return
 
         super().mousePressEvent(event)
