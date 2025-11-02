@@ -53,7 +53,7 @@ QComboBox::down-arrow {
 }
 
 QComboBox QLineEdit{
-    margin-bottom: 8px;
+    margin-bottom: 2px;
     color: green;
 
 }

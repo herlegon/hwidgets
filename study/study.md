@@ -1,9 +1,6 @@
 # port from RLG for pynnlib_gui
 
-- correct QCombobox:
-    - windows: wrong text size and top margin
-
-
+- combobox: draw the upper right radius if popup width is larger than combobox
 
 
 # Later
@@ -11,8 +8,7 @@
 - Accordion
 - horizontal scrollbar in PlainText Area
 
-- HLineEdit
-    * escape: undo modifications, deselect and focus out
+
 
 
 Links:

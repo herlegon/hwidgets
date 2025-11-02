@@ -34,9 +34,9 @@ QPlainTextEdit:focus {
 
 }
 
-/* QPlainTextEdit:hover {
+QPlainTextEdit:hover {
     background-color: $hover_bgd;
-} */
+}
 
 
 QPlainTextEdit:disabled {

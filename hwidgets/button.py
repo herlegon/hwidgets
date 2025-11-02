@@ -140,7 +140,7 @@ class HButton(QPushButton):
         try:
             self.pixmap_size = icon.availableSizes()[0]
         except:
-            warn(f"Empty icon for button: {self.objectName()}")
+            raise FileNotFoundError(f"Empty icon for button: {self.objectName()}")
             self.pixmap_size = QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
         pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
         self._pixmaps: dict[str, QPixmap] = {
@@ -150,7 +150,7 @@ class HButton(QPushButton):
             # "hover" : make_tinted_pixmap(pixmap, hstyle.hover_bgd),
             "pressed" : make_tinted_pixmap(pixmap, hstyle.pressed_button),
             "checked" : make_tinted_pixmap(pixmap, hstyle.pressed_button),
-            "disabled" : make_tinted_pixmap(pixmap, hstyle.disabled_button),
+            "disabled" : make_tinted_pixmap(pixmap, hstyle.disabled_bgd),
             # Disabled + check should never occurs. bad UI
             "disabled_checked": make_tinted_pixmap(pixmap, hstyle.disabled_text),
         }
