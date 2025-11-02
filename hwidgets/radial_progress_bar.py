@@ -85,21 +85,20 @@ class HRadialProgress(QProgressBar):
         standard_triggers: bool = False,
     ):
         super().__init__(parent)
-
         self._percent = 0
-        self.setValue(0)
-        super().setMinimum(0)
-        super().setMaximum(100)
-        self.setTextVisible(False)
 
         bgd_color: str = MC_COLORS['grey800']
         bar_color: str = MC_COLORS['green700']
 
         self.bar_width = bar_width
         self.bar_thickness = bar_thickness
-        self.bar_color = QColor(bar_color)
-        self.track_color = QColor(bgd_color)
+        self.set_colors(track=QColor(bgd_color), bar=QColor(bar_color))
         self.track_color_disable = self.track_color.setAlpha(OPACITY_DISABLED)
+
+        self.setValue(0)
+        super().setMinimum(0)
+        super().setMaximum(100)
+        self.setTextVisible(False)
 
         self.start = (270 - angle_start) * 16
         self.span  = (2 * angle_start - 360) * 16
@@ -291,8 +290,9 @@ class HRadialProgress(QProgressBar):
 
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
+        pen_color = self.track_color if self.isEnabled() else self.track_color_disable
         pen = QPen(
-            self.track_color if self.isEnabled() else self.track_color_disable,
+            pen_color if pen_color is not None else QColor("grey"),
             self.bar_thickness,
             Qt.PenStyle.SolidLine,
             Qt.PenCapStyle.RoundCap,

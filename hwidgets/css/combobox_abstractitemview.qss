@@ -1,8 +1,9 @@
 /* top, right, bottom, left */
 
 QListView {
-    background: $window_bgd;
-    border: none;
+    /* background: $window_bgd; */
+    background: transparent;
+    border: 1px solid $border_color;
     outline: none;
     margin: 0px;
     padding: 0px;

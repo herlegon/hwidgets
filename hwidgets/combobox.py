@@ -13,6 +13,7 @@ from PySide6.QtCore import (
     QRect,
     QSize,
     QTimer,
+    QRectF,
 )
 from PySide6.QtGui import (
     QPen,
@@ -55,11 +56,21 @@ from .utils import (
 
 
 class RoundedListView(QListView):
-    def __init__(self, stylesheet: str, radius: int, bgd_color: str, parent=None):
+    def __init__(
+        self,
+        stylesheet: str,
+        radius: int,
+        bgd_color: str,
+        border_color: str,
+        parent: QWidget = None
+    ):
         super().__init__(parent)
-        self.radius = radius + 1
+        self.radius = float(radius)
         self.bgd_color = QColor(bgd_color)
+        self.border_color  = QColor(border_color)
+        self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setStyleSheet(stylesheet)
+
         self.setSpacing(0)
         self.setUniformItemSizes(True)
         self.margin_top = COMBOBOX_HEIGHT + COMBOBOX_RADIUS + 2
@@ -70,10 +81,9 @@ class RoundedListView(QListView):
         painter = QPainter(self.viewport())
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
-        rect = self.viewport().rect() # .adjusted(0, self.margin_top, 1, -self.margin_bottom)
-
+        rect = QRectF(self.viewport().rect())
         if sys.platform == 'win32':
-            rect = rect.adjusted(0,0,1,0)
+            rect.adjust(0, 0, -0.5, -0.5)
         path = QPainterPath()
 
         # Only bottom corners rounded
@@ -85,6 +95,15 @@ class RoundedListView(QListView):
         path.lineTo(rect.topRight())
 
         painter.fillPath(path, self.bgd_color)
+
+        pen = QPen(self.border_color, 2.0)
+        pen.setCosmetic(True)
+        pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
+        painter.setPen(pen)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing, False)
+        painter.drawPath(path)
+
         super().paintEvent(event)
 
 
@@ -221,6 +240,7 @@ class HComboBox(QComboBox):
         )
         popup.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         popup.setStyleSheet("QFrame { background: transparent; border: none; }")
+        popup.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
         if self.adjust_popup_width:
             fm = QFontMetrics(self.font())
@@ -233,8 +253,7 @@ class HComboBox(QComboBox):
             # Add padding for icon + scrollbar + margins
             scrollbar_width = self.style().pixelMetric(QStyle.PixelMetric.PM_ScrollBarExtent)
             padding = 20  # general horizontal padding
-            popup_width = max(self.width(), max_text_width + scrollbar_width + padding)
-
+            popup_width = max(self.width(), max_text_width + scrollbar_width + padding) + 2
             popup.resize(popup_width, popup.height() + 2 * COMBOBOX_RADIUS)
 
         else:
@@ -243,7 +262,7 @@ class HComboBox(QComboBox):
         self.view().viewport().update()
 
         if sys.platform == 'win32':
-            QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(0, self.height()))))
+            QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(-1, self.height() - 1))))
 
         else:
             QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(0, self.height()))))
@@ -337,6 +356,7 @@ class HComboBox(QComboBox):
             popup_width = f"{self.width()}px",
             padding_left=f"{int(1.5 * COMBOBOX_RADIUS) - 2}px",
             padding_right=f"{int(1.5 * COMBOBOX_RADIUS)}px",
+            border_color=f"{hstyle.border}",
         )
 
         qss_template = Template(load_qss("combobox.qss", variant=self.variant))
@@ -357,6 +377,7 @@ class HComboBox(QComboBox):
                 stylesheet=self.popup_qss,
                 radius=COMBOBOX_RADIUS,
                 bgd_color=hstyle.widget_bgd,
+                border_color=hstyle.selected,
                 parent=self
             )
             self.setView(view)
@@ -401,6 +422,30 @@ class HComboBox(QComboBox):
                 COMBOBOX_RADIUS,
                 COMBOBOX_RADIUS
             )
+
+        # Only draw custom border for non-editable combobox
+        if not self.isEditable() and self.view().isVisible():
+            border_color = QColor(self.hstyle.selected)
+            border_width = 2.0
+
+            pen = QPen(border_color, border_width)
+            pen.setCosmetic(True)  # ensures 1px on any device scaling
+            painter.setPen(pen)
+            painter.setBrush(Qt.BrushStyle.NoBrush)
+
+            r = QRectF(self.rect())
+            r.adjust(1, 0, 0, 0)  # align to pixel grid
+
+            radius = COMBOBOX_RADIUS  # your corner radius
+            path = QPainterPath()
+            path.moveTo(r.left(), r.bottom())                  # start bottom-left
+            path.lineTo(r.left(), r.top() + radius)           # left side
+            path.quadTo(r.left(), r.top(), r.left() + radius, r.top())  # top-left corner
+            path.lineTo(r.right() - radius, r.top())          # top side
+            path.quadTo(r.right(), r.top(), r.right(), r.top() + radius)  # top-right corner
+            path.lineTo(r.right(), r.bottom())                # right side
+            # bottom side left open (no bottom border)
+            painter.drawPath(path)
 
         painter.end()
 
