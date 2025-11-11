@@ -1,3 +1,5 @@
+__version__ = "0.1.0"
+
 from .logger import hlogger
 
 from .hstyle import HStyle
@@ -55,5 +57,3 @@ __all__ = [
 
     "load_png_image",
 ]
-
-__version__ = "0.2"

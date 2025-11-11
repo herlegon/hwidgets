@@ -71,7 +71,7 @@ from PySide6.QtWidgets import (
 
 )
 
-from hutils import parent_directory
+from hytils import parent_directory
 
 TITLE_BAR_ICON_PATH = os.path.join(parent_directory(__file__), "icons")
 

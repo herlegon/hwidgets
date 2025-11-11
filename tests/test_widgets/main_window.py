@@ -1,5 +1,5 @@
 import sys
-from hutils import (
+from hytils import (
     absolute_path,
     get_extension,
 )

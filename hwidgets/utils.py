@@ -1,6 +1,6 @@
 
 from dataclasses import dataclass
-from hutils import parent_directory, path_basename
+from hytils import parent_directory, path_basename
 import os
 from pathlib import Path
 import sys

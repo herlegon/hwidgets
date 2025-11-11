@@ -1,10 +1,9 @@
 [project]
 name = "hwidgets"
-version = "0.2"
-description = "Customized PySide6 widgets"
+description = "Customized PySide6 widgets for Herlegon tools"
 readme = "README.md"
 authors = [
-    { name = "Jep Etau", email = "jep.etau@gmail.com" }
+    { name = "Jep Etau" }
 ]
 requires-python = ">=3.12"
 classifiers = [
@@ -13,22 +12,27 @@ classifiers = [
     "Operating System :: OS Independent",
     "Programming Language :: Python :: 3.12",
 ]
-dependencies = []
+dependencies = [
+    "hytils",
+    "numpy",
+    "PySide6_Essentials",
+]
+dynamic = ["version"]
 
 [project.urls]
-Homepage = "https://github.com/JepEtau/hwidgets"
-Documentation = "https://github.com/JepEtau/hwidgets/README.md"
-Repository = "https://github.com/JepEtau/hwidgets"
-"Bug Tracker" = "https://github.com/JepEtau/hwidgets/issues"
+Homepage = "https://github.com/herlegon/hwidgets"
 
 [build-system]
-requires = ["setuptools >= 77.0.3", "wheel"]
+requires = ["setuptools >= 80.9.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["."]
 include = ["hwidgets"]
 exclude = ["tests*", "scripts", "rlg_widgets"]
+
+[tool.setuptools.dynamic]
+version = { attr = "hwidgets.__version__" }
 
 [tool.black]
 line-length = 90

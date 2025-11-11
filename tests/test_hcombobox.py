@@ -1,6 +1,6 @@
 import os
 import sys
-from hutils import parent_directory
+from hytils import parent_directory
 sys.path.append(os.path.join(parent_directory(__file__), "hwidgets"))
 
 
@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QGridLayout,
 )
-from hutils import (
+from hytils import (
     blue, lightcyan, lightgreen, lightgrey, orange,
     purple, yellow,
 )

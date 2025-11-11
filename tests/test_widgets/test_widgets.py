@@ -1,5 +1,5 @@
 from argparse import ArgumentParser
-from hutils import parent_directory
+from hytils import parent_directory
 import os
 import signal
 import sys
@@ -151,7 +151,7 @@ from PySide6.QtWidgets import (
 from string import Template
 
 
-from hutils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
+from hytils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
 
 from hwidgets.combobox import HComboBox
 from hwidgets.hstyle import *

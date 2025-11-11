@@ -1,4 +1,4 @@
-from hutils import (
+from hytils import (
     blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
 )
 from .hstyle import (
