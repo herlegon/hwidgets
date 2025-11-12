@@ -46,12 +46,12 @@ class _ClearButton(QPushButton):
         hstyle: HStyle
     ):
         super().__init__(parent)
-        self.setCursor(Qt.CursorShape.ArrowCursor)
+        # self.setCursor(Qt.CursorShape.ArrowCursor)
 
         self.setFixedSize(QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT))
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        self.setCursor(Qt.CursorShape.PointingHandCursor)
+        # self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         self.normal_icon = QIcon(load_png_icon(
             "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
@@ -446,8 +446,10 @@ class HPlainTextEdit(QPlainTextEdit):
         super().setReadOnly(enable)
         if self.isEnabled():
             self.setClearButtonEnabled(not enable)
+            self.setCursor(Qt.CursorShape.ArrowCursor)
         else:
             self.setClearButtonEnabled(False)
+            self.setCursor(Qt.CursorShape.IBeamCursor)
 
 
     def setEnabled(self, enable: bool) -> bool:

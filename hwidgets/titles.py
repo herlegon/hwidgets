@@ -17,6 +17,7 @@ from PySide6.QtGui import (
     QPixmap,
     QColor,
     QPainter,
+    QPaintEvent,
 )
 from PySide6.QtWidgets import (
     QHBoxLayout,
@@ -29,6 +30,8 @@ from .hstyle import (
     TITLE_1_HEIGHT,
     TITLE_1_FONT_SIZE,
     TITLE_1_BOLD,
+    DEBUG_GEOMETRY,
+    draw_widget_rect,
 )
 from .utils import load_png_icon
 # from .style_types import (
@@ -196,6 +199,9 @@ class HTitle1(QWidget):
         super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         self.setFixedHeight(TITLE_1_HEIGHT)
+        self.setSizePolicy(
+            QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
+        )
         self.hstyle = hstyle
 
         self._layout = QHBoxLayout()
@@ -250,6 +256,11 @@ class HTitle1(QWidget):
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
         self._title.setFixedHeight(TITLE_1_HEIGHT)
+        self.adjustSize()
+
+
+    # def sizeHint(self) -> QSize:
+    #     return QSize(self.width(), TITLE_1_HEIGHT)
 
 
     def setText(self, text: str) -> None:
@@ -279,4 +290,12 @@ class HTitle1(QWidget):
         self._icon.setPixmap(pixmap)
         self._icon.setFixedSize(pixmap.size())
         self._layout.setSpacing(8)
+
+
+    def paintEvent(self, event: QPaintEvent) -> None:
+        super().paintEvent(event)
+        painter = QPainter(self)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
+        painter.end()
 
