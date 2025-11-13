@@ -327,7 +327,7 @@ class HComboBox(QComboBox):
             if event.type() == QEvent.Type.MouseButtonPress:
                 mouse_event: QMouseEvent = event
                 if (
-                    mouse_event.button() == Qt.MouseButton.LeftButto
+                    mouse_event.button() == Qt.MouseButton.LeftButton
                     and line_edit.isReadOnly()
                 ):
                     QTimer.singleShot(0, self.showPopup)
