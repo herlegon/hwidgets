@@ -46,9 +46,10 @@ class HLabel(QLabel):
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         if text is not None:
             self.setText(text)
-        self.setSizePolicy(
-            QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        )
+
+        # self.setSizePolicy(
+        #     QSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Policy.Fixed)
+        # )
         self.setMinimumWidth(COMBOBOX_RADIUS)
         self.setFixedHeight(COMBOBOX_HEIGHT)
 
@@ -62,3 +63,7 @@ class HLabel(QLabel):
         )
         self.setStyleSheet(qss)
 
+
+    def setText(self, text: str) -> None:
+        super().setText(text)
+        self.setMinimumWidth(self.sizeHint().width())
