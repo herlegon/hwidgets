@@ -316,6 +316,18 @@ class SettingsDialog(QDialog):
         dev_layout.addWidget(self.widgets['dev_mode'])
         settings_layout.addWidget(dev_row)
 
+        # Additional 10 random settings
+        for i in range(1, 11):
+            setting_row = QWidget()
+            setting_layout = QHBoxLayout(setting_row)
+            setting_layout.setContentsMargins(0, 0, 0, 0)
+            setting_label = QLabel(f"Random setting {i}:")
+            setting_layout.addWidget(setting_label)
+            setting_layout.addStretch()
+            self.widgets[f'random_setting_{i}'] = HSwitch()
+            setting_layout.addWidget(self.widgets[f'random_setting_{i}'])
+            settings_layout.addWidget(setting_row)
+
         settings_layout.addStretch()
 
         scroll_area.setWidget(settings_widget)

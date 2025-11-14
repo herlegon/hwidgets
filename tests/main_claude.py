@@ -1,155 +1,485 @@
-from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout,
-                               QHBoxLayout, QGridLayout, QPushButton, QLabel,
-                               QSizePolicy, QTextEdit)
-from PySide6.QtCore import Qt
+from PySide6.QtWidgets import (QApplication, QDialog, QVBoxLayout, QHBoxLayout,
+                               QPushButton, QLabel, QScrollArea, QWidget, QMainWindow,
+                               QComboBox, QFrame, QFileDialog, QGridLayout)
+from PySide6.QtCore import Qt, QPoint, QSize, Signal, QRect, QPropertyAnimation, QEasingCurve, Property
+from PySide6.QtGui import QMouseEvent, QPainter, QColor
 import sys
+
+
+class HSwitch(QWidget):
+    """Horizontal toggle switch widget"""
+    toggled = Signal(bool)
+
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self._checked = False
+        self._circle_position = 0
+        self.setFixedSize(50, 26)
+        self.setCursor(Qt.PointingHandCursor)
+
+        # Animation
+        self.animation = QPropertyAnimation(self, b"circle_position", self)
+        self.animation.setEasingCurve(QEasingCurve.InOutCubic)
+        self.animation.setDuration(150)
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing)
+
+        # Draw background track
+        if self._checked:
+            painter.setBrush(QColor("#0d6efd"))
+        else:
+            painter.setBrush(QColor("#ccc"))
+
+        painter.setPen(Qt.NoPen)
+        track_rect = QRect(0, 0, self.width(), self.height())
+        painter.drawRoundedRect(track_rect, self.height() / 2, self.height() / 2)
+
+        # Draw circle
+        painter.setBrush(QColor("white"))
+        circle_x = int(self._circle_position)
+        circle_y = 3
+        circle_diameter = self.height() - 6
+        painter.drawEllipse(circle_x, circle_y, circle_diameter, circle_diameter)
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.LeftButton:
+            self.toggle()
+
+    def toggle(self):
+        self._checked = not self._checked
+        self.animate_circle()
+        self.toggled.emit(self._checked)
+
+    def setChecked(self, checked):
+        if self._checked != checked:
+            self._checked = checked
+            self.animate_circle()
+
+    def isChecked(self):
+        return self._checked
+
+    def animate_circle(self):
+        start_pos = self._circle_position
+        end_pos = self.width() - self.height() + 3 if self._checked else 3
+
+        self.animation.stop()
+        self.animation.setStartValue(start_pos)
+        self.animation.setEndValue(end_pos)
+        self.animation.start()
+
+    def get_circle_position(self):
+        return self._circle_position
+
+    def set_circle_position(self, pos):
+        self._circle_position = pos
+        self.update()
+
+    circle_position = Property(float, get_circle_position, set_circle_position)
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        # Set initial position without animation
+        self._circle_position = self.width() - self.height() + 3 if self._checked else 3
+        self.update()
+
+
+class SettingsDialog(QDialog):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.setWindowFlags(Qt.FramelessWindowHint | Qt.Dialog)
+        self.setAttribute(Qt.WA_TranslucentBackground)
+        self.setModal(True)  # Make dialog modal to prevent main window interaction
+
+        # For dragging
+        self.drag_position = QPoint()
+
+        # Store default values
+        self.defaults = {
+            'reload_previous_model': True,
+            'default_graphic_card': 'NVIDIA GeForce RTX 3080',
+            'persistent_output_folder': 'C:/Users/Output',
+            'always_show_log_panel': False,
+            'dev_mode': False
+        }
+
+        # Add defaults for random settings
+        for i in range(1, 11):
+            self.defaults[f'random_setting_{i}'] = i % 2 == 0  # Alternate True/False
+
+        # Available graphics cards (simulated)
+        self.available_gpus = [
+            'NVIDIA GeForce RTX 3080',
+            'NVIDIA GeForce RTX 4090',
+            'AMD Radeon RX 7900 XTX',
+            'Intel Arc A770'
+        ]
+
+        self.setup_ui()
+        self.load_settings()
+
+    def setup_ui(self):
+        # Main container with border and shadow
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(10, 10, 10, 10)
+
+        # Content frame
+        content_frame = QFrame()
+        content_frame.setObjectName("contentFrame")
+        content_frame.setStyleSheet("""
+            QFrame#contentFrame {
+                background-color: white;
+                border: 2px solid #ccc;
+                border-radius: 8px;
+            }
+        """)
+
+        frame_layout = QVBoxLayout(content_frame)
+        frame_layout.setContentsMargins(0, 0, 0, 0)
+        frame_layout.setSpacing(0)
+
+        # Title bar
+        title_bar = QWidget()
+        title_bar.setStyleSheet("background-color: #f0f0f0; border-radius: 6px 6px 0 0;")
+        title_layout = QHBoxLayout(title_bar)
+        title_layout.setContentsMargins(15, 10, 15, 10)
+
+        title_label = QLabel("Settings")
+        title_label.setStyleSheet("font-size: 14px; font-weight: bold; color: #333;")
+        title_layout.addWidget(title_label)
+        title_layout.addStretch()
+
+        frame_layout.addWidget(title_bar)
+
+        # Scroll area for settings
+        scroll_area = QScrollArea()
+        scroll_area.setWidgetResizable(True)
+        scroll_area.setFrameShape(QFrame.NoFrame)
+        scroll_area.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        scroll_area.setStyleSheet("""
+            QScrollArea {
+                border: none;
+                background-color: white;
+            }
+            QScrollBar:vertical {
+                border: none;
+                background: #f0f0f0;
+                width: 10px;
+                margin: 0px;
+            }
+            QScrollBar::handle:vertical {
+                background: #c0c0c0;
+                min-height: 20px;
+                border-radius: 5px;
+            }
+            QScrollBar::handle:vertical:hover {
+                background: #a0a0a0;
+            }
+            QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+                height: 0px;
+            }
+        """)
+
+        # Settings content
+        settings_widget = QWidget()
+        settings_layout = QVBoxLayout(settings_widget)
+        settings_layout.setContentsMargins(20, 20, 20, 20)
+        settings_layout.setSpacing(20)
+
+        # Store widgets
+        self.widgets = {}
+
+        # Common style for combo boxes
+        combo_style = """
+            QComboBox {
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 6px 10px;
+                background-color: white;
+                min-height: 24px;
+            }
+            QComboBox:hover {
+                border: 1px solid #999;
+            }
+            QComboBox:focus {
+                border: 1px solid #0d6efd;
+            }
+            QComboBox::drop-down {
+                border: none;
+                width: 20px;
+            }
+            QComboBox::down-arrow {
+                image: none;
+                border-left: 4px solid transparent;
+                border-right: 4px solid transparent;
+                border-top: 6px solid #666;
+                margin-right: 5px;
+            }
+            QComboBox:disabled {
+                background-color: #f0f0f0;
+                color: #666;
+            }
+        """
+
+        # 1. Reload previous model on startup
+        reload_row = QWidget()
+        reload_layout = QHBoxLayout(reload_row)
+        reload_layout.setContentsMargins(0, 0, 0, 0)
+        reload_label = QLabel("Reload previous model on startup:")
+        reload_layout.addWidget(reload_label)
+        reload_layout.addStretch()
+        self.widgets['reload_previous_model'] = HSwitch()
+        reload_layout.addWidget(self.widgets['reload_previous_model'])
+        settings_layout.addWidget(reload_row)
+
+        # 2. Default graphic card (read-only)
+        settings_layout.addWidget(QLabel("Default graphic card:"))
+        self.widgets['default_graphic_card'] = QComboBox()
+        self.widgets['default_graphic_card'].addItems(self.available_gpus)
+        self.widgets['default_graphic_card'].setEnabled(False)  # Read-only
+        self.widgets['default_graphic_card'].setStyleSheet(combo_style)
+        settings_layout.addWidget(self.widgets['default_graphic_card'])
+
+        # 3. Persistent output folder (editable combo + browse)
+        settings_layout.addWidget(QLabel("Persistent output folder:"))
+        folder_row = QWidget()
+        folder_layout = QHBoxLayout(folder_row)
+        folder_layout.setContentsMargins(0, 0, 0, 0)
+        folder_layout.setSpacing(8)
+
+        self.widgets['persistent_output_folder'] = QComboBox()
+        self.widgets['persistent_output_folder'].setEditable(True)
+        self.widgets['persistent_output_folder'].addItems([
+            'C:/Users/Output',
+            'D:/Projects/Output',
+            'E:/Renders'
+        ])
+        self.widgets['persistent_output_folder'].setStyleSheet(combo_style)
+        folder_layout.addWidget(self.widgets['persistent_output_folder'], stretch=1)
+
+        browse_btn = QPushButton("Browse...")
+        browse_btn.setFixedWidth(90)
+        browse_btn.setStyleSheet("""
+            QPushButton {
+                background-color: #f8f9fa;
+                border: 1px solid #ccc;
+                border-radius: 4px;
+                padding: 6px 12px;
+                color: #333;
+            }
+            QPushButton:hover {
+                background-color: #e9ecef;
+                border: 1px solid #999;
+            }
+            QPushButton:pressed {
+                background-color: #dee2e6;
+            }
+        """)
+        browse_btn.clicked.connect(self.browse_folder)
+        folder_layout.addWidget(browse_btn)
+
+        settings_layout.addWidget(folder_row)
+
+        # 4. Always show log panel
+        log_row = QWidget()
+        log_layout = QHBoxLayout(log_row)
+        log_layout.setContentsMargins(0, 0, 0, 0)
+        log_label = QLabel("Always show log panel:")
+        log_layout.addWidget(log_label)
+        log_layout.addStretch()
+        self.widgets['always_show_log_panel'] = HSwitch()
+        log_layout.addWidget(self.widgets['always_show_log_panel'])
+        settings_layout.addWidget(log_row)
+
+        # 5. Dev mode
+        dev_row = QWidget()
+        dev_layout = QHBoxLayout(dev_row)
+        dev_layout.setContentsMargins(0, 0, 0, 0)
+        dev_label = QLabel("Dev mode:")
+        dev_layout.addWidget(dev_label)
+        dev_layout.addStretch()
+        self.widgets['dev_mode'] = HSwitch()
+        dev_layout.addWidget(self.widgets['dev_mode'])
+        settings_layout.addWidget(dev_row)
+
+        # Additional 10 random settings
+        for i in range(1, 11):
+            setting_row = QWidget()
+            setting_layout = QHBoxLayout(setting_row)
+            setting_layout.setContentsMargins(0, 0, 0, 0)
+            setting_label = QLabel(f"Random setting {i}:")
+            setting_layout.addWidget(setting_label)
+            setting_layout.addStretch()
+            self.widgets[f'random_setting_{i}'] = HSwitch()
+            setting_layout.addWidget(self.widgets[f'random_setting_{i}'])
+            settings_layout.addWidget(setting_row)
+
+        settings_layout.addStretch()
+
+        scroll_area.setWidget(settings_widget)
+        frame_layout.addWidget(scroll_area)
+
+        # Button bar
+        button_bar = QWidget()
+        button_bar.setStyleSheet("background-color: #f8f8f8; border-radius: 0 0 6px 6px;")
+        button_layout = QHBoxLayout(button_bar)
+        button_layout.setContentsMargins(15, 10, 15, 10)
+
+        # Restore defaults button (left side)
+        restore_btn = QPushButton("Restore to Default")
+        restore_btn.setStyleSheet(self.get_button_style("#6c757d"))
+        restore_btn.clicked.connect(self.restore_defaults)
+        button_layout.addWidget(restore_btn)
+
+        button_layout.addStretch()
+
+        # Cancel and OK buttons (right side)
+        cancel_btn = QPushButton("Cancel")
+        cancel_btn.setFixedWidth(80)
+        cancel_btn.setStyleSheet(self.get_button_style("#6c757d"))
+        cancel_btn.clicked.connect(self.reject)
+        button_layout.addWidget(cancel_btn)
+
+        ok_btn = QPushButton("OK")
+        ok_btn.setFixedWidth(80)
+        ok_btn.setStyleSheet(self.get_button_style("#0d6efd"))
+        ok_btn.clicked.connect(self.accept)
+        button_layout.addWidget(ok_btn)
+
+        frame_layout.addWidget(button_bar)
+
+        main_layout.addWidget(content_frame)
+
+    def get_button_style(self, color):
+        return f"""
+            QPushButton {{
+                background-color: {color};
+                color: white;
+                border: none;
+                padding: 6px 16px;
+                border-radius: 4px;
+                font-size: 13px;
+            }}
+            QPushButton:hover {{
+                background-color: {self.adjust_color(color, -20)};
+            }}
+            QPushButton:pressed {{
+                background-color: {self.adjust_color(color, -40)};
+            }}
+        """
+
+    def adjust_color(self, hex_color, amount):
+        """Darken or lighten a hex color"""
+        hex_color = hex_color.lstrip('#')
+        rgb = tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
+        new_rgb = tuple(max(0, min(255, c + amount)) for c in rgb)
+        return f"#{new_rgb[0]:02x}{new_rgb[1]:02x}{new_rgb[2]:02x}"
+
+    def browse_folder(self):
+        """Open folder browser dialog"""
+        current_path = self.widgets['persistent_output_folder'].currentText()
+        folder = QFileDialog.getExistingDirectory(
+            self,
+            "Select Output Folder",
+            current_path,
+            QFileDialog.ShowDirsOnly | QFileDialog.DontResolveSymlinks
+        )
+        if folder:
+            self.widgets['persistent_output_folder'].setCurrentText(folder)
+
+    def load_settings(self):
+        """Load current settings (from defaults initially)"""
+        self.widgets['reload_previous_model'].setChecked(self.defaults['reload_previous_model'])
+        self.widgets['default_graphic_card'].setCurrentText(self.defaults['default_graphic_card'])
+        self.widgets['persistent_output_folder'].setCurrentText(self.defaults['persistent_output_folder'])
+        self.widgets['always_show_log_panel'].setChecked(self.defaults['always_show_log_panel'])
+        self.widgets['dev_mode'].setChecked(self.defaults['dev_mode'])
+
+        # Load random settings
+        for i in range(1, 11):
+            self.widgets[f'random_setting_{i}'].setChecked(self.defaults[f'random_setting_{i}'])
+
+    def restore_defaults(self):
+        """Restore all settings to default values"""
+        self.load_settings()
+
+    def get_settings(self):
+        """Get current settings as dictionary"""
+        settings = {
+            'reload_previous_model': self.widgets['reload_previous_model'].isChecked(),
+            'default_graphic_card': self.widgets['default_graphic_card'].currentText(),
+            'persistent_output_folder': self.widgets['persistent_output_folder'].currentText(),
+            'always_show_log_panel': self.widgets['always_show_log_panel'].isChecked(),
+            'dev_mode': self.widgets['dev_mode'].isChecked()
+        }
+
+        # Add random settings
+        for i in range(1, 11):
+            settings[f'random_setting_{i}'] = self.widgets[f'random_setting_{i}'].isChecked()
+
+        return settings
+
+    def mousePressEvent(self, event: QMouseEvent):
+        if event.button() == Qt.LeftButton:
+            self.drag_position = event.globalPosition().toPoint() - self.frameGeometry().topLeft()
+            event.accept()
+
+    def mouseMoveEvent(self, event: QMouseEvent):
+        if event.buttons() == Qt.LeftButton and not self.drag_position.isNull():
+            self.move(event.globalPosition().toPoint() - self.drag_position)
+            event.accept()
+
+    def showEvent(self, event):
+        super().showEvent(event)
+        if self.parent():
+            # Calculate maximum height (parent height - 50px)
+            parent_height = self.parent().height()
+            max_height = parent_height - 50
+
+            # Set a reasonable width
+            self.setFixedWidth(500)
+
+            # Set maximum height
+            if self.sizeHint().height() > max_height:
+                self.setFixedHeight(max_height)
+            else:
+                self.setFixedHeight(min(self.sizeHint().height(), max_height))
+
+            # Center in parent
+            parent_rect = self.parent().geometry()
+            dialog_rect = self.geometry()
+            center_x = parent_rect.x() + (parent_rect.width() - dialog_rect.width()) // 2
+            center_y = parent_rect.y() + (parent_rect.height() - dialog_rect.height()) // 2
+            self.move(center_x, center_y)
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Model Browser Layout")
+        self.setWindowTitle("Main Window")
+        self.setGeometry(100, 100, 800, 600)
 
-        # Fixed dimensions
-        self.FIXED_LOG_WIDTH = 300
-        self.FIXED_HEADER_HEIGHT = 60
-        self.FIXED_BROWSER_HEIGHT = 80
+        # Central widget
+        central = QWidget()
+        layout = QVBoxLayout(central)
 
-        # Main widget and layout
-        central_widget = QWidget()
-        self.setCentralWidget(central_widget)
-        main_layout = QHBoxLayout(central_widget)
-        main_layout.setContentsMargins(0, 0, 0, 0)
-        main_layout.setSpacing(0)
+        label = QLabel("Click the button to open settings dialog")
+        label.setAlignment(Qt.AlignCenter)
+        layout.addWidget(label)
 
-        # Left section (all widgets except log)
-        left_widget = QWidget()
-        left_layout = QVBoxLayout(left_widget)
-        left_layout.setContentsMargins(5, 5, 5, 5)
-        left_layout.setSpacing(5)
+        btn = QPushButton("Open Settings")
+        btn.setFixedSize(150, 40)
+        btn.clicked.connect(self.open_settings)
+        layout.addWidget(btn, alignment=Qt.AlignCenter)
 
-        # Header widget with button inside
-        self.widget_header = QWidget()
-        self.widget_header.setFixedHeight(self.FIXED_HEADER_HEIGHT)
-        self.widget_header.setStyleSheet("background-color: #4A90E2;")
-        header_layout = QHBoxLayout(self.widget_header)
-        header_layout.setContentsMargins(10, 5, 10, 5)
+        self.setCentralWidget(central)
 
-        header_label = QLabel("Widget Header")
-        header_label.setStyleSheet("color: white; font-weight: bold;")
-        header_layout.addWidget(header_label, 1)
-
-        # Checkable button to show/hide log
-        self.checkable_button_show = QPushButton("Hide Log")
-        self.checkable_button_show.setCheckable(True)
-        self.checkable_button_show.setChecked(True)
-        self.checkable_button_show.setStyleSheet("""
-            QPushButton {
-                background-color: #5CB85C;
-                color: white;
-                padding: 5px 20px;
-                font-weight: bold;
-                border: none;
-                border-radius: 3px;
-            }
-            QPushButton:checked {
-                background-color: #D9534F;
-            }
-        """)
-        self.checkable_button_show.clicked.connect(self.toggle_log)
-        header_layout.addWidget(self.checkable_button_show)
-
-        left_layout.addWidget(self.widget_header)
-
-        # Model browser widget
-        self.widget_model_browser = QLabel("Widget Model Browser")
-        self.widget_model_browser.setStyleSheet("background-color: #F0AD4E; padding: 10px;")
-        self.widget_model_browser.setFixedHeight(self.FIXED_BROWSER_HEIGHT)
-        left_layout.addWidget(self.widget_model_browser)
-
-        # Bottom section with grid layout
-        bottom_widget = QWidget()
-        grid_layout = QGridLayout(bottom_widget)
-        grid_layout.setContentsMargins(0, 0, 0, 0)
-        grid_layout.setSpacing(5)
-
-        # Left column: model widgets (width calculated from content)
-        models_widget = QWidget()
-        models_layout = QVBoxLayout(models_widget)
-        models_layout.setContentsMargins(0, 0, 0, 0)
-        models_layout.setSpacing(5)
-
-        self.widget_pytorch_model = QLabel("PyTorch Model")
-        self.widget_pytorch_model.setStyleSheet("background-color: #EE6C4D; color: white; padding: 10px;")
-        models_layout.addWidget(self.widget_pytorch_model)
-
-        self.widget_onnx_model = QLabel("ONNX Model")
-        self.widget_onnx_model.setStyleSheet("background-color: #3D5A80; color: white; padding: 10px;")
-        models_layout.addWidget(self.widget_onnx_model)
-
-        self.widget_tensorrt_model = QLabel("TensorRT Model with Longer Text")
-        self.widget_tensorrt_model.setStyleSheet("background-color: #98C1D9; padding: 10px;")
-        models_layout.addWidget(self.widget_tensorrt_model)
-
-        models_layout.addStretch()
-
-        # Calculate maximum width of model widgets
-        QApplication.processEvents()  # Ensure widgets are laid out
-        max_width = max(
-            self.widget_pytorch_model.sizeHint().width(),
-            self.widget_onnx_model.sizeHint().width(),
-            self.widget_tensorrt_model.sizeHint().width()
-        )
-        models_widget.setFixedWidth(max_width)
-
-        grid_layout.addWidget(models_widget, 0, 0, 2, 1)
-
-        # Metadata widget (expandable horizontally)
-        self.widget_metadata = QTextEdit()
-        self.widget_metadata.setPlainText("Widget Metadata\n(Expandable horizontally)")
-        self.widget_metadata.setStyleSheet("background-color: #E0E0E0; padding: 10px;")
-        self.widget_metadata.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        grid_layout.addWidget(self.widget_metadata, 0, 1)
-
-        # Conversion widget (expandable vertically)
-        self.widget_conversion = QTextEdit()
-        self.widget_conversion.setPlainText("Widget Conversion\n(Expandable vertically)\n\nMultiple widgets can be hidden here...")
-        self.widget_conversion.setStyleSheet("background-color: #C9E4CA; padding: 10px;")
-        self.widget_conversion.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-        grid_layout.addWidget(self.widget_conversion, 1, 1)
-
-        # Set column stretch
-        grid_layout.setColumnStretch(0, 0)  # Fixed width column
-        grid_layout.setColumnStretch(1, 1)  # Expandable column
-
-        left_layout.addWidget(bottom_widget, 1)
-
-        main_layout.addWidget(left_widget, 1)
-
-        # Right section: Log widget (fixed width, toggleable)
-        self.widget_log = QTextEdit()
-        self.widget_log.setPlainText("Widget Log\n(Fixed width)")
-        self.widget_log.setStyleSheet("background-color: #2D2D2D; color: #00FF00; padding: 10px;")
-        self.widget_log.setFixedWidth(self.FIXED_LOG_WIDTH)
-        self.widget_log.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Expanding)
-        main_layout.addWidget(self.widget_log)
-
-        # Initial window size
-        self.resize(900, 600)
-
-    def toggle_log(self):
-        if self.checkable_button_show.isChecked():
-            # Show log
-            self.widget_log.show()
-            self.checkable_button_show.setText("Hide Log")
-            # Increase window width
-            self.resize(self.width() + self.FIXED_LOG_WIDTH, self.height())
-        else:
-            # Hide log
-            self.widget_log.hide()
-            self.checkable_button_show.setText("Show Log")
-            # Decrease window width
-            self.resize(self.width() - self.FIXED_LOG_WIDTH, self.height())
+    def open_settings(self):
+        dialog = SettingsDialog(self)
+        if dialog.exec() == QDialog.Accepted:
+            settings = dialog.get_settings()
+            print("Settings saved:", settings)
 
 
 if __name__ == "__main__":

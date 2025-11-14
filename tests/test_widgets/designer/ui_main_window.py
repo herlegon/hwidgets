@@ -51,7 +51,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, hstyle: HStyle):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1443, 937)
+        MainWindow.resize(1443, 939)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -100,6 +100,39 @@ class Ui_MainWindow(object):
         self.q_combobox_disabled.setEditable(True)
 
         self.q_combobox_layout.addWidget(self.q_combobox_disabled)
+
+        self.horizontalLayout_23 = QHBoxLayout()
+        self.horizontalLayout_23.setObjectName(u"horizontalLayout_23")
+        self.q_lineedit_editable_3 = QLineEdit(self.q_frame)
+        self.q_lineedit_editable_3.setObjectName(u"q_lineedit_editable_3")
+        self.q_lineedit_editable_3.setClearButtonEnabled(False)
+
+        self.horizontalLayout_23.addWidget(self.q_lineedit_editable_3)
+
+        self.q_combobox_read_only_3 = QComboBox(self.q_frame)
+        self.q_combobox_read_only_3.setObjectName(u"q_combobox_read_only_3")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.q_combobox_read_only_3.sizePolicy().hasHeightForWidth())
+        self.q_combobox_read_only_3.setSizePolicy(sizePolicy)
+        self.q_combobox_read_only_3.setMaximumSize(QSize(300, 16777215))
+
+        self.horizontalLayout_23.addWidget(self.q_combobox_read_only_3)
+
+        self.q_spinbox_rw_3 = QSpinBox(self.q_frame)
+        self.q_spinbox_rw_3.setObjectName(u"q_spinbox_rw_3")
+        self.q_spinbox_rw_3.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.q_spinbox_rw_3.setMinimum(10)
+
+        self.horizontalLayout_23.addWidget(self.q_spinbox_rw_3)
+
+        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_23.addItem(self.horizontalSpacer_11)
+
+
+        self.q_combobox_layout.addLayout(self.horizontalLayout_23)
 
 
         self.q_widgets_sub_layout.addLayout(self.q_combobox_layout)
@@ -272,9 +305,6 @@ class Ui_MainWindow(object):
         self.q_button_layout.setObjectName(u"q_button_layout")
         self.q_button = QPushButton(self.q_frame)
         self.q_button.setObjectName(u"q_button")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.q_button.sizePolicy().hasHeightForWidth())
         self.q_button.setSizePolicy(sizePolicy)
         self.q_button.setMaximumSize(QSize(24, 24))
@@ -1210,6 +1240,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.q_lineedit_editable_3.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
         self.q_radiobutton_1.setText("")
         self.q_radiobutton_2.setText("")
         self.q_radiobutton_disabled_1.setText("")
