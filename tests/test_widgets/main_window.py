@@ -83,7 +83,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.setMinimumWidth(800)
         if sys.platform == 'linux':
-            self.move(QPoint(400,200))
+            self.move(QPoint(400,50))
         else:
             self.move(QPoint(400,200))
 

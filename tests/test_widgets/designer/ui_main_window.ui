@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1333</width>
-    <height>885</height>
+    <width>1443</width>
+    <height>939</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -63,27 +63,31 @@
          <item>
           <layout class="QVBoxLayout" name="q_combobox_layout">
            <item>
-            <widget class="QComboBox" name="q_combobox_rw">
-             <property name="maximumSize">
-              <size>
-               <width>300</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="q_combobox_read_only">
-             <property name="maximumSize">
-              <size>
-               <width>300</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_20">
+             <item>
+              <widget class="QComboBox" name="q_combobox_read_only">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="q_combobox_rw">
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QComboBox" name="q_combobox_disabled">
@@ -94,6 +98,59 @@
               <bool>true</bool>
              </property>
             </widget>
+           </item>
+           <item>
+            <layout class="QHBoxLayout" name="horizontalLayout_23">
+             <item>
+              <widget class="QLineEdit" name="q_lineedit_editable_3">
+               <property name="text">
+                <string>Editable</string>
+               </property>
+               <property name="clearButtonEnabled">
+                <bool>false</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="q_combobox_read_only_3">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QSpinBox" name="q_spinbox_rw_3">
+               <property name="alignment">
+                <set>Qt::AlignmentFlag::AlignRight|Qt::AlignmentFlag::AlignTrailing|Qt::AlignmentFlag::AlignVCenter</set>
+               </property>
+               <property name="minimum">
+                <number>10</number>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <spacer name="horizontalSpacer_11">
+               <property name="orientation">
+                <enum>Qt::Orientation::Horizontal</enum>
+               </property>
+               <property name="sizeHint" stdset="0">
+                <size>
+                 <width>40</width>
+                 <height>20</height>
+                </size>
+               </property>
+              </spacer>
+             </item>
+            </layout>
            </item>
           </layout>
          </item>
@@ -302,6 +359,75 @@
           </layout>
          </item>
          <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_19">
+           <item>
+            <widget class="QPushButton" name="q_text_icon_button">
+             <property name="text">
+              <string>qi_button</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="q_text_icon_button_checked">
+             <property name="text">
+              <string>qi_button (checked)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="q_text_icon_button_disabled">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>qi_button (disabled)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="q_text_icon_button_disabled_checked">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>qi_button (Checked Disabled)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="q_button_layout">
            <item>
             <widget class="QPushButton" name="q_button">
@@ -443,6 +569,58 @@
               </size>
              </property>
             </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_22">
+           <property name="bottomMargin">
+            <number>60</number>
+           </property>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="q_frame_layout">
+           <item>
+            <widget class="QFrame" name="q_frame_noframe">
+             <property name="frameShape">
+              <enum>QFrame::Shape::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Plain</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_8">
+              <item>
+               <widget class="QLabel" name="q_label_1">
+                <property name="text">
+                 <string>no frame, plain</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="q_frame_styled_raised">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Plain</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_9">
+              <item>
+               <widget class="QLabel" name="q_label_0">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="text">
+                 <string>no frame, styled</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </item>
           </layout>
          </item>
@@ -816,39 +994,43 @@ of vertical text
          <item>
           <layout class="QVBoxLayout" name="h_combobox_layout">
            <item>
-            <widget class="QComboBox" name="h_combobox_read_only">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>300</width>
-               <height>16777215</height>
-              </size>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QComboBox" name="h_combobox_rw">
-             <property name="sizePolicy">
-              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-               <horstretch>0</horstretch>
-               <verstretch>0</verstretch>
-              </sizepolicy>
-             </property>
-             <property name="maximumSize">
-              <size>
-               <width>300</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="editable">
-              <bool>true</bool>
-             </property>
-            </widget>
+            <layout class="QHBoxLayout" name="horizontalLayout_21">
+             <item>
+              <widget class="QComboBox" name="h_combobox_rw">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+               <property name="editable">
+                <bool>true</bool>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QComboBox" name="h_combobox_read_only">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>300</width>
+                 <height>16777215</height>
+                </size>
+               </property>
+              </widget>
+             </item>
+            </layout>
            </item>
            <item>
             <widget class="QComboBox" name="h_combobox_disabled">
@@ -1124,7 +1306,7 @@ of vertical text
            <item>
             <widget class="QPushButton" name="h_text_button_checked">
              <property name="text">
-              <string>HButton (C)</string>
+              <string>HButton (checked)</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -1140,7 +1322,7 @@ of vertical text
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>HButton (D)</string>
+              <string>HButton (disabled)</string>
              </property>
             </widget>
            </item>
@@ -1150,7 +1332,73 @@ of vertical text
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>HButton (C/D)</string>
+              <string>HButton (Checked Disabled)</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_18">
+           <item>
+            <widget class="QPushButton" name="h_text_icon_button">
+             <property name="text">
+              <string>hi_button</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_text_icon_button_checked">
+             <property name="text">
+              <string>hi_button (checked)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_text_icon_button_disabled">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>hi_button (disabled)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_text_icon_button_disabled_checked">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>hi_button (Checked Disabled)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -1304,6 +1552,51 @@ of vertical text
               </size>
              </property>
             </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="h_frame_layout">
+           <item>
+            <widget class="QFrame" name="h_frame_no_frame">
+             <property name="frameShape">
+              <enum>QFrame::Shape::NoFrame</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Plain</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_10">
+              <item>
+               <widget class="QLabel" name="h_label_2">
+                <property name="text">
+                 <string>no frame, plain</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
+           </item>
+           <item>
+            <widget class="QFrame" name="h_frame_plain">
+             <property name="frameShape">
+              <enum>QFrame::Shape::StyledPanel</enum>
+             </property>
+             <property name="frameShadow">
+              <enum>QFrame::Shadow::Plain</enum>
+             </property>
+             <layout class="QVBoxLayout" name="verticalLayout_11">
+              <item>
+               <widget class="QLabel" name="styled_plain">
+                <property name="frameShape">
+                 <enum>QFrame::Shape::StyledPanel</enum>
+                </property>
+                <property name="text">
+                 <string>no frame, styled</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </widget>
            </item>
           </layout>
          </item>
@@ -1629,7 +1922,7 @@ of vertical text
            <item>
             <widget class="QLabel" name="h_title1_2">
              <property name="text">
-              <string/>
+              <string>This is a HTitle1 widget WITH icon</string>
              </property>
              <property name="pixmap">
               <pixmap>../../../hwidgets/icons/gpu.png</pixmap>
@@ -1781,9 +2074,9 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_2"/>
+  <buttongroup name="buttonGroup_4"/>
+  <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_3"/>
  </buttongroups>
 </ui>
