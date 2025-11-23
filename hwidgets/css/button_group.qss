@@ -1,5 +1,5 @@
 QWidget {
-    color: $text_color;
+    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
 
@@ -8,7 +8,7 @@ QWidget {
 QToolButton {
     /* border: 1px solid #BBBBBB; */
     background-color: $widget_bgd;
-    color: $text_color;
+    color: $font_color;
     padding: 0px $radius 2px $radius;
     outline: none;
 }
@@ -24,7 +24,7 @@ QToolButton:pressed {
 
 QToolButton:checked {
     background-color: $selected_bgd;
-    color: $text_color;
+    color: $font_color;
 }
 
 /* QToolButton:checked:hover {

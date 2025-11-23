@@ -3,7 +3,7 @@ from hytils import (
     absolute_path,
     get_extension,
 )
-from hwidgets.hstyle import HStyle
+from hwidgets.hstyle import Theme
 
 from designer.ui_main_window import Ui_MainWindow
 from PySide6.QtCore import (
@@ -35,7 +35,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
-        hrl_style = HStyle()
+        hrl_style = Theme()
 
 
         self.setupUi(self, hstyle=hrl_style)
@@ -49,7 +49,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.h_frame.setStyleSheet(f"""
             background-color: {hrl_style.window_bgd};
-            color: {hrl_style.text_color};
+            color: {hrl_style.font_color};
         """)
         # p = self.palette()
         # p.setColor(self.backgroundRole(), hrl_style.window_bgd)

@@ -5,14 +5,14 @@ QGroupBox {
     border-radius: $radius;
     margin-top: 12px;
 
-    color: $text_color;
+    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
 }
 
 
 QGroupBox:disabled {
-    border: 1px solid $disabled_text;
+    border: 1px solid $font_color_disabled;
 }
 /*
 Linux, no need for that, other platforms?
@@ -20,7 +20,7 @@ QGroupBox::title {
     background-color: $widget_bgd;
     border-radius: 0px;
 
-    color: $text_color;
+    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
 
@@ -36,7 +36,7 @@ QGroupBox::title {
 */
 
 QGroupBox:disabled {
-    color: $disabled_text;
+    color: $font_color_disabled;
     background-color: $widget_disabled;
 }
 

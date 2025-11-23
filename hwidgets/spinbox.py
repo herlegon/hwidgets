@@ -1,6 +1,6 @@
 from string import Template
 import sys
-from typing import TYPE_CHECKING, Literal
+from typing import TYPE_CHECKING, Literal, Type
 from warnings import warn
 
 from PySide6.QtCore import (
@@ -33,7 +33,7 @@ from PySide6.QtWidgets import (
 from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
-    HStyle,
+    Theme,
 )
 from .utils import load_qss
 
@@ -47,7 +47,7 @@ class HSpinBoxButton(QPushButton):
         parent: QWidget | None = None,
         *,
         kind: Literal['plus', 'minus'],
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         size: QSize,
         autoDefault: bool | None = None,
         default: bool | None = None,
@@ -70,14 +70,14 @@ class HSpinBoxButton(QPushButton):
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
         states = {
-            'normal': (hstyle.widget_bgd, hstyle.text_color),
-            'hover': (hstyle.hover_bgd, hstyle.text_color),
-            'pressed': (hstyle.checked, hstyle.text_color),
+            'normal': (hstyle.widget_bgd, hstyle.font_color),
+            'hover': (hstyle.hover_bgd, hstyle.font_color),
+            'pressed': (hstyle.checked, hstyle.font_color),
             'disabled': (hstyle.disabled_bgd, hstyle.disabled_text),
         }
 
         self.pixmaps = {}
-        for state, (bgd_color, text_color) in states.items():
+        for state, (bgd_color, font_color) in states.items():
             pixmap = QPixmap(button_width, button_height)
             pixmap.fill(Qt.GlobalColor.transparent)
             painter = QPainter(pixmap)
@@ -109,7 +109,7 @@ class HSpinBoxButton(QPushButton):
 
             # Draw symbol
             painter.setRenderHint(QPainter.RenderHint.Antialiasing, False)
-            pen = QPen(QColor(text_color))
+            pen = QPen(QColor(font_color))
             pen.setWidth(1)
             painter.setPen(pen)
             if kind == 'minus':
@@ -172,7 +172,7 @@ class HCommonSpinBox:
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         prefix: str | None = None,
         suffix: str | None = None,
         cleanText: str | None = None,
@@ -238,7 +238,7 @@ class HCommonSpinBox:
         qss_template = Template(load_qss("spinbox.qss"))
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
-            text_color=f"{hstyle.text_color}",
+            font_color=f"{hstyle.font_color}",
             radius=f"{COMBOBOX_RADIUS}px",
             hover_bgd=f"{hstyle.hover_bgd}",
             border_color=f"{hstyle.border}",
@@ -251,7 +251,9 @@ class HCommonSpinBox:
             selection_bgd=f"{hstyle.selection_bgd}",
             margin_right=f"{COMBOBOX_RADIUS+12}px",
             button_width=f"{20}px",
-            selected=f"{hstyle.selected}"
+            selected=f"{hstyle.selected}",
+            font_family=f"\"{hstyle.font_family}\"",
+            font_size=f"{hstyle.font_size}pt",
         )
         self.setStyleSheet(qss)
 
@@ -435,7 +437,7 @@ class HDoubleSpinBox(HCommonSpinBox, QDoubleSpinBox):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         prefix: str | None = None,
         suffix: str | None = None,
         cleanText: str | None = None,
@@ -477,7 +479,7 @@ class HSpinBox(HCommonSpinBox, QSpinBox):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         prefix: str | None = None,
         suffix: str | None = None,
         cleanText: str | None = None,

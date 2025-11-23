@@ -29,8 +29,8 @@ class HButtonGroupPlugin(QDesignerCustomWidgetInterface):
         self._task_menus = []  # Keep a reference
 
     def createWidget(self, parent):
-        from hwidgets import HStyle
-        t = HButtonGroup(parent, hstyle=HStyle())
+        from hwidgets import Theme
+        t = HButtonGroup(parent, theme=Theme())
         t.set_buttons([
             'button1', 'button2', 'button3'
         ])

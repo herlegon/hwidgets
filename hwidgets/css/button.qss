@@ -6,27 +6,27 @@ QPushButton {
     padding-right: 8px;
     padding-bottom: 0px;
 
-    color: $text_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    color: $font_color;
+    font-family: $font_family;
+    font-size: $font_size;
 }
 
 
 QPushButton:hover {
     background-color: $widget_hover;
-    color: $text_color;
+    color: $font_color;
 }
 
 
 QPushButton:pressed {
     background-color: $selection_bgd;
-    color: $text_color;
+    color: $font_color;
 }
 
 
 QPushButton:checked {
     background-color: $selection_bgd;
-    color: $text_color;
+    color: $font_color;
 }
 
 

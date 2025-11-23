@@ -1,6 +1,8 @@
+from typing import Type
+
 from .hstyle import (
     DEBUG_GEOMETRY,
-    HStyle,
+    Theme,
     TRACK_Y,
     CAP_OFFSET,
     TRACK_THICKNESS,
@@ -37,7 +39,7 @@ class HIndeterminateProgress(QProgressBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         is_m2: bool = False,
         minimum: int | None = None,
         maximum: int | None = None,

@@ -1,6 +1,6 @@
 import os
 import sys
-from typing import Any
+from typing import Any, Type
 from PySide6.QtCore import (
     QObject,
     QPoint,
@@ -40,12 +40,8 @@ from PySide6.QtWidgets import (
 from string import Template
 
 from .hstyle import (
-    COMBOBOX_HEIGHT,
-    COMBOBOX_RADIUS,
     DEBUG_GEOMETRY,
-    HStyle,
     draw_widget_rect,
-
 )
 from .utils import (
     TITLE_BAR_ICON_PATH,
@@ -117,7 +113,7 @@ class HComboBox(QComboBox):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         editable: bool | None = ...,
         count: int | None = ...,
         currentText: str | None = ...,
@@ -151,7 +147,7 @@ class HComboBox(QComboBox):
                 TITLE_BAR_ICON_PATH,
                 "keyboard_arrow_down_20dp_000000_FILL0_wght400_GRAD0_opsz20.png"
             ),
-            hstyle.text_color
+            hstyle.font_color
         )
 
         self._pixmaps: dict[str, QPixmap] = {
@@ -339,7 +335,7 @@ class HComboBox(QComboBox):
         return super().eventFilter(watched, event)
 
 
-    def set_stylesheet(self, hstyle: HStyle):
+    def set_stylesheet(self, hstyle: Type[Theme]):
         self.variant = ""
 
         template_subst: dict = dict(
@@ -349,7 +345,7 @@ class HComboBox(QComboBox):
             selection_bgd=hstyle.selection_bgd,
             disabled_bgd=hstyle.disabled_bgd,
             disabled_text=hstyle.disabled_text,
-            text_color=hstyle.text_color,
+            font_color=hstyle.font_color,
             selected_text=f"{hstyle.selected_text}",
             radius=f"{COMBOBOX_RADIUS}px",
             margin_top=f"{COMBOBOX_RADIUS}px",
@@ -357,6 +353,8 @@ class HComboBox(QComboBox):
             padding_left=f"{int(1.5 * COMBOBOX_RADIUS) - 2}px",
             padding_right=f"{int(1.5 * COMBOBOX_RADIUS)}px",
             border_color=f"{hstyle.border}",
+            font_family=f"\"{hstyle.font_family}\"",
+            font_size=f"{hstyle.font_size}pt",
         )
 
         qss_template = Template(load_qss("combobox.qss", variant=self.variant))

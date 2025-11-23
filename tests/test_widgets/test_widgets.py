@@ -183,12 +183,12 @@ if __name__ == "__main__":
         "Right-click won't work"
     ]
 
-    hrl_style = HStyle()
+    hrl_style = Theme()
 
     window = QWidget()
     window.setStyleSheet(f"""
         background-color: {hrl_style.window_bgd};
-        color: {hrl_style.text_color};
+        color: {hrl_style.font_color};
     """)
     p = window.palette()
     p.setColor(window.backgroundRole(), hrl_style.window_bgd)

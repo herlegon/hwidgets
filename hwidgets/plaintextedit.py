@@ -1,4 +1,5 @@
 from string import Template
+from typing import Type
 
 from PySide6.QtCore import (
     QSize,
@@ -29,7 +30,7 @@ from hwidgets.scrollbar import HScrollBar
 from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
-    HStyle,
+    Theme,
 )
 from .utils import (
     load_png_icon,
@@ -43,7 +44,7 @@ class _ClearButton(QPushButton):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle
+        hstyle: Theme
     ):
         super().__init__(parent)
         # self.setCursor(Qt.CursorShape.ArrowCursor)
@@ -55,7 +56,7 @@ class _ClearButton(QPushButton):
 
         self.normal_icon = QIcon(load_png_icon(
             "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
-            hstyle.text_color
+            hstyle.font_color
         ))
         self.hover_icon = QIcon(load_png_icon(
             "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
@@ -225,7 +226,7 @@ class HPlainTextEdit(QPlainTextEdit):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         tabChangesFocus: bool | None = None,
         documentTitle: str | None = None,
         undoRedoEnabled: bool | None = None,
@@ -293,7 +294,7 @@ class HPlainTextEdit(QPlainTextEdit):
         qss_template = Template(load_qss("plaintextedit.qss"))
         qss = qss_template.substitute(
             widget_bgd=f"{hstyle.widget_bgd}",
-            text_color=f"{hstyle.text_color}",
+            font_color=f"{hstyle.font_color}",
             radius=f"{COMBOBOX_RADIUS}px",
             hover_bgd=f"{hstyle.hover_bgd}",
             border_color=f"{hstyle.border}",
@@ -303,6 +304,8 @@ class HPlainTextEdit(QPlainTextEdit):
             editing_border=f"{hstyle.checked}",
             selected_text=f"{hstyle.selected_text}",
             selected=f"{hstyle.selected}",
+            font_family=f"\"{hstyle.font_family}\"",
+            font_size=f"{hstyle.font_size}pt",
         )
         self.setStyleSheet(qss)
 

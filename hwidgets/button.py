@@ -1,8 +1,8 @@
 from string import Template
+from typing import Type
+
+from .styles import Theme
 from .hstyle import (
-    COMBOBOX_RADIUS,
-    COMBOBOX_HEIGHT,
-    HStyle,
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )
@@ -41,7 +41,7 @@ class HButton(QPushButton):
         *,
         icon: QIcon | QPixmap | None = None,
         text: str | None = None,
-        hstyle: HStyle,
+        theme: Type[Theme],
         autoDefault: bool | None = None,
         default: bool | None = None,
         flat: bool | None = True,
@@ -49,31 +49,33 @@ class HButton(QPushButton):
         super().__init__(parent)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
-        self.hstyle = hstyle
+        self.hstyle = theme
 
         # self.setFlat(True)
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
-        self.setMinimumWidth(COMBOBOX_HEIGHT)
-        self.setFixedHeight(COMBOBOX_HEIGHT)
+        self.setMinimumWidth(theme.button.height)
+        self.setFixedHeight(theme.button.height)
 
         self._icon = None
         self._pixmaps = {}
 
         qss_template = Template(load_qss("button.qss"))
         qss = qss_template.substitute(
-            window_bgd=f"{hstyle.window_bgd}",
-            widget_bgd=f"{hstyle.widget_bgd}",
-            widget_hover=f"{hstyle.hover_bgd}",
-            disabled_bgd=f"{hstyle.disabled_bgd}",
-            text_color=f"{hstyle.text_color}",
-            selection_bgd=f"{hstyle.selection_bgd}",
-            checked_color=f"{hstyle.enabled}",
+            window_bgd=f"{theme.window_bgd}",
+            widget_bgd=f"{theme.widget_bgd}",
+            widget_hover=f"{theme.hover_bgd}",
+            disabled_bgd=f"{theme.disabled_bgd}",
+            font_color=f"{theme.font_color}",
+            selection_bgd=f"{theme.selection_bgd}",
+            checked_color=f"{theme.enabled}",
             radius=f"{COMBOBOX_RADIUS}px",
             margin_left=f"{COMBOBOX_RADIUS + COMBOBOX_HEIGHT + 6}px",
-            text_disabled=f"{hstyle.disabled_text}",
-            checked_text=f"{hstyle.checked_text}",
+            text_disabled=f"{theme.disabled_text}",
+            checked_text=f"{theme.checked_text}",
+            font_family=f"\"{theme.font_family}\"",
+            font_size=f"{theme.font_size}pt",
         )
         self.setStyleSheet(qss)
 
@@ -112,10 +114,10 @@ class HButton(QPushButton):
 
         hstyle = self.hstyle
         if self.text():
-            normal = hstyle.text_color
-            pressed = hstyle.text_color
+            normal = hstyle.font_color
+            pressed = hstyle.font_color
             disabled = hstyle.disabled_text
-            hover = hstyle.text_color
+            hover = hstyle.font_color
         else:
             normal = hstyle.normal_button
             pressed = hstyle.pressed_button
@@ -154,13 +156,15 @@ class HButton(QPushButton):
             widget_bgd=f"{hstyle.widget_bgd}",
             widget_hover=f"{hstyle.hover_bgd}",
             disabled_bgd=f"{hstyle.disabled_bgd}",
-            text_color=f"{hstyle.text_color}",
+            font_color=f"{hstyle.font_color}",
             selection_bgd=f"{hstyle.window_bgd}",
             checked_color=f"{hstyle.enabled}",
             radius=f"{COMBOBOX_RADIUS}px",
             margin_left=f"{COMBOBOX_RADIUS + COMBOBOX_HEIGHT + 6}px",
             text_disabled=f"{hstyle.disabled_text}",
             checked_text=f"{hstyle.checked_text}",
+            font_family=f"\"{hstyle.font_family}\"",
+            font_size=f"{hstyle.font_size}pt",
         )
         self.setStyleSheet(qss)
 
@@ -180,7 +184,7 @@ class HButton(QPushButton):
                 widget_bgd=f"{hstyle.window_bgd}",
                 widget_hover=f"{hstyle.window_bgd}",
                 disabled_bgd=f"{hstyle.window_bgd}",
-                text_color=f"{hstyle.selection_bgd}",
+                font_color=f"{hstyle.selection_bgd}",
                 selection_bgd=f"{hstyle.window_bgd}",
                 checked_color=f"{hstyle.enabled}",
                 radius=f"{COMBOBOX_RADIUS}px",
@@ -248,7 +252,7 @@ class HButton(QPushButton):
                 self.height()
             )
             painter.setPen(QColor(
-                self.hstyle.text_color
+                self.hstyle.font_color
                 if state & QStyle.StateFlag.State_Enabled
                 else self.hstyle.disabled_text
             ))

@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 import math
-from typing import overload
+from typing import overload, Type
 
 from .hstyle import (
     DEBUG_GEOMETRY,
-    HStyle,
+    Theme,
     TRACK_THICKNESS,
     draw_widget_rect,
 )
@@ -76,7 +76,7 @@ class HRadialProgress(QProgressBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         bar_width: int = 32,
         bar_thickness: int = TRACK_THICKNESS,
         angle_start: int = 60,

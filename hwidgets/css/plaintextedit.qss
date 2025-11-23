@@ -3,9 +3,9 @@
 QPlainTextEdit {
     background-color: $widget_bgd;
 
-    color: $text_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    color: $font_color;
+    font-family: $font_family;
+    font-size: $font_size;
 
     border: 1px solid $border_color;
     border-radius: $radius;
@@ -29,7 +29,7 @@ QPlainTextEdit:read-only:hover {
 
 
 QPlainTextEdit:focus {
-    color: $text_color;
+    color: $font_color;
     border: 1px solid $selected;
 
 }
@@ -41,6 +41,6 @@ QPlainTextEdit:hover {
 
 QPlainTextEdit:disabled {
     background-color: $disabled_bgd;
-    color: $disabled_text;
+    color: $font_color_disabled;
 }
 

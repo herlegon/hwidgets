@@ -22,6 +22,7 @@ from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCh
     QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
     QWidget)
 
+from typing import Type
 from hwidgets import (
     HButton,
     HCheckBox,
@@ -42,13 +43,13 @@ from hwidgets import (
     HProgress,
     HRadialProgress,
     HSwitch,
-    HTitle1,
+    HTitle,
     HVerticalDivider,
-    HStyle,
+    Theme,
 )
 
 class Ui_MainWindow(object):
-    def setupUi(self, MainWindow, hstyle: HStyle):
+    def setupUi(self, MainWindow, hstyle: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
         MainWindow.resize(1443, 939)
@@ -730,24 +731,24 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.h_label_checkbox)
 
-        self.h_checkbox = HCheckBox(self.h_frame, hstyle=hstyle)
+        self.h_checkbox = HCheckBox(self.h_frame, theme=hstyle)
         self.h_checkbox.setObjectName(u"h_checkbox")
 
         self.horizontalLayout_4.addWidget(self.h_checkbox)
 
-        self.h_checkbox_clicked = HCheckBox(self.h_frame, hstyle=hstyle)
+        self.h_checkbox_clicked = HCheckBox(self.h_frame, theme=hstyle)
         self.h_checkbox_clicked.setObjectName(u"h_checkbox_clicked")
         self.h_checkbox_clicked.setChecked(True)
 
         self.horizontalLayout_4.addWidget(self.h_checkbox_clicked)
 
-        self.h_checkbox_disabled = HCheckBox(self.h_frame, hstyle=hstyle)
+        self.h_checkbox_disabled = HCheckBox(self.h_frame, theme=hstyle)
         self.h_checkbox_disabled.setObjectName(u"h_checkbox_disabled")
         self.h_checkbox_disabled.setEnabled(False)
 
         self.horizontalLayout_4.addWidget(self.h_checkbox_disabled)
 
-        self.h_checkbox_disabled_clicked = HCheckBox(self.h_frame, hstyle=hstyle)
+        self.h_checkbox_disabled_clicked = HCheckBox(self.h_frame, theme=hstyle)
         self.h_checkbox_disabled_clicked.setObjectName(u"h_checkbox_disabled_clicked")
         self.h_checkbox_disabled_clicked.setEnabled(False)
         self.h_checkbox_disabled_clicked.setChecked(True)
@@ -788,25 +789,25 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_8 = QHBoxLayout()
         self.horizontalLayout_8.setObjectName(u"horizontalLayout_8")
-        self.h_text_button = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button = HButton(self.h_frame, theme=hstyle)
         self.h_text_button.setObjectName(u"h_text_button")
 
         self.horizontalLayout_8.addWidget(self.h_text_button)
 
-        self.h_text_button_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_checked = HButton(self.h_frame, theme=hstyle)
         self.h_text_button_checked.setObjectName(u"h_text_button_checked")
         self.h_text_button_checked.setCheckable(True)
         self.h_text_button_checked.setChecked(True)
 
         self.horizontalLayout_8.addWidget(self.h_text_button_checked)
 
-        self.h_text_button_disabled = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_disabled = HButton(self.h_frame, theme=hstyle)
         self.h_text_button_disabled.setObjectName(u"h_text_button_disabled")
         self.h_text_button_disabled.setEnabled(False)
 
         self.horizontalLayout_8.addWidget(self.h_text_button_disabled)
 
-        self.h_text_button_disabled_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_button_disabled_checked = HButton(self.h_frame, theme=hstyle)
         self.h_text_button_disabled_checked.setObjectName(u"h_text_button_disabled_checked")
         self.h_text_button_disabled_checked.setEnabled(False)
         self.h_text_button_disabled_checked.setCheckable(True)
@@ -819,13 +820,13 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_18 = QHBoxLayout()
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
-        self.h_text_icon_button = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_icon_button = HButton(self.h_frame, theme=hstyle)
         self.h_text_icon_button.setObjectName(u"h_text_icon_button")
         self.h_text_icon_button.setIcon(icon)
 
         self.horizontalLayout_18.addWidget(self.h_text_icon_button)
 
-        self.h_text_icon_button_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_icon_button_checked = HButton(self.h_frame, theme=hstyle)
         self.h_text_icon_button_checked.setObjectName(u"h_text_icon_button_checked")
         self.h_text_icon_button_checked.setIcon(icon)
         self.h_text_icon_button_checked.setCheckable(True)
@@ -833,14 +834,14 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_18.addWidget(self.h_text_icon_button_checked)
 
-        self.h_text_icon_button_disabled = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_icon_button_disabled = HButton(self.h_frame, theme=hstyle)
         self.h_text_icon_button_disabled.setObjectName(u"h_text_icon_button_disabled")
         self.h_text_icon_button_disabled.setEnabled(False)
         self.h_text_icon_button_disabled.setIcon(icon)
 
         self.horizontalLayout_18.addWidget(self.h_text_icon_button_disabled)
 
-        self.h_text_icon_button_disabled_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_text_icon_button_disabled_checked = HButton(self.h_frame, theme=hstyle)
         self.h_text_icon_button_disabled_checked.setObjectName(u"h_text_icon_button_disabled_checked")
         self.h_text_icon_button_disabled_checked.setEnabled(False)
         self.h_text_icon_button_disabled_checked.setIcon(icon)
@@ -854,7 +855,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout = QHBoxLayout()
         self.h_button_layout.setObjectName(u"h_button_layout")
-        self.h_button = HButton(self.h_frame, hstyle=hstyle)
+        self.h_button = HButton(self.h_frame, theme=hstyle)
         self.h_button.setObjectName(u"h_button")
         sizePolicy.setHeightForWidth(self.h_button.sizePolicy().hasHeightForWidth())
         self.h_button.setSizePolicy(sizePolicy)
@@ -865,7 +866,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout.addWidget(self.h_button)
 
-        self.h_button_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_button_checked = HButton(self.h_frame, theme=hstyle)
         self.h_button_checked.setObjectName(u"h_button_checked")
         self.h_button_checked.setMaximumSize(QSize(24, 24))
         self.h_button_checked.setIcon(icon1)
@@ -876,7 +877,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout.addWidget(self.h_button_checked)
 
-        self.h_button_disabled = HButton(self.h_frame, hstyle=hstyle)
+        self.h_button_disabled = HButton(self.h_frame, theme=hstyle)
         self.h_button_disabled.setObjectName(u"h_button_disabled")
         self.h_button_disabled.setEnabled(False)
         self.h_button_disabled.setMaximumSize(QSize(24, 24))
@@ -886,7 +887,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout.addWidget(self.h_button_disabled)
 
-        self.h_button_disabled_checked = HButton(self.h_frame, hstyle=hstyle)
+        self.h_button_disabled_checked = HButton(self.h_frame, theme=hstyle)
         self.h_button_disabled_checked.setObjectName(u"h_button_disabled_checked")
         self.h_button_disabled_checked.setEnabled(False)
         self.h_button_disabled_checked.setMaximumSize(QSize(24, 24))
@@ -1120,12 +1121,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.h_title1 = HTitle1(self.h_frame, hstyle=hstyle)
+        self.h_title1 = HTitle(self.h_frame, hstyle=hstyle)
         self.h_title1.setObjectName(u"h_title1")
 
         self.verticalLayout_3.addWidget(self.h_title1)
 
-        self.h_title1_2 = HTitle1(self.h_frame, hstyle=hstyle)
+        self.h_title1_2 = HTitle(self.h_frame, hstyle=hstyle)
         self.h_title1_2.setObjectName(u"h_title1_2")
         self.h_title1_2.setPixmap(QPixmap(u"../../hwidgets/icons/gpu.png"))
 
@@ -1213,7 +1214,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_13 = QHBoxLayout()
         self.horizontalLayout_13.setObjectName(u"horizontalLayout_13")
-        self.h_button_group = HButtonGroup(self.h_frame, hstyle=hstyle)
+        self.h_button_group = HButtonGroup(self.h_frame, theme=hstyle)
         self.h_button_group.setObjectName(u"h_button_group")
 
         self.horizontalLayout_13.addWidget(self.h_button_group)

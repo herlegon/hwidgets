@@ -1,11 +1,12 @@
 from pathlib import Path
-from typing import Optional, overload
+from typing import Optional, Type
 from PySide6.QtCore import (
     Qt,
     QRect,
     QPoint,
     QSize,
     QLocale,
+    Property,
 )
 from PySide6.QtGui import (
     QCursor,
@@ -26,7 +27,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 from .hstyle import (
-    HStyle,
+    Theme,
     TITLE_1_HEIGHT,
     TITLE_1_FONT_SIZE,
     TITLE_1_BOLD,
@@ -124,14 +125,14 @@ def colorize_pixmap(pixmap: QPixmap, color: QColor) -> QPixmap:
     return QPixmap.fromImage(image)
 
 
-class HTitle1(QWidget):
+class HTitle(QWidget):
     def __init__(
         self,
         /,
         parent: QWidget | None = None,
         f: Qt.WindowType = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         text: str = "",
         icon: str | Path | None = None,
 
@@ -215,7 +216,7 @@ class HTitle1(QWidget):
         if icon is not None:
             icon_path = str(icon) if isinstance(icon, Path) else icon
             self._icon = QLabel(self)
-            pixmap = load_png_icon(icon_path, hstyle.text_color)
+            pixmap = load_png_icon(icon_path, hstyle.font_color)
             self._icon.setPixmap(pixmap)
             self._icon.setFixedSize(pixmap.size())
             self._layout.addWidget(self._icon)
@@ -248,7 +249,7 @@ class HTitle1(QWidget):
                 }}
             """.format(
                 color=self.hstyle.title_text,
-                font_family="\"Segoe UI\", \"Sans Serif\"",
+                font_family=f"\"{self.hstyle.font_family}\"",
                 font_size=f"{TITLE_1_FONT_SIZE}pt",
             )
         )
@@ -266,6 +267,11 @@ class HTitle1(QWidget):
     def setText(self, text: str) -> None:
         self._title.setText(text)
         self.adjustSize()
+
+    def text(self) -> str:
+        return self._title.text()
+
+    text = Property(str, text, setText)
 
 
     def setIcon(self, icon: Optional[str | Path]):

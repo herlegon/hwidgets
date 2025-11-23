@@ -1,8 +1,9 @@
 from string import Template
+from typing import Type
 from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
-    HStyle,
+    Theme,
 )
 from .utils import load_qss
 
@@ -27,7 +28,7 @@ class HLabel(QLabel):
         parent:QWidget | None = ...,
         f: Qt.WindowType = ...,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         text: str | None = None,
         textFormat: Qt.TextFormat | None = None,
         pixmap: QPixmap | None = None,
@@ -51,19 +52,37 @@ class HLabel(QLabel):
         #     QSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Policy.Fixed)
         # )
         self.setMinimumWidth(COMBOBOX_RADIUS)
-        self.setFixedHeight(COMBOBOX_HEIGHT)
+        if text and '\n' not in text:
+            self.setFixedHeight(COMBOBOX_HEIGHT)
+        else:
+            self.setSizePolicy(
+                QSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Policy.Preferred)
+            )
 
         qss_template = Template(load_qss("label.css"))
         qss = qss_template.substitute(
             window_bgd=f"{hstyle.window_bgd}",
             widget_bgd=f"{hstyle.widget_bgd}",
-            text_color=f"{hstyle.text_color}",
+            font_color=f"{hstyle.font_color}",
             radius=f"{COMBOBOX_RADIUS}px",
             disabled_text=f"{hstyle.disabled_text}",
+            font_family=f"\"{hstyle.font_family}\"",
+            font_size=f"{hstyle.font_size}pt",
         )
         self.setStyleSheet(qss)
 
 
     def setText(self, text: str) -> None:
         super().setText(text)
+        if text and '\n' not in text:
+            self.setFixedHeight(COMBOBOX_HEIGHT)
+        else:
+            self.setSizePolicy(
+                QSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Policy.Preferred)
+            )
         self.setMinimumWidth(self.sizeHint().width())
+
+
+class HSubtitle(HLabel):
+    ...
+

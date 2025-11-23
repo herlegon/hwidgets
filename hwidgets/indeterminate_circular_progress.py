@@ -1,9 +1,10 @@
 from .hstyle import (
-    HStyle,
+    Theme,
     TRACK_Y,
     CAP_OFFSET,
     TRACK_THICKNESS,
 )
+from typing import Type
 
 import math
 from PySide6.QtCore import (
@@ -86,7 +87,7 @@ class HIndeterminateCircularProgress(QProgressBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         is_m2: bool = False,
         minimum: int | None = None,
         maximum: int | None = None,

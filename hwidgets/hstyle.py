@@ -47,51 +47,51 @@ class BoldHoverDelegate(QStyledItemDelegate):
 
 
 
-@dataclass(slots=True)
-class HStyle:
-    window_bgd: str = "#252528"
+# @dataclass(slots=True)
+# class Theme:
+#     window_bgd: str = "#252528"
 
-    # Combobox
-    widget_bgd: str = "#4F4D53"
-    text_color: str = "#d4d4d8"
-    # selection_bgd: str = "#454546"
-    hover_bgd: str = "#66636D"
+#     # Combobox
+#     widget_bgd: str = "#4F4D53"
+#     font_color: str = "#d4d4d8"
+#     # selection_bgd: str = "#454546"
+#     hover_bgd: str = "#66636D"
 
-    # normal_button: str = "#5545bd"
-    # hover_button: str = "#6a5bcc"
-    # pressed_button: str = "#4539a0"
-    # disabled_button: str = "#8b88c7"
+#     # normal_button: str = "#5545bd"
+#     # hover_button: str = "#6a5bcc"
+#     # pressed_button: str = "#4539a0"
+#     # disabled_button: str = "#8b88c7"
 
-    normal_button: str = "#5442bd"
-    hover_button: str = "#7777FF"
-    pressed_button: str = "#5555B3"
-    disabled_button: str = "#A3A3D1"
+#     normal_button: str = "#5442bd"
+#     hover_button: str = "#7777FF"
+#     pressed_button: str = "#5555B3"
+#     disabled_button: str = "#A3A3D1"
 
-    # hover_bgd: str ="#77f"
-    selection_bgd: str = "#5545bd"
+#     # hover_bgd: str ="#77f"
+#     selection_bgd: str = "#5545bd"
 
-    selected_text: str = "#5545bd"
-
-
-    border: str = "#505053" # same as hover
-
-    checked: str = "#5442bd"
-
-    selected: str = "#5442bd"
+#     selected_text: str = "#5545bd"
 
 
-    # checkbox
-    enabled = "#4B8DD8"
-    disabled_bgd = "#313131"
+#     border: str = "#505053" # same as hover
 
-    disabled_text = "#4E4E4E"
-    checked_text = "#4632c7"
+#     checked: str = "#5442bd"
 
-    divider: str = "#3B3B3B" # same as hover
+#     selected: str = "#5442bd"
 
-    pressed: str = "#66636D" # same as hover
 
-    title_text: str = "#5442bd"
+#     # checkbox
+#     enabled = "#4B8DD8"
+#     disabled_bgd = "#313131"
+
+#     disabled_text = "#4E4E4E"
+#     # checked_text =
+
+#     divider: str = "#3B3B3B" # same as hover
+
+#     pressed: str = "#66636D" # same as hover
+
+#     title_text: str = "#5442bd"
 
 
     # Accent (hover)	"#4e83c2"	 # Slightly lighter for hover feedback
@@ -112,37 +112,7 @@ class HStyle:
 # Disabled	#2d2b3e	Muted, low-contrast desaturation
 
 
-COMBOBOX_HEIGHT = 24
-COMBOBOX_RADIUS = 6
-# COMBOBOX_PADDING = 10
 
-
-RADIO_SIZE: int = 14
-RADIO_RADIUS = COMBOBOX_RADIUS - 1
-RADIO_BORDER_WIDTH = 2
-
-
-CHECKBOX_SIZE: int = 14
-
-
-LABEL_PADDING = COMBOBOX_RADIUS
-
-
-GROUPBOX_HEIGHT = COMBOBOX_RADIUS * 2 + COMBOBOX_HEIGHT
-GROUPBOX_TITLE_PADDING = COMBOBOX_RADIUS + 4
-GROUPBOX_TITLE_HEIGHT = 10
-
-
-
-SPINBOX_RADIUS = COMBOBOX_RADIUS
-SPINBOX_PADDING = 12
-SPINBOX_MIN_WIDTH = 50
-
-
-
-DIVIDER_THICKNESS = 1
-DIVIDER_MIN_LENGTH = 40
-DIVIDER_PADDING = 16
 
 
 
@@ -170,25 +140,20 @@ DIVIDER_PADDING = 16
 # Icon        Size (unselected)       16dp
 
 
-TRACK_WIDTH: int = 40
-TRACK_HEIGHT: int = COMBOBOX_HEIGHT
-HANDLE_RADIUS: int = 16
-TRACK_MARGIN = (TRACK_HEIGHT - HANDLE_RADIUS) // 2
-TRACK_HEIGHT = TRACK_MARGIN * 2 + HANDLE_RADIUS
-
-
-TITLE_1_HEIGHT = COMBOBOX_HEIGHT + COMBOBOX_RADIUS
-TITLE_1_FONT_SIZE = 16
-TITLE_1_BOLD = True
-
-SCROLLBAR_TRACK_WIDTH = 8
+# ????????
+# TRACK_WIDTH: int = 40
+# TRACK_HEIGHT: int = COMBOBOX_HEIGHT
+# HANDLE_RADIUS: int = 16
+# TRACK_MARGIN = (TRACK_HEIGHT - HANDLE_RADIUS) // 2
+# TRACK_HEIGHT = TRACK_MARGIN * 2 + HANDLE_RADIUS
 
 
 
-TRACK_THICKNESS: Final[int] = 6
-TRACK_MARGIN = TRACK_THICKNESS // 2
-TRACK_Y: Final[int] = TRACK_THICKNESS // 2
-CAP_OFFSET: Final[int] = TRACK_THICKNESS // 2
+
+# TRACK_THICKNESS: Final[int] = 6
+# TRACK_MARGIN = TRACK_THICKNESS // 2
+# TRACK_Y: Final[int] = TRACK_THICKNESS // 2
+# CAP_OFFSET: Final[int] = TRACK_THICKNESS // 2
 
 
 

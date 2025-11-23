@@ -9,11 +9,11 @@ QDoubleSpinBox {
 
     selection-background-color: $selection_bgd;
     /* selection-background-color: transparent; */
-    selection-color: $text_color;
+    selection-color: $font_color;
 
-    color: $text_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    color: $font_color;
+    font-family: $font_family;
+    font-size: $font_size;
     min-width: 40px;
     border: 1px solid $widget_bgd;
 }
@@ -30,7 +30,7 @@ QDoubleSpinBox:read-only {
 QSpinBox:disabled,
 QDoubleSpinBox:disabled {
     background-color: $disabled_bgd;
-    color: $disabled_text;
+    color: $font_color_disabled;
     border: 1px solid $disabled_bgd;
 }
 

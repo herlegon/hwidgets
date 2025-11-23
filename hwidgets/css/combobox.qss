@@ -3,20 +3,20 @@ QFrame {
     background-color: $window_bgd;
     background: $window_bgd;
 
-    color: $text_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    color: $font_color;
+    font-family: $font_family;
+    font-size: $font_size;
 }
 
 QComboBox {
     background-color: $widget_bgd;
 
-    color: $text_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    color: $font_color;
+    font-family: $font_family;
+    font-size: $font_size;
 
     selection-background-color: $selection_bgd;
-    selection-color: $text_color;
+    selection-color: $font_color;
 
     border-radius: $radius;
     padding-left: $padding_left;
@@ -26,7 +26,7 @@ QComboBox {
 
 QComboBox:disabled {
     background-color: $disabled_bgd;
-    color: $disabled_text;
+    color: $font_color_disabled;
 }
 
 

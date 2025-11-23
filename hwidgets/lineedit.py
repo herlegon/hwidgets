@@ -1,4 +1,5 @@
 from string import Template
+from typing import Type
 
 from PySide6.QtCore import (
     QSize,
@@ -21,7 +22,7 @@ from .hstyle import (
     COMBOBOX_RADIUS,
     COMBOBOX_HEIGHT,
     COMBOBOX_RADIUS,
-    HStyle,
+    Theme,
 )
 from .utils import (
     load_png_icon,
@@ -35,7 +36,7 @@ class _ClearButton(QPushButton):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle
+        hstyle: Theme
     ):
         super().__init__(parent)
 
@@ -45,7 +46,7 @@ class _ClearButton(QPushButton):
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         self.normal_icon = QIcon(load_png_icon(
-            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.text_color
+            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.font_color
         ))
         self.hover_icon = QIcon(load_png_icon(
             "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.selected
@@ -80,7 +81,7 @@ class HLineEdit(QLineEdit):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         inputMask: str | None = None,
         text: str | None = None,
         maxLength: int | None = None,
@@ -165,7 +166,7 @@ class HLineEdit(QLineEdit):
             padding_left=f"{padding_left}px",
 
             widget_bgd=f"{hstyle.widget_bgd}",
-            text_color=f"{hstyle.text_color}",
+            font_color=f"{hstyle.font_color}",
             radius=f"{COMBOBOX_RADIUS}px",
             hover_bgd=f"{hstyle.hover_bgd}",
             border_color=f"{hstyle.border}",
@@ -174,6 +175,8 @@ class HLineEdit(QLineEdit):
             editing_border=f"{hstyle.selected}",
             selected_text=f"{hstyle.selected_text}",
             selected=f"{hstyle.selected}",
+            font_family=f"\"{hstyle.font_family}\"",
+            font_size=f"{hstyle.font_size}pt",
         )
         self.setStyleSheet(qss)
 

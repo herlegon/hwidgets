@@ -1,3 +1,4 @@
+from typing import Type
 from .logger import hlogger
 from .hstyle import (
     COMBOBOX_HEIGHT,
@@ -5,7 +6,7 @@ from .hstyle import (
     RADIO_BORDER_WIDTH,
     RADIO_RADIUS,
     RADIO_SIZE,
-    HStyle,
+    Theme,
     draw_widget_rect,
 )
 
@@ -40,7 +41,7 @@ class HRadioButton(QRadioButton):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
     ) -> None:
         super().__init__(parent)
 

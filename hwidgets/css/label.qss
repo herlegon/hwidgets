@@ -1,13 +1,13 @@
 QLabel {
     background-color: transparent;
-    color: $text_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    color: $font_color;
+    font-family: $font_family;
+    font-size: $font_size;
     margin: 0px;
     padding: 0px;
 }
 
 
 QLabel:disabled {
-    color: $disabled_text;
+    color: $font_color_disabled;
 }

@@ -1,4 +1,5 @@
 from string import Template
+from typing import Type
 from PySide6.QtCore import (
     Qt,
     QRect,
@@ -12,7 +13,7 @@ from PySide6.QtWidgets import (
 from .hstyle import (
     COMBOBOX_RADIUS,
     SCROLLBAR_TRACK_WIDTH,
-    HStyle,
+    Theme,
 )
 from .utils import (
     load_qss,
@@ -25,7 +26,7 @@ class HScrollBar(QScrollBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
     ):
         super().__init__(parent)
         self.setCursor(Qt.CursorShape.ArrowCursor)

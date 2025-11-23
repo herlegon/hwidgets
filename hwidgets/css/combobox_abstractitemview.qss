@@ -8,7 +8,7 @@ QListView {
     margin: 0px;
     padding: 0px;
 
-    color: $text_color;
+    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
 }

@@ -1,12 +1,10 @@
 from string import Template
 from typing import overload
 from .hstyle import (
-    COMBOBOX_RADIUS,
-    COMBOBOX_HEIGHT,
     DEBUG_GEOMETRY,
-    HStyle,
     draw_widget_rect,
 )
+from .style_manager import Theme
 from .utils import (
     load_qss,
 )
@@ -38,11 +36,12 @@ class HButtonGroup(QWidget):
         parent: QWidget | None = ...,
         *,
         buttons: list[str] | tuple[str] | None = None,
-        hstyle: HStyle = None,
+        theme: Theme = None,
     ) -> None:
         super().__init__(parent)
-        if hstyle is None:
-            hstyle = HStyle()
+        if theme is None:
+            theme = Theme()
+        self.theme: Theme = theme
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
 
@@ -51,13 +50,13 @@ class HButtonGroup(QWidget):
         self._layout.setContentsMargins(0, 0, 0, 0)
         self._layout.setSpacing(1)
         self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        self.setFixedHeight(COMBOBOX_HEIGHT)
+        self.setFixedHeight(theme.button.height)
 
         # Logical Group
         self.group = QButtonGroup(self)
         self.group.setExclusive(True)
 
-        self.hstyle = hstyle
+        self.hstyle = theme
         self._buttons: list[QToolButton] = []
         self._button_keys: list[str] = []
         if buttons is not None and buttons:
@@ -70,30 +69,30 @@ class HButtonGroup(QWidget):
 
     def sizeHint(self) -> QSize:
         # width = self._buttons[0].width() * len(self._buttons)
-        return QSize(self.width(), COMBOBOX_HEIGHT)
+        return QSize(self.width(), self.theme.button.height)
 
 
     def minimumSizeHint(self):
         if self._buttons:
-            return QSize(self._normalize_button_widths(), COMBOBOX_HEIGHT)
+            return QSize(self._normalize_button_widths(), self.theme.button.height)
         return super().minimumSizeHint()
 
 
     def _update_stylesheet(self) -> None:
-        hstyle = self.hstyle
         qss_template = Template(load_qss(f"button_group.qss"))
+        style = self.theme.button_group
         qss = qss_template.substitute(
-            window_bgd=f"{hstyle.window_bgd}",
-            widget_bgd=f"{hstyle.widget_bgd}",
-            widget_hover=f"{hstyle.hover_bgd}",
-            disabled_bgd=f"{hstyle.disabled_bgd}",
-            text_color=f"{hstyle.text_color}",
-            selected_bgd=f"{hstyle.selected}",
-            checked_color=f"{hstyle.hover_bgd}",
-            pressed_color=f"{hstyle.selection_bgd}",
-            radius=f"{COMBOBOX_RADIUS}px",
-            text_disabled=f"{hstyle.disabled_text}",
-            checked_text=f"{hstyle.checked_text}",
+            window_bgd=f"{self.theme.window_bgd}",
+            widget_bgd=f"{self.theme.common.bgd}",
+            widget_hover=f"{style.hover}",
+            disabled_bgd=f"{style.disabled}",
+            font_color=f"{style.font}",
+            selected_bgd=f"{self.theme.common.selection}",
+            checked_color=f"{style.hover}",
+            pressed_color=f"{self.theme.common.selection}",
+            radius=f"{self.theme.common.border_radius}px",
+            text_disabled=f"{style.font_color_disabled}",
+            checked_text=f"{style.font_color_checked}",
         )
         self.setStyleSheet(qss)
 

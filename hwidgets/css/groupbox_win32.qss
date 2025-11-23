@@ -7,7 +7,7 @@ QGroupBox::title {
     background-color: $widget_bgd;
     border-radius: 0px;
 
-    color: $text_color;
+    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
 
@@ -23,5 +23,5 @@ QGroupBox::title {
 
 
 QGroupBox::title:disabled {
-    color: $disabled_text;
+    color: $font_color_disabled;
 }

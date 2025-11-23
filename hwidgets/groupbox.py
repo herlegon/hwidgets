@@ -1,5 +1,5 @@
-
 from string import Template
+from typing import Type
 from PySide6.QtCore import (
     Qt,
 )
@@ -12,7 +12,7 @@ from PySide6.QtWidgets import (
 )
 
 from .hstyle import (
-    HStyle,
+    Theme,
     COMBOBOX_RADIUS,
     GROUPBOX_TITLE_HEIGHT,
 )
@@ -25,7 +25,7 @@ class HGroupBox(QGroupBox):
         /,
         parent: QWidget | None = ...,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
         title: str | None = None,
         alignment: Qt.AlignmentFlag | None = ...,
         flat: bool | None = ...,
@@ -44,7 +44,7 @@ class HGroupBox(QGroupBox):
         qss = qss_template.substitute(
             window_bgd=f"{hstyle.window_bgd}",
             widget_bgd=f"{hstyle.window_bgd}",
-            text_color=f"{hstyle.text_color}",
+            font_color=f"{hstyle.font_color}",
             radius=f"{COMBOBOX_RADIUS}",
             border_color=f"{hstyle.hover_bgd}",
             margin_top=f"{int(COMBOBOX_RADIUS + GROUPBOX_TITLE_HEIGHT) - 1}",

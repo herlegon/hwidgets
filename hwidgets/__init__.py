@@ -2,7 +2,7 @@ __version__ = "0.1.0"
 
 from .logger import hlogger
 
-from .hstyle import HStyle
+# from .hstyle import Theme
 
 from .checkbox import HCheckBox
 from .combobox import HComboBox
@@ -24,14 +24,16 @@ from .radiobutton import HRadioButton
 from .scrollbar import HScrollBar
 from .spinbox import HDoubleSpinBox, HSpinBox
 from .switch import HSwitch
-from .titles import HTitle1
+from .titles import HTitle
 from .progress import HProgress
 from .utils import load_png_image
+from .style_manager import StyleManager, Theme
 
 
 __all__ = [
     "hlogger",
-    "HStyle",
+    "StyleManager",
+    "Theme",
 
     "HButton",
     "HButtonGroup",
@@ -40,7 +42,6 @@ __all__ = [
     "HDivider",
     "HDoubleSpinBox",
     "HGroupBox",
-    # "HIndeterminateCircularProgress",
     "HHorizontalDivider",
     "HVerticalDivider",
     "HIndeterminateProgress",
@@ -53,7 +54,7 @@ __all__ = [
     "HScrollBar",
     "HSpinBox",
     "HSwitch",
-    "HTitle1",
+    "HTitle",
 
     "load_png_image",
 ]

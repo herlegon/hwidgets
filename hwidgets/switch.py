@@ -1,10 +1,11 @@
+from typing import Type
 from .hstyle import (
     DEBUG_GEOMETRY,
     HANDLE_RADIUS,
     TRACK_HEIGHT,
     TRACK_MARGIN,
     TRACK_WIDTH,
-    HStyle,
+    Theme,
     draw_widget_rect,
 )
 
@@ -33,7 +34,7 @@ class HSwitch(QCheckBox):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: HStyle,
+        hstyle: Type[Theme],
     ) -> None:
         super().__init__(parent)
 

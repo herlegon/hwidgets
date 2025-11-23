@@ -61,11 +61,13 @@ if __name__ == "__main__":
     # Add imports
     hwidgets_to_import = sorted(WIDGET_MAP.values())
     hwidgets_to_import.extend(sorted(WIDGET_NAME_MAP.values()))
-    hwidgets_to_import.append("HStyle")
+    hwidgets_to_import.append("Theme")
 
-    grouped_import = "from hwidgets import (\n" + "".join(
+    grouped_import = "from typing import Type\n"
+    grouped_import += "from hwidgets import (\n" + "".join(
         [f"    {cls},\n" for cls in hwidgets_to_import]
     ) + ")\n"
+
 
     # Insert import block right before the first `class` declaration
     text = re.sub(
@@ -78,7 +80,7 @@ if __name__ == "__main__":
     # Add hstyle argument to the main class
     text = re.sub(
         r"def setupUi\(self,\s*(\w+)\):",
-        r"def setupUi(self, \1, hstyle: HStyle):",
+        r"def setupUi(self, \1, hstyle: Type[Theme]):",
         text,
     )
 
