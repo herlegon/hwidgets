@@ -1,9 +1,9 @@
 import sys
+from hwidgets.style_manager import StyleManager
 from hytils import (
     absolute_path,
     get_extension,
 )
-from hwidgets.hstyle import Theme
 
 from designer.ui_main_window import Ui_MainWindow
 from PySide6.QtCore import (
@@ -29,16 +29,18 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QWidget
 )
+from hwidgets.styles import Theme
+
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
 
     def __init__(self):
         super().__init__()
-        hrl_style = Theme()
+        theme = StyleManager().get_theme()
 
 
-        self.setupUi(self, hstyle=hrl_style)
+        self.setupUi(self, theme=theme)
 
         items = [
             "This is a long text you can select if you want",
@@ -48,38 +50,41 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         ]
 
         self.h_frame.setStyleSheet(f"""
-            background-color: {hrl_style.window_bgd};
-            color: {hrl_style.font_color};
+            background-color: {theme.window_bgd};
+
+            color: {theme.common.font_color};
+            font-family: {theme.common.font.family};
+            font-size: {theme.common.font.size};
         """)
         # p = self.palette()
         # p.setColor(self.backgroundRole(), hrl_style.window_bgd)
         # self.setPalette(p)
 
-        for w in (
-            self.q_combobox_rw,
-            self.q_combobox_read_only,
-            self.q_combobox_disabled,
-            self.h_combobox_rw,
-            self.h_combobox_read_only,
-            self.h_combobox_disabled,
-        ):
-            w.addItems(items)
+        # for w in (
+        #     self.q_combobox_rw,
+        #     self.q_combobox_read_only,
+        #     self.q_combobox_disabled,
+        #     self.h_combobox_rw,
+        #     self.h_combobox_read_only,
+        #     self.h_combobox_disabled,
+        # ):
+        #     w.addItems(items)
 
-        self.h_radial_progress_1.set_standard_triggers()
-        self.h_radial_progress_2.set_standard_triggers()
-        self.h_radial_progress_3.set_standard_triggers()
-        self.h_radial_progress_4.set_standard_triggers()
+        # self.h_radial_progress_1.set_standard_triggers()
+        # self.h_radial_progress_2.set_standard_triggers()
+        # self.h_radial_progress_3.set_standard_triggers()
+        # self.h_radial_progress_4.set_standard_triggers()
 
-        self.h_radial_progress_1.set_legend_text("GPU")
-        self.h_radial_progress_1.set_label_text("label")
-        from PySide6.QtCore import QSize
-        self.h_radial_progress_1.setFixedSize(QSize(100,100))
-        self.h_radial_progress_1.set_thickness(8)
+        # self.h_radial_progress_1.set_legend_text("GPU")
+        # self.h_radial_progress_1.set_label_text("label")
+        # from PySide6.QtCore import QSize
+        # self.h_radial_progress_1.setFixedSize(QSize(100,100))
+        # self.h_radial_progress_1.set_thickness(8)
 
-        self.h_button_group.set_buttons([
-            "SafeTensors", "ONNX", "TensorRT", "NCNN"
-        ])
-        self.horizontalLayout_13.setAlignment(self.h_button_group, Qt.AlignCenter)
+        # self.h_button_group.set_buttons([
+        #     "SafeTensors", "ONNX", "TensorRT", "NCNN"
+        # ])
+        # self.horizontalLayout_13.setAlignment(self.h_button_group, Qt.AlignCenter)
 
         self.setMinimumWidth(800)
         if sys.platform == 'linux':

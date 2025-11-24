@@ -1,9 +1,4 @@
-from .hstyle import (
-    Theme,
-    TRACK_Y,
-    CAP_OFFSET,
-    TRACK_THICKNESS,
-)
+from .style_manager import Theme
 from typing import Type
 
 import math

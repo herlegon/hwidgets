@@ -10,7 +10,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QLabel,
 )
-from style_manager import Theme
+from .style_manager import Theme
 from .utils import load_qss
 
 

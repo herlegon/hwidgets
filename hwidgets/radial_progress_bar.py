@@ -6,7 +6,7 @@ from .hstyle import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )
-from style_manager import Theme
+from .style_manager import Theme
 
 from PySide6.QtCore import (
     Qt,

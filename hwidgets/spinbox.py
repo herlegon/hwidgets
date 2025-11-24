@@ -30,7 +30,7 @@ from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QSpinBox,
 )
-from style_manager import Theme
+from .style_manager import Theme
 from .utils import load_qss
 
 

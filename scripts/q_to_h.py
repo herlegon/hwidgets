@@ -40,7 +40,7 @@ if __name__ == "__main__":
         "h_vertical_divider": "HVerticalDivider",
         "h_horizontal_divider": "HHorizontalDivider",
         "h_switch": "HSwitch",
-        "h_title1": "HTitle1",
+        "h_title": "HTitle",
         "h_progress": "HProgress",
         "h_indeterminate_progress": "HIndeterminateProgress",
         "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
@@ -80,20 +80,20 @@ if __name__ == "__main__":
     # Add hstyle argument to the main class
     text = re.sub(
         r"def setupUi\(self,\s*(\w+)\):",
-        r"def setupUi(self, \1, hstyle: Type[Theme]):",
+        r"def setupUi(self, \1, theme: Type[Theme]):",
         text,
     )
 
     # Replace by widget name
     for widget_name, h_widget in WIDGET_NAME_MAP.items():
         pattern = rf"(\s*self\.{widget_name}\w*\s*=\s*)(?!q)\w*\((.*?)\)"
-        replacement = rf"\1{h_widget}(\2, hstyle=hstyle)"
+        replacement = rf"\1{h_widget}(\2, theme=theme)"
         text = re.sub(pattern, replacement, text)
 
     # Replace by class name
     for q_widget, h_widget in WIDGET_MAP.items():
         pattern = rf"(\s*self\.(?!q)\w*\s*=\s*){q_widget}\((.*?)\)"
-        replacement = rf"\1{h_widget}(\2, hstyle=hstyle)"
+        replacement = rf"\1{h_widget}(\2, theme=theme)"
         text = re.sub(pattern, replacement, text)
 
     Path(ui_path).write_text(text, encoding="utf-8")

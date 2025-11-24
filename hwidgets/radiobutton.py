@@ -2,9 +2,6 @@ from typing import Type
 from .logger import hlogger
 from .hstyle import (
     DEBUG_GEOMETRY,
-    RADIO_BORDER_WIDTH,
-    RADIO_RADIUS,
-    RADIO_SIZE,
     draw_widget_rect,
 )
 from .style_manager import Theme

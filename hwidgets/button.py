@@ -49,7 +49,7 @@ class HButton(QPushButton):
         super().__init__(parent)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
-        self.hstyle = theme
+        self.theme = theme
 
         # self.setFlat(True)
         self.setSizePolicy(
@@ -62,20 +62,20 @@ class HButton(QPushButton):
         self._pixmaps = {}
 
         qss_template = Template(load_qss("button.qss"))
+        button_theme = theme.button
+        radius: int = theme.common.radius
         qss = qss_template.substitute(
             window_bgd=f"{theme.window_bgd}",
-            widget_bgd=f"{theme.widget_bgd}",
-            widget_hover=f"{theme.hover_bgd}",
-            disabled_bgd=f"{theme.disabled_bgd}",
-            font_color=f"{theme.font_color}",
-            selection_bgd=f"{theme.selection_bgd}",
-            checked_color=f"{theme.enabled}",
-            radius=f"{COMBOBOX_RADIUS}px",
-            margin_left=f"{COMBOBOX_RADIUS + COMBOBOX_HEIGHT + 6}px",
-            text_disabled=f"{theme.disabled_text}",
-            checked_text=f"{theme.checked_text}",
-            font_family=f"\"{theme.font_family}\"",
-            font_size=f"{theme.font_size}pt",
+            widget_bgd=f"{theme.common.bgd}",
+            hover=f"{button_theme.hover}",
+            disabled=f"{button_theme.disabled}",
+            font_color=f"{button_theme.font_color}",
+            checked_color=f"{button_theme.checked}",
+            radius=f"{radius}px",
+            margin_left=f"{radius + theme.common.height + 6}px",
+            text_disabled=f"{button_theme.font_color_disabled}",
+            font_family=f"\"{button_theme.font.family}\"",
+            font_size=f"{button_theme.font.size}pt",
         )
         self.setStyleSheet(qss)
 
@@ -89,8 +89,8 @@ class HButton(QPushButton):
     def sizeHint(self) -> QSize:
         hint = super().sizeHint()
         if not self.text() and self._pixmaps:
-            hint.setWidth(COMBOBOX_HEIGHT)
-        hint.setHeight(COMBOBOX_HEIGHT)
+            hint.setWidth(self.theme.common.height)
+        hint.setHeight(self.theme.common.height)
         return hint
 
 
@@ -112,17 +112,17 @@ class HButton(QPushButton):
             self.pixmap_size = QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
         pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
 
-        hstyle = self.hstyle
+        btn_style = self.theme.button
         if self.text():
-            normal = hstyle.font_color
-            pressed = hstyle.font_color
-            disabled = hstyle.disabled_text
-            hover = hstyle.font_color
+            normal = btn_style.font_color
+            pressed = btn_style.font_color
+            disabled = btn_style.font
+            hover = btn_style.font_color
         else:
-            normal = hstyle.normal_button
-            pressed = hstyle.pressed_button
-            disabled = hstyle.disabled_bgd
-            hover = hstyle.hover_button
+            normal = btn_style.normal
+            pressed = btn_style.pressed
+            disabled = btn_style.disabled
+            hover = btn_style.hover
 
         self._pixmaps: dict[str, QPixmap] = {
             "normal" : make_tinted_pixmap(pixmap, normal),
@@ -133,7 +133,7 @@ class HButton(QPushButton):
             "checked" : make_tinted_pixmap(pixmap, pressed),
             "disabled" : make_tinted_pixmap(pixmap, disabled),
             # Disabled + check should never occurs. bad UI
-            "disabled_checked": make_tinted_pixmap(pixmap, hstyle.disabled_text),
+            "disabled_checked": make_tinted_pixmap(pixmap, btn_style.font_color_disabled),
         }
 
 
@@ -148,23 +148,24 @@ class HButton(QPushButton):
                 QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
             )
 
-        hstyle = self.hstyle
+        radius: int = self.theme.common.radius
+        btn_style = self.theme.button
 
         qss_template = Template(load_qss("button.qss"))
         qss = qss_template.substitute(
-            window_bgd=f"{hstyle.window_bgd}",
-            widget_bgd=f"{hstyle.widget_bgd}",
-            widget_hover=f"{hstyle.hover_bgd}",
-            disabled_bgd=f"{hstyle.disabled_bgd}",
-            font_color=f"{hstyle.font_color}",
-            selection_bgd=f"{hstyle.window_bgd}",
-            checked_color=f"{hstyle.enabled}",
-            radius=f"{COMBOBOX_RADIUS}px",
-            margin_left=f"{COMBOBOX_RADIUS + COMBOBOX_HEIGHT + 6}px",
-            text_disabled=f"{hstyle.disabled_text}",
-            checked_text=f"{hstyle.checked_text}",
-            font_family=f"\"{hstyle.font_family}\"",
-            font_size=f"{hstyle.font_size}pt",
+            window_bgd=f"{self.theme.window_bgd}",
+            widget_bgd=f"{self.theme.common.bgd}",
+            widget_hover=f"{btn_style.hover}",
+            disabled_bgd=f"{btn_style.disabled}",
+            checked=f"{btn_style.checked}",
+            pressed=f"{btn_style.pressed}",
+            radius=f"{radius}px",
+            margin_left=f"{radius + self.theme.common.height + 6}px",
+
+            font_color=f"{btn_style.font_color}",
+            font_color_disabled=f"{btn_style.font_color_disabled}",
+            font_family=f"\"{btn_style.font.family}\"",
+            font_size=f"{btn_style.font.size}pt",
         )
         self.setStyleSheet(qss)
 
@@ -173,24 +174,27 @@ class HButton(QPushButton):
 
 
     def setIcon(self, icon: QIcon | QPixmap) -> None:
-        hstyle = self.hstyle
+        btn_style = self.theme
         self._icon = icon
 
         if icon is not None:
+            radius: int = self.theme.common.radius
+            btn_style = self.theme.button
 
             qss_template = Template(load_qss("button.qss"))
             qss = qss_template.substitute(
-                window_bgd=f"{hstyle.window_bgd}",
-                widget_bgd=f"{hstyle.window_bgd}",
-                widget_hover=f"{hstyle.window_bgd}",
-                disabled_bgd=f"{hstyle.window_bgd}",
-                font_color=f"{hstyle.selection_bgd}",
-                selection_bgd=f"{hstyle.window_bgd}",
-                checked_color=f"{hstyle.enabled}",
-                radius=f"{COMBOBOX_RADIUS}px",
-                margin_left=f"{COMBOBOX_RADIUS + COMBOBOX_HEIGHT + 6}px",
-                text_disabled=f"{hstyle.disabled_text}",
-                checked_text=f"{hstyle.checked_text}",
+                window_bgd=f"{self.theme.window_bgd}",
+                widget_bgd=f"{self.theme.window_bgd}",
+                widget_hover=f"{self.theme.window_bgd}",
+                disabled_bgd=f"{self.theme.window_bgd}",
+                checked_color=f"{btn_style.checked}",
+                radius=f"{radius}px",
+                margin_left=f"{radius + self.theme.common.height + 6}px",
+
+                font_color=f"{btn_style.font_color}",
+                font_color_disabled=f"{btn_style.font_color_disabled}",
+                font_family=f"\"{btn_style.font.family}\"",
+                font_size=f"{btn_style.font.size}pt",
             )
             self.setStyleSheet(qss)
             self.populate_pixmaps()
@@ -236,8 +240,10 @@ class HButton(QPushButton):
 
 
         # Draw centered pixmap if no text
+        radius = self.theme.common.radius
+        height = self.theme.common.height
         x = (
-            COMBOBOX_RADIUS
+            radius
             if self.text()
             else (self.width() - self.pixmap_size.width()) // 2
         )
@@ -247,14 +253,14 @@ class HButton(QPushButton):
         # Draw text, better
         if self.text():
             text_rect = QRect(
-                COMBOBOX_RADIUS + COMBOBOX_HEIGHT + 6, 0,
-                self.width() - COMBOBOX_RADIUS,
+                radius + height + 6, 0,
+                self.width() - radius,
                 self.height()
             )
             painter.setPen(QColor(
-                self.hstyle.font_color
+                self.theme.button.font_color
                 if state & QStyle.StateFlag.State_Enabled
-                else self.hstyle.disabled_text
+                else self.theme.button.font_color_disabled
             ))
             painter.drawText(
                 text_rect,
