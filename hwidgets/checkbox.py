@@ -161,7 +161,7 @@ class HCheckBox(QCheckBox):
             else:
                 skip_draw = True
         if not skip_draw:
-            painter.drawRoundedRect(self.inner_box_rect, self._radius, self._radius)
+            painter.drawRect(self.inner_box_rect)
 
         # Check mark
         if checked:

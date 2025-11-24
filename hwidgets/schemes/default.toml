@@ -1,9 +1,9 @@
 [window]
-window = "#303034"
+window = "#1C1B1D"
 
 
 [common]
-bgd = "#4F4D53"
+bgd = "#424048"
 hover = "#66636D"
 selection = "#5545bd"
 pressed = "#5555B3"
@@ -20,7 +20,7 @@ font_color_checked = "#4632c7"
 
 
 [divider]
-normal ="#3B3B3B"
+normal ="#474747"
 
 [button]
 normal = "#5442bd"
@@ -46,11 +46,12 @@ checked = "#7053D6"
 disabled = "#474747"
 
 [switch]
-size = 16
-border = "#7c787f"
-pressed = "#7c787f"
-checked = "#7053D6"
-disabled = "#474747"
+track_off = "#4F4D53"
+track_on = "#4F4D53"
+handle_off = "#66636D"
+handle_on = "#7053D6"
+track_disabled = "#36343B"
+handle_disabled = "#232223"
 
 
 [radio]
@@ -69,29 +70,29 @@ font_weight = 500
 font_family = "Segoe UI"
 font_size = 10
 font_weight = 400
-font_color = "#f0f0f0"
+font_color = "#d4d4d8"
 
 [title]
 font_family = "Segoe UI"
 font_size = 16
 font_weight = 800
-font_color = "#7c5cd8"
+font_color = "#7053D6"
 
 # subtitle and comment only appear in TOML if they override label
 [subtitle]
 font_size = 14
 font_weight = 600
-font_color = "#f0f0f0"
+font_color = "#c2c2c7ff"
 # Inherits everything from [label], font is defined in code
 
 [description]
 font_size = 10
-font_weight = 400
-font_color = "#f0f0f0"
+font_weight = 500
+font_color = "#c2c2c7ff"
 
 
 [comment]
-font_size = 8
-font_color = "#a7a7a7ff"
+font_size = 9
+font_color = "#a7a7a7"
 # Inherits font_color_disabled from label
 

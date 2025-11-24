@@ -151,19 +151,22 @@ class CheckBoxStyle:
     checked_text: str = ""
 
 
+
 @dataclass
 class SwitchStyle:
-    track_height: int = NORMAL_HEIGHT
+    track_height: int = 24
     track_width: int = 40
-    handle_radius: int = 16
+    handle_radius: int = 18
 
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    checked: str = ""
-    disabled: str = ""
+    track_on: str = ""
+    track_off: str = ""
+
+    handle_on: str = ""
+    handle_off: str = ""
+
+    track_disabled: str = ""
     handle_disabled: str = ""
-    unchecked: str = ""
+
 
 
 @dataclass
