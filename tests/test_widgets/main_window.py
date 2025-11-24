@@ -94,3 +94,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
 
+        # make it italic
+        self.h_comment_italic.setItalic(True)
+        self.h_comment_bold.setWeight(800)
+        self.h_comment_small_italic.setItalic(True)
+        self.h_comment_small_italic.setFontSize(8)
+

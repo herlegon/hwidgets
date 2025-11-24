@@ -16,7 +16,12 @@ from .button_group import HButtonGroup
 from .groupbox import HGroupBox
 from .indeterminate_progress import HIndeterminateProgress
 from .indeterminate_circular_progress import HIndeterminateCircularProgress # Not yet supported
-from .label import HLabel
+from .label import (
+    HLabel,
+    HSubtitle,
+    HDescription,
+    HComment,
+)
 from .lineedit import HLineEdit
 from .plaintextedit import HPlainTextEdit
 from .radial_progress_bar import HRadialProgress
@@ -30,10 +35,17 @@ from .utils import load_png_image
 from .style_manager import StyleManager, Theme
 
 
+# By order of validation
 __all__ = [
     "hlogger",
     "StyleManager",
     "Theme",
+
+    "HTitle",
+    "HSubtitle",
+    "HDescription",
+    "HComment",
+    "HLabel",
 
     "HButton",
     "HButtonGroup",
@@ -45,7 +57,6 @@ __all__ = [
     "HHorizontalDivider",
     "HVerticalDivider",
     "HIndeterminateProgress",
-    "HLabel",
     "HLineEdit",
     "HPlainTextEdit",
     "HProgress",
@@ -54,7 +65,6 @@ __all__ = [
     "HScrollBar",
     "HSpinBox",
     "HSwitch",
-    "HTitle",
 
     "load_png_image",
 ]

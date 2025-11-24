@@ -1,3 +1,4 @@
+from string import Template
 import numpy as np
 from pathlib import Path
 from typing import Optional, Type
@@ -32,7 +33,7 @@ from .hstyle import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )
-from .utils import load_png_icon
+from .utils import load_png_icon, load_qss
 
 
 
@@ -220,35 +221,29 @@ class HTitle(QWidget):
         )
 
         # font = QFont()
-        # font.setBold(TITLE_1_BOLD)
+        # font.setBold(True)
         # font.setUnderline(False)
         # font.setItalic(False)
-        self._title.setFont(font)
-        # for debug:
-        # self.setStyleSheet("background-color: yellow; border: 1px solid white;")
-        self._title.setStyleSheet(
-            """
-                QLabel{{
-                    /* background-color: white; */
-                    /* border: 1px solid red; */
-                    color: {color};
-                    font-family: {font_family};
-                    font-size: {font_size};
-                    padding: 0px;
-                    margin: 0px;
-                    padding-bottom: 2px;
-
-                }}
-            """.format(
-                color=self.theme.title.font_color,
-                font_family=f"\"{self.theme.title.font.family}\"",
-                font_size=f"{self.theme.title.font.size}pt",
-            )
+        # if font is not None:
+        #     self._title.setFont(font)
+        self.title_style = self.theme.title
+        qss_template = Template(load_qss("label.css"))
+        qss = qss_template.substitute(
+            font_color=f"{self.title_style.font_color}",
+            font_family=f"\"{self.title_style.font.family}\"",
+            font_size=f"{self.title_style.font.size}pt",
+            font_weight=f"{self.title_style.font.weight}",
+            font_style="normal",
+            font_color_disabled=f"{self.theme.common.font_color_disabled}",
         )
+        qss += " padding-bottom: 10px;"
+        self.setStyleSheet(qss)
+
+
         self._title.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
-        self._title.setFixedHeight(self.theme.title.height)
+        self._title.setFixedHeight(self.title_style.height)
         self.adjustSize()
 
 
@@ -271,7 +266,7 @@ class HTitle(QWidget):
         if self._icon is None:
             self._icon = QLabel(self)
             self._layout.insertWidget(0, self._icon)
-        pixmap: QPixmap = load_png_icon(icon_path, self.theme.title.font_color)
+        pixmap: QPixmap = load_png_icon(icon_path, self.title_style.font_color)
         self._icon.setPixmap(pixmap)
         self._icon.setFixedSize(pixmap.size())
         self._layout.setSpacing(8)
@@ -280,7 +275,7 @@ class HTitle(QWidget):
     def setPixmap(self, pixmap: QPixmap | QImage) -> None:
         if isinstance(pixmap, QImage):
             pixmap = QPixmap.fromImage(pixmap)
-        pixmap = transform_black_to_blue(pixmap, QColor(self.theme.title.font_color))
+        pixmap = transform_black_to_blue(pixmap, QColor(self.title_style.font_color))
 
         if self._icon is None:
             self._icon: QLabel = QLabel(self)

@@ -992,6 +992,78 @@ of vertical text
        <item>
         <layout class="QVBoxLayout" name="main_layout">
          <item>
+          <layout class="QVBoxLayout" name="titles_layout">
+           <item>
+            <widget class="QLabel" name="h_title">
+             <property name="text">
+              <string>This is a HTitle widget without icon</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="h_title_icon">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="pixmap">
+              <pixmap>../../../hwidgets/icons/gpu.png</pixmap>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="h_subtitles">
+             <property name="text">
+              <string>Subtitle</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="h_description">
+             <property name="text">
+              <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="h_comment_bold">
+             <property name="text">
+              <string>Bold comment</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="h_comment_italic">
+             <property name="text">
+              <string>Italic comment</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="h_comment_small_italic">
+             <property name="text">
+              <string>Small italic comment</string>
+             </property>
+             <property name="wordWrap">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="labels_layout">
            <item>
             <widget class="QLabel" name="h_label">
@@ -1013,27 +1085,6 @@ of vertical text
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <widget class="QLabel" name="h_subtitles">
-             <property name="text">
-              <string>Subtitle</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="h_comment">
-             <property name="text">
-              <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
-             </property>
-             <property name="wordWrap">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </item>
-         <item>
           <widget class="Line" name="h_divider">
            <property name="orientation">
             <enum>Qt::Orientation::Horizontal</enum>
@@ -1041,21 +1092,100 @@ of vertical text
           </widget>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="titles_layout">
+          <layout class="QHBoxLayout" name="horizontalLayout_4">
            <item>
-            <widget class="QLabel" name="h_title">
+            <widget class="QCheckBox" name="h_checkbox">
              <property name="text">
-              <string>This is a HTitle widget without icon</string>
+              <string/>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="h_title_icon">
+            <widget class="QCheckBox" name="h_checkbox_clicked">
              <property name="text">
               <string/>
              </property>
-             <property name="pixmap">
-              <pixmap>../../../hwidgets/icons/gpu.png</pixmap>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="h_checkbox_disabled">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="h_checkbox_disabled_clicked">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="h_switch">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="h_switch_checked">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="h_switch_disabled">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QCheckBox" name="h_switch_disabled_checked">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -1087,7 +1217,5 @@ of vertical text
  <buttongroups>
   <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup"/>
-  <buttongroup name="buttonGroup_2"/>
  </buttongroups>
 </ui>

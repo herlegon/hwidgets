@@ -6,6 +6,7 @@ from dataclasses import replace
 from .styles import (
     ButtonStyle,
     CheckBoxStyle,
+    DescriptionStyle,
     CommentStyle,
     FontConfig,
     GroupBoxStyle,
@@ -14,6 +15,8 @@ from .styles import (
     RadioButtonStyle,
     SubtitleStyle,
     TitleStyle,
+    IconButtonStyle,
+    SwitchStyle,
 )
 
 class StyleManager:
@@ -42,23 +45,32 @@ class StyleManager:
             theme.window_bgd = config["window"]["window"]
 
         # Common widget colors
-        if "widget" in config:
+        if "common" in config:
+            common_cfg = config["common"]
+
+            # Font parsing
+            font = theme.common.font
+            if "font_family" in common_cfg or "font_size" in common_cfg or "font_weight" in common_cfg:
+                font = FontConfig(
+                    family=common_cfg.get("font_family", font.family),
+                    size=common_cfg.get("font_size", font.size),
+                    weight=common_cfg.get("font_weight", font.weight),
+                )
+
             theme.common = replace(theme.common, **{
-                "background":   config["widget"].get("bgd", theme.common.bgd),
-                "hover":        config["widget"].get("hover", theme.common.hover),
-                "selection":    config["widget"].get("selection", theme.common.selection),
-                "pressed":      config["widget"].get("pressed", theme.common.pressed),
-                "disabled_bgd": config["widget"].get("disabled_bgd", theme.common.disabled),
-                "border":       config["widget"].get("border", theme.common.border),
-                "font_color":   config["widget"].get("font_color", theme.common.font_color),
-                "font_color_disabled": config["widget"].get("font_color_disabled", theme.common.font_color_disabled),
+                "bgd":                  common_cfg.get("bgd", theme.common.bgd),
+                "hover":                common_cfg.get("hover", theme.common.hover),
+                "selection":            common_cfg.get("selection", theme.common.selection),
+                "pressed":              common_cfg.get("pressed", theme.common.pressed),
+                "disabled":             common_cfg.get("disabled_bgd", theme.common.disabled),
+                "border":               common_cfg.get("border", theme.common.border),
+                "font_color":           common_cfg.get("font_color", theme.common.font_color),
+                "font_color_disabled":  common_cfg.get("font_color_disabled", theme.common.font_color_disabled),
+                "font_color_checked":   common_cfg.get("font_color_checked", theme.common.font_color_checked),
+                "font":                 font,
             })
 
-        # Checkbox/Radio special fields
-        if "checkbox" in config:
-            theme.common.checked = config["checkbox"].get("checked", theme.common.checked)
-        if "radio" in config:
-            theme.common.checked = config["radio"].get("checked", theme.common.checked)
+
 
         # Divider color
         if "divider" in config and "normal" in config["divider"]:
@@ -68,22 +80,27 @@ class StyleManager:
         # Inheritance rules
         # ------------------------------
         inheritance = {
+            "title": "label",
             "subtitle": "label",
             "comment": "label",
+            "description": "label",
         }
 
         # ------------------------------
         # Map TOML key → InstallStyle attribute
         # ------------------------------
         widget_map = {
-            "button": ("hbutton", ButtonStyle),
-            "radio": ("hradiobutton", RadioButtonStyle),
-            "checkbox": ("hcheckbox", CheckBoxStyle),
-            "label": ("hlabel", LabelStyle),
-            "title": ("htitle", TitleStyle),
-            "subtitle": ("hsubtitle", SubtitleStyle),
-            "comment": ("hcomment", CommentStyle),
-            "group_box": ("hgroupbox", GroupBoxStyle),
+            "button": ("button", ButtonStyle),
+            "radio": ("radio_button", RadioButtonStyle),
+            "checkbox": ("checkbox", CheckBoxStyle),
+            "switch": ("switch", SwitchStyle),
+            "label": ("label", LabelStyle),
+            "title": ("title", TitleStyle),
+            "subtitle": ("subtitle", SubtitleStyle),
+            "description": ("description", DescriptionStyle),
+            "comment": ("comment", CommentStyle),
+            "group_box": ("groupbox", GroupBoxStyle),
+            "icon_button": ("icon_button", IconButtonStyle),
         }
 
         # ------------------------------
@@ -101,24 +118,38 @@ class StyleManager:
                 parent_cfg.update(widget_cfg)
                 widget_cfg = parent_cfg
 
+            widget = getattr(theme, attr)
+
             # Font override
-            if "font_family" in widget_cfg or "font_size" in widget_cfg or "font_weight" in widget_cfg:
-                font = getattr(theme, attr).font
-                font = FontConfig(
-                    family = widget_cfg.pop("font_family", font.family),
-                    size   = widget_cfg.pop("font_size",  font.size),
-                    weight = widget_cfg.pop("font_weight", font.weight),
-                )
+            font_args = {}
+            if hasattr(widget, "font"):
+                if "font_family" in widget_cfg or "font_size" in widget_cfg or "font_weight" in widget_cfg:
+                    font = widget.font
+                    font = FontConfig(
+                        family = widget_cfg.pop("font_family", font.family),
+                        size   = widget_cfg.pop("font_size",  font.size),
+                        weight = widget_cfg.pop("font_weight", font.weight),
+                    )
+                    font_args = {"font": font}
+                else:
+                    # Keep existing font (redundant for replace but safe)
+                    pass
             else:
-                font = getattr(theme, attr).font
+                # Remove font keys if present to avoid error in replace
+                widget_cfg.pop("font_family", None)
+                widget_cfg.pop("font_size", None)
+                widget_cfg.pop("font_weight", None)
 
             # Fill missing colors from common
             for field in ("font_color", "font_color_disabled"):
-                if field not in widget_cfg:
+                if field not in widget_cfg and hasattr(widget, field):
                     widget_cfg[field] = getattr(theme.common, field)
 
-            widget = getattr(theme, attr)
-            setattr(theme, attr, replace(widget, **widget_cfg, font=font))
+            # Remove keys that are not in the dataclass fields to avoid TypeError in replace
+            # (Optional but good practice if toml has extra keys)
+            # For now, assuming toml is correct or replace will raise TypeError which is fine.
+
+            setattr(theme, attr, replace(widget, **widget_cfg, **font_args))
 
         return theme
 

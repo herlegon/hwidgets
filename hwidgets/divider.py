@@ -37,7 +37,7 @@ class HDivider(QFrame):
             self.setMinimumWidth(theme.divider.min_length)
             self.setFixedHeight(theme.divider.thickness)
 
-        self._update_stylesheet(theme.divider.normal)
+        self._update_stylesheet(theme.divider)
         self.adjustSize()
 
 

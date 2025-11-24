@@ -39,33 +39,33 @@ class HSwitch(QCheckBox):
 
         self._hover: bool = False
 
-        switch_theme = theme.switch
+        sw_style = theme.switch
 
-        track_width = switch_theme.track_width
+        track_width = sw_style.track_width
 
-        self.track_height = switch_theme.track_height - 4
+        self.track_height = sw_style.track_height - 4
         self.track_radius = self.track_height // 2
-        self.handle_radius = switch_theme.handle_radius
-        self.margin = switch_theme.track_margin - 1
+        self.handle_radius = sw_style.handle_radius
+        self.margin = (sw_style.track_height - sw_style.handle_radius) // 2 - 1
 
         self.setFixedSize(track_width, self.track_height)
         self.handle_position_off = self.margin
         self.handle_position_on = track_width - self.handle_radius - self.margin
         self.handle_position = self.margin
 
-        self.track_rect = QRectF(0, 0, switch_theme.track_width, switch_theme.track_height),
+        self.track_rect = QRectF(0, 0, sw_style.track_width, sw_style.track_height)
 
         # Colors
         self.unchecked_track = QColor(theme.common.bgd)
-        self.unchecked_handle = QColor(switch_theme.unchecked)
+        self.unchecked_handle = QColor(sw_style.unchecked)
 
-        self.unchecked_hover_handle = QColor(switch_theme.hover)
+        self.unchecked_hover_handle = QColor(sw_style.hover)
 
         self.checked_track = QColor(theme.common.bgd)
-        self.checked_handle = QColor(switch_theme.checked)
+        self.checked_handle = QColor(sw_style.checked)
 
-        self.disabled_track = QColor(theme.common.disabled)
-        self.disabled_handle = QColor(theme.common.handle_disabled)
+        self.disabled_track = QColor(sw_style.disabled)
+        self.disabled_handle = QColor(sw_style.handle_disabled)
 
         # Animation
         curve: QEasingCurve.Type = QEasingCurve.Type.InOutQuad

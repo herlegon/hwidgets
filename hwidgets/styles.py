@@ -106,21 +106,6 @@ class IconButtonStyle:
     disabled: str = ""
 
 
-@dataclass
-class SwitchStyle:
-    track_height: int = ""
-    track_margin: int = ""
-    track_width: int = ""
-    handle_radius: int = ""
-
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    checked: str = ""
-    disabled: str = ""
-    handle_disabled: str = ""
-    unchecked: str = ""
-
 
 
 @dataclass
@@ -153,16 +138,32 @@ class ButtonGroupStyle(ButtonStyle):
 
 @dataclass
 class CheckBoxStyle:
-    size: int = NORMAL_HEIGHT
+    size: int = 16
     box_size: int = 14
     box_thickness: int = 2
 
+    pressed: str = ""
+    border: str = ""
     normal: str = ""
     hover: str = ""
     disabled: str = ""
     checked: str = ""
     checked_text: str = ""
 
+
+@dataclass
+class SwitchStyle:
+    track_height: int = NORMAL_HEIGHT
+    track_width: int = 40
+    handle_radius: int = 16
+
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+    handle_disabled: str = ""
+    unchecked: str = ""
 
 
 @dataclass
@@ -236,7 +237,6 @@ class TitleStyle:
     padding = 0
 
     font: FontConfig = FontConfig(size=16, weight=800)
-    font_bold: bool = True
     font_color: str = ""
     font_color_disabled: str = ""
 
@@ -244,6 +244,13 @@ class TitleStyle:
 
 @dataclass
 class SubtitleStyle:
+    font: FontConfig = FontConfig(size=12, weight=400)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+@dataclass
+class DescriptionStyle:
     font: FontConfig = FontConfig(size=12, weight=400)
     font_color: str = ""
     font_color_disabled: str = ""
@@ -291,6 +298,13 @@ class Theme:
     # horizontal_divider: DividerStyle = field(default_factory=DividerStyle)
     # vertical_divider: DividerStyle = field(default_factory=DividerStyle)
 
+    label: LabelStyle = field(default_factory=LabelStyle)
+    title: TitleStyle = field(default_factory=TitleStyle)
+    subtitle: SubtitleStyle = field(default_factory=SubtitleStyle)
+    description: DescriptionStyle = field(default_factory=DescriptionStyle)
+    comment: CommentStyle = field(default_factory=CommentStyle)
+
+
     scrollbar: ScrollBarStyle = field(default_factory=ScrollBarStyle)
 
     button: ButtonStyle = field(default_factory=ButtonStyle)
@@ -308,10 +322,7 @@ class Theme:
     spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
     # double_spinbox: DoubleSpinBoxStyle = field(default_factory=DoubleSpinBoxStyle)
 
-    label: LabelStyle = field(default_factory=LabelStyle)
-    title: TitleStyle = field(default_factory=TitleStyle)
-    subtitle: SubtitleStyle = field(default_factory=SubtitleStyle)
-    comment: CommentStyle = field(default_factory=CommentStyle)
+
 
     progress: ProgressStyle = field(default_factory=ProgressStyle)
     # indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)

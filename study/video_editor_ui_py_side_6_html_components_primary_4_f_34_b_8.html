@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Video Editor UI — Components (Primary #4F34B8)</title>
+  <style>
+    /* ==========================
+       Theme variables
+       ========================== */
+    :root{
+      --primary: #7C5CD8;            /* your chosen primary */
+      --primary-600: #644ABC;        /* darker */
+      --primary-300: #A48BF0;        /* lighter */
+      --bg: #0b0c10;                 /* nearly dark background */
+      --surface: #101216;            /* panels */
+      --muted: #9aa3b6;             /* secondary text */
+      --card: #14161a;
+      --border: rgba(255,255,255,0.04);
+      --success: #4CD964;
+      --danger: #FF5F56;
+      --lightgreen-italic: #98FF9A;
+      --white: #F5F6FA;
+      --glass: rgba(255,255,255,0.02);
+      --radius: 10px;
+      --shadow: 0 6px 18px rgba(8,6,15,0.75);
+      --font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+
+    /* ==========================
+       Base
+       ========================== */
+    html,body{height:100%;}
+    body{
+      margin:0;
+      background: linear-gradient(180deg,var(--bg),#06060a 80%);
+      color:var(--white);
+      font-family:var(--font-family);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      padding:28px;
+      box-sizing:border-box;
+    }
+
+    .container{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:320px 1fr;gap:24px;}
+    .card{background:var(--card);border-radius:var(--radius);padding:18px;border:1px solid var(--border);box-shadow:var(--shadow);}
+
+    h1.title{color:var(--primary);font-size:20px;margin:0 0 6px;font-weight:700;}
+    h2.subtitle{color:var(--white);font-size:13px;margin:0 0 12px;font-weight:600;}
+
+    /* comment styles */
+    .comment{color:var(--white);font-size:13px;}
+    .small-comment{color:var(--lightgreen-italic);font-style:italic;font-size:12px}
+
+    /* ==========================
+       Button (maps to QPushButton)
+       - classes: .btn .primary .secondary
+       - states via :hover, .active, .disabled
+       ========================== */
+    .btn{display:inline-flex;align-items:center;gap:10px;padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600;user-select:none;text-decoration:none;transition:all .12s ease;box-shadow:0 2px 6px rgba(0,0,0,0.45);}
+
+    .btn.primary{background:linear-gradient(180deg,var(--primary),var(--primary-600));color:var(--white);}
+    .btn.primary:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(79,52,184,0.25)}
+    .btn.primary:active,.btn.primary.active{transform:translateY(0);box-shadow:0 3px 10px rgba(0,0,0,0.6)}
+    .btn.primary.disabled,.btn.primary[aria-disabled="true"]{opacity:.38;cursor:not-allowed;transform:none}
+
+    .btn.ghost{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--white);}
+    .btn.ghost:hover{background:var(--glass);}
+
+    /* small icon button */
+    .icon-btn{padding:8px;width:40px;height:40px;justify-content:center;border-radius:10px}
+
+    /* ==========================
+       Input (maps to QLineEdit)
+       ========================== */
+    .input{
+      background:linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.015));
+      border:1px solid var(--border);
+      padding:10px 12px;border-radius:8px;color:var(--white);min-width:220px;outline:none;transition:all .12s ease;box-shadow:inset 0 -1px 0 rgba(0,0,0,0.25);
+    }
+    .input:focus{border-color:var(--primary-300);box-shadow:0 6px 20px rgba(79,52,184,0.08)}
+    .input.error{border-color:var(--danger);box-shadow:0 6px 20px rgba(255,95,86,0.06)}
+    .input[disabled]{opacity:.35;cursor:not-allowed}
+
+    .label{display:block;margin-bottom:6px;font-size:12px;color:var(--muted);}
+
+    /* ==========================
+       Checkbox / Radio / Toggle (maps to QCheckBox / QRadioButton)
+       ========================== */
+    .row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+
+    .fake-checkbox,.fake-radio,.fake-toggle{display:inline-grid;place-items:center;width:20px;height:20px;border-radius:6px;border:1px solid var(--border);background:transparent}
+    .fake-radio{border-radius:50%}
+
+    .fake-checkbox.checked{background:linear-gradient(180deg,var(--primary),var(--primary-600));border-color:transparent}
+    .fake-radio.checked{background:linear-gradient(180deg,var(--primary),var(--primary-600));border-color:transparent}
+
+    /* toggle */
+    .fake-toggle{width:46px;height:26px;border-radius:20px;padding:3px;position:relative}
+    .fake-toggle .knob{position:absolute;left:4px;top:3px;width:20px;height:20px;border-radius:50%;background:#fff;transition:all .12s ease}
+    .fake-toggle.on{background:linear-gradient(90deg,var(--primary-300),var(--primary));}
+    .fake-toggle.on .knob{left:22px;background:#fff}
+    .fake-toggle.off{background:rgba(255,255,255,0.03)}
+
+    /* ==========================
+       Slider (maps to QSlider)
+       ========================== */
+    .slider{width:100%;height:8px;background:rgba(255,255,255,0.04);border-radius:8px;position:relative}
+    .slider .bar{height:8px;border-radius:8px;background:linear-gradient(90deg,var(--primary-300),var(--primary));width:48%}
+    .slider .thumb{position:absolute;right:calc(52% - 10px);top:50%;transform:translateY(-50%);width:20px;height:20px;border-radius:50%;background:var(--white);box-shadow:0 6px 18px rgba(8,6,15,0.6)}
+
+    /* ==========================
+       Progress (maps to QProgressBar)
+       ========================== */
+    .progress{height:12px;background:rgba(255,255,255,0.03);border-radius:6px;overflow:hidden}
+    .progress .fill{height:100%;width:62%;background:linear-gradient(90deg,var(--primary-300),var(--primary));}
+
+    /* ==========================
+       Tabs (maps to QTabWidget) - simple visual
+       ========================== */
+    .tabs{display:flex;gap:6px;border-bottom:1px solid rgba(255,255,255,0.02);padding-bottom:8px;margin-bottom:14px}
+    .tab{padding:8px 12px;border-radius:8px 8px 0 0;color:var(--muted);background:transparent;font-weight:600}
+    .tab.active{color:var(--white);background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border:1px solid var(--border);border-bottom:1px solid transparent}
+    .tab:hover{color:var(--primary-300)}
+
+    /* ==========================
+       Dropdown/Menu (maps to QComboBox / QMenu)
+       ========================== */
+    .dropdown{position:relative;display:inline-block}
+    .dropdown .menu{position:absolute;left:0;top:calc(100% + 8px);min-width:200px;background:var(--surface);border-radius:8px;padding:8px;border:1px solid var(--border);box-shadow:var(--shadow)}
+    .dropdown .menu .item{padding:8px 10px;border-radius:6px}
+    .dropdown .menu .item:hover{background:var(--glass)}
+
+    /* ==========================
+       Misc: badge / chip / tooltip
+       ========================== */
+    .badge{display:inline-block;padding:6px 8px;border-radius:999px;background:rgba(255,255,255,0.03);font-weight:700}
+    .chip{display:inline-flex;gap:8px;align-items:center;padding:8px;border-radius:999px;background:rgba(255,255,255,0.02)}
+
+    /* helper grid for demo */
+    .demo-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .demo-row{display:flex;flex-direction:column;gap:10px}
+
+    /* small responsive */
+    @media (max-width:860px){.container{grid-template-columns:1fr;}}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left: component list / labels -->
+    <div class="card">
+      <h1 class="title">Title sample</h1>
+      <h2 class="subtitle">Subtitle sample</h2>
+      <p class="comment">Comment sample — use for annotations or markers</p>
+      <p class="small-comment">Small comment (lightgreen, italic)</p>
+
+      <hr style="border:none;height:1px;background:var(--border);margin:14px 0;"/>
+
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <div>
+          <div class="label">Primary button (QPushButton)</div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="btn primary">Primary</button>
+            <button class="btn primary disabled" aria-disabled="true">Disabled</button>
+            <button class="btn ghost">Ghost</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="label">Icon buttons</div>
+          <div style="display:flex;gap:8px">
+            <button class="btn primary icon-btn">▶</button>
+            <button class="btn ghost icon-btn">✚</button>
+            <button class="btn primary icon-btn disabled" aria-disabled="true">⏸</button>
+          </div>
+        </div>
+
+        <div>
+          <div class="label">Inputs (QLineEdit)</div>
+          <input class="input" placeholder="Normal input" />
+          <div style="height:8px"></div>
+          <input class="input" value="Focused / filled" />
+          <div style="height:8px"></div>
+          <input class="input error" value="Error state" />
+          <div style="height:8px"></div>
+          <input class="input" disabled placeholder="Disabled" />
+        </div>
+
+        <div>
+          <div class="label">Checkbox / Radio / Toggle</div>
+          <div class="row">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="fake-checkbox checked">✔</div>
+              <div class="label" style="margin:0;color:var(--white);font-size:13px">Checked</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="fake-checkbox"> </div>
+              <div class="label" style="margin:0;color:var(--muted);font-size:13px">Unchecked</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="fake-radio checked"> </div>
+              <div class="label" style="margin:0;color:var(--white);font-size:13px">Radio selected</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="fake-radio"> </div>
+              <div class="label" style="margin:0;color:var(--muted);font-size:13px">Radio</div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="fake-toggle on"><div class="knob"></div></div>
+              <div class="label" style="margin:0;color:var(--white);font-size:13px">On</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px">
+              <div class="fake-toggle off"><div class="knob"></div></div>
+              <div class="label" style="margin:0;color:var(--muted);font-size:13px">Off</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- Right: interactive demos / other components -->
+    <div class="card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+        <div>
+          <h1 class="title">Project</h1>
+          <h2 class="subtitle">Sequence: 00:03:24</h2>
+        </div>
+        <div style="display:flex;gap:8px;align-items:center">
+          <div class="badge">LIVE</div>
+          <div class="chip">Autosave</div>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <div class="tab active">Edit</div>
+        <div class="tab">Color</div>
+        <div class="tab">Audio</div>
+        <div class="tab">Export</div>
+      </div>
+
+      <div class="demo-grid">
+        <div class="card" style="background:linear-gradient(180deg, rgba(255,255,255,0.01), transparent);padding:12px">
+          <div class="label">Slider (QSlider)</div>
+          <div class="slider" aria-valuenow="48">
+            <div class="bar"></div>
+            <div class="thumb" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="48"></div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="label">Progress (QProgressBar)</div>
+          <div class="progress"><div class="fill"></div></div>
+
+          <div style="height:12px"></div>
+
+          <div class="label">Dropdown (QComboBox)</div>
+          <div class="dropdown">
+            <button class="btn ghost">Timeline options ▾</button>
+            <div class="menu">
+              <div class="item">New Track</div>
+              <div class="item">Add Marker</div>
+              <div class="item">Timeline Settings</div>
+            </div>
+          </div>
+
+        </div>
+
+        <div class="card" style="padding:12px">
+          <div class="label">Form / metadata</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div>
+              <div class="label">Clip Title</div>
+              <input class="input" value="Sunset_take_12" />
+            </div>
+            <div>
+              <div class="label">Duration</div>
+              <input class="input" value="00:00:14:12" />
+            </div>
+            <div>
+              <div class="label">Notes</div>
+              <textarea class="input" style="min-height:90px;resize:vertical"></textarea>
+            </div>
+          </div>
+        </div>
+
+        <div class="card" style="padding:12px">
+          <div class="label">Buttons states</div>
+          <div style="display:flex;gap:10px;align-items:center">
+            <button class="btn primary">Play</button>
+            <button class="btn primary active">Active (pressed)</button>
+            <button class="btn primary disabled" aria-disabled="true">Disabled</button>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="label">Small controls</div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn ghost">Cut</button>
+            <button class="btn ghost">Copy</button>
+            <button class="btn ghost">Paste</button>
+          </div>
+
+        </div>
+
+        <div class="card" style="padding:12px">
+          <div class="label">Notification / Alerts</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            <div style="padding:10px;border-radius:8px;background:linear-gradient(90deg, rgba(79,52,184,0.08), rgba(79,52,184,0.03));border:1px solid rgba(79,52,184,0.06)">Info saved</div>
+            <div style="padding:10px;border-radius:8px;background:linear-gradient(90deg, rgba(255,95,86,0.06), rgba(255,95,86,0.03));border:1px solid rgba(255,95,86,0.04)">Export failed</div>
+            <div style="padding:10px;border-radius:8px;background:linear-gradient(90deg, rgba(76,217,100,0.06), rgba(76,217,100,0.03));border:1px solid rgba(76,217,100,0.04)">Rendered</div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <footer style="position:fixed;left:18px;bottom:18px;color:var(--muted);font-size:12px">Component samples: classes are named to map easily to PySide6 widgets (see comments)</footer>
+</body>
+</html>
