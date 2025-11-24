@@ -10,11 +10,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QScrollBar
 )
-from .hstyle import (
-    COMBOBOX_RADIUS,
-    SCROLLBAR_TRACK_WIDTH,
-    Theme,
-)
+from .style_manager import Theme
 from .utils import (
     load_qss,
 )
@@ -26,7 +22,7 @@ class HScrollBar(QScrollBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
     ):
         super().__init__(parent)
         self.setCursor(Qt.CursorShape.ArrowCursor)
@@ -34,26 +30,26 @@ class HScrollBar(QScrollBar):
         # self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
 
-        self.hstyle= hstyle
+        self.theme: Theme = theme
         self.qss_template = Template(load_qss("scrollbar.qss"))
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Preferred)
         )
-        self.setFixedWidth(SCROLLBAR_TRACK_WIDTH)
+        self.setFixedWidth(self.theme.scrollbar.track_width)
         self.setSingleStep(0)
 
 
     def _update_stylesheet(self) -> None:
-        hstyle = self.hstyle
+        theme = self.theme
 
         qss = self.qss_template.substitute(
-            radius=f"{COMBOBOX_RADIUS}px",
-            hover_bgd=f"{hstyle.hover_bgd}",
-            selection_bgd=f"{hstyle.selection_bgd}",
+            radius=f"{self.theme.common.radius}px",
+            hover_bgd=f"{self.theme.common.hover}",
+            selection_bgd=f"{self.theme.common.selection}",
 
-            widget_bgd=f"{hstyle.widget_bgd}",
-            handle_bgd=f"{hstyle.hover_bgd}",
-            handle_bgd_hover=f"{hstyle.selection_bgd}",
+            widget_bgd=f"{theme.common.bgd}",
+            handle_bgd=f"{theme.common.hover}",
+            handle_bgd_hover=f"{theme.common.selection}",
 
             widget_margin=1,
             track_width=self.width(),
@@ -79,15 +75,15 @@ class HScrollBar(QScrollBar):
             return
 
         parent: QWidget = self.parent()
-        cr = COMBOBOX_RADIUS
+        radius = self.theme.common.radius
         full_rect = parent.rect()
         # shrink height by 2*corner_radius, and move down by corner_radius
         self.setGeometry(
             QRect(
                 full_rect.width() - self.width(),
-                cr,
+                radius,
                 self.width(),
-                full_rect.height() - 2 * cr
+                full_rect.height() - 2 * radius
             )
         )
 

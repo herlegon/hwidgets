@@ -28,7 +28,7 @@ class HDoubleSpinBoxPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HDoubleSpinBox(parent, hstyle=Theme())
+        t = HDoubleSpinBox(parent, theme=Theme())
         return t
 
     def domXml(self):

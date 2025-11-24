@@ -15,21 +15,23 @@ class FontConfig(NamedTuple):
 
 @dataclass
 class WidgetCommonColors:
-    border_radius: int = BORDER_RADIUS
+    height: int = NORMAL_HEIGHT
+    radius: int = BORDER_RADIUS
+
     bgd: str = ""
+    normal: str = ""
     hover: str = ""
     selection: str = ""
     pressed: str = ""
-    disabled_bgd: str = ""
+    disabled: str = ""
+
     border: str = ""
-    # Checkbox/RadioButton
-    normal: str = ""
-    checked: str = ""
-    checked_text: str = ""
+    border_selected: str = ""
 
     # Text colors
     font: FontConfig = FontConfig(size=14, weight=600)
     font_color: str = ""
+    font_color_checked: str = ""
     font_color_disabled: str = ""
 
 
@@ -86,6 +88,7 @@ class ButtonStyle:
     normal: str = ""
     hover: str = ""
     pressed: str = ""
+    checked: str = ""
     disabled: str = ""
 
     font: FontConfig = FontConfig(weight=500)
@@ -93,13 +96,30 @@ class ButtonStyle:
     font_color_disabled: str = ""
 
 
-
 @dataclass
-class SwitchStyle:
+class IconButtonStyle:
+    height: int = NORMAL_HEIGHT
+
     normal: str = ""
     hover: str = ""
     pressed: str = ""
     disabled: str = ""
+
+
+@dataclass
+class SwitchStyle:
+    track_height: int = ""
+    track_margin: int = ""
+    track_width: int = ""
+    handle_radius: int = ""
+
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+    handle_disabled: str = ""
+    unchecked: str = ""
 
 
 
@@ -107,7 +127,7 @@ class SwitchStyle:
 class RadioButtonStyle:
     size: int = 14
     radius: int = BORDER_RADIUS - 1
-    border_width: int = 2
+    border_thickness: int = 2
 
     normal: str = ""
     disabled: str = ""
@@ -147,17 +167,16 @@ class CheckBoxStyle:
 
 @dataclass
 class ComboBoxStyle:
-    height = NORMAL_HEIGHT
-    radius = BORDER_RADIUS
-
     normal: str = ""
     hover: str = ""
+    selection: str = ""
     pressed: str = ""
     disabled: str = ""
 
     font: FontConfig = FontConfig(weight=500)
     font_color: str = ""
     font_color_disabled: str = ""
+    font_color_selected: str = ""
 
 
 
@@ -166,24 +185,19 @@ class LineEditStyle:
     normal: str = ""
     hover: str = ""
     pressed: str = ""
+    selected: str = ""
     disabled: str = ""
 
     font: FontConfig = FontConfig(weight=500)
     font_color: str = ""
+    font_color_selection: str = ""
     font_color_disabled: str = ""
 
 
 
 @dataclass
-class PlainTextEditStyle:
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_disabled: str = ""
+class PlainTextEditStyle(LineEditStyle):
+    ...
 
 
 
@@ -196,23 +210,12 @@ class SpinBoxStyle:
     normal: str = ""
     hover: str = ""
     pressed: str = ""
+    selected: str = ""
     disabled: str = ""
 
     font: FontConfig = FontConfig(weight=500)
     font_color: str = ""
-    font_color_disabled: str = ""
-
-
-
-@dataclass
-class DoubleSpinBoxStyle(SpinBoxStyle):
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
+    font_color_selection: str = ""
     font_color_disabled: str = ""
 
 
@@ -255,23 +258,24 @@ class CommentStyle:
 
 
 
-PROGRESS_TRACK_THICKNESS: int = 6
+PROGRESS_TRACK_THICKNESS: int = 12
 @dataclass
 class ProgressStyle:
-    track_width: int = 40
-    cap_offset: int = PROGRESS_TRACK_THICKNESS // 2
-    track_margin: int = PROGRESS_TRACK_THICKNESS // 2
-    track_y: int = PROGRESS_TRACK_THICKNESS // 2
+    thickness: int = PROGRESS_TRACK_THICKNESS
+
+    track: str = ""
+    bar: str = ""
 
 
-@dataclass
-class IndeterminateProgressStyle(ProgressStyle):
-    ...
+
+# @dataclass
+# class IndeterminateProgressStyle(ProgressStyle):
+#     ...
 
 
-@dataclass
-class RadialProgressStyle(ProgressStyle):
-    ...
+# @dataclass
+# class RadialProgressStyle(ProgressStyle):
+#     ...
 
 
 
@@ -290,6 +294,7 @@ class Theme:
     scrollbar: ScrollBarStyle = field(default_factory=ScrollBarStyle)
 
     button: ButtonStyle = field(default_factory=ButtonStyle)
+    icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
     switch: SwitchStyle = field(default_factory=SwitchStyle)
     radio_button: RadioButtonStyle = field(default_factory=RadioButtonStyle)
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
@@ -300,8 +305,8 @@ class Theme:
     line_edit: LineEditStyle = field(default_factory=LineEditStyle)
     plain_text_edit: PlainTextEditStyle = field(default_factory=PlainTextEditStyle)
 
-    spin_spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
-    double_spinbox: DoubleSpinBoxStyle = field(default_factory=DoubleSpinBoxStyle)
+    spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
+    # double_spinbox: DoubleSpinBoxStyle = field(default_factory=DoubleSpinBoxStyle)
 
     label: LabelStyle = field(default_factory=LabelStyle)
     title: TitleStyle = field(default_factory=TitleStyle)
@@ -309,8 +314,8 @@ class Theme:
     comment: CommentStyle = field(default_factory=CommentStyle)
 
     progress: ProgressStyle = field(default_factory=ProgressStyle)
-    indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)
-    radial_progress: RadialProgressStyle = field(default_factory=RadialProgressStyle)
+    # indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)
+    # radial_progress: RadialProgressStyle = field(default_factory=RadialProgressStyle)
 
 
 

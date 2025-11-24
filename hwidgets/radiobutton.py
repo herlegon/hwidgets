@@ -1,14 +1,13 @@
 from typing import Type
 from .logger import hlogger
 from .hstyle import (
-    COMBOBOX_HEIGHT,
     DEBUG_GEOMETRY,
     RADIO_BORDER_WIDTH,
     RADIO_RADIUS,
     RADIO_SIZE,
-    Theme,
     draw_widget_rect,
 )
+from .style_manager import Theme
 
 from PySide6.QtCore import (
     QRectF,
@@ -41,19 +40,19 @@ class HRadioButton(QRadioButton):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
     ) -> None:
         super().__init__(parent)
 
-        self._margin = (COMBOBOX_HEIGHT - RADIO_SIZE) / 2
-        self._radius = RADIO_RADIUS
-        self.border_width = RADIO_BORDER_WIDTH
+        self._margin = (theme.common.radius - theme.radio_button.size) / 2
+        self._radius = theme.radio_button.radius
+        self.border_width = theme.radio_button.border_thickness
 
-        self.hstyle = hstyle
+        self.theme = theme
 
 
     def sizeHint(self) -> QSize:
-        return QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
+        return QSize(self.theme.common.height, self.theme.common.height)
 
 
     def mouseMoveEvent(self, event: QMouseEvent):
@@ -67,7 +66,10 @@ class HRadioButton(QRadioButton):
     def hitButton(self, pos: QPoint) -> bool:
         """Only accept clicks inside the visible 16x16 box"""
         click_rect = QRectF(
-            self._margin, self._margin, RADIO_SIZE, RADIO_SIZE,
+            self._margin,
+            self._margin,
+            self.theme.radio_button.size,
+            self.theme.radio_button.size,
         )
         return click_rect.contains(pos)
 
@@ -85,21 +87,22 @@ class HRadioButton(QRadioButton):
         pressed = bool(option.state & QStyle.StateFlag.State_Sunken)
         checked = bool(option.state & QStyle.StateFlag.State_On)
 
+        radio_theme = self.theme.radio_button
         if not enabled:
-            outer_line_color = self.hstyle.disabled_bgd
-            brush = self.hstyle.disabled_bgd
+            outer_line_color = radio_theme.disabled
+            brush = radio_theme.disabled
         elif checked:
-            outer_line_color = self.hstyle.checked
-            brush = self.hstyle.checked
+            outer_line_color = radio_theme.checked
+            brush = radio_theme.checked
         elif pressed:
-            outer_line_color = self.hstyle.hover_bgd
-            brush = self.hstyle.hover_bgd
+            outer_line_color = radio_theme.hover
+            brush = radio_theme.hover
         else:
-            outer_line_color = self.hstyle.widget_bgd
-            brush = self.hstyle.widget_bgd
+            outer_line_color = self.theme.common.bgd
+            brush = self.theme.common.bgd
 
         # Draw the outer circle
-        box = QRectF(self._margin, self._margin, RADIO_SIZE, RADIO_SIZE)
+        box = QRectF(self._margin, self._margin, radio_theme.size, radio_theme.size)
 
         pen = QPen()
         pen.setWidth(self.border_width)

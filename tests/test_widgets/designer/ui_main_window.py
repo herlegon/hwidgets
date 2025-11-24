@@ -636,7 +636,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_17 = QHBoxLayout()
         self.horizontalLayout_17.setObjectName(u"horizontalLayout_17")
-        self.h_lineedit_editable_2 = HLineEdit(self.h_frame, hstyle=hstyle)
+        self.h_lineedit_editable_2 = HLineEdit(self.h_frame, theme=hstyle)
         self.h_lineedit_editable_2.setObjectName(u"h_lineedit_editable_2")
         self.h_lineedit_editable_2.setClearButtonEnabled(False)
 
@@ -650,7 +650,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_17.addWidget(self.h_combobox_read_only_2)
 
-        self.h_spinbox_rw_2 = HSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_spinbox_rw_2 = HSpinBox(self.h_frame, theme=hstyle)
         self.h_spinbox_rw_2.setObjectName(u"h_spinbox_rw_2")
         self.h_spinbox_rw_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_spinbox_rw_2.setMinimum(10)
@@ -669,7 +669,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.h_radiobutton_2 = HRadioButton(self.h_frame, hstyle=hstyle)
+        self.h_radiobutton_2 = HRadioButton(self.h_frame, theme=hstyle)
         self.buttonGroup = QButtonGroup(MainWindow)
         self.buttonGroup.setObjectName(u"buttonGroup")
         self.buttonGroup.addButton(self.h_radiobutton_2)
@@ -678,13 +678,13 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.h_radiobutton_2)
 
-        self.h_radiobutton_1 = HRadioButton(self.h_frame, hstyle=hstyle)
+        self.h_radiobutton_1 = HRadioButton(self.h_frame, theme=hstyle)
         self.buttonGroup.addButton(self.h_radiobutton_1)
         self.h_radiobutton_1.setObjectName(u"h_radiobutton_1")
 
         self.horizontalLayout_2.addWidget(self.h_radiobutton_1)
 
-        self.h_radiobutton_disabled_1 = HRadioButton(self.h_frame, hstyle=hstyle)
+        self.h_radiobutton_disabled_1 = HRadioButton(self.h_frame, theme=hstyle)
         self.buttonGroup_2 = QButtonGroup(MainWindow)
         self.buttonGroup_2.setObjectName(u"buttonGroup_2")
         self.buttonGroup_2.addButton(self.h_radiobutton_disabled_1)
@@ -694,7 +694,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_2.addWidget(self.h_radiobutton_disabled_1)
 
-        self.h_radiobutton_disabled_2 = HRadioButton(self.h_frame, hstyle=hstyle)
+        self.h_radiobutton_disabled_2 = HRadioButton(self.h_frame, theme=hstyle)
         self.buttonGroup_2.addButton(self.h_radiobutton_disabled_2)
         self.h_radiobutton_disabled_2.setObjectName(u"h_radiobutton_disabled_2")
         self.h_radiobutton_disabled_2.setEnabled(False)
@@ -710,12 +710,12 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_6 = QHBoxLayout()
         self.horizontalLayout_6.setObjectName(u"horizontalLayout_6")
-        self.h_label = HLabel(self.h_frame, hstyle=hstyle)
+        self.h_label = HLabel(self.h_frame, theme=hstyle)
         self.h_label.setObjectName(u"h_label")
 
         self.horizontalLayout_6.addWidget(self.h_label)
 
-        self.h_label_disabled = HLabel(self.h_frame, hstyle=hstyle)
+        self.h_label_disabled = HLabel(self.h_frame, theme=hstyle)
         self.h_label_disabled.setObjectName(u"h_label_disabled")
         self.h_label_disabled.setEnabled(False)
 
@@ -726,7 +726,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.h_label_checkbox = HLabel(self.h_frame, hstyle=hstyle)
+        self.h_label_checkbox = HLabel(self.h_frame, theme=hstyle)
         self.h_label_checkbox.setObjectName(u"h_label_checkbox")
 
         self.horizontalLayout_4.addWidget(self.h_label_checkbox)
@@ -759,25 +759,25 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_3)
 
-        self.h_switch = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch = HSwitch(self.h_frame, theme=hstyle)
         self.h_switch.setObjectName(u"h_switch")
 
         self.horizontalLayout_4.addWidget(self.h_switch)
 
-        self.h_switch_checked = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_checked = HSwitch(self.h_frame, theme=hstyle)
         self.h_switch_checked.setObjectName(u"h_switch_checked")
         self.h_switch_checked.setChecked(True)
 
         self.horizontalLayout_4.addWidget(self.h_switch_checked)
 
-        self.h_switch_disabled = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_disabled = HSwitch(self.h_frame, theme=hstyle)
         self.h_switch_disabled.setObjectName(u"h_switch_disabled")
         self.h_switch_disabled.setEnabled(False)
         self.h_switch_disabled.setCheckable(True)
 
         self.horizontalLayout_4.addWidget(self.h_switch_disabled)
 
-        self.h_switch_disabled_checked = HSwitch(self.h_frame, hstyle=hstyle)
+        self.h_switch_disabled_checked = HSwitch(self.h_frame, theme=hstyle)
         self.h_switch_disabled_checked.setObjectName(u"h_switch_disabled_checked")
         self.h_switch_disabled_checked.setEnabled(False)
         self.h_switch_disabled_checked.setChecked(True)
@@ -914,7 +914,7 @@ class Ui_MainWindow(object):
         self.h_frame_no_frame.setFrameShadow(QFrame.Shadow.Plain)
         self.verticalLayout_10 = QVBoxLayout(self.h_frame_no_frame)
         self.verticalLayout_10.setObjectName(u"verticalLayout_10")
-        self.h_label_2 = HLabel(self.h_frame_no_frame, hstyle=hstyle)
+        self.h_label_2 = HLabel(self.h_frame_no_frame, theme=hstyle)
         self.h_label_2.setObjectName(u"h_label_2")
 
         self.verticalLayout_10.addWidget(self.h_label_2)
@@ -928,7 +928,7 @@ class Ui_MainWindow(object):
         self.h_frame_plain.setFrameShadow(QFrame.Shadow.Plain)
         self.verticalLayout_11 = QVBoxLayout(self.h_frame_plain)
         self.verticalLayout_11.setObjectName(u"verticalLayout_11")
-        self.styled_plain = HLabel(self.h_frame_plain, hstyle=hstyle)
+        self.styled_plain = HLabel(self.h_frame_plain, theme=hstyle)
         self.styled_plain.setObjectName(u"styled_plain")
         self.styled_plain.setFrameShape(QFrame.Shape.StyledPanel)
 
@@ -942,11 +942,11 @@ class Ui_MainWindow(object):
 
         self.h_groupbox_layout = QHBoxLayout()
         self.h_groupbox_layout.setObjectName(u"h_groupbox_layout")
-        self.h_groupbox = HGroupBox(self.h_frame, hstyle=hstyle)
+        self.h_groupbox = HGroupBox(self.h_frame, theme=hstyle)
         self.h_groupbox.setObjectName(u"h_groupbox")
         self.verticalLayout_5 = QVBoxLayout(self.h_groupbox)
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
-        self.h_label_groupbox_1 = HLabel(self.h_groupbox, hstyle=hstyle)
+        self.h_label_groupbox_1 = HLabel(self.h_groupbox, theme=hstyle)
         self.h_label_groupbox_1.setObjectName(u"h_label_groupbox_1")
 
         self.verticalLayout_5.addWidget(self.h_label_groupbox_1)
@@ -954,12 +954,12 @@ class Ui_MainWindow(object):
 
         self.h_groupbox_layout.addWidget(self.h_groupbox)
 
-        self.h_groupbox_disabled = HGroupBox(self.h_frame, hstyle=hstyle)
+        self.h_groupbox_disabled = HGroupBox(self.h_frame, theme=hstyle)
         self.h_groupbox_disabled.setObjectName(u"h_groupbox_disabled")
         self.h_groupbox_disabled.setEnabled(False)
         self.verticalLayout_4 = QVBoxLayout(self.h_groupbox_disabled)
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
-        self.h_label_groupbox_2 = HLabel(self.h_groupbox_disabled, hstyle=hstyle)
+        self.h_label_groupbox_2 = HLabel(self.h_groupbox_disabled, theme=hstyle)
         self.h_label_groupbox_2.setObjectName(u"h_label_groupbox_2")
 
         self.verticalLayout_4.addWidget(self.h_label_groupbox_2)
@@ -972,26 +972,26 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_15 = QHBoxLayout()
         self.horizontalLayout_15.setObjectName(u"horizontalLayout_15")
-        self.h_lineedit_editable = HLineEdit(self.h_frame, hstyle=hstyle)
+        self.h_lineedit_editable = HLineEdit(self.h_frame, theme=hstyle)
         self.h_lineedit_editable.setObjectName(u"h_lineedit_editable")
         self.h_lineedit_editable.setClearButtonEnabled(False)
 
         self.horizontalLayout_15.addWidget(self.h_lineedit_editable)
 
-        self.h_lineedit_editable_clear_button = HLineEdit(self.h_frame, hstyle=hstyle)
+        self.h_lineedit_editable_clear_button = HLineEdit(self.h_frame, theme=hstyle)
         self.h_lineedit_editable_clear_button.setObjectName(u"h_lineedit_editable_clear_button")
         self.h_lineedit_editable_clear_button.setClearButtonEnabled(True)
 
         self.horizontalLayout_15.addWidget(self.h_lineedit_editable_clear_button)
 
-        self.h_lineedit_disabled = HLineEdit(self.h_frame, hstyle=hstyle)
+        self.h_lineedit_disabled = HLineEdit(self.h_frame, theme=hstyle)
         self.h_lineedit_disabled.setObjectName(u"h_lineedit_disabled")
         self.h_lineedit_disabled.setEnabled(False)
         self.h_lineedit_disabled.setClearButtonEnabled(True)
 
         self.horizontalLayout_15.addWidget(self.h_lineedit_disabled)
 
-        self.h_lineedit_read_only = HLineEdit(self.h_frame, hstyle=hstyle)
+        self.h_lineedit_read_only = HLineEdit(self.h_frame, theme=hstyle)
         self.h_lineedit_read_only.setObjectName(u"h_lineedit_read_only")
         self.h_lineedit_read_only.setReadOnly(True)
         self.h_lineedit_read_only.setClearButtonEnabled(True)
@@ -1003,33 +1003,33 @@ class Ui_MainWindow(object):
 
         self.h_plaintextedit_layout = QHBoxLayout()
         self.h_plaintextedit_layout.setObjectName(u"h_plaintextedit_layout")
-        self.h_plaintextedit_editable = HPlainTextEdit(self.h_frame, hstyle=hstyle)
+        self.h_plaintextedit_editable = HPlainTextEdit(self.h_frame, theme=hstyle)
         self.h_plaintextedit_editable.setObjectName(u"h_plaintextedit_editable")
         self.h_plaintextedit_editable.setMaximumSize(QSize(100, 150))
 
         self.h_plaintextedit_layout.addWidget(self.h_plaintextedit_editable)
 
-        self.h_plaintextedit_editable_vscrollbar = HPlainTextEdit(self.h_frame, hstyle=hstyle)
+        self.h_plaintextedit_editable_vscrollbar = HPlainTextEdit(self.h_frame, theme=hstyle)
         self.h_plaintextedit_editable_vscrollbar.setObjectName(u"h_plaintextedit_editable_vscrollbar")
         self.h_plaintextedit_editable_vscrollbar.setMaximumSize(QSize(100, 150))
 
         self.h_plaintextedit_layout.addWidget(self.h_plaintextedit_editable_vscrollbar)
 
-        self.h_plaintextedit_editable_scrollbars = HPlainTextEdit(self.h_frame, hstyle=hstyle)
+        self.h_plaintextedit_editable_scrollbars = HPlainTextEdit(self.h_frame, theme=hstyle)
         self.h_plaintextedit_editable_scrollbars.setObjectName(u"h_plaintextedit_editable_scrollbars")
         self.h_plaintextedit_editable_scrollbars.setMaximumSize(QSize(150, 150))
         self.h_plaintextedit_editable_scrollbars.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
 
         self.h_plaintextedit_layout.addWidget(self.h_plaintextedit_editable_scrollbars)
 
-        self.h_plaintextedit_readonly = HPlainTextEdit(self.h_frame, hstyle=hstyle)
+        self.h_plaintextedit_readonly = HPlainTextEdit(self.h_frame, theme=hstyle)
         self.h_plaintextedit_readonly.setObjectName(u"h_plaintextedit_readonly")
         self.h_plaintextedit_readonly.setMaximumSize(QSize(100, 150))
         self.h_plaintextedit_readonly.setReadOnly(True)
 
         self.h_plaintextedit_layout.addWidget(self.h_plaintextedit_readonly)
 
-        self.h_plaintextedit_disabled = HPlainTextEdit(self.h_frame, hstyle=hstyle)
+        self.h_plaintextedit_disabled = HPlainTextEdit(self.h_frame, theme=hstyle)
         self.h_plaintextedit_disabled.setObjectName(u"h_plaintextedit_disabled")
         self.h_plaintextedit_disabled.setEnabled(False)
         self.h_plaintextedit_disabled.setMaximumSize(QSize(100, 150))
@@ -1045,28 +1045,28 @@ class Ui_MainWindow(object):
 
         self.h_spinbox_layout = QHBoxLayout()
         self.h_spinbox_layout.setObjectName(u"h_spinbox_layout")
-        self.h_spinbox_no_button = HSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_spinbox_no_button = HSpinBox(self.h_frame, theme=hstyle)
         self.h_spinbox_no_button.setObjectName(u"h_spinbox_no_button")
         self.h_spinbox_no_button.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_spinbox_no_button.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
 
         self.h_spinbox_layout.addWidget(self.h_spinbox_no_button)
 
-        self.h_spinbox_rw = HSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_spinbox_rw = HSpinBox(self.h_frame, theme=hstyle)
         self.h_spinbox_rw.setObjectName(u"h_spinbox_rw")
         self.h_spinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_spinbox_rw.setMinimum(10)
 
         self.h_spinbox_layout.addWidget(self.h_spinbox_rw)
 
-        self.h_spinbox_ro = HSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_spinbox_ro = HSpinBox(self.h_frame, theme=hstyle)
         self.h_spinbox_ro.setObjectName(u"h_spinbox_ro")
         self.h_spinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_spinbox_ro.setReadOnly(True)
 
         self.h_spinbox_layout.addWidget(self.h_spinbox_ro)
 
-        self.h_spinbox_disabled = HSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_spinbox_disabled = HSpinBox(self.h_frame, theme=hstyle)
         self.h_spinbox_disabled.setObjectName(u"h_spinbox_disabled")
         self.h_spinbox_disabled.setEnabled(False)
         self.h_spinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
@@ -1077,7 +1077,7 @@ class Ui_MainWindow(object):
 
         self.h_spinbox_layout.addItem(self.rlg_spinbox_spacer)
 
-        self.h_doublespinbox_nobutton = HDoubleSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_doublespinbox_nobutton = HDoubleSpinBox(self.h_frame, theme=hstyle)
         self.h_doublespinbox_nobutton.setObjectName(u"h_doublespinbox_nobutton")
         self.h_doublespinbox_nobutton.setFrame(True)
         self.h_doublespinbox_nobutton.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
@@ -1085,7 +1085,7 @@ class Ui_MainWindow(object):
 
         self.h_spinbox_layout.addWidget(self.h_doublespinbox_nobutton)
 
-        self.h_doublespinbox_rw = HDoubleSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_doublespinbox_rw = HDoubleSpinBox(self.h_frame, theme=hstyle)
         self.h_doublespinbox_rw.setObjectName(u"h_doublespinbox_rw")
         self.h_doublespinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_doublespinbox_rw.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.PlusMinus)
@@ -1095,14 +1095,14 @@ class Ui_MainWindow(object):
 
         self.h_spinbox_layout.addWidget(self.h_doublespinbox_rw)
 
-        self.h_doublespinbox_ro = HDoubleSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_doublespinbox_ro = HDoubleSpinBox(self.h_frame, theme=hstyle)
         self.h_doublespinbox_ro.setObjectName(u"h_doublespinbox_ro")
         self.h_doublespinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
         self.h_doublespinbox_ro.setReadOnly(True)
 
         self.h_spinbox_layout.addWidget(self.h_doublespinbox_ro)
 
-        self.h_doublespinbox_disabled = HDoubleSpinBox(self.h_frame, hstyle=hstyle)
+        self.h_doublespinbox_disabled = HDoubleSpinBox(self.h_frame, theme=hstyle)
         self.h_doublespinbox_disabled.setObjectName(u"h_doublespinbox_disabled")
         self.h_doublespinbox_disabled.setEnabled(False)
         self.h_doublespinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
@@ -1121,12 +1121,12 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.h_title1 = HTitle(self.h_frame, hstyle=hstyle)
+        self.h_title1 = HTitle(self.h_frame, theme=hstyle)
         self.h_title1.setObjectName(u"h_title1")
 
         self.verticalLayout_3.addWidget(self.h_title1)
 
-        self.h_title1_2 = HTitle(self.h_frame, hstyle=hstyle)
+        self.h_title1_2 = HTitle(self.h_frame, theme=hstyle)
         self.h_title1_2.setObjectName(u"h_title1_2")
         self.h_title1_2.setPixmap(QPixmap(u"../../hwidgets/icons/gpu.png"))
 
@@ -1137,7 +1137,7 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_12 = QHBoxLayout()
         self.horizontalLayout_12.setObjectName(u"horizontalLayout_12")
-        self.h_indeterminate_progress = HIndeterminateProgress(self.h_frame, hstyle=hstyle)
+        self.h_indeterminate_progress = HIndeterminateProgress(self.h_frame, Theme=hstyle)
         self.h_indeterminate_progress.setObjectName(u"h_indeterminate_progress")
         self.h_indeterminate_progress.setStyleSheet(u"background-color: rgb(231, 253, 255);")
         self.h_indeterminate_progress.setValue(24)
@@ -1154,19 +1154,19 @@ class Ui_MainWindow(object):
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setSpacing(3)
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.h_progress_0 = HProgress(self.h_frame, hstyle=hstyle)
+        self.h_progress_0 = HProgress(self.h_frame, theme=hstyle)
         self.h_progress_0.setObjectName(u"h_progress_0")
         self.h_progress_0.setValue(0)
 
         self.verticalLayout_2.addWidget(self.h_progress_0)
 
-        self.h_progress_25 = HProgress(self.h_frame, hstyle=hstyle)
+        self.h_progress_25 = HProgress(self.h_frame, theme=hstyle)
         self.h_progress_25.setObjectName(u"h_progress_25")
         self.h_progress_25.setValue(25)
 
         self.verticalLayout_2.addWidget(self.h_progress_25)
 
-        self.h_progress_100 = HProgress(self.h_frame, hstyle=hstyle)
+        self.h_progress_100 = HProgress(self.h_frame, theme=hstyle)
         self.h_progress_100.setObjectName(u"h_progress_100")
         self.h_progress_100.setValue(100)
 

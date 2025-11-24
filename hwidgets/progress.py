@@ -2,12 +2,9 @@ from typing import Type
 
 from .hstyle import (
     DEBUG_GEOMETRY,
-    Theme,
-    TRACK_Y,
-    CAP_OFFSET,
-    TRACK_THICKNESS,
     draw_widget_rect,
 )
+from style_manager import Theme
 
 from PySide6.QtCore import (
     Qt,
@@ -36,7 +33,7 @@ class HProgress(QProgressBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         minimum: int | None = None,
         maximum: int | None = None,
         text: str | None = None,
@@ -50,10 +47,15 @@ class HProgress(QProgressBar):
     ):
         super().__init__(parent)
 
-        self.setFixedHeight(TRACK_THICKNESS)
+        self.thickness = theme.progress.thickness
+        self.setFixedHeight(self.thickness)
+        self.setMinimumWidth(self.thickness*4)
 
         self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
-        self.set_colors(track=hstyle.widget_bgd, bar=hstyle.selected)
+        self.set_colors(
+            track=theme.progress.track,
+            bar=theme.progress.bar,
+        )
 
         self._progress = 0
         self.setMinimum(0)
@@ -95,35 +97,39 @@ class HProgress(QProgressBar):
             draw_widget_rect(self, painter)
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
-        track_x0 = CAP_OFFSET
-        track_x1 = float(self.width() - CAP_OFFSET)
+        thickness = self.thickness
+        cap_offset: int = self.thickness // 2
+        track_y: int = self.thickness // 2
+
+        track_x0 = cap_offset
+        track_x1 = float(self.width() - cap_offset)
         track_length = track_x1 - track_x0
 
-        track_x = CAP_OFFSET + int(self._progress * track_length / 100)
+        track_x = cap_offset + int(self._progress * track_length / 100)
 
         pen = QPen()
-        pen.setWidth(TRACK_THICKNESS)
+        pen.setWidth(thickness)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
         pen.setColor(self.bar_color)
         painter.setPen(pen)
 
         # Active
-        painter.drawLine(track_x0, TRACK_Y, track_x, TRACK_Y)
+        painter.drawLine(track_x0, track_y, track_x, track_y)
 
         # Inactive
-        x = (track_x + CAP_OFFSET) + (4 + CAP_OFFSET)
+        x = (track_x + cap_offset) + (4 + cap_offset)
         if x < track_x1:
             pen.setColor(self.track_color)
             painter.setPen(pen)
             painter.drawLine(
-                x, TRACK_Y, track_x1 - int(TRACK_THICKNESS/2), TRACK_Y
+                x, track_y, track_x1 - int(thickness/2), track_y
             )
 
-        pen.setWidth(TRACK_THICKNESS)
+        pen.setWidth(thickness)
         pen.setColor(self.bar_color)
         painter.setPen(pen)
-        painter.drawPoint(QPoint(track_x1, TRACK_Y))
-        painter.drawPoint(QPoint(track_x0, TRACK_Y))
+        painter.drawPoint(QPoint(track_x1, track_y))
+        painter.drawPoint(QPoint(track_x0, track_y))
 
         painter.end()
 

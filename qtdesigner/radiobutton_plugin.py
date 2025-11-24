@@ -31,7 +31,7 @@ class HRadioButtonPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HRadioButton("RadioButton", parent, hstyle=Theme())
+        t = HRadioButton("RadioButton", parent, theme=Theme())
         return t
 
     def domXml(self):

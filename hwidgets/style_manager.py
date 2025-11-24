@@ -48,7 +48,7 @@ class StyleManager:
                 "hover":        config["widget"].get("hover", theme.common.hover),
                 "selection":    config["widget"].get("selection", theme.common.selection),
                 "pressed":      config["widget"].get("pressed", theme.common.pressed),
-                "disabled_bgd": config["widget"].get("disabled_bgd", theme.common.disabled_bgd),
+                "disabled_bgd": config["widget"].get("disabled_bgd", theme.common.disabled),
                 "border":       config["widget"].get("border", theme.common.border),
                 "font_color":   config["widget"].get("font_color", theme.common.font_color),
                 "font_color_disabled": config["widget"].get("font_color_disabled", theme.common.font_color_disabled),

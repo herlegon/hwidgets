@@ -90,7 +90,7 @@ class HButtonGroup(QWidget):
             selected_bgd=f"{self.theme.common.selection}",
             checked_color=f"{style.hover}",
             pressed_color=f"{self.theme.common.selection}",
-            radius=f"{self.theme.common.border_radius}px",
+            radius=f"{self.theme.common.radius}px",
             text_disabled=f"{style.font_color_disabled}",
             checked_text=f"{style.font_color_checked}",
         )

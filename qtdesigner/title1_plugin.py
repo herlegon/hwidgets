@@ -31,7 +31,7 @@ class HTitle1Plugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HTitle(parent, hstyle=Theme(), text="Title1")
+        t = HTitle(parent, theme=Theme(), text="Title1")
         return t
 
     def domXml(self):

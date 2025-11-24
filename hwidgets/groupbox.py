@@ -10,12 +10,7 @@ from PySide6.QtWidgets import (
     QWidget,
     QLabel,
 )
-
-from .hstyle import (
-    Theme,
-    COMBOBOX_RADIUS,
-    GROUPBOX_TITLE_HEIGHT,
-)
+from style_manager import Theme
 from .utils import load_qss
 
 
@@ -25,7 +20,7 @@ class HGroupBox(QGroupBox):
         /,
         parent: QWidget | None = ...,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         title: str | None = None,
         alignment: Qt.AlignmentFlag | None = ...,
         flat: bool | None = ...,
@@ -41,21 +36,26 @@ class HGroupBox(QGroupBox):
 
         qss_template = Template(load_qss("groupbox.css"))
         title_left_adjust = 0
+        radius: int = theme.common.radius
         qss = qss_template.substitute(
-            window_bgd=f"{hstyle.window_bgd}",
-            widget_bgd=f"{hstyle.window_bgd}",
-            font_color=f"{hstyle.font_color}",
-            radius=f"{COMBOBOX_RADIUS}",
-            border_color=f"{hstyle.hover_bgd}",
-            margin_top=f"{int(COMBOBOX_RADIUS + GROUPBOX_TITLE_HEIGHT) - 1}",
-            disabled_text=f"{hstyle.disabled_text}",
-            widget_disabled=f"{hstyle.window_bgd}",
-            padding=f"{COMBOBOX_RADIUS + title_left_adjust}",
+            window_bgd=f"{theme.window_bgd}",
+            widget_bgd=f"{theme.window_bgd}",
+            font_color=f"{theme.common.font_color}",
+            radius=f"{theme.common.radius}",
+            border_color=f"{theme.common.border}",
+            margin_top=f"{int(radius + theme.groupbox.height) - 1}",
+            disabled_text=f"{theme.common.font_color_disabled}",
+            widget_disabled=f"{theme.window_bgd}",
+            padding=f"{radius + title_left_adjust}",
             title_margins=f"{title_left_adjust}",
         )
         self.setStyleSheet(qss)
 
-        self.setAlignment(Qt.AlignmentFlag.AlignLeading|Qt.AlignmentFlag.AlignLeft|Qt.AlignmentFlag.AlignVCenter)
+        self.setAlignment(
+            Qt.AlignmentFlag.AlignLeading
+            | Qt.AlignmentFlag.AlignLeft
+            | Qt.AlignmentFlag.AlignVCenter
+        )
         self.adjustSize()
 
 

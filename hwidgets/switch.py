@@ -1,13 +1,9 @@
 from typing import Type
 from .hstyle import (
     DEBUG_GEOMETRY,
-    HANDLE_RADIUS,
-    TRACK_HEIGHT,
-    TRACK_MARGIN,
-    TRACK_WIDTH,
-    Theme,
     draw_widget_rect,
 )
+from style_manager import Theme
 
 from PySide6.QtCore import (
     QEasingCurve,
@@ -15,6 +11,7 @@ from PySide6.QtCore import (
     Qt,
     QPoint,
     QRect,
+    QRectF,
     Property
 )
 from PySide6.QtGui import (
@@ -34,36 +31,43 @@ class HSwitch(QCheckBox):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
     ) -> None:
         super().__init__(parent)
 
         self.setCursor(Qt.CursorShape.ArrowCursor)
 
-        self._hovered: bool = False
+        self._hover: bool = False
 
-        track_width = TRACK_WIDTH
-        self.track_height = TRACK_HEIGHT - 4
+        switch_theme = theme.switch
+
+        track_width = switch_theme.track_width
+
+        self.track_height = switch_theme.track_height - 4
         self.track_radius = self.track_height // 2
-        self.handle_radius = HANDLE_RADIUS
-        self.margin = TRACK_MARGIN - 1
+        self.handle_radius = switch_theme.handle_radius
+        self.margin = switch_theme.track_margin - 1
 
         self.setFixedSize(track_width, self.track_height)
         self.handle_position_off = self.margin
-        self.handle_position_on = TRACK_WIDTH - HANDLE_RADIUS - self.margin
+        self.handle_position_on = track_width - self.handle_radius - self.margin
         self.handle_position = self.margin
 
-        self.unchecked_track = QColor(hstyle.widget_bgd)
-        self.unchecked_handle = QColor(hstyle.disabled_bgd)
+        self.track_rect = QRectF(0, 0, switch_theme.track_width, switch_theme.track_height),
 
-        self.unchecked_hover_handle = QColor(hstyle.hover_bgd)
+        # Colors
+        self.unchecked_track = QColor(theme.common.bgd)
+        self.unchecked_handle = QColor(switch_theme.unchecked)
 
-        self.checked_track = QColor(hstyle.widget_bgd)
-        self.checked_handle = QColor(hstyle.checked)
+        self.unchecked_hover_handle = QColor(switch_theme.hover)
 
-        self.disabled_track = QColor(hstyle.disabled_bgd)
-        self.disabled_handle = QColor(hstyle.disabled_text)
+        self.checked_track = QColor(theme.common.bgd)
+        self.checked_handle = QColor(switch_theme.checked)
 
+        self.disabled_track = QColor(theme.common.disabled)
+        self.disabled_handle = QColor(theme.common.handle_disabled)
+
+        # Animation
         curve: QEasingCurve.Type = QEasingCurve.Type.InOutQuad
         self.animation = QPropertyAnimation(self, b"position")
         self.animation.setEasingCurve(curve)
@@ -103,13 +107,13 @@ class HSwitch(QCheckBox):
 
 
     def enterEvent(self, event):
-        self._hovered = True
+        self._hover = True
         self.update()
         super().enterEvent(event)
 
 
     def leaveEvent(self, event):
-        self._hovered = False
+        self._hover = False
         self.update()
         super().leaveEvent(event)
 
@@ -123,7 +127,7 @@ class HSwitch(QCheckBox):
                 track_brush = self.unchecked_track
                 handle_brush = (
                     self.unchecked_hover_handle
-                    if self._hovered
+                    if self._hover
                     else self.unchecked_handle
                 )
         else:
@@ -136,10 +140,7 @@ class HSwitch(QCheckBox):
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(track_brush)
-        painter.drawRoundedRect(
-            0, 0, self.width(), self.height(),
-            self.track_radius, self.track_radius
-        )
+        painter.drawRoundedRect(self.track_rect, self.track_radius, self.track_radius)
         painter.setBrush(QColor(handle_brush))
         painter.drawEllipse(
             self.handle_position,

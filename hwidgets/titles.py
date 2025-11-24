@@ -1,3 +1,4 @@
+import numpy as np
 from pathlib import Path
 from typing import Optional, Type
 from PySide6.QtCore import (
@@ -26,23 +27,13 @@ from PySide6.QtWidgets import (
     QSizePolicy,
     QWidget,
 )
+from .style_manager import Theme
 from .hstyle import (
-    Theme,
-    TITLE_1_HEIGHT,
-    TITLE_1_FONT_SIZE,
-    TITLE_1_BOLD,
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )
 from .utils import load_png_icon
-# from .style_types import (
-#     TextStyle,
-#     textstyle_to_font,
-# )
-# from .utils import png_to_pixmap
 
-
-import numpy as np
 
 
 def transform_black_to_blue(pixmap: QPixmap, target_color: QColor = QColor(0, 100, 255)) -> QPixmap:
@@ -89,7 +80,7 @@ def transform_black_to_blue(pixmap: QPixmap, target_color: QColor = QColor(0, 10
 
 def colorize_pixmap(pixmap: QPixmap, color: QColor) -> QPixmap:
     """Return a colorized copy of a black→color pixmap, preserving shading and transparency."""
-    image = pixmap.toImage().convertToFormat(QImage.Format_RGBA8888)
+    image = pixmap.toImage().convertToFormat(QImage.Format.Format_RGBA8888)
 
     # Get the pixel buffer as a numpy array
     ptr = image.bits()
@@ -125,6 +116,7 @@ def colorize_pixmap(pixmap: QPixmap, color: QColor) -> QPixmap:
     return QPixmap.fromImage(image)
 
 
+
 class HTitle(QWidget):
     def __init__(
         self,
@@ -132,7 +124,7 @@ class HTitle(QWidget):
         parent: QWidget | None = None,
         f: Qt.WindowType = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         text: str = "",
         icon: str | Path | None = None,
 
@@ -199,11 +191,11 @@ class HTitle(QWidget):
     ) -> None:
         super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
-        self.setFixedHeight(TITLE_1_HEIGHT)
+        self.setFixedHeight(theme.title.height)
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
         )
-        self.hstyle = hstyle
+        self.theme = theme
 
         self._layout = QHBoxLayout()
         # M3 margins: https://m3.material.io/components/top-app-bar/specs
@@ -216,7 +208,7 @@ class HTitle(QWidget):
         if icon is not None:
             icon_path = str(icon) if isinstance(icon, Path) else icon
             self._icon = QLabel(self)
-            pixmap = load_png_icon(icon_path, hstyle.font_color)
+            pixmap = load_png_icon(icon_path, theme.font_color)
             self._icon.setPixmap(pixmap)
             self._icon.setFixedSize(pixmap.size())
             self._layout.addWidget(self._icon)
@@ -227,10 +219,10 @@ class HTitle(QWidget):
             self._title, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
         )
 
-        font = QFont()
-        font.setBold(TITLE_1_BOLD)
-        font.setUnderline(False)
-        font.setItalic(False)
+        # font = QFont()
+        # font.setBold(TITLE_1_BOLD)
+        # font.setUnderline(False)
+        # font.setItalic(False)
         self._title.setFont(font)
         # for debug:
         # self.setStyleSheet("background-color: yellow; border: 1px solid white;")
@@ -248,15 +240,15 @@ class HTitle(QWidget):
 
                 }}
             """.format(
-                color=self.hstyle.title_text,
-                font_family=f"\"{self.hstyle.font_family}\"",
-                font_size=f"{TITLE_1_FONT_SIZE}pt",
+                color=self.theme.title.font_color,
+                font_family=f"\"{self.theme.title.font.family}\"",
+                font_size=f"{self.theme.title.font.size}pt",
             )
         )
         self._title.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
-        self._title.setFixedHeight(TITLE_1_HEIGHT)
+        self._title.setFixedHeight(self.theme.title.height)
         self.adjustSize()
 
 
@@ -279,7 +271,7 @@ class HTitle(QWidget):
         if self._icon is None:
             self._icon = QLabel(self)
             self._layout.insertWidget(0, self._icon)
-        pixmap: QPixmap = load_png_icon(icon_path, self.hstyle.selected)
+        pixmap: QPixmap = load_png_icon(icon_path, self.theme.title.font_color)
         self._icon.setPixmap(pixmap)
         self._icon.setFixedSize(pixmap.size())
         self._layout.setSpacing(8)
@@ -288,7 +280,7 @@ class HTitle(QWidget):
     def setPixmap(self, pixmap: QPixmap | QImage) -> None:
         if isinstance(pixmap, QImage):
             pixmap = QPixmap.fromImage(pixmap)
-        pixmap = transform_black_to_blue(pixmap, QColor(self.hstyle.selected))
+        pixmap = transform_black_to_blue(pixmap, QColor(self.theme.title.font_color))
 
         if self._icon is None:
             self._icon: QLabel = QLabel(self)

@@ -31,7 +31,7 @@ class HPlainTextEditPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HPlainTextEdit("PlainTextEdit", parent, hstyle=Theme())
+        t = HPlainTextEdit("PlainTextEdit", parent, theme=Theme())
         return t
 
     def domXml(self):

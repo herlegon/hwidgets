@@ -31,7 +31,7 @@ class HProgressPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HProgress(parent, hstyle=Theme())
+        t = HProgress(parent, theme=Theme())
         return t
 
     def domXml(self):

@@ -1,7 +1,4 @@
 from .styles import Theme
-from hytils import (
-    blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
-)
 from typing import Type
 from .hstyle import (
     DEBUG_GEOMETRY,

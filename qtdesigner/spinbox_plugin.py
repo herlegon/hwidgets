@@ -28,7 +28,7 @@ class HSpinBoxPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HSpinBox(parent, hstyle=Theme())
+        t = HSpinBox(parent, theme=Theme())
         return t
 
     def domXml(self):

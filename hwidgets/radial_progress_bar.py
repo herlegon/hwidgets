@@ -4,10 +4,9 @@ from typing import overload, Type
 
 from .hstyle import (
     DEBUG_GEOMETRY,
-    Theme,
-    TRACK_THICKNESS,
     draw_widget_rect,
 )
+from style_manager import Theme
 
 from PySide6.QtCore import (
     Qt,
@@ -76,9 +75,8 @@ class HRadialProgress(QProgressBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         bar_width: int = 32,
-        bar_thickness: int = TRACK_THICKNESS,
         angle_start: int = 60,
         smooth: bool = True,
         smooth_duration_ms: int = 300,
@@ -91,8 +89,11 @@ class HRadialProgress(QProgressBar):
         bar_color: str = MC_COLORS['green700']
 
         self.bar_width = bar_width
-        self.bar_thickness = bar_thickness
-        self.set_colors(track=QColor(bgd_color), bar=QColor(bar_color))
+        self.bar_thickness = theme.progress.thickness
+        self.set_colors(
+            track=QColor(bgd_color),
+            bar=QColor(bar_color)
+        )
         self.track_color_disable = self.track_color.setAlpha(OPACITY_DISABLED)
 
         self.setValue(0)
@@ -101,7 +102,7 @@ class HRadialProgress(QProgressBar):
         self.setTextVisible(False)
 
         self.start = (270 - angle_start) * 16
-        self.span  = (2 * angle_start - 360) * 16
+        self.span = (2 * angle_start - 360) * 16
         self.angle = angle_start
 
         trigger_style: RadialProgressTriggerStyle = RadialProgressTriggerStyle()
@@ -130,6 +131,10 @@ class HRadialProgress(QProgressBar):
         self._update_geometry()
 
         self.valueChanged.connect(self.percent_changed_event)
+
+
+    def set_thickness(self, thickness: int) -> None:
+        self.bar_thickness = thickness
 
 
     @overload

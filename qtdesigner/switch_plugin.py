@@ -28,7 +28,7 @@ class HSwitchPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HSwitch(parent, hstyle=Theme())
+        t = HSwitch(parent, theme=Theme())
         return t
 
     def domXml(self):

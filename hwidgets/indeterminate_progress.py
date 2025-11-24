@@ -1,11 +1,7 @@
 from typing import Type
-
+from .style_manager import Theme
 from .hstyle import (
     DEBUG_GEOMETRY,
-    Theme,
-    TRACK_Y,
-    CAP_OFFSET,
-    TRACK_THICKNESS,
     draw_widget_rect,
 )
 
@@ -39,7 +35,7 @@ class HIndeterminateProgress(QProgressBar):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         is_m2: bool = False,
         minimum: int | None = None,
         maximum: int | None = None,
@@ -54,10 +50,12 @@ class HIndeterminateProgress(QProgressBar):
     ):
 
         super().__init__(parent)
-        self.setFixedHeight(TRACK_THICKNESS)
-        self.setMinimumWidth(CAP_OFFSET + TRACK_THICKNESS)
 
-        self.set_colors(track=hstyle.widget_bgd, bar=hstyle.selected)
+        self.thickness = theme.progress.thickness
+        self.setFixedHeight(self.thickness)
+        self.setMinimumWidth(self.thickness*4)
+
+        self.set_colors(track=Theme.widget_bgd, bar=Theme.selected)
 
         self._progress = 0
         self.setMinimum(0)
@@ -314,9 +312,13 @@ class HIndeterminateProgress(QProgressBar):
 
         painter.setRenderHints(QPainter.RenderHint.Antialiasing)
 
+        thickness = self.thickness
+        cap_offset: int = self.thickness // 2
+        track_y: int = self.thickness // 2
+
         # track is widget width - 2 x margin - 2 x track thickness for rounded cap
-        track_x0 = CAP_OFFSET
-        track_x1 = float(self.width() - CAP_OFFSET)
+        track_x0 = cap_offset
+        track_x1 = float(self.width() - cap_offset)
         track_length = track_x1 - track_x0
 
         # For debug
@@ -333,13 +335,13 @@ class HIndeterminateProgress(QProgressBar):
         x_t2 = int(track_x0 + self.slt * track_length)
 
         pen = QPen()
-        pen.setWidth(TRACK_THICKNESS)
+        pen.setWidth(thickness)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
 
         # Track
         pen.setColor(self.track_color)
         painter.setPen(pen)
-        painter.drawLine(track_x0, TRACK_Y, track_x1, TRACK_Y)
+        painter.drawLine(track_x0, track_y, track_x1, track_y)
 
         # Progress bars
         if not all([x in (0, 1)  for x in [self.flh, self.flt, self.slh, self.slt]]):
@@ -349,31 +351,31 @@ class HIndeterminateProgress(QProgressBar):
             # 1st progress bar
             track_start = track_x0 + x_h1
             if track_start < track_x1:
-                painter.drawLine(track_start, TRACK_Y, track_x1, TRACK_Y)
+                painter.drawLine(track_start, track_y, track_x1, track_y)
 
             if x_h2 <= track_x0:
                 # Before progress2 is moving
                 progress2_x0 = track_x0
                 progress2_x1 = max(track_x0, x_t1  - track_x0)
                 if progress2_x1 - progress2_x0:
-                    painter.drawLine(progress2_x0, TRACK_Y, progress2_x1, TRACK_Y)
+                    painter.drawLine(progress2_x0, track_y, progress2_x1, track_y)
 
             else:
                 # Progress 2 is moving
                 progress2_x0 = track_x0
                 progress2_x1 = max(track_x0, x_t2)
                 if progress2_x1 - progress2_x0 >= 0:
-                    painter.drawLine(progress2_x0, TRACK_Y, progress2_x1, TRACK_Y)
+                    painter.drawLine(progress2_x0, track_y, progress2_x1, track_y)
 
                 progress2_x0 = x_h2
                 progress2_x1 = min(x_t1, track_x1)
                 if progress2_x1 > progress2_x0:
-                    painter.drawLine(progress2_x0, TRACK_Y, progress2_x1, TRACK_Y)
+                    painter.drawLine(progress2_x0, track_y, progress2_x1, track_y)
 
         else:
             pen.setColor(self.bar_color)
             painter.setPen(pen)
-            painter.drawLine(track_x0, TRACK_Y, track_x1, TRACK_Y)
+            painter.drawLine(track_x0, track_y, track_x1, track_y)
 
         painter.end()
 

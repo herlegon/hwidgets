@@ -5,11 +5,11 @@ from PySide6.QtCore import (
     QSize,
     Qt,
     QSize,
-    QEvent,
     QTimer,
 )
 from PySide6.QtGui import (
     QIcon,
+    QKeyEvent,
 )
 from PySide6.QtWidgets import (
     QHBoxLayout,
@@ -18,47 +18,46 @@ from PySide6.QtWidgets import (
     QLineEdit,
 )
 
-from .hstyle import (
-    COMBOBOX_RADIUS,
-    COMBOBOX_HEIGHT,
-    COMBOBOX_RADIUS,
-    Theme,
-)
+from .style_manager import Theme
 from .utils import (
     load_png_icon,
     load_qss,
 )
 
 
-class _ClearButton(QPushButton):
+class ClearButton(QPushButton):
     def __init__(
         self,
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Theme
+        theme: Theme
     ):
         super().__init__(parent)
 
-        self.setFixedSize(QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT))
+        self.setFixedSize(
+            QSize(theme.common.height, theme.common.height)
+        )
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
+        btn_theme = theme.icon_button
         self.normal_icon = QIcon(load_png_icon(
-            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.font_color
+            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", btn_theme.normal
         ))
         self.hover_icon = QIcon(load_png_icon(
-            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", hstyle.selected
+            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", btn_theme.hover
         ))
         self.setIcon(self.normal_icon)
 
-        qss_template = Template(load_qss("lineedit_button.qss"))
+        qss_template = Template(load_qss("icon_button.qss"))
         qss = qss_template.substitute(
-            radius=f"{COMBOBOX_RADIUS}px",
-            hover_bgd=f"{hstyle.hover_bgd}",
-            selection_bgd=f"{hstyle.selection_bgd}",
-            selected=f"{hstyle.selected}",
+            radius=f"{theme.common.radius}px",
+            # hover_bgd=f"{btn_theme.hover}",
+            # selection_bgd=f"{btn_theme.selected}",
+            # selected=f"{btn_theme.font_color_selection}",
+            margin_right="4px"
         )
         self.setStyleSheet(qss)
 
@@ -81,7 +80,7 @@ class HLineEdit(QLineEdit):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         inputMask: str | None = None,
         text: str | None = None,
         maxLength: int | None = None,
@@ -103,11 +102,11 @@ class HLineEdit(QLineEdit):
         clearButtonEnabled: bool | None = None
     ) -> None:
         super().__init__(parent)
-        self.hstyle = hstyle
+        self.theme = theme
 
         self.setCursor(Qt.CursorShape.ArrowCursor)
 
-        self.setFixedHeight(COMBOBOX_HEIGHT)
+        self.setFixedHeight(theme.common.height)
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
@@ -118,7 +117,7 @@ class HLineEdit(QLineEdit):
         self.main_layout.setSpacing(0)
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.main_layout.addStretch(1)
-        self.clear_button = _ClearButton(self, hstyle=hstyle)
+        self.clear_button = ClearButton(self, theme=theme)
         self.main_layout.addWidget(
             self.clear_button, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
         )
@@ -146,37 +145,39 @@ class HLineEdit(QLineEdit):
 
 
     def _update_stylesheet(self) -> None:
-        hstyle = self.hstyle
+        theme: Theme = self.theme
+        le_theme = theme.line_edit
+        radius = theme.common.radius
 
         if not self.is_clear_button_enabled:
             self.clear_button.setFixedWidth(0)
             self.clear_button.hide()
             self.main_layout.invalidate()
-            padding_left, padding_right = COMBOBOX_RADIUS, COMBOBOX_RADIUS
+            padding_left, padding_right = radius, radius
 
         else:
             self.clear_button.show()
-            self.clear_button.setFixedWidth(COMBOBOX_HEIGHT)
+            self.clear_button.setFixedWidth(radius)
             self.main_layout.invalidate()
-            padding_left, padding_right = COMBOBOX_RADIUS, COMBOBOX_HEIGHT
+            padding_left, padding_right = radius, theme.common.height
 
         qss_template = Template(load_qss("lineedit.qss"))
         qss = qss_template.substitute(
             padding_right=f"{padding_right}px",
             padding_left=f"{padding_left}px",
 
-            widget_bgd=f"{hstyle.widget_bgd}",
-            font_color=f"{hstyle.font_color}",
-            radius=f"{COMBOBOX_RADIUS}px",
-            hover_bgd=f"{hstyle.hover_bgd}",
-            border_color=f"{hstyle.border}",
-            disabled_bgd=f"{hstyle.disabled_bgd}",
-            disabled_text=f"{hstyle.disabled_text}",
-            editing_border=f"{hstyle.selected}",
-            selected_text=f"{hstyle.selected_text}",
-            selected=f"{hstyle.selected}",
-            font_family=f"\"{hstyle.font_family}\"",
-            font_size=f"{hstyle.font_size}pt",
+            widget_bgd=f"{theme.common}",
+            font_color=f"{le_theme.font_color}",
+            radius=f"{radius}px",
+            hover_bgd=f"{le_theme.hover}",
+            border_color=f"{theme.common.border}",
+            disabled_bgd=f"{le_theme.disabled}",
+            font_color_disabled=f"{le_theme.font_color_disabled}",
+            editing_border=f"{le_theme.selected}",
+            selected_text=f"{le_theme.font_color_selection}",
+            selected=f"{le_theme.selected}",
+            font_family=f"\"{le_theme.font.family}\"",
+            font_size=f"{le_theme.font.size}pt",
         )
         self.setStyleSheet(qss)
 
@@ -269,7 +270,7 @@ class HLineEdit(QLineEdit):
         self.clearFocus()
 
 
-    def keyPressEvent(self, event: QEvent) -> None:
+    def keyPressEvent(self, event: QKeyEvent) -> None:
         key = event.key()
 
         if key in (Qt.Key.Key_Return, Qt.Key.Key_Enter):

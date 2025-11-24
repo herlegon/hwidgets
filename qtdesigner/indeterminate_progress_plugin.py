@@ -28,7 +28,7 @@ class HIndeterminateProgressPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HIndeterminateProgress(parent, hstyle=Theme())
+        t = HIndeterminateProgress(parent, Theme=Theme())
         return t
 
     def domXml(self):

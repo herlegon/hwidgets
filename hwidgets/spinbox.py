@@ -10,6 +10,7 @@ from PySide6.QtCore import (
     QTimer,
     QRect,
     QSize,
+    QSizeF,
     Signal,
 )
 from PySide6.QtGui import (
@@ -29,12 +30,7 @@ from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QSpinBox,
 )
-
-from .hstyle import (
-    COMBOBOX_RADIUS,
-    COMBOBOX_HEIGHT,
-    Theme,
-)
+from style_manager import Theme
 from .utils import load_qss
 
 
@@ -47,7 +43,7 @@ class HSpinBoxButton(QPushButton):
         parent: QWidget | None = None,
         *,
         kind: Literal['plus', 'minus'],
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         size: QSize,
         autoDefault: bool | None = None,
         default: bool | None = None,
@@ -57,7 +53,7 @@ class HSpinBoxButton(QPushButton):
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.kind = kind
-        radius = COMBOBOX_RADIUS + 2
+        radius = theme.common.radius + 2
         button_width, button_height = size.toTuple()
         self.setFixedSize(button_width, button_height)
         # symbol
@@ -69,11 +65,12 @@ class HSpinBoxButton(QPushButton):
         self.setCheckable(False)
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
+        sb_theme = theme.spinbox
         states = {
-            'normal': (hstyle.widget_bgd, hstyle.font_color),
-            'hover': (hstyle.hover_bgd, hstyle.font_color),
-            'pressed': (hstyle.checked, hstyle.font_color),
-            'disabled': (hstyle.disabled_bgd, hstyle.disabled_text),
+            'normal': (theme.common.bgd, sb_theme.font_color),
+            'hover': (sb_theme.hover, sb_theme.font_color),
+            'pressed': (sb_theme.pressed, sb_theme.font_color),
+            'disabled': (sb_theme.disabled, sb_theme.font_color_disabled),
         }
 
         self.pixmaps = {}
@@ -172,7 +169,7 @@ class HCommonSpinBox:
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         prefix: str | None = None,
         suffix: str | None = None,
         cleanText: str | None = None,
@@ -186,6 +183,9 @@ class HCommonSpinBox:
         **kwargs,
     ) -> None:
         # super().__init__(parent, **kwargs)
+        self.theme = theme
+        radius = theme.common.radius
+        height = theme.common.height
 
         self.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
 
@@ -195,7 +195,7 @@ class HCommonSpinBox:
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
 
         self.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
-        self.setFixedHeight(COMBOBOX_HEIGHT)
+        self.setFixedHeight(height)
 
         self.setAlignment(
             Qt.AlignmentFlag.AlignRight
@@ -209,14 +209,14 @@ class HCommonSpinBox:
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.main_layout.addStretch(1)
 
-        button_size = QSize(COMBOBOX_HEIGHT//2 + COMBOBOX_RADIUS, COMBOBOX_HEIGHT//2)
-        self.plus_button = HSpinBoxButton(self, kind='plus', hstyle=hstyle, size=button_size)
+        button_size = QSize(height//2 + radius, height//2)
+        self.plus_button = HSpinBoxButton(self, kind='plus', theme=theme, size=button_size)
         self.plus_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.plus_button.setFlat(True)
         self.plus_button.setFixedSize(button_size)
         self.plus_button.setAutoRepeat(True)
 
-        self.minus_button = HSpinBoxButton(self, kind='minus', hstyle=hstyle, size=button_size)
+        self.minus_button = HSpinBoxButton(self, kind='minus', theme=theme, size=button_size)
         self.minus_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.minus_button.setFlat(True)
         self.minus_button.setFixedSize(button_size)
@@ -236,24 +236,25 @@ class HCommonSpinBox:
         self.setLayout(self.main_layout)
 
         qss_template = Template(load_qss("spinbox.qss"))
+        sb_theme = theme.spinbox
         qss = qss_template.substitute(
-            widget_bgd=f"{hstyle.widget_bgd}",
-            font_color=f"{hstyle.font_color}",
-            radius=f"{COMBOBOX_RADIUS}px",
-            hover_bgd=f"{hstyle.hover_bgd}",
-            border_color=f"{hstyle.border}",
-            disabled_bgd=f"{hstyle.disabled_bgd}",
-            disabled_text=f"{hstyle.disabled_text}",
-            padding_right=f"{COMBOBOX_RADIUS + 12}px",
-            editing_border=f"{hstyle.checked}",
-            selected_text=f"{hstyle.selected_text}",
-            padding=f"{COMBOBOX_RADIUS}px",
-            selection_bgd=f"{hstyle.selection_bgd}",
-            margin_right=f"{COMBOBOX_RADIUS+12}px",
+            widget_bgd=f"{theme.common.widget_bgd}",
+            font_color=f"{sb_theme.font_color}",
+            radius=f"{radius}px",
+            hover_bgd=f"{sb_theme.hover}",
+            border_color=f"{theme.common.border}",
+            disabled_bgd=f"{sb_theme.disabled}",
+            disabled_text=f"{sb_theme.font_color_disabled}",
+            padding_right=f"{radius + 12}px",
+            editing_border=f"{theme.common.border_selected}",
+            selected_text=f"{sb_theme.font_color_selection}",
+            padding=f"{radius}px",
+            selection_bgd=f"{sb_theme.selected}",
+            margin_right=f"{radius+12}px",
             button_width=f"{20}px",
-            selected=f"{hstyle.selected}",
-            font_family=f"\"{hstyle.font_family}\"",
-            font_size=f"{hstyle.font_size}pt",
+            selected=f"{sb_theme.font_color_selection}",
+            font_family=f"\"{sb_theme.font.family}\"",
+            font_size=f"{sb_theme.font.size}pt",
         )
         self.setStyleSheet(qss)
 
@@ -437,7 +438,7 @@ class HDoubleSpinBox(HCommonSpinBox, QDoubleSpinBox):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         prefix: str | None = None,
         suffix: str | None = None,
         cleanText: str | None = None,
@@ -452,7 +453,7 @@ class HDoubleSpinBox(HCommonSpinBox, QDoubleSpinBox):
         QDoubleSpinBox.__init__(self, parent)
         HCommonSpinBox.__init__(
             self,
-            hstyle=hstyle,
+            theme=theme,
             prefix=prefix,
             suffix=suffix,
             cleanText=cleanText,
@@ -479,7 +480,7 @@ class HSpinBox(HCommonSpinBox, QSpinBox):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         prefix: str | None = None,
         suffix: str | None = None,
         cleanText: str | None = None,
@@ -494,7 +495,7 @@ class HSpinBox(HCommonSpinBox, QSpinBox):
         QSpinBox.__init__(self, parent)
         HCommonSpinBox.__init__(
             self,
-            hstyle=hstyle,
+            theme=theme,
             prefix=prefix,
             suffix=suffix,
             cleanText=cleanText,

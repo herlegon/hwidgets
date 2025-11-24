@@ -20,12 +20,12 @@ def main():
     window = QWidget()
     layout = QVBoxLayout(window)
 
-    layout.addWidget(HTitle(hstyle=CustomStyle, text="Custom Font Test"))
+    layout.addWidget(HTitle(theme=CustomStyle, text="Custom Font Test"))
     layout.addWidget(HButton(theme=CustomStyle, text="Button"))
-    layout.addWidget(HLineEdit(hstyle=CustomStyle, text="LineEdit"))
+    layout.addWidget(HLineEdit(theme=CustomStyle, text="LineEdit"))
     layout.addWidget(HComboBox(hstyle=CustomStyle, currentText="ComboBox"))
     layout.addWidget(HCheckBox(theme=CustomStyle)) # Checkbox might not show text but we test instantiation
-    layout.addWidget(HRadioButton(hstyle=CustomStyle))
+    layout.addWidget(HRadioButton(theme=CustomStyle))
 
     window.show()
     sys.exit(app.exec())

@@ -28,7 +28,7 @@ class HLineEditPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HLineEdit(parent, hstyle=Theme())
+        t = HLineEdit(parent, theme=Theme())
         return t
 
     def domXml(self):

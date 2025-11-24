@@ -27,60 +27,13 @@ from PySide6.QtWidgets import (
 
 from hwidgets.scrollbar import HScrollBar
 
-from .hstyle import (
-    COMBOBOX_RADIUS,
-    COMBOBOX_HEIGHT,
-    Theme,
-)
+from .style_manager import Theme
+from .lineedit import ClearButton
 from .utils import (
     load_png_icon,
     load_qss,
 )
 
-
-class _ClearButton(QPushButton):
-    def __init__(
-        self,
-        /,
-        parent: QWidget | None = None,
-        *,
-        hstyle: Theme
-    ):
-        super().__init__(parent)
-        # self.setCursor(Qt.CursorShape.ArrowCursor)
-
-        self.setFixedSize(QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT))
-        self.setFlat(True)
-        self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
-        # self.setCursor(Qt.CursorShape.PointingHandCursor)
-
-        self.normal_icon = QIcon(load_png_icon(
-            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
-            hstyle.font_color
-        ))
-        self.hover_icon = QIcon(load_png_icon(
-            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png",
-            hstyle.selected
-        ))
-        self.setIcon(self.normal_icon)
-
-        qss_template = Template(load_qss("plaintextedit_button.qss"))
-        qss = qss_template.substitute(
-            radius=f"{COMBOBOX_RADIUS}px",
-            hover_bgd=f"{hstyle.hover_bgd}",
-            selection_bgd=f"{hstyle.selection_bgd}",
-        )
-        self.setStyleSheet(qss)
-
-
-    def enterEvent(self, event):
-        self.setIcon(self.hover_icon)
-        super().enterEvent(event)
-
-
-    def leaveEvent(self, event):
-        self.setIcon(self.normal_icon)
-        super().leaveEvent(event)
 
 
 
@@ -88,9 +41,9 @@ class _ClearButton(QPushButton):
 class OverlayVScrollBar(QWidget):
     valueChanged = Signal(int)
 
-    def __init__(self, parent=None, corner_radius=8, width=12):
+    def __init__(self, parent=None, radius=8, width=12):
         super().__init__(parent)
-        self.corner_radius = corner_radius
+        self.corner_radius = radius
         self._base_width = 3
         self.padding_right: int = 3
 
@@ -111,9 +64,11 @@ class OverlayVScrollBar(QWidget):
         self._maximum = maximum
         self.update()
 
+
     def setPageStep(self, step):
         self._page_step = step
         self.update()
+
 
     def setValue(self, value):
         value = max(self._minimum, min(self._maximum, value))
@@ -122,8 +77,10 @@ class OverlayVScrollBar(QWidget):
             self.valueChanged.emit(value)
             self.update()
 
+
     def value(self):
         return self._value
+
 
     def enterEvent(self, event):
         self._hovered = True
@@ -131,6 +88,7 @@ class OverlayVScrollBar(QWidget):
         self.reposition_and_resize()
         self.update()
         super().enterEvent(event)
+
 
     def leaveEvent(self, event):
         self._hovered = False
@@ -140,8 +98,9 @@ class OverlayVScrollBar(QWidget):
         self.update()
         super().leaveEvent(event)
 
+
     def mousePressEvent(self, event: QMouseEvent):
-        if event.button() == Qt.LeftButton:
+        if event.button() == Qt.MouseButton.LeftButton:
             handle_rect = self._handle_rect()
             if handle_rect.contains(event.position().toPoint()):
                 self._pressed = True
@@ -150,29 +109,34 @@ class OverlayVScrollBar(QWidget):
                 self._jump_to_click(event.position().y())
         super().mousePressEvent(event)
 
+
     def mouseMoveEvent(self, event: QMouseEvent):
         if self._pressed:
             y = event.position().y() - self._press_offset
             self._move_handle_to(y)
         super().mouseMoveEvent(event)
 
+
     def mouseReleaseEvent(self, event: QMouseEvent):
-        if event.button() == Qt.LeftButton:
+        if event.button() == Qt.MouseButton.LeftButton:
             self._pressed = False
             if not self._hovered:
                 self.setFixedWidth(self._base_width)
                 self.reposition_and_resize()
         super().mouseReleaseEvent(event)
 
+
     def _jump_to_click(self, y):
         handle_height = max(25, int(self._page_step / (self._maximum - self._minimum + self._page_step) * self.height()))
         new_value = int(self._minimum + (y - handle_height // 2) / (self.height() - handle_height) * (self._maximum - self._minimum))
         self.setValue(new_value)
 
+
     def _move_handle_to(self, y):
         handle_height = max(25, int(self._page_step / (self._maximum - self._minimum + self._page_step) * self.height()))
         new_value = int(self._minimum + y / (self.height() - handle_height) * (self._maximum - self._minimum))
         self.setValue(new_value)
+
 
     def _handle_rect(self):
         if self._maximum == self._minimum:
@@ -188,6 +152,7 @@ class OverlayVScrollBar(QWidget):
             rect.setRight(min(self.width(), rect.right()))
         return rect
 
+
     def paintEvent(self, event):
         painter = QPainter(self)
         # anti-aliasing off for performance
@@ -199,7 +164,6 @@ class OverlayVScrollBar(QWidget):
         radius = round(self.width() /2)
         # print(f"radius= {radius}")
         painter.drawRoundedRect(handle_rect, radius, radius)
-
 
 
     def reposition_and_resize(self):
@@ -226,7 +190,7 @@ class HPlainTextEdit(QPlainTextEdit):
         /,
         parent: QWidget | None = None,
         *,
-        hstyle: Type[Theme],
+        theme: Type[Theme],
         tabChangesFocus: bool | None = None,
         documentTitle: str | None = None,
         undoRedoEnabled: bool | None = None,
@@ -245,6 +209,9 @@ class HPlainTextEdit(QPlainTextEdit):
         clearButtonEnabled: bool = True,
     ) -> None:
         super().__init__(parent)
+        self.theme = theme
+
+        self.setCursor(Qt.CursorShape.ArrowCursor)
 
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
@@ -261,8 +228,8 @@ class HPlainTextEdit(QPlainTextEdit):
         self.overlay_vbar: OverlayVScrollBar = None
         self._update_timer: QTimer = None
 
-        self.overlay_vbar = OverlayVScrollBar(
-            self, corner_radius=COMBOBOX_RADIUS, width=COMBOBOX_RADIUS)
+        radius: int = theme.common.radius
+        self.overlay_vbar = OverlayVScrollBar(self, radius=radius, width=radius)
 
         # use QTimer to throttle updates for smoother scrolling
         self._update_timer = QTimer(self)
@@ -275,44 +242,24 @@ class HPlainTextEdit(QPlainTextEdit):
         self.overlay_vbar.valueChanged.connect(self._on_overlay_value_changed)
         self._sync_overlay_from_native()
 
+        self.clear_button = ClearButton(self, hstyle=theme)
 
-
-        # self.main_layout = QHBoxLayout(self)
-        # self.main_layout.setContentsMargins(0,0,0,0)
-        # self.main_layout.setSpacing(0)
-        # self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignBottom)
-        # self.main_layout.addStretch(1)
-        self.clear_button = _ClearButton(self, hstyle=hstyle)
-        # self.main_layout.addWidget(
-        #     self.clear_button, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
-        # )
-        # self.setLayout(self.main_layout)
-
-        self.viewport().setAttribute(Qt.WA_StyledBackground, True)
+        self.viewport().setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.viewport().setStyleSheet("background: transparent;")
 
-        qss_template = Template(load_qss("plaintextedit.qss"))
-        qss = qss_template.substitute(
-            widget_bgd=f"{hstyle.widget_bgd}",
-            font_color=f"{hstyle.font_color}",
-            radius=f"{COMBOBOX_RADIUS}px",
-            hover_bgd=f"{hstyle.hover_bgd}",
-            border_color=f"{hstyle.border}",
-            disabled_bgd=f"{hstyle.disabled_bgd}",
-            disabled_text=f"{hstyle.disabled_text}",
-            padding_right=f"{COMBOBOX_RADIUS}px",
-            editing_border=f"{hstyle.checked}",
-            selected_text=f"{hstyle.selected_text}",
-            selected=f"{hstyle.selected}",
-            font_family=f"\"{hstyle.font_family}\"",
-            font_size=f"{hstyle.font_size}pt",
-        )
-        self.setStyleSheet(qss)
+        self.is_clear_button_enabled: bool = False
+        if readOnly is not None and readOnly:
+            self.setReadOnly(True)
 
-        # for HLineEdit, it's set in the qss file. here because the button has
-        #   to be moved, it can't be done in the stylesheet
-        self.margin = 6
+        elif clearButtonEnabled is not None and clearButtonEnabled:
+            self.is_clear_button_enabled = True
+            self.setClearButtonEnabled(self.is_clear_button_enabled)
 
+        else:
+            self.setClearButtonEnabled(self.is_clear_button_enabled)
+
+        self.clear_button.setVisible(False)
+        self._update_stylesheet()
 
         # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
         self.signals_connected = False
@@ -339,8 +286,49 @@ class HPlainTextEdit(QPlainTextEdit):
         self.overlay_vbar.leaveEvent(None)
         self.update_clear_button_position()
 
-        # print(f"{__class__.__name__} Instanciated")
-        # self.setStyleSheet("background-color: red;border-radius:8px;")
+
+    def _update_stylesheet(self) -> None:
+        theme: Theme = self.theme
+        le_theme = theme.line_edit
+        radius = theme.common.radius
+
+        if not self.is_clear_button_enabled:
+            self.clear_button.setFixedWidth(0)
+            self.clear_button.hide()
+            # self.main_layout.invalidate()
+            padding_left, padding_right = radius, radius
+
+        else:
+            self.clear_button.show()
+            self.clear_button.setFixedWidth(radius)
+            # self.main_layout.invalidate()
+            padding_left, padding_right = radius, theme.common.height
+
+        # Use line_edit style
+        qss_template = Template(load_qss("plaintextedit.qss"))
+        qss = qss_template.substitute(
+            padding_right=f"{padding_right}px",
+            padding_left=f"{padding_left}px",
+
+            widget_bgd=f"{theme.common}",
+            font_color=f"{le_theme.font_color}",
+            radius=f"{radius}px",
+            hover_bgd=f"{le_theme.hover}",
+            border_color=f"{theme.common.border}",
+            disabled_bgd=f"{le_theme.disabled}",
+            font_color_disabled=f"{le_theme.font_color_disabled}",
+            editing_border=f"{le_theme.selected}",
+            selected_text=f"{le_theme.font_color_selection}",
+            selected=f"{le_theme.selected}",
+            font_family=f"\"{le_theme.font.family}\"",
+            font_size=f"{le_theme.font.size}pt",
+        )
+        self.setStyleSheet(qss)
+
+        # for HLineEdit, it's set in the qss file. here because the button has
+        #   to be moved, it can't be done in the stylesheet
+        self.margin = 6
+
 
 
     @Slot(int, int)
@@ -348,10 +336,12 @@ class HPlainTextEdit(QPlainTextEdit):
         if not self._update_timer.isActive():
             self._update_timer.start(0)
 
+
     @Slot(int)
     def _on_native_value_changed(self, value):
         if not self._update_timer.isActive():
             self._update_timer.start(0)
+
 
     @Slot(int)
     def _on_overlay_value_changed(self, value):
@@ -359,8 +349,10 @@ class HPlainTextEdit(QPlainTextEdit):
         if native.value() != value:
             native.setValue(value)
 
+
     def _do_sync_overlay(self):
         self._sync_overlay_from_native()
+
 
     def _sync_overlay_from_native(self):
         native = super().verticalScrollBar()
@@ -377,6 +369,7 @@ class HPlainTextEdit(QPlainTextEdit):
         finally:
             self.overlay_vbar.blockSignals(False)
 
+
     def resizeEvent(self, event):
         super().resizeEvent(event)
         if self.overlay_vbar is not None:
@@ -384,7 +377,6 @@ class HPlainTextEdit(QPlainTextEdit):
             if not self._update_timer.isActive():
                 self._update_timer.start(0)
         self.update_clear_button_position()
-
 
 
     def on_scrollbar_changed(self, *args):

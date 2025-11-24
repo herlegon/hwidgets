@@ -31,7 +31,7 @@ class HScrollBarPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HScrollBar(parent, hstyle=Theme())
+        t = HScrollBar(parent, theme=Theme())
         return t
 
     def domXml(self):

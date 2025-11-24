@@ -31,7 +31,7 @@ class HLabelPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HLabel(parent, hstyle=Theme())
+        t = HLabel(parent, theme=Theme())
         return t
 
     def domXml(self):

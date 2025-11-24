@@ -31,7 +31,7 @@ class HGroupBoxPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HGroupBox(parent, hstyle=Theme())
+        t = HGroupBox(parent, theme=Theme())
         return t
 
     def domXml(self):
