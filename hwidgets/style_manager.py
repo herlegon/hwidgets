@@ -14,6 +14,7 @@ from .styles import (
     LineEditStyle,
     PlainTextEditStyle,
     ScrollBarStyle,
+    SpinBoxStyle,
     Theme,
     LabelStyle,
     RadioButtonStyle,
@@ -102,6 +103,9 @@ class StyleManager:
             "line_edit": ("line_edit", LineEditStyle),
             "plain_text_edit": ("plain_text_edit", PlainTextEditStyle),
             "scrollbar": ("scrollbar", ScrollBarStyle),
+
+            "spinbox": ("spinbox", SpinBoxStyle),
+            # "double_spinbox": ("double_spinbox", DoubleSpinBoxStyle),
 
             "group_box": ("groupbox", GroupBoxStyle),
             "icon_button": ("icon_button", IconButtonStyle),

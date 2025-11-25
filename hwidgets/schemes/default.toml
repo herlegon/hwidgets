@@ -95,7 +95,8 @@ hover = "#7777FF"
 
 
 [spinbox]
-
+button_hover = "#7c787f"
+button_pressed = "#7c787f"
 
 
 

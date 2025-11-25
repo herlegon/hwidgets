@@ -1,3 +1,4 @@
+from pprint import pprint
 from string import Template
 import sys
 from typing import TYPE_CHECKING, Literal, Type
@@ -54,7 +55,7 @@ class HSpinBoxButton(QPushButton):
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.kind = kind
-        radius = theme.common.radius + 2
+        radius = theme.common.radius
         button_width, button_height = size.toTuple()
         self.setFixedSize(button_width, button_height)
         # symbol
@@ -66,12 +67,14 @@ class HSpinBoxButton(QPushButton):
         self.setCheckable(False)
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
-        sb_theme = theme.spinbox
+        default_style = theme.common
+        sb_style = theme.spinbox
+        # background, text
         states = {
-            'normal': (theme.common.bgd, sb_theme.font_color),
-            'hover': (sb_theme.hover, sb_theme.font_color),
-            'pressed': (sb_theme.pressed, sb_theme.font_color),
-            'disabled': (sb_theme.disabled, sb_theme.font_color_disabled),
+            'normal': (default_style.bgd, sb_style.font_color),
+            'hover': (sb_style.button_hover, sb_style.font_color),
+            'pressed': (sb_style.button_pressed, sb_style.font_color),
+            'disabled': (sb_style.disabled, sb_style.font_color_disabled),
         }
 
         self.pixmaps = {}
@@ -184,7 +187,6 @@ class HCommonSpinBox:
         **kwargs,
     ) -> None:
         # super().__init__(parent, **kwargs)
-        print(red("edrftgyhujik"))
         self.theme = theme
         radius = theme.common.radius
         height = theme.common.height
@@ -327,8 +329,7 @@ class HCommonSpinBox:
 
 
     def enterEvent(self, event):
-        if not self._button_hover:
-            self._set_hover(True)
+        self._set_hover(True)
         super().enterEvent(event)
 
 
@@ -340,7 +341,8 @@ class HCommonSpinBox:
     def _on_button_hover_changed(self, hovered: bool):
         if self.isEnabled() and not self.isReadOnly():
             self._button_hover = hovered
-            self._set_hover(not hovered)
+            if hovered:
+                self._set_hover(True)
         else:
             self._button_hover = False
 

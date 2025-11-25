@@ -20,7 +20,7 @@ QPlainTextEdit:read-only,
 QPlainTextEdit:read-only:focus,
 QPlainTextEdit:read-only:hover {
     background-color: $widget_bgd;
-    border: none;
+    /* border: none; */
 }
 
 

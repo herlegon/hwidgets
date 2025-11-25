@@ -3,7 +3,7 @@ QDoubleSpinBox {
     background-color: $widget_bgd;
 
     min-width: 40px;
-    border: 1px solid $widget_bgd;
+    border: 1px solid $border_color;
     border-radius: $radius;
     margin: 0px;
     /* margin-right: $margin_right; */
@@ -19,12 +19,21 @@ QDoubleSpinBox {
 }
 
 
-/* QSpinBox:read-only,
-QDoubleSpinBox:read-only {
+QSpinBox:read-only,
+QDoubleSpinBox:read-only,
+QSpinBox:read-only:focus,
+QDoubleSpinBox:read-only:focus,
+QSpinBox:read-only:hover,
+QDoubleSpinBox:read-only:hover {
     background-color: $widget_bgd;
-    border: 1px solid $widget_bgd;
-} */
+    border: 1px solid $border_color;
+}
 
+
+QSpinBox:focus,
+QDoubleSpinBox:focus{
+    border: 1px solid $border_edition;
+}
 
 
 QSpinBox:disabled,
@@ -35,17 +44,12 @@ QDoubleSpinBox:disabled {
 }
 
 
-HSpinBox[hover="true"],
+/* HSpinBox[hover="true"],
 HDoubleSpinBox[hover="true"] {
-    /* background-color: $hover; */
     border: 1px solid $hover;
-}
+} */
 
 
-QSpinBox:focus,
-QDoubleSpinBox:focus{
-    border: 1px solid $selection;
-}
 
 /* QSpinBox:read-only:focus,
 QDoubleSpinBox:read-only:focus,
