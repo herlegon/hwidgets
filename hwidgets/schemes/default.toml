@@ -5,7 +5,7 @@ window = "#1C1B1D"
 [common]
 bgd = "#424048"
 hover = "#66636D"
-selection = "#5545bd"
+selection = "#7777FF"
 pressed = "#5555B3"
 disabled_bgd = "#313131"
 border = "#505053"
@@ -16,54 +16,7 @@ font_weight = 500
 font_color = "#d4d4d8"
 font_color_disabled = "#4E4E4E"
 font_color_selected = "#5442bd"
-font_color_checked = "#4632c7"
-
-
-[divider]
-normal ="#474747"
-
-[button]
-normal = "#5442bd"
-hover = "#7777FF"
-disabled = "#A3A3D1"
-
-
-[flat_button]
-normal = "#5442bd"
-disabled = "#A3A3D1"
-
-
-[icon_button]
-# normal = icon line color
-normal = "#5442bd"
-disabled = "#A3A3D1"
-
-[checkbox]
-size = 16
-border = "#7c787f"
-pressed = "#7c787f"
-checked = "#7053D6"
-disabled = "#474747"
-
-[switch]
-track_off = "#4F4D53"
-track_on = "#4F4D53"
-handle_off = "#66636D"
-handle_on = "#7053D6"
-track_disabled = "#36343B"
-handle_disabled = "#232223"
-
-
-[radio]
-checked = "#7C5CD8"
-
-[progress_bar]
-track = "#A3A3D1"
-bar = "#5442bd"
-
-[button_label]
-font_size = 12
-font_weight = 500
+# font_color_checked = "#4632c7"
 
 
 [label]
@@ -76,7 +29,7 @@ font_color = "#d4d4d8"
 font_family = "Segoe UI"
 font_size = 16
 font_weight = 800
-font_color = "#7053D6"
+font_color = "#7777FF"
 
 # subtitle and comment only appear in TOML if they override label
 [subtitle]
@@ -96,3 +49,68 @@ font_size = 9
 font_color = "#a7a7a7"
 # Inherits font_color_disabled from label
 
+
+[divider]
+normal ="#474747"
+
+
+[checkbox]
+size = 16
+border = "#7c787f"
+pressed = "#7c787f"
+checked = "#7777FF"
+disabled = "#474747"
+
+
+[switch]
+track_off = "#4E4E4E"
+track_on = "#4E4E4E"
+handle_off = "#66636D"
+handle_on = "#7777FF"
+track_disabled = "#36343B"
+handle_disabled = "#232223"
+
+
+[radio_button]
+unchecked = "#66636D"
+pressed = "#7c787f"
+checked = "#7777FF"
+disabled = "#232223"
+
+
+[line_edit]
+disabled = "#232223"
+hover = ""
+button_hover = "#7e7effff"
+button_disabled = "#36343B"
+
+
+
+
+
+[button]
+normal = "#5442bd"
+hover = "#7777FF"
+disabled = "#A3A3D1"
+
+
+[flat_button]
+normal = "#5442bd"
+disabled = "#A3A3D1"
+
+
+[icon_button]
+# normal = icon line color
+normal = "#5442bd"
+disabled = "#A3A3D1"
+
+
+
+
+[progress_bar]
+track = "#A3A3D1"
+bar = "#5442bd"
+
+[button_label]
+font_size = 12
+font_weight = 500

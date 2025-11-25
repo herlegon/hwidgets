@@ -37,29 +37,34 @@ class WidgetCommonColors:
 
 
 @dataclass
-class GroupBoxStyle:
-    height: int = BORDER_RADIUS * 2 + NORMAL_HEIGHT
-    title_padding: int = BORDER_RADIUS + 4
-    title_height: int = 10
+class TitleStyle:
+    height: int = NORMAL_HEIGHT + BORDER_RADIUS
+    padding = 0
 
-    bgd: str = ""
-    hover: str = ""
-    selection: str = ""
-    pressed: str = ""
-    disabled_bgd: str = ""
-    border: str = ""
+    font: FontConfig = FontConfig(size=16, weight=800)
+    font_color: str = ""
+    font_color_disabled: str = ""
 
 
 
 @dataclass
-class FrameStyle:
-    bgd: str = ""
-    hover: str = ""
-    selection: str = ""
-    pressed: str = ""
-    disabled_bgd: str = ""
-    border: str = ""
-    font: FontConfig = FontConfig(size=14, weight=600)
+class SubtitleStyle:
+    font: FontConfig = FontConfig(size=12, weight=400)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+@dataclass
+class DescriptionStyle:
+    font: FontConfig = FontConfig(size=12, weight=400)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+
+@dataclass
+class CommentStyle:
+    font: FontConfig = FontConfig(size=10, weight=400)
     font_color: str = ""
     font_color_disabled: str = ""
 
@@ -72,67 +77,6 @@ class DividerStyle:
     thickness: int = 1
     min_length: int = 40
     padding: int = 16
-
-
-
-@dataclass
-class ScrollBarStyle:
-    track_width: int = 8
-
-
-
-@dataclass
-class ButtonStyle:
-    height: int = NORMAL_HEIGHT
-
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    checked: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
-@dataclass
-class IconButtonStyle:
-    height: int = NORMAL_HEIGHT
-
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    disabled: str = ""
-
-
-
-
-@dataclass
-class RadioButtonStyle:
-    size: int = 14
-    radius: int = BORDER_RADIUS - 1
-    border_thickness: int = 2
-
-    normal: str = ""
-    disabled: str = ""
-    checked: str = ""
-    checked_text: str = ""
-
-
-
-@dataclass
-class ButtonGroupStyle(ButtonStyle):
-    size: int = 14
-    radius: int = BORDER_RADIUS - 1
-    border_width: int = 2
-
-    normal: str = ""
-    hover: str = ""
-    disabled: str = ""
-
-    font_color_checked: str = ""
-    font_color_disabled: str = ""
 
 
 
@@ -170,6 +114,134 @@ class SwitchStyle:
 
 
 @dataclass
+class RadioButtonStyle:
+    size: int = 14
+    radius: int = BORDER_RADIUS - 1
+    border_thickness: int = 2
+
+    unchecked: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+
+
+
+@dataclass
+class LineEditStyle:
+    hover: str = ""
+    selection: str = ""
+    disabled: str = ""
+    button_hover: str = ""
+    button_disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=500)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+
+@dataclass
+class PlainTextEditStyle(LineEditStyle):
+    ...
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@dataclass
+class GroupBoxStyle:
+    height: int = BORDER_RADIUS * 2 + NORMAL_HEIGHT
+    title_padding: int = BORDER_RADIUS + 4
+    title_height: int = 10
+
+    bgd: str = ""
+    hover: str = ""
+    selection: str = ""
+    pressed: str = ""
+    disabled_bgd: str = ""
+    border: str = ""
+
+
+
+@dataclass
+class FrameStyle:
+    bgd: str = ""
+    hover: str = ""
+    selection: str = ""
+    pressed: str = ""
+    disabled_bgd: str = ""
+    border: str = ""
+    font: FontConfig = FontConfig(size=14, weight=600)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+
+
+
+
+@dataclass
+class ScrollBarStyle:
+    track_width: int = 8
+
+
+
+@dataclass
+class ButtonStyle:
+    height: int = NORMAL_HEIGHT
+
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=500)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+@dataclass
+class IconButtonStyle:
+    height: int = NORMAL_HEIGHT
+
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    disabled: str = ""
+
+
+
+@dataclass
+class ButtonGroupStyle(ButtonStyle):
+    size: int = 14
+    radius: int = BORDER_RADIUS - 1
+    border_width: int = 2
+
+    normal: str = ""
+    hover: str = ""
+    disabled: str = ""
+
+    font_color_checked: str = ""
+    font_color_disabled: str = ""
+
+
+
+
+
+@dataclass
 class ComboBoxStyle:
     normal: str = ""
     hover: str = ""
@@ -181,27 +253,6 @@ class ComboBoxStyle:
     font_color: str = ""
     font_color_disabled: str = ""
     font_color_selected: str = ""
-
-
-
-@dataclass
-class LineEditStyle:
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    selected: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_selection: str = ""
-    font_color_disabled: str = ""
-
-
-
-@dataclass
-class PlainTextEditStyle(LineEditStyle):
-    ...
 
 
 
@@ -234,37 +285,6 @@ class LabelStyle:
 
 
 
-@dataclass
-class TitleStyle:
-    height: int = NORMAL_HEIGHT + BORDER_RADIUS
-    padding = 0
-
-    font: FontConfig = FontConfig(size=16, weight=800)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
-
-@dataclass
-class SubtitleStyle:
-    font: FontConfig = FontConfig(size=12, weight=400)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
-@dataclass
-class DescriptionStyle:
-    font: FontConfig = FontConfig(size=12, weight=400)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
-
-@dataclass
-class CommentStyle:
-    font: FontConfig = FontConfig(size=10, weight=400)
-    font_color: str = ""
-    font_color_disabled: str = ""
 
 
 

@@ -16,8 +16,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QFrame,
-    QHBoxLayout, QLabel, QMainWindow, QSizePolicy,
-    QSpacerItem, QVBoxLayout, QWidget)
+    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+    QRadioButton, QSizePolicy, QSpacerItem, QVBoxLayout,
+    QWidget)
 
 from typing import Type
 from hwidgets import (
@@ -199,6 +200,75 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.horizontalLayout_4)
 
+        self.radio_layout = QHBoxLayout()
+        self.radio_layout.setObjectName(u"radio_layout")
+        self.h_radiobutton_enabled_off = HRadioButton(self.h_frame, theme=theme)
+        self.buttonGroup = QButtonGroup(MainWindow)
+        self.buttonGroup.setObjectName(u"buttonGroup")
+        self.buttonGroup.addButton(self.h_radiobutton_enabled_off)
+        self.h_radiobutton_enabled_off.setObjectName(u"h_radiobutton_enabled_off")
+        self.h_radiobutton_enabled_off.setChecked(False)
+
+        self.radio_layout.addWidget(self.h_radiobutton_enabled_off)
+
+        self.h_radiobutton_enabled_on = HRadioButton(self.h_frame, theme=theme)
+        self.buttonGroup.addButton(self.h_radiobutton_enabled_on)
+        self.h_radiobutton_enabled_on.setObjectName(u"h_radiobutton_enabled_on")
+        self.h_radiobutton_enabled_on.setChecked(True)
+
+        self.radio_layout.addWidget(self.h_radiobutton_enabled_on)
+
+        self.h_radiobutton_disabled_on = HRadioButton(self.h_frame, theme=theme)
+        self.h_radiobutton_disabled_on.setObjectName(u"h_radiobutton_disabled_on")
+        self.h_radiobutton_disabled_on.setEnabled(False)
+        self.h_radiobutton_disabled_on.setChecked(False)
+
+        self.radio_layout.addWidget(self.h_radiobutton_disabled_on)
+
+        self.h_radiobutton_disabled_off = HRadioButton(self.h_frame, theme=theme)
+        self.h_radiobutton_disabled_off.setObjectName(u"h_radiobutton_disabled_off")
+        self.h_radiobutton_disabled_off.setEnabled(False)
+
+        self.radio_layout.addWidget(self.h_radiobutton_disabled_off)
+
+        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.radio_layout.addItem(self.horizontalSpacer)
+
+
+        self.main_layout.addLayout(self.radio_layout)
+
+        self.lineedit_layout = QHBoxLayout()
+        self.lineedit_layout.setObjectName(u"lineedit_layout")
+        self.h_lineedit_editable = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_editable.setObjectName(u"h_lineedit_editable")
+        self.h_lineedit_editable.setClearButtonEnabled(False)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_editable)
+
+        self.h_lineedit_editable_clear_button = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_editable_clear_button.setObjectName(u"h_lineedit_editable_clear_button")
+        self.h_lineedit_editable_clear_button.setClearButtonEnabled(True)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_editable_clear_button)
+
+        self.h_lineedit_disabled = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_disabled.setObjectName(u"h_lineedit_disabled")
+        self.h_lineedit_disabled.setEnabled(False)
+        self.h_lineedit_disabled.setClearButtonEnabled(True)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_disabled)
+
+        self.h_lineedit_read_only = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_read_only.setObjectName(u"h_lineedit_read_only")
+        self.h_lineedit_read_only.setReadOnly(True)
+        self.h_lineedit_read_only.setClearButtonEnabled(True)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_read_only)
+
+
+        self.main_layout.addLayout(self.lineedit_layout)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout.addItem(self.verticalSpacer_2)
@@ -235,5 +305,13 @@ class Ui_MainWindow(object):
         self.h_switch_checked.setText("")
         self.h_switch_disabled.setText("")
         self.h_switch_disabled_checked.setText("")
+        self.h_radiobutton_enabled_off.setText("")
+        self.h_radiobutton_enabled_on.setText("")
+        self.h_radiobutton_disabled_on.setText("")
+        self.h_radiobutton_disabled_off.setText("")
+        self.h_lineedit_editable.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
+        self.h_lineedit_editable_clear_button.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_lineedit_disabled.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
+        self.h_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
     # retranslateUi
 

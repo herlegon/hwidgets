@@ -40,11 +40,11 @@ if __name__ == "__main__":
         "h_subtitle": "HSubtitle",
         "h_comment": "HComment",
         "h_description": "HDescription",
-
         "h_divider": "HDivider",
+        "h_switch": "HSwitch",
+
         "h_vertical_divider": "HVerticalDivider",
         "h_horizontal_divider": "HHorizontalDivider",
-        "h_switch": "HSwitch",
         "h_progress": "HProgress",
         "h_indeterminate_progress": "HIndeterminateProgress",
         "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",

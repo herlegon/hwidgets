@@ -40,19 +40,20 @@ def load_qss(qss_fp: str, variant: str = "") -> str:
     return qss
 
 
-def load_png_icon(filename: str, color: str) -> QPixmap:
+def load_png_icon(filename: str, color: str = "") -> QPixmap:
     filepath = os.path.join(TITLE_BAR_ICON_PATH, filename)
     if not os.path.exists(filepath):
         raise ValueError(f"image {filepath} does not exist")
     qimage: QImage = QImage(filepath)
-    color = QColor(color)
 
     painter: QPainter = QPainter()
     painter.begin(qimage)
     painter.setRenderHint(QPainter.RenderHint.Antialiasing)
     painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceIn)
-    painter.setBrush(color)
-    painter.setPen(color)
+    if color:
+        color = QColor(color)
+        painter.setBrush(color)
+        painter.setPen(color)
     painter.drawRect(qimage.rect())
     painter.end()
     return QPixmap(qimage)

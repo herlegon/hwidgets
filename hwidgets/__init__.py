@@ -22,10 +22,10 @@ from .label import (
     HDescription,
     HComment,
 )
-from .lineedit import HLineEdit
+from .line_edit import HLineEdit
 from .plaintextedit import HPlainTextEdit
 from .radial_progress_bar import HRadialProgress
-from .radiobutton import HRadioButton
+from .radio_button import HRadioButton
 from .scrollbar import HScrollBar
 from .spinbox import HDoubleSpinBox, HSpinBox
 from .switch import HSwitch

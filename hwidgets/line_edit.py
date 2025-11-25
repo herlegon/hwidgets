@@ -1,3 +1,4 @@
+from pprint import pprint
 from string import Template
 from typing import Type
 
@@ -22,6 +23,7 @@ from .style_manager import Theme
 from .utils import (
     load_png_icon,
     load_qss,
+    make_tinted_pixmap,
 )
 
 
@@ -31,44 +33,50 @@ class ClearButton(QPushButton):
         /,
         parent: QWidget | None = None,
         *,
-        theme: Theme
+        theme: Theme,
+        margin_right: int = 0,
     ):
         super().__init__(parent)
 
-        self.setFixedSize(
-            QSize(theme.common.height, theme.common.height)
-        )
+        size_hint = QSize(theme.common.height, theme.common.height)
+        self.setFixedSize(size_hint)
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        btn_theme = theme.icon_button
-        self.normal_icon = QIcon(load_png_icon(
-            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", btn_theme.normal
-        ))
-        self.hover_icon = QIcon(load_png_icon(
-            "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", btn_theme.hover
-        ))
+        btn_theme = theme.line_edit
+        icon_filename: str = "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png"
+        self.normal_icon = QIcon(make_tinted_pixmap(load_png_icon(icon_filename), btn_theme.selection))
+        self.hover_icon = QIcon(make_tinted_pixmap(load_png_icon(icon_filename), btn_theme.button_hover))
+        self.disabled_icon = QIcon(make_tinted_pixmap(load_png_icon(icon_filename), btn_theme.button_disabled))
         self.setIcon(self.normal_icon)
 
-        qss_template = Template(load_qss("icon_button.qss"))
-        qss = qss_template.substitute(
-            radius=f"{theme.common.radius}px",
-            # hover_bgd=f"{btn_theme.hover}",
-            # selection_bgd=f"{btn_theme.selected}",
-            # selected=f"{btn_theme.font_color_selection}",
-            margin_right="4px"
-        )
+        qss = """
+            QPushButton {{
+                background-color: transparent;
+                border: solid 1px white;
+                margin_right={margin_right}px;
+            }}
+        """.format(margin_right=margin_right)
         self.setStyleSheet(qss)
+
+    def sizeHint(self):
+        return super().sizeHint()
 
 
     def enterEvent(self, event):
-        self.setIcon(self.hover_icon)
+        if self.isEnabled():
+            self.setIcon(self.hover_icon)
+        else:
+            self.setIcon(self.disabled_icon)
         super().enterEvent(event)
 
 
     def leaveEvent(self, event):
-        self.setIcon(self.normal_icon)
+        if self.isEnabled():
+            self.setIcon(self.normal_icon)
+        else:
+            self.setIcon(self.disabled_icon)
         super().leaveEvent(event)
 
 
@@ -103,8 +111,9 @@ class HLineEdit(QLineEdit):
     ) -> None:
         super().__init__(parent)
         self.theme = theme
+        self.le_theme = theme.line_edit
 
-        self.setCursor(Qt.CursorShape.ArrowCursor)
+        # self.setCursor(Qt.CursorShape.ArrowCursor)
 
         self.setFixedHeight(theme.common.height)
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
@@ -117,7 +126,7 @@ class HLineEdit(QLineEdit):
         self.main_layout.setSpacing(0)
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.main_layout.addStretch(1)
-        self.clear_button = ClearButton(self, theme=theme)
+        self.clear_button = ClearButton(self, theme=theme, margin_right=4)
         self.main_layout.addWidget(
             self.clear_button, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
         )
@@ -146,38 +155,40 @@ class HLineEdit(QLineEdit):
 
     def _update_stylesheet(self) -> None:
         theme: Theme = self.theme
-        le_theme = theme.line_edit
+        default_style = theme.common
+        le_style = self.le_theme
         radius = theme.common.radius
 
         if not self.is_clear_button_enabled:
-            self.clear_button.setFixedWidth(0)
+            # self.clear_button.setFixedWidth(0)
             self.clear_button.hide()
             self.main_layout.invalidate()
             padding_left, padding_right = radius, radius
 
         else:
             self.clear_button.show()
-            self.clear_button.setFixedWidth(radius)
+            # self.clear_button.setFixedWidth(radius)
             self.main_layout.invalidate()
-            padding_left, padding_right = radius, theme.common.height
+            padding_left, padding_right = radius, default_style.height
 
         qss_template = Template(load_qss("lineedit.qss"))
         qss = qss_template.substitute(
+            radius=f"{radius}px",
             padding_right=f"{padding_right}px",
             padding_left=f"{padding_left}px",
 
-            widget_bgd=f"{theme.common}",
-            font_color=f"{le_theme.font_color}",
-            radius=f"{radius}px",
-            hover_bgd=f"{le_theme.hover}",
-            border_color=f"{theme.common.border}",
-            disabled_bgd=f"{le_theme.disabled}",
-            font_color_disabled=f"{le_theme.font_color_disabled}",
-            editing_border=f"{le_theme.selected}",
-            selected_text=f"{le_theme.font_color_selection}",
-            selected=f"{le_theme.selected}",
-            font_family=f"\"{le_theme.font.family}\"",
-            font_size=f"{le_theme.font.size}pt",
+            widget_bgd=f"{default_style.bgd}",
+            hover=f"{le_style.hover}",
+            border_color=f"{default_style.border}",
+            border_edition=f"{le_style.selection}",
+
+            selection=f"{le_style.selection}",
+            disabled=f"{le_style.disabled}",
+
+            font_family=f"\"{le_style.font.family}\"",
+            font_size=f"{le_style.font.size}pt",
+            font_color=f"{le_style.font_color}",
+            font_color_disabled=f"{le_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
 

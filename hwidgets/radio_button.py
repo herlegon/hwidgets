@@ -40,16 +40,29 @@ class HRadioButton(QRadioButton):
         theme: Type[Theme],
     ) -> None:
         super().__init__(parent)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        self._margin = (theme.common.radius - theme.radio_button.size) / 2
-        self._radius = theme.radio_button.radius
-        self.border_width = theme.radio_button.border_thickness
+        self.rb_style = theme.radio_button
+        self.size_hint = QSize(theme.common.height, theme.common.height)
 
-        self.theme = theme
+        self.margin = (theme.common.height - self.rb_style.size) / 2
+        self.radius = self.rb_style.radius
+        self.border_width = self.rb_style.border_thickness
+
+        self.outer_circle_box = QRectF(
+            self.margin, self.margin, self.rb_style.size, self.rb_style.size
+        )
+        self.inner_radius = self.radius / 2 + 1
+        self.inner_rect = QRectF(
+            self.outer_circle_box.center().x() - self.inner_radius,
+            self.outer_circle_box.center().y() - self.inner_radius,
+            self.inner_radius * 2,
+            self.inner_radius * 2
+        )
 
 
     def sizeHint(self) -> QSize:
-        return QSize(self.theme.common.height, self.theme.common.height)
+        return self.size_hint
 
 
     def mouseMoveEvent(self, event: QMouseEvent):
@@ -63,10 +76,10 @@ class HRadioButton(QRadioButton):
     def hitButton(self, pos: QPoint) -> bool:
         """Only accept clicks inside the visible 16x16 box"""
         click_rect = QRectF(
-            self._margin,
-            self._margin,
-            self.theme.radio_button.size,
-            self.theme.radio_button.size,
+            self.margin,
+            self.margin,
+            self.rb_style.size,
+            self.rb_style.size,
         )
         return click_rect.contains(pos)
 
@@ -84,43 +97,36 @@ class HRadioButton(QRadioButton):
         pressed = bool(option.state & QStyle.StateFlag.State_Sunken)
         checked = bool(option.state & QStyle.StateFlag.State_On)
 
-        radio_theme = self.theme.radio_button
+        rb_style = self.rb_style
         if not enabled:
-            outer_line_color = radio_theme.disabled
-            brush = radio_theme.disabled
+            outer_line_color = rb_style.disabled
+            brush = rb_style.disabled
+
         elif checked:
-            outer_line_color = radio_theme.checked
-            brush = radio_theme.checked
+            outer_line_color = rb_style.checked
+            brush = rb_style.checked
+
         elif pressed:
-            outer_line_color = radio_theme.hover
-            brush = radio_theme.hover
+            outer_line_color = rb_style.pressed
+            brush = rb_style.pressed
+
         else:
-            outer_line_color = self.theme.common.bgd
-            brush = self.theme.common.bgd
+            outer_line_color = rb_style.unchecked
+            brush = rb_style.unchecked
 
         # Draw the outer circle
-        box = QRectF(self._margin, self._margin, radio_theme.size, radio_theme.size)
-
         pen = QPen()
         pen.setWidth(self.border_width)
         pen.setColor(QColor(outer_line_color))
         painter.setPen(pen)
-        painter.drawEllipse(box)
+        painter.drawEllipse(self.outer_circle_box)
 
         # Draw inner cercle when pressed, checked
         draw_inner: bool = enabled or (not enabled and checked)
         if draw_inner:
-            inner_radius = self._radius / 2 + 1
-            inner_rect = QRectF(
-                box.center().x() - inner_radius,
-                box.center().y() - inner_radius,
-                inner_radius * 2,
-                inner_radius * 2
-            )
-
             painter.setPen(Qt.PenStyle.NoPen)
             painter.setBrush(QBrush(QColor(brush)))
-            painter.drawEllipse(inner_rect)
+            painter.drawEllipse(self.inner_rect)
 
         painter.end()
 

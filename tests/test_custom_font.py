@@ -3,10 +3,10 @@ import sys
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget, QLabel
 from hwidgets.hstyle import Theme
 from hwidgets.button import HButton
-from hwidgets.lineedit import HLineEdit
+from hwidgets.line_edit import HLineEdit
 from hwidgets.combobox import HComboBox
 from hwidgets.checkbox import HCheckBox
-from hwidgets.radiobutton import HRadioButton
+from hwidgets.radio_button import HRadioButton
 from hwidgets.titles import HTitle
 
 def main():

@@ -28,7 +28,7 @@ from PySide6.QtWidgets import (
 from hwidgets.scrollbar import HScrollBar
 
 from .style_manager import Theme
-from .lineedit import ClearButton
+from .line_edit import ClearButton
 from .utils import (
     load_png_icon,
     load_qss,

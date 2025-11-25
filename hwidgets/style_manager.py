@@ -1,15 +1,17 @@
 from pprint import pprint
 import tomllib
 from pathlib import Path
-from dataclasses import replace
+from dataclasses import replace, fields
 
 from .styles import (
     ButtonStyle,
     CheckBoxStyle,
     DescriptionStyle,
     CommentStyle,
+    DividerStyle,
     FontConfig,
     GroupBoxStyle,
+    LineEditStyle,
     Theme,
     LabelStyle,
     RadioButtonStyle,
@@ -17,6 +19,7 @@ from .styles import (
     TitleStyle,
     IconButtonStyle,
     SwitchStyle,
+    WidgetCommonColors,
 )
 
 class StyleManager:
@@ -70,12 +73,6 @@ class StyleManager:
                 "font":                 font,
             })
 
-
-
-        # Divider color
-        if "divider" in config and "normal" in config["divider"]:
-            theme.common.divider = config["divider"]["normal"]
-
         # ------------------------------
         # Inheritance rules
         # ------------------------------
@@ -90,17 +87,21 @@ class StyleManager:
         # Map TOML key → InstallStyle attribute
         # ------------------------------
         widget_map = {
-            "button": ("button", ButtonStyle),
-            "radio": ("radio_button", RadioButtonStyle),
-            "checkbox": ("checkbox", CheckBoxStyle),
-            "switch": ("switch", SwitchStyle),
             "label": ("label", LabelStyle),
             "title": ("title", TitleStyle),
             "subtitle": ("subtitle", SubtitleStyle),
             "description": ("description", DescriptionStyle),
             "comment": ("comment", CommentStyle),
+            "divider": ("divider", DividerStyle),
+            "checkbox": ("checkbox", CheckBoxStyle),
+            "switch": ("switch", SwitchStyle),
+            "radio_button": ("radio_button", RadioButtonStyle),
+
+            "line_edit": ("line_edit", LineEditStyle),
+
             "group_box": ("groupbox", GroupBoxStyle),
             "icon_button": ("icon_button", IconButtonStyle),
+            "button": ("button", ButtonStyle),
         }
 
         # ------------------------------
@@ -141,9 +142,13 @@ class StyleManager:
                 widget_cfg.pop("font_weight", None)
 
             # Fill missing colors from common
-            for field in ("font_color", "font_color_disabled"):
+            common_fields = [f.name for f in fields(WidgetCommonColors)]
+
+            for field in common_fields:
                 if field not in widget_cfg and hasattr(widget, field):
-                    widget_cfg[field] = getattr(theme.common, field)
+                    # Only override if the default value is empty
+                    if getattr(widget, field) == "":
+                        widget_cfg[field] = getattr(theme.common, field)
 
             # Remove keys that are not in the dataclass fields to avoid TypeError in replace
             # (Optional but good practice if toml has extra keys)

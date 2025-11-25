@@ -1,0 +1,125 @@
+{'font_color': '#d4d4d8',
+ 'font_family': 'Segoe UI',
+ 'font_size': 10,
+ 'font_weight': 400}
+LabelStyle(font=FontConfig(family='Segoe UI', size=10, weight=400),
+           font_color='',
+           font_color_disabled='')
+{'font_color': '#7777FF',
+ 'font_family': 'Segoe UI',
+ 'font_size': 16,
+ 'font_weight': 800}
+TitleStyle(height=30,
+           font=FontConfig(family='Segoe UI', size=16, weight=800),
+           font_color='',
+           font_color_disabled='')
+{'font_color': '#c2c2c7ff',
+ 'font_family': 'Segoe UI',
+ 'font_size': 14,
+ 'font_weight': 600}
+SubtitleStyle(font=FontConfig(family='Segoe UI', size=12, weight=400),
+              font_color='',
+              font_color_disabled='')
+{'font_color': '#c2c2c7ff',
+ 'font_family': 'Segoe UI',
+ 'font_size': 10,
+ 'font_weight': 500}
+DescriptionStyle(font=FontConfig(family='Segoe UI', size=12, weight=400),
+                 font_color='',
+                 font_color_disabled='')
+{'font_color': '#a7a7a7',
+ 'font_family': 'Segoe UI',
+ 'font_size': 9,
+ 'font_weight': 400}
+CommentStyle(font=FontConfig(family='Segoe UI', size=10, weight=400),
+             font_color='',
+             font_color_disabled='')
+{'normal': '#474747'}
+DividerStyle(normal='', disabled='', thickness=1, min_length=40, padding=16)
+{'border': '#7c787f',
+ 'checked': '#7777FF',
+ 'disabled': '#474747',
+ 'pressed': '#7c787f',
+ 'size': 16}
+CheckBoxStyle(size=16,
+              box_size=14,
+              box_thickness=2,
+              pressed='',
+              border='',
+              normal='',
+              hover='',
+              disabled='',
+              checked='',
+              checked_text='')
+{'handle_disabled': '#232223',
+ 'handle_off': '#66636D',
+ 'handle_on': '#7777FF',
+ 'track_disabled': '#36343B',
+ 'track_off': '#4E4E4E',
+ 'track_on': '#4E4E4E'}
+SwitchStyle(track_height=24,
+            track_width=40,
+            handle_radius=18,
+            track_on='',
+            track_off='',
+            handle_on='',
+            handle_off='',
+            track_disabled='',
+            handle_disabled='')
+{'checked': '#7777FF',
+ 'disabled': '#232223',
+ 'pressed': '#7c787f',
+ 'unchecked': '#66636D'}
+RadioButtonStyle(size=14,
+                 radius=5,
+                 border_thickness=2,
+                 unchecked='',
+                 pressed='',
+                 checked='',
+                 disabled='')
+{'disabled': '#232223', 'hover': ''}
+LineEditStyle(hover='',
+              selection='',
+              disabled='',
+              font=FontConfig(family='Segoe UI', size=10, weight=500),
+              font_color='',
+              font_color_disabled='')
+{'disabled': '#A3A3D1', 'normal': '#5442bd'}
+IconButtonStyle(height=24, normal='', hover='', pressed='', disabled='')
+{'disabled': '#A3A3D1', 'hover': '#7777FF', 'normal': '#5442bd'}
+ButtonStyle(height=24,
+            normal='',
+            hover='',
+            pressed='',
+            checked='',
+            disabled='',
+            font=FontConfig(family='Segoe UI', size=10, weight=500),
+            font_color='',
+            font_color_disabled='')
+LineEditStyle:
+LineEditStyle(hover='',
+              selection='#7777FF',
+              disabled='#232223',
+              font=FontConfig(family='Segoe UI', size=10, weight=500),
+              font_color='#d4d4d8',
+              font_color_disabled='#4E4E4E')
+
+Common:
+WidgetCommonColors(height=24,
+                   radius=6,
+                   bgd='#424048',
+                   normal='',
+                   hover='#66636D',
+                   selection='#7777FF',
+                   pressed='#5555B3',
+                   disabled='#313131',
+                   border='#505053',
+                   border_selected='',
+                   font=FontConfig(family='Segoe UI', size=10, weight=500),
+                   font_color='#d4d4d8',
+                   font_color_checked='',
+                   font_color_disabled='#4E4E4E')
+
+FAILURES:
+hover: expected '#66636D', got ''
+

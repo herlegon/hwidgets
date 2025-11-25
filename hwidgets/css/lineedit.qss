@@ -3,17 +3,16 @@
 QLineEdit {
     background-color: $widget_bgd;
 
+    border-radius: $radius;
+    border: 1px solid $border_color;
+
+    padding: 0px $padding_right 2px $padding_left;
+
     color: $font_color;
     font-family: $font_family;
     font-size: $font_size;
 
-    border: 1px solid $border_color;
-    border-radius: $radius;
-
-    selection-background-color: $selected_text;
-
-    padding: 0px $padding_right 2px $padding_left;
-
+    selection-background-color: $selection;
 }
 
 
@@ -27,17 +26,16 @@ QLineEdit:read-only:hover {
 
 QLineEdit:focus {
     color: $font_color;
-    border: 1px solid $selected;
-
+    border: 1px solid $border_edition;
 }
 
 QLineEdit:hover {
-    background-color: $hover_bgd;
+    background-color: $hover;
 }
 
 
 QLineEdit:disabled {
-    background-color: $disabled_bgd;
+    background-color: $disabled;
     color: $font_color_disabled;
 }
 
