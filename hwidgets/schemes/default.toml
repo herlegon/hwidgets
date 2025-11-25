@@ -81,8 +81,8 @@ disabled = "#232223"
 [line_edit]
 disabled = "#232223"
 hover = ""
-button_hover = "#7e7effff"
-button_disabled = "#36343B"
+button_hover = "#7777FF"
+button_disabled = "#4E4E4E"
 
 
 

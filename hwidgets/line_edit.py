@@ -11,20 +11,26 @@ from PySide6.QtCore import (
 from PySide6.QtGui import (
     QIcon,
     QKeyEvent,
+    QPainter,
 )
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QPushButton,
     QWidget,
     QLineEdit,
+    QProxyStyle,
 )
+
+from hytils import red, yellow
 
 from .style_manager import Theme
 from .utils import (
     load_png_icon,
+    load_png_image,
     load_qss,
     make_tinted_pixmap,
 )
+
 
 
 class ClearButton(QPushButton):
@@ -37,19 +43,17 @@ class ClearButton(QPushButton):
         margin_right: int = 0,
     ):
         super().__init__(parent)
-
         size_hint = QSize(theme.common.height, theme.common.height)
         self.setFixedSize(size_hint)
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        btn_theme = theme.line_edit
+        btn_style = theme.line_edit
         icon_filename: str = "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png"
-        self.normal_icon = QIcon(make_tinted_pixmap(load_png_icon(icon_filename), btn_theme.selection))
-        self.hover_icon = QIcon(make_tinted_pixmap(load_png_icon(icon_filename), btn_theme.button_hover))
-        self.disabled_icon = QIcon(make_tinted_pixmap(load_png_icon(icon_filename), btn_theme.button_disabled))
-        self.setIcon(self.normal_icon)
+        self.normal_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.selection)
+        self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.button_hover)
+        self.disabled_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.button_disabled)
 
         qss = """
             QPushButton {{
@@ -60,24 +64,57 @@ class ClearButton(QPushButton):
         """.format(margin_right=margin_right)
         self.setStyleSheet(qss)
 
+
     def sizeHint(self):
         return super().sizeHint()
 
 
     def enterEvent(self, event):
-        if self.isEnabled():
-            self.setIcon(self.hover_icon)
-        else:
-            self.setIcon(self.disabled_icon)
+        if not self.isEnabled():
+            return
+        # self.setIcon(self.hover_icon)
         super().enterEvent(event)
 
 
     def leaveEvent(self, event):
-        if self.isEnabled():
-            self.setIcon(self.normal_icon)
-        else:
-            self.setIcon(self.disabled_icon)
+        if not self.isEnabled():
+            return
+        # self.setIcon(self.normal_icon)
         super().leaveEvent(event)
+
+
+    def setEnabled(self, b: bool):
+        super().setEnabled(b)
+        self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, not b)
+        if not b:
+            self.setIcon(self.disabled_pixmap)
+        else:
+            self.setIcon(self.normal_pixmap)
+
+
+    def paintEvent(self, event):
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+
+        # Draw background (transparent)
+        painter.fillRect(self.rect(), Qt.GlobalColor.transparent)
+
+        # Determine which icon to use based on parent state
+        if not self.isEnabled():
+            pixmap = self.disabled_pixmap
+        elif self.underMouse() and self.isEnabled():
+            pixmap = self.hover_pixmap
+        else:
+            pixmap = self.normal_pixmap
+
+        # Calculate centered position
+        button_rect = self.rect()
+        pixmap_rect = pixmap.rect()
+        x = (button_rect.width() - pixmap_rect.width()) // 2
+        y = (button_rect.height() - pixmap_rect.height()) // 2
+        # Draw pixmap at centered position
+        painter.drawPixmap(x, y, pixmap)
+        painter.end()
 
 
 
@@ -135,21 +172,19 @@ class HLineEdit(QLineEdit):
 
         # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
         self.signals_connected = False
-        self.is_clear_button_enabled: bool = False
+        self.clear_button_enabled: bool = False
+
         if readOnly is not None and readOnly:
             self.setReadOnly(True)
 
-        elif clearButtonEnabled is not None and clearButtonEnabled:
-            self.is_clear_button_enabled = True
-            self.setClearButtonEnabled(self.is_clear_button_enabled)
+        if clearButtonEnabled is not None and clearButtonEnabled:
+            self.clear_button_enabled = True
 
-        else:
-            self.setClearButtonEnabled(self.is_clear_button_enabled)
+        self.setClearButtonEnabled(self.clear_button_enabled)
 
-        self.clear_button.setVisible(False)
         self._update_stylesheet()
 
-        self.clear_button.released.connect(self.clear_button_released)
+        self.clear_button.clicked.connect(self.clear_button_clicked)
         # print(f"{__class__.__name__} Instanciated")
 
 
@@ -159,17 +194,17 @@ class HLineEdit(QLineEdit):
         le_style = self.le_theme
         radius = theme.common.radius
 
-        if not self.is_clear_button_enabled:
-            # self.clear_button.setFixedWidth(0)
-            self.clear_button.hide()
-            self.main_layout.invalidate()
-            padding_left, padding_right = radius, radius
-
-        else:
+        if self.clear_button_enabled:
+            # self.clear_button.setFixedWidth(theme.common.height)
             self.clear_button.show()
-            # self.clear_button.setFixedWidth(radius)
             self.main_layout.invalidate()
             padding_left, padding_right = radius, default_style.height
+
+        else:
+            self.clear_button.hide()
+            # self.clear_button.setFixedWidth(0)
+            self.main_layout.invalidate()
+            padding_left, padding_right = radius, radius
 
         qss_template = Template(load_qss("lineedit.qss"))
         qss = qss_template.substitute(
@@ -194,13 +229,13 @@ class HLineEdit(QLineEdit):
 
 
 
-    def clear_button_released(self):
+    def clear_button_clicked(self):
         self.clear()
         self.clear_button.hide()
 
 
     def event_text_changed(self, text: str) -> None:
-        if len(text) > 0:
+        if len(text) > 0 and not self.isReadOnly():
             self.clear_button.show()
         else:
             self.clear_button.hide()
@@ -216,58 +251,58 @@ class HLineEdit(QLineEdit):
 
 
     def setClearButtonEnabled(self, enable: bool) -> None:
-        # print(f"{self.objectName()} set clear button={enable} (ro: {self.isReadOnly()}, enabled: {self.isVisible()})")
-        self.blockSignals(True)
+        # Always remove native clear button
         super().setClearButtonEnabled(False)
+        self.clear_button_enabled = enable
 
-        if enable and not self.isReadOnly() and self.isEnabled():
-            self.is_clear_button_enabled = True
-            self._update_stylesheet()
-            self.main_layout.invalidate()
+        # print(f"{self.objectName()} set clear button to {enable} (ro: {self.isReadOnly()}, enabled: {self.isEnabled()}")
+        # self.blockSignals(True)
+
+        # Do not show if read only
+        if self.isReadOnly():
+            self.clear_button_enabled = False
+            self.clear_button.hide()
+
+        # Connect/disconnect signals
+        if self.clear_button_enabled:
             if not self.signals_connected:
-                # print(f"{__class__.__name__}   connect signals")
-                self.textChanged.connect(self.event_text_changed)
-                self.textEdited.connect(self.event_text_changed)
+                for signal in (self.textChanged, self.textEdited):
+                    try:
+                        signal.connect(self.event_text_changed)
+                    except (TypeError, RuntimeError):
+                        pass
                 self.signals_connected = True
-
         else:
-            self.is_clear_button_enabled = False
-            self._update_stylesheet()
-            self.main_layout.invalidate()
-
             if self.signals_connected:
                 for signal in (self.textChanged, self.textEdited):
                     try:
-                        # print(f"{__class__.__name__}   disconnect signal {signal}")
                         signal.disconnect(self.event_text_changed)
                     except (TypeError, RuntimeError):
                         pass
                 self.signals_connected = False
-        self.blockSignals(False)
+
+        self._update_stylesheet()
+        self.main_layout.invalidate()
+        # self.blockSignals(False)
 
 
     def setReadOnly(self, enable: bool=True) -> None:
         # print(f"{__class__.__name__} set ro={enable}")
         super().setReadOnly(enable)
-        if self.isEnabled():
-            self.setClearButtonEnabled(not enable)
-        else:
-            self.setClearButtonEnabled(False)
+        self.setClearButtonEnabled(not enable)
 
 
     def setEnabled(self, enable: bool) -> None:
-        # print(f"{__class__.__name__} set enabled={enable}")
         super().setEnabled(enable)
-        self.is_clear_button_enabled = (
+        self.clear_button_enabled = (
             enable if not self.isReadOnly() else False
         )
-        self.setClearButtonEnabled(self.is_clear_button_enabled)
+        self.clear_button.setEnabled(enable)
+        self.setClearButtonEnabled(self.clear_button_enabled)
 
 
     def setDisabled(self, enable: bool) -> None:
-        # print(f"{__class__.__name__} set disabled={enable}")
         self.setEnabled(not enable)
-
 
 
     def deselect_and_clear_focus(self):

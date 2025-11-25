@@ -79,7 +79,7 @@ def load_png_image(filename: str, h: int = -1) -> QPixmap:
                 pixmap.width(),
                 h,
                 aspectMode=Qt.AspectRatioMode.KeepAspectRatio,
-                # mode=Qt.TransformationMode.SmoothTransformation
+                mode=Qt.TransformationMode.SmoothTransformation
             )
     return pixmap
 
