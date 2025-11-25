@@ -50,7 +50,7 @@ class ClearButton(QPushButton):
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         btn_style = theme.line_edit
-        icon_filename: str = "cancel_22dp_000000_FILL0_wght400_GRAD0_opsz24.png"
+        icon_filename: str = "cancel_16dp_000000_FILL0_wght400_GRAD0_opsz24.png"
         self.normal_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.selection)
         self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.button_hover)
         self.disabled_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.button_disabled)
@@ -199,7 +199,7 @@ class HLineEdit(QLineEdit):
             self.main_layout.invalidate()
             padding_left, padding_right = radius, radius
 
-        qss_template = Template(load_qss("lineedit.qss"))
+        qss_template = Template(load_qss("line_edit.qss"))
         qss = qss_template.substitute(
             radius=f"{radius}px",
             padding_right=f"{padding_right}px",

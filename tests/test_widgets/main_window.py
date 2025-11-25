@@ -100,3 +100,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.h_comment_small_italic.setItalic(True)
         self.h_comment_small_italic.setFontSize(8)
 
+        self.h_plaintextedit_editable.setClearButtonEnabled(False)
+

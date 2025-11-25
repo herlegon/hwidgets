@@ -2,30 +2,23 @@ from string import Template
 from typing import Type
 
 from PySide6.QtCore import (
-    QSize,
     Qt,
     QSize,
     QRect,
-    QPoint,
     Signal,
     Slot,
     QTimer,
 )
 from PySide6.QtGui import (
-    QIcon,
     QMouseEvent,
     QPainter,
     QColor,
     QBrush,
 )
 from PySide6.QtWidgets import (
-    QHBoxLayout,
-    QPushButton,
     QWidget,
     QPlainTextEdit,
 )
-
-from hwidgets.scrollbar import HScrollBar
 
 from .style_manager import Theme
 from .line_edit import ClearButton
@@ -219,7 +212,6 @@ class HPlainTextEdit(QPlainTextEdit):
         self.signals_connected = False
 
         # self.setCursor(Qt.CursorShape.ArrowCursor)
-
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
@@ -228,7 +220,6 @@ class HPlainTextEdit(QPlainTextEdit):
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         self.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
-
 
         self.overlay_vbar: OverlayVScrollBar = None
         self._update_timer: QTimer = None
@@ -294,18 +285,16 @@ class HPlainTextEdit(QPlainTextEdit):
         le_style = self.le_theme
         radius = theme.common.radius
 
+        padding_left, padding_right = radius, radius
         if self.clear_button_enabled:
             # self.clear_button.setFixedWidth(theme.common.height)
             self.clear_button.show()
-            padding_left, padding_right = radius, default_style.height
-
         else:
             self.clear_button.hide()
             # self.clear_button.setFixedWidth(0)
-            padding_left, padding_right = radius, radius
 
         # Use line_edit style
-        qss_template = Template(load_qss("plaintextedit.qss"))
+        qss_template = Template(load_qss("plain_text_edit.qss"))
         qss = qss_template.substitute(
             radius=f"{radius}px",
             padding_right=f"{padding_right}px",

@@ -6,7 +6,7 @@ QPlainTextEdit {
     border-radius: $radius;
     border: 1px solid $border_color;
 
-    padding: 0px, $padding_right, 2px, $padding_left;
+    padding: 0px $padding_right 2px $padding_left;
 
     color: $font_color;
     font-family: $font_family;
