@@ -23,7 +23,7 @@ from .label import (
     HComment,
 )
 from .line_edit import HLineEdit
-from .plaintextedit import HPlainTextEdit
+from .plain_text_edit import HPlainTextEdit
 from .radial_progress_bar import HRadialProgress
 from .radio_button import HRadioButton
 from .scrollbar import HScrollBar

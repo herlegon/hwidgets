@@ -86,13 +86,11 @@ class ClearButton(QPushButton):
     def setEnabled(self, b: bool):
         super().setEnabled(b)
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, not b)
-        if not b:
-            self.setIcon(self.disabled_pixmap)
-        else:
-            self.setIcon(self.normal_pixmap)
 
 
     def paintEvent(self, event):
+        if not self.isVisible():
+            return
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
 
@@ -150,8 +148,6 @@ class HLineEdit(QLineEdit):
         self.theme = theme
         self.le_theme = theme.line_edit
 
-        # self.setCursor(Qt.CursorShape.ArrowCursor)
-
         self.setFixedHeight(theme.common.height)
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
@@ -173,13 +169,10 @@ class HLineEdit(QLineEdit):
         # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
         self.signals_connected = False
         self.clear_button_enabled: bool = False
-
         if readOnly is not None and readOnly:
             self.setReadOnly(True)
-
         if clearButtonEnabled is not None and clearButtonEnabled:
             self.clear_button_enabled = True
-
         self.setClearButtonEnabled(self.clear_button_enabled)
 
         self._update_stylesheet()
@@ -228,17 +221,17 @@ class HLineEdit(QLineEdit):
         self.setStyleSheet(qss)
 
 
-
     def clear_button_clicked(self):
         self.clear()
         self.clear_button.hide()
 
 
     def event_text_changed(self, text: str) -> None:
-        if len(text) > 0 and not self.isReadOnly():
+        if len(text) > 0 and not self.isReadOnly() and self.clear_button_enabled:
             self.clear_button.show()
         else:
             self.clear_button.hide()
+
 
     def clear(self) -> None:
         self.clear_button.hide()
@@ -265,6 +258,7 @@ class HLineEdit(QLineEdit):
 
         # Connect/disconnect signals
         if self.clear_button_enabled:
+            self.clear_button.show()
             if not self.signals_connected:
                 for signal in (self.textChanged, self.textEdited):
                     try:
@@ -273,6 +267,7 @@ class HLineEdit(QLineEdit):
                         pass
                 self.signals_connected = True
         else:
+            self.clear_button.hide()
             if self.signals_connected:
                 for signal in (self.textChanged, self.textEdited):
                     try:

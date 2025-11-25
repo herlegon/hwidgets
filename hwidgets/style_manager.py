@@ -12,6 +12,7 @@ from .styles import (
     FontConfig,
     GroupBoxStyle,
     LineEditStyle,
+    ScrollBarStyle,
     Theme,
     LabelStyle,
     RadioButtonStyle,
@@ -98,6 +99,7 @@ class StyleManager:
             "radio_button": ("radio_button", RadioButtonStyle),
 
             "line_edit": ("line_edit", LineEditStyle),
+            "scrollbar": ("scrollbar", ScrollBarStyle),
 
             "group_box": ("groupbox", GroupBoxStyle),
             "icon_button": ("icon_button", IconButtonStyle),

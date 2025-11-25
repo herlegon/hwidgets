@@ -147,6 +147,11 @@ class PlainTextEditStyle(LineEditStyle):
 
 
 
+@dataclass
+class ScrollBarStyle:
+    vtrack_width: int = 8
+    normal: str = ""
+    hover: str = ""
 
 
 
@@ -188,13 +193,6 @@ class FrameStyle:
     font_color_disabled: str = ""
 
 
-
-
-
-
-@dataclass
-class ScrollBarStyle:
-    track_width: int = 8
 
 
 

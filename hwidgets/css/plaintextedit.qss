@@ -3,20 +3,16 @@
 QPlainTextEdit {
     background-color: $widget_bgd;
 
+    border-radius: $radius;
+    border: 1px solid $border_color;
+
+    padding: 0px, $padding_right, 2px, $padding_left;
+
     color: $font_color;
     font-family: $font_family;
     font-size: $font_size;
 
-    border: 1px solid $border_color;
-    border-radius: $radius;
-
-    selection-background-color: $selected_text;
-
-    padding-left: $radius;
-    padding-bottom: 2px;
-    padding-top: 0px;
-    padding-right: $radius;
-
+    selection-background-color: $selection;
 }
 
 
@@ -30,17 +26,17 @@ QPlainTextEdit:read-only:hover {
 
 QPlainTextEdit:focus {
     color: $font_color;
-    border: 1px solid $selected;
-
+    border: 1px solid $border_edition;
 }
 
+
 QPlainTextEdit:hover {
-    background-color: $hover_bgd;
+    background-color: $hover;
 }
 
 
 QPlainTextEdit:disabled {
-    background-color: $disabled_bgd;
+    background-color: $disabled;
     color: $font_color_disabled;
 }
 

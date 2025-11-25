@@ -85,6 +85,13 @@ button_hover = "#7777FF"
 button_disabled = "#4E4E4E"
 
 
+[plain_text_edit]
+# Use line_edit style
+
+
+[scrollbar]
+normal = "#66636D"
+hover = "#7777FF"
 
 
 

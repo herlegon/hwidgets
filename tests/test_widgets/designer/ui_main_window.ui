@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1000</width>
-    <height>860</height>
+    <width>662</width>
+    <height>538</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -366,6 +366,111 @@
               <bool>true</bool>
              </property>
             </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="plaintextedit_layout">
+           <item>
+            <widget class="QPlainTextEdit" name="h_plaintextedit_editable">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="plainText">
+              <string>editable
+sdsdc</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPlainTextEdit" name="h_plaintextedit_editable_vscrollbar">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="plainText">
+              <string>editable
+multiple lines
+for scrollbar
+with test
+</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPlainTextEdit" name="h_plaintextedit_editable_scrollbars">
+             <property name="maximumSize">
+              <size>
+               <width>150</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="lineWrapMode">
+              <enum>QPlainTextEdit::LineWrapMode::WidgetWidth</enum>
+             </property>
+             <property name="plainText">
+              <string>editable
+multiple lines with very large text for hscrollbar
+for scrollbar 
+with test
+and
+a lot
+of vertical text
+</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPlainTextEdit" name="h_plaintextedit_readonly">
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+             <property name="plainText">
+              <string>read only
+</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPlainTextEdit" name="h_plaintextedit_disabled">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>100</width>
+               <height>150</height>
+              </size>
+             </property>
+             <property name="plainText">
+              <string>disabled
+</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_6">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </item>

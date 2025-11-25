@@ -41,7 +41,7 @@ from .utils import (
 class OverlayVScrollBar(QWidget):
     valueChanged = Signal(int)
 
-    def __init__(self, parent=None, radius=8, width=12):
+    def __init__(self, parent, theme: Theme, radius=8, width=12):
         super().__init__(parent)
         self.corner_radius = radius
         self._base_width = 3
@@ -58,6 +58,10 @@ class OverlayVScrollBar(QWidget):
         self._page_step = 10
         self.setMouseTracking(True)
         self.setFixedWidth(width)
+
+        self.normal_brush = QBrush(QColor(theme.scrollbar.normal))
+        self.hover_brush = QBrush(QColor(theme.scrollbar.hover))
+
 
     def setRange(self, minimum, maximum):
         self._minimum = minimum
@@ -158,8 +162,9 @@ class OverlayVScrollBar(QWidget):
         # anti-aliasing off for performance
         painter.fillRect(self.rect(), Qt.transparent)
         handle_rect = self._handle_rect()
-        color = QColor("#77f") if self._hovered else QColor("#66c")
-        painter.setBrush(QBrush(color))
+        painter.setBrush(
+            self.hover_brush if self._hovered else self.normal_brush
+        )
         painter.setPen(Qt.PenStyle.NoPen)
         radius = round(self.width() /2)
         # print(f"radius= {radius}")
@@ -210,14 +215,14 @@ class HPlainTextEdit(QPlainTextEdit):
     ) -> None:
         super().__init__(parent)
         self.theme = theme
+        self.le_theme = theme.line_edit
+        self.signals_connected = False
 
-        self.setCursor(Qt.CursorShape.ArrowCursor)
+        # self.setCursor(Qt.CursorShape.ArrowCursor)
 
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        # self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
-
 
         # Replace the default scrollbars
         self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
@@ -229,7 +234,7 @@ class HPlainTextEdit(QPlainTextEdit):
         self._update_timer: QTimer = None
 
         radius: int = theme.common.radius
-        self.overlay_vbar = OverlayVScrollBar(self, radius=radius, width=radius)
+        self.overlay_vbar = OverlayVScrollBar(self, theme=theme, radius=radius, width=radius)
 
         # use QTimer to throttle updates for smoother scrolling
         self._update_timer = QTimer(self)
@@ -242,27 +247,23 @@ class HPlainTextEdit(QPlainTextEdit):
         self.overlay_vbar.valueChanged.connect(self._on_overlay_value_changed)
         self._sync_overlay_from_native()
 
-        self.clear_button = ClearButton(self, hstyle=theme)
+        self.clear_button = ClearButton(self, theme=theme)
 
         self.viewport().setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.viewport().setStyleSheet("background: transparent;")
 
-        self.is_clear_button_enabled: bool = False
+        self.signals_connected = False
+        self.clear_button_enabled: bool = False
         if readOnly is not None and readOnly:
             self.setReadOnly(True)
+        if clearButtonEnabled is not None and clearButtonEnabled:
+            self.clear_button_enabled = True
+        self.setClearButtonEnabled(self.clear_button_enabled)
 
-        elif clearButtonEnabled is not None and clearButtonEnabled:
-            self.is_clear_button_enabled = True
-            self.setClearButtonEnabled(self.is_clear_button_enabled)
-
-        else:
-            self.setClearButtonEnabled(self.is_clear_button_enabled)
-
-        self.clear_button.setVisible(False)
         self._update_stylesheet()
 
         # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
-        self.signals_connected = False
+
         if readOnly is not None and readOnly:
             self.setReadOnly(True)
 
@@ -272,7 +273,7 @@ class HPlainTextEdit(QPlainTextEdit):
         else:
             self.setClearButtonEnabled(False)
 
-        self.clear_button.released.connect(self.clear_button_released)
+        self.clear_button.clicked.connect(self.clear_button_clicked)
 
         # Connect scrollbar events
         # vertical_scrollbar = self.verticalScrollBar()
@@ -289,46 +290,45 @@ class HPlainTextEdit(QPlainTextEdit):
 
     def _update_stylesheet(self) -> None:
         theme: Theme = self.theme
-        le_theme = theme.line_edit
+        default_style = theme.common
+        le_style = self.le_theme
         radius = theme.common.radius
 
-        if not self.is_clear_button_enabled:
-            self.clear_button.setFixedWidth(0)
-            self.clear_button.hide()
-            # self.main_layout.invalidate()
-            padding_left, padding_right = radius, radius
+        if self.clear_button_enabled:
+            # self.clear_button.setFixedWidth(theme.common.height)
+            self.clear_button.show()
+            padding_left, padding_right = radius, default_style.height
 
         else:
-            self.clear_button.show()
-            self.clear_button.setFixedWidth(radius)
-            # self.main_layout.invalidate()
-            padding_left, padding_right = radius, theme.common.height
+            self.clear_button.hide()
+            # self.clear_button.setFixedWidth(0)
+            padding_left, padding_right = radius, radius
 
         # Use line_edit style
         qss_template = Template(load_qss("plaintextedit.qss"))
         qss = qss_template.substitute(
+            radius=f"{radius}px",
             padding_right=f"{padding_right}px",
             padding_left=f"{padding_left}px",
 
-            widget_bgd=f"{theme.common}",
-            font_color=f"{le_theme.font_color}",
-            radius=f"{radius}px",
-            hover_bgd=f"{le_theme.hover}",
-            border_color=f"{theme.common.border}",
-            disabled_bgd=f"{le_theme.disabled}",
-            font_color_disabled=f"{le_theme.font_color_disabled}",
-            editing_border=f"{le_theme.selected}",
-            selected_text=f"{le_theme.font_color_selection}",
-            selected=f"{le_theme.selected}",
-            font_family=f"\"{le_theme.font.family}\"",
-            font_size=f"{le_theme.font.size}pt",
+            widget_bgd=f"{default_style.bgd}",
+            hover=f"{le_style.hover}",
+            border_color=f"{default_style.border}",
+            border_edition=f"{le_style.selection}",
+
+            selection=f"{le_style.selection}",
+            disabled=f"{le_style.disabled}",
+
+            font_family=f"\"{le_style.font.family}\"",
+            font_size=f"{le_style.font.size}pt",
+            font_color=f"{le_style.font_color}",
+            font_color_disabled=f"{le_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
 
         # for HLineEdit, it's set in the qss file. here because the button has
         #   to be moved, it can't be done in the stylesheet
         self.margin = 6
-
 
 
     @Slot(int, int)
@@ -383,7 +383,7 @@ class HPlainTextEdit(QPlainTextEdit):
         self.update_clear_button_position()
 
 
-    def clear_button_released(self):
+    def clear_button_clicked(self):
         self.clear()
         self.clear_button.hide()
 
@@ -403,7 +403,7 @@ class HPlainTextEdit(QPlainTextEdit):
 
 
     def event_text_changed(self) -> None:
-        if self.toPlainText():
+        if self.toPlainText() and not self.isReadOnly():
             self.clear_button.show()
         else:
             self.clear_button.hide()

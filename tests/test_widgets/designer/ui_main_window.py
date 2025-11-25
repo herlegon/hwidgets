@@ -17,8 +17,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QFrame,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QRadioButton, QSizePolicy, QSpacerItem, QVBoxLayout,
-    QWidget)
+    QPlainTextEdit, QRadioButton, QSizePolicy, QSpacerItem,
+    QVBoxLayout, QWidget)
 
 from typing import Type
 from hwidgets import (
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1000, 860)
+        MainWindow.resize(662, 538)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -269,6 +269,48 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.lineedit_layout)
 
+        self.plaintextedit_layout = QHBoxLayout()
+        self.plaintextedit_layout.setObjectName(u"plaintextedit_layout")
+        self.h_plaintextedit_editable = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_editable.setObjectName(u"h_plaintextedit_editable")
+        self.h_plaintextedit_editable.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable)
+
+        self.h_plaintextedit_editable_vscrollbar = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_editable_vscrollbar.setObjectName(u"h_plaintextedit_editable_vscrollbar")
+        self.h_plaintextedit_editable_vscrollbar.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable_vscrollbar)
+
+        self.h_plaintextedit_editable_scrollbars = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_editable_scrollbars.setObjectName(u"h_plaintextedit_editable_scrollbars")
+        self.h_plaintextedit_editable_scrollbars.setMaximumSize(QSize(150, 150))
+        self.h_plaintextedit_editable_scrollbars.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable_scrollbars)
+
+        self.h_plaintextedit_readonly = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_readonly.setObjectName(u"h_plaintextedit_readonly")
+        self.h_plaintextedit_readonly.setMaximumSize(QSize(100, 150))
+        self.h_plaintextedit_readonly.setReadOnly(True)
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_readonly)
+
+        self.h_plaintextedit_disabled = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_disabled.setObjectName(u"h_plaintextedit_disabled")
+        self.h_plaintextedit_disabled.setEnabled(False)
+        self.h_plaintextedit_disabled.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_disabled)
+
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.plaintextedit_layout.addItem(self.horizontalSpacer_6)
+
+
+        self.main_layout.addLayout(self.plaintextedit_layout)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout.addItem(self.verticalSpacer_2)
@@ -313,5 +355,24 @@ class Ui_MainWindow(object):
         self.h_lineedit_editable_clear_button.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
         self.h_lineedit_disabled.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
         self.h_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
+        self.h_plaintextedit_editable.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"sdsdc", None))
+        self.h_plaintextedit_editable_vscrollbar.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"multiple lines\n"
+"for scrollbar\n"
+"with test\n"
+"", None))
+        self.h_plaintextedit_editable_scrollbars.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"multiple lines with very large text for hscrollbar\n"
+"for scrollbar \n"
+"with test\n"
+"and\n"
+"a lot\n"
+"of vertical text\n"
+"", None))
+        self.h_plaintextedit_readonly.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
+"", None))
+        self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
+"", None))
     # retranslateUi
 
