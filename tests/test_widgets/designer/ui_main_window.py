@@ -54,7 +54,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(662, 567)
+        MainWindow.resize(662, 565)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)

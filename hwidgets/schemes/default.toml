@@ -95,9 +95,9 @@ hover = "#7777FF"
 
 
 [spinbox]
-button_hover = "#7c787f"
-button_pressed = "#7c787f"
-
+button_hover = "#66636D"
+button_pressed = "#66636D"
+button_disabled = "#232223"
 
 
 [button]

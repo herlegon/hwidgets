@@ -19,17 +19,6 @@ QDoubleSpinBox {
 }
 
 
-QSpinBox:read-only,
-QDoubleSpinBox:read-only,
-QSpinBox:read-only:focus,
-QDoubleSpinBox:read-only:focus,
-QSpinBox:read-only:hover,
-QDoubleSpinBox:read-only:hover {
-    background-color: $widget_bgd;
-    border: 1px solid $border_color;
-}
-
-
 QSpinBox:focus,
 QDoubleSpinBox:focus{
     border: 1px solid $border_edition;
@@ -40,23 +29,29 @@ QSpinBox:disabled,
 QDoubleSpinBox:disabled {
     background-color: $disabled;
     color: $font_color_disabled;
-    border: 1px solid $disabled;
 }
 
 
-/* HSpinBox[hover="true"],
-HDoubleSpinBox[hover="true"] {
-    border: 1px solid $hover;
-} */
+HSpinBox[editing="true"],
+HDoubleSpinBox[editing="true"] {
+    border: 1px solid $border_edition;
+}
+
+HSpinBox[editing="false"],
+HDoubleSpinBox[editing="false"] {
+    border: 1px solid $border_color;
+}
 
 
-
-/* QSpinBox:read-only:focus,
+/* Moved to bottom to ensure precedence */
+QSpinBox:read-only,
+QDoubleSpinBox:read-only,
+QSpinBox:read-only:focus,
 QDoubleSpinBox:read-only:focus,
 QSpinBox:read-only:hover,
 QDoubleSpinBox:read-only:hover,
-QSpinBox:read-only[hover="true"],
-QDoubleSpinBox:read-only[hover="true"] {
+HSpinBox:read-only,
+HDoubleSpinBox:read-only {
     background-color: $widget_bgd;
-    border: none;
-} */
+    border: 1px solid $border_color;
+}

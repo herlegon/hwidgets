@@ -169,6 +169,7 @@ class SpinBoxStyle:
     button_color: str = ""
     button_hover: str = ""
     button_pressed: str = ""
+    button_disabled: str = ""
 
 
     font: FontConfig = FontConfig(weight=500)

@@ -19,6 +19,7 @@ from PySide6.QtGui import (
     QPixmap,
     QPainterPath,
     QPen,
+    QMouseEvent,
 )
 from PySide6.QtWidgets import (
     QDoubleSpinBox,
@@ -38,6 +39,7 @@ from .utils import load_qss
 
 class HSpinBoxButton(QPushButton):
     hovered = Signal(bool)  # True when entered, False when left
+    pressed = Signal(bool)  # True when entered, False when left
 
     def __init__(
         self,
@@ -59,8 +61,8 @@ class HSpinBoxButton(QPushButton):
         button_width, button_height = size.toTuple()
         self.setFixedSize(button_width, button_height)
         # symbol
-        x, y = button_width // 2 - 1, button_height // 2
-        length = min(button_width, button_height) // 4
+        x, y = button_width / 2 - 1, button_height / 2 - 1
+        length = min(button_width, button_height) / 4
 
         self.setFlat(True)
         self.setCursor(Qt.CursorShape.ArrowCursor)
@@ -74,7 +76,7 @@ class HSpinBoxButton(QPushButton):
             'normal': (default_style.bgd, sb_style.font_color),
             'hover': (sb_style.button_hover, sb_style.font_color),
             'pressed': (sb_style.button_pressed, sb_style.font_color),
-            'disabled': (sb_style.disabled, sb_style.font_color_disabled),
+            'disabled': (sb_style.button_disabled, sb_style.font_color_disabled),
         }
 
         self.pixmaps = {}
@@ -99,7 +101,6 @@ class HSpinBoxButton(QPushButton):
                 path.lineTo(right, bottom)
 
             else:
-                right -= 1
                 path.lineTo(right, top)
                 path.lineTo(right, bottom - radius//2)
                 path.arcTo(right - radius, bottom - radius, radius, radius, 0, -90)
@@ -114,11 +115,10 @@ class HSpinBoxButton(QPushButton):
             pen.setWidth(1)
             painter.setPen(pen)
             if kind == 'minus':
-                painter.drawLine(x - length, y - 1, x + length, y - 1)
+                painter.drawLine(x - length, y, x + length, y)
             else:
                 painter.drawLine(x - length, y, x + length, y)
                 painter.drawLine(x, y - length, x, y + length)
-
             painter.end()
 
             self.pixmaps[f"{self.kind}_{state}"] = pixmap
@@ -144,6 +144,18 @@ class HSpinBoxButton(QPushButton):
         if self.isEnabled() and not self.isReadOnly():
             self.hovered.emit(False)
         super().leaveEvent(event)
+
+
+    def mousePressEvent(self, e: QMouseEvent):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self.pressed.emit(True)
+        return super().mousePressEvent(e)
+
+
+    def mouseReleaseEvent(self, e: QMouseEvent):
+        if e.button() == Qt.MouseButton.LeftButton:
+            self.pressed.emit(False)
+        return super().mouseReleaseEvent(e)
 
 
     def paintEvent(self, event: QEvent):
@@ -213,7 +225,7 @@ class HCommonSpinBox:
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.main_layout.addStretch(1)
 
-        button_size = QSize(height//2 + radius, height//2)
+        button_size = QSize(height//2 + radius - 2, height//2)
         self.plus_button = HSpinBoxButton(self, kind='plus', theme=theme, size=button_size)
         self.plus_button.setCursor(Qt.CursorShape.PointingHandCursor)
         self.plus_button.setFlat(True)
@@ -251,7 +263,7 @@ class HCommonSpinBox:
             # button_width=f"{20}px",
 
             widget_bgd=f"{default_style.bgd}",
-            hover=f"{le_style.selection}",
+            # hover=f"{le_style.selection}",
             border_color=f"{default_style.border}",
             border_edition=f"{le_style.selection}",
 
@@ -270,8 +282,8 @@ class HCommonSpinBox:
         self.lineEdit().deselect()
         self._saved_value = self.value()
         # When focus in/out happens the QLineEdit will emit signals and generate events.
-        self._hovered = None
-        self._pressed = None
+        self._hovered = False
+        self._pressed = False
 
         self.lineEdit().installEventFilter(self)
 
@@ -286,12 +298,14 @@ class HCommonSpinBox:
         self.minus_button.released.connect(fct)
 
         self._button_hover = False
+        self._button_pressed = False
         # self.setMouseTracking(True)
         # # self.setMouseTracking(True)
         # ensure we get hover events even when children are under the cursor
         self.setAttribute(Qt.WidgetAttribute.WA_Hover, True)
         for btn in (self.plus_button, self.minus_button):
             btn.hovered.connect(self._on_button_hover_changed)
+            btn.pressed.connect(self._on_button_pressed_changed)
 
         self.signals_connected = True
         self.plus_button.clicked.connect(self.stepUp)
@@ -328,14 +342,41 @@ class HCommonSpinBox:
         super().setReadOnly(b)
 
 
-    def enterEvent(self, event):
-        self._set_hover(True)
-        super().enterEvent(event)
+    # def enterEvent(self, event):
+    #     self._set_hover(True)
+    #     super().enterEvent(event)
 
 
-    def leaveEvent(self, event):
-        self._set_hover(False)
-        super().leaveEvent(event)
+    # def leaveEvent(self, event):
+    #     self._set_hover(False)
+    #     super().leaveEvent(event)
+
+
+    def eventFilter(self, source: QWidget, event: QEvent):
+        if source == self.lineEdit():
+            if event.type() == QEvent.Type.FocusOut:
+                self._set_editing(False)
+
+            elif event.type() in (
+                QEvent.Type.MouseButtonPress,
+                QEvent.Type.Wheel,
+            ):
+                self._set_editing(True)
+
+        return super().eventFilter(source, event)
+
+
+    def focusOutEvent(self, event):
+        self._set_editing(False)
+        super().focusOutEvent(event)
+
+
+    def focusInEvent(self, event):
+        if self.isReadOnly():
+            self._set_editing(False)
+            self.deselect_and_clear_focus_delayed()
+            return
+        super().focusInEvent(event)
 
 
     def _on_button_hover_changed(self, hovered: bool):
@@ -353,6 +394,27 @@ class HCommonSpinBox:
         elif hover == self.property("hover"):
             return
         self.setProperty("hover", hover)
+        style = self.style()
+        style.unpolish(self)
+        style.polish(self)
+        self.update()
+
+
+    def _on_button_pressed_changed(self, pressed: bool):
+        if self.isEnabled() and not self.isReadOnly():
+            self._button_pressed = pressed
+            if pressed:
+                self._set_editing(True)
+        else:
+            self._button_pressed = False
+
+
+    def _set_editing(self, editing: bool):
+        if self.isReadOnly() or not self.isEnabled():
+            editing = False
+        elif editing == self.property("editing"):
+            return
+        self.setProperty("editing", editing)
         style = self.style()
         style.unpolish(self)
         style.polish(self)
@@ -390,7 +452,7 @@ class HCommonSpinBox:
     def deselect_and_clear_focus(self):
         # print(f"{__class__.__name__} deselect and clear focus")
         self.deselect_value()
-        self.lineEdit().clearFocus()
+        # self.lineEdit().clearFocus()
 
 
     def deselect_and_clear_focus_delayed(self):
