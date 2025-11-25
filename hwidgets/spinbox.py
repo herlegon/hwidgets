@@ -91,6 +91,9 @@ class HSpinBoxButton(QPushButton):
             rect = QRect(0, 0, button_width, button_height)
             top = 0
             bottom, right = rect.bottom(), rect.right() + 1
+            if state in ('normal', 'disabled'):
+                right -= 1
+                bottom -= 1
             path.moveTo(0, top)
             offset = 5
             if kind == "plus":

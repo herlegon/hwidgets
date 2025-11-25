@@ -27,6 +27,7 @@ from hwidgets import (
     HCheckBox,
     HComboBox,
     HDoubleSpinBox,
+    HFrame,
     HGroupBox,
     HLabel,
     HLineEdit,
@@ -54,13 +55,13 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(662, 565)
+        MainWindow.resize(942, 994)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
         self.horizontalLayout.setObjectName(u"horizontalLayout")
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
-        self.h_frame = QFrame(self.centralwidget)
+        self.h_frame = HFrame(self.centralwidget, theme=theme)
         self.h_frame.setObjectName(u"h_frame")
         self.h_frame.setFrameShape(QFrame.Shape.StyledPanel)
         self.h_frame.setFrameShadow(QFrame.Shadow.Raised)
@@ -381,7 +382,285 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.h_spinbox_layout)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.q_frame_layout = QHBoxLayout()
+        self.q_frame_layout.setObjectName(u"q_frame_layout")
+        self.h_frame_styled_raised = HFrame(self.h_frame, theme=theme)
+        self.h_frame_styled_raised.setObjectName(u"h_frame_styled_raised")
+        self.h_frame_styled_raised.setFrameShape(QFrame.Shape.StyledPanel)
+        self.h_frame_styled_raised.setFrameShadow(QFrame.Shadow.Plain)
+        self.verticalLayout_9 = QVBoxLayout(self.h_frame_styled_raised)
+        self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.h_comment_bold_2 = HComment(self.h_frame_styled_raised, theme=theme)
+        self.h_comment_bold_2.setObjectName(u"h_comment_bold_2")
+        self.h_comment_bold_2.setWordWrap(True)
+
+        self.verticalLayout_9.addWidget(self.h_comment_bold_2)
+
+        self.h_comment_italic_2 = HComment(self.h_frame_styled_raised, theme=theme)
+        self.h_comment_italic_2.setObjectName(u"h_comment_italic_2")
+        self.h_comment_italic_2.setWordWrap(True)
+
+        self.verticalLayout_9.addWidget(self.h_comment_italic_2)
+
+        self.h_description_2 = HDescription(self.h_frame_styled_raised, theme=theme)
+        self.h_description_2.setObjectName(u"h_description_2")
+        self.h_description_2.setWordWrap(True)
+
+        self.verticalLayout_9.addWidget(self.h_description_2)
+
+        self.labels_layout_2 = QHBoxLayout()
+        self.labels_layout_2.setObjectName(u"labels_layout_2")
+        self.h_label_2 = HLabel(self.h_frame_styled_raised, theme=theme)
+        self.h_label_2.setObjectName(u"h_label_2")
+
+        self.labels_layout_2.addWidget(self.h_label_2)
+
+        self.h_label_disabled_2 = HLabel(self.h_frame_styled_raised, theme=theme)
+        self.h_label_disabled_2.setObjectName(u"h_label_disabled_2")
+        self.h_label_disabled_2.setEnabled(False)
+
+        self.labels_layout_2.addWidget(self.h_label_disabled_2)
+
+
+        self.verticalLayout_9.addLayout(self.labels_layout_2)
+
+        self.horizontalLayout_5 = QHBoxLayout()
+        self.horizontalLayout_5.setObjectName(u"horizontalLayout_5")
+        self.h_checkbox_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
+        self.h_checkbox_2.setObjectName(u"h_checkbox_2")
+
+        self.horizontalLayout_5.addWidget(self.h_checkbox_2)
+
+        self.h_checkbox_clicked_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
+        self.h_checkbox_clicked_2.setObjectName(u"h_checkbox_clicked_2")
+        self.h_checkbox_clicked_2.setChecked(True)
+
+        self.horizontalLayout_5.addWidget(self.h_checkbox_clicked_2)
+
+        self.h_checkbox_disabled_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
+        self.h_checkbox_disabled_2.setObjectName(u"h_checkbox_disabled_2")
+        self.h_checkbox_disabled_2.setEnabled(False)
+
+        self.horizontalLayout_5.addWidget(self.h_checkbox_disabled_2)
+
+        self.h_checkbox_disabled_clicked_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
+        self.h_checkbox_disabled_clicked_2.setObjectName(u"h_checkbox_disabled_clicked_2")
+        self.h_checkbox_disabled_clicked_2.setEnabled(False)
+        self.h_checkbox_disabled_clicked_2.setChecked(True)
+
+        self.horizontalLayout_5.addWidget(self.h_checkbox_disabled_clicked_2)
+
+        self.horizontalSpacer_4 = QSpacerItem(10, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_5.addItem(self.horizontalSpacer_4)
+
+        self.h_switch_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_2.setObjectName(u"h_switch_2")
+
+        self.horizontalLayout_5.addWidget(self.h_switch_2)
+
+        self.h_switch_checked_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_checked_2.setObjectName(u"h_switch_checked_2")
+        self.h_switch_checked_2.setChecked(True)
+
+        self.horizontalLayout_5.addWidget(self.h_switch_checked_2)
+
+        self.h_switch_disabled_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_disabled_2.setObjectName(u"h_switch_disabled_2")
+        self.h_switch_disabled_2.setEnabled(False)
+        self.h_switch_disabled_2.setCheckable(True)
+
+        self.horizontalLayout_5.addWidget(self.h_switch_disabled_2)
+
+        self.h_switch_disabled_checked_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_disabled_checked_2.setObjectName(u"h_switch_disabled_checked_2")
+        self.h_switch_disabled_checked_2.setEnabled(False)
+        self.h_switch_disabled_checked_2.setChecked(True)
+
+        self.horizontalLayout_5.addWidget(self.h_switch_disabled_checked_2)
+
+
+        self.verticalLayout_9.addLayout(self.horizontalLayout_5)
+
+        self.radio_layout_2 = QHBoxLayout()
+        self.radio_layout_2.setObjectName(u"radio_layout_2")
+        self.h_radiobutton_enabled_off_2 = HRadioButton(self.h_frame_styled_raised, theme=theme)
+        self.h_radiobutton_enabled_off_2.setObjectName(u"h_radiobutton_enabled_off_2")
+        self.h_radiobutton_enabled_off_2.setChecked(False)
+
+        self.radio_layout_2.addWidget(self.h_radiobutton_enabled_off_2)
+
+        self.h_radiobutton_enabled_on_2 = HRadioButton(self.h_frame_styled_raised, theme=theme)
+        self.h_radiobutton_enabled_on_2.setObjectName(u"h_radiobutton_enabled_on_2")
+        self.h_radiobutton_enabled_on_2.setChecked(True)
+
+        self.radio_layout_2.addWidget(self.h_radiobutton_enabled_on_2)
+
+        self.h_radiobutton_disabled_on_2 = HRadioButton(self.h_frame_styled_raised, theme=theme)
+        self.h_radiobutton_disabled_on_2.setObjectName(u"h_radiobutton_disabled_on_2")
+        self.h_radiobutton_disabled_on_2.setEnabled(False)
+        self.h_radiobutton_disabled_on_2.setChecked(False)
+
+        self.radio_layout_2.addWidget(self.h_radiobutton_disabled_on_2)
+
+        self.h_radiobutton_disabled_off_2 = HRadioButton(self.h_frame_styled_raised, theme=theme)
+        self.h_radiobutton_disabled_off_2.setObjectName(u"h_radiobutton_disabled_off_2")
+        self.h_radiobutton_disabled_off_2.setEnabled(False)
+
+        self.radio_layout_2.addWidget(self.h_radiobutton_disabled_off_2)
+
+        self.horizontalSpacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.radio_layout_2.addItem(self.horizontalSpacer_2)
+
+
+        self.verticalLayout_9.addLayout(self.radio_layout_2)
+
+        self.lineedit_layout_2 = QHBoxLayout()
+        self.lineedit_layout_2.setObjectName(u"lineedit_layout_2")
+        self.h_lineedit_editable_2 = HLineEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_lineedit_editable_2.setObjectName(u"h_lineedit_editable_2")
+        self.h_lineedit_editable_2.setClearButtonEnabled(False)
+
+        self.lineedit_layout_2.addWidget(self.h_lineedit_editable_2)
+
+        self.h_lineedit_editable_clear_button_2 = HLineEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_lineedit_editable_clear_button_2.setObjectName(u"h_lineedit_editable_clear_button_2")
+        self.h_lineedit_editable_clear_button_2.setClearButtonEnabled(True)
+
+        self.lineedit_layout_2.addWidget(self.h_lineedit_editable_clear_button_2)
+
+        self.h_lineedit_disabled_2 = HLineEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_lineedit_disabled_2.setObjectName(u"h_lineedit_disabled_2")
+        self.h_lineedit_disabled_2.setEnabled(False)
+        self.h_lineedit_disabled_2.setClearButtonEnabled(True)
+
+        self.lineedit_layout_2.addWidget(self.h_lineedit_disabled_2)
+
+        self.h_lineedit_read_only_2 = HLineEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_lineedit_read_only_2.setObjectName(u"h_lineedit_read_only_2")
+        self.h_lineedit_read_only_2.setReadOnly(True)
+        self.h_lineedit_read_only_2.setClearButtonEnabled(True)
+
+        self.lineedit_layout_2.addWidget(self.h_lineedit_read_only_2)
+
+
+        self.verticalLayout_9.addLayout(self.lineedit_layout_2)
+
+        self.plaintextedit_layout_2 = QHBoxLayout()
+        self.plaintextedit_layout_2.setObjectName(u"plaintextedit_layout_2")
+        self.h_plaintextedit_editable_2 = HPlainTextEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_plaintextedit_editable_2.setObjectName(u"h_plaintextedit_editable_2")
+        self.h_plaintextedit_editable_2.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout_2.addWidget(self.h_plaintextedit_editable_2)
+
+        self.h_plaintextedit_editable_vscrollbar_2 = HPlainTextEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_plaintextedit_editable_vscrollbar_2.setObjectName(u"h_plaintextedit_editable_vscrollbar_2")
+        self.h_plaintextedit_editable_vscrollbar_2.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout_2.addWidget(self.h_plaintextedit_editable_vscrollbar_2)
+
+        self.h_plaintextedit_editable_scrollbars_2 = HPlainTextEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_plaintextedit_editable_scrollbars_2.setObjectName(u"h_plaintextedit_editable_scrollbars_2")
+        self.h_plaintextedit_editable_scrollbars_2.setMaximumSize(QSize(150, 150))
+        self.h_plaintextedit_editable_scrollbars_2.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
+
+        self.plaintextedit_layout_2.addWidget(self.h_plaintextedit_editable_scrollbars_2)
+
+        self.h_plaintextedit_readonly_2 = HPlainTextEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_plaintextedit_readonly_2.setObjectName(u"h_plaintextedit_readonly_2")
+        self.h_plaintextedit_readonly_2.setMaximumSize(QSize(100, 150))
+        self.h_plaintextedit_readonly_2.setReadOnly(True)
+
+        self.plaintextedit_layout_2.addWidget(self.h_plaintextedit_readonly_2)
+
+        self.h_plaintextedit_disabled_2 = HPlainTextEdit(self.h_frame_styled_raised, theme=theme)
+        self.h_plaintextedit_disabled_2.setObjectName(u"h_plaintextedit_disabled_2")
+        self.h_plaintextedit_disabled_2.setEnabled(False)
+        self.h_plaintextedit_disabled_2.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout_2.addWidget(self.h_plaintextedit_disabled_2)
+
+
+        self.verticalLayout_9.addLayout(self.plaintextedit_layout_2)
+
+        self.h_spinbox_layout_2 = QHBoxLayout()
+        self.h_spinbox_layout_2.setObjectName(u"h_spinbox_layout_2")
+        self.h_spinbox_no_button_2 = HSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_spinbox_no_button_2.setObjectName(u"h_spinbox_no_button_2")
+        self.h_spinbox_no_button_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_no_button_2.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+
+        self.h_spinbox_layout_2.addWidget(self.h_spinbox_no_button_2)
+
+        self.h_spinbox_rw_2 = HSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_spinbox_rw_2.setObjectName(u"h_spinbox_rw_2")
+        self.h_spinbox_rw_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_rw_2.setMinimum(10)
+
+        self.h_spinbox_layout_2.addWidget(self.h_spinbox_rw_2)
+
+        self.h_spinbox_ro_2 = HSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_spinbox_ro_2.setObjectName(u"h_spinbox_ro_2")
+        self.h_spinbox_ro_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_ro_2.setReadOnly(True)
+
+        self.h_spinbox_layout_2.addWidget(self.h_spinbox_ro_2)
+
+        self.h_spinbox_disabled_2 = HSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_spinbox_disabled_2.setObjectName(u"h_spinbox_disabled_2")
+        self.h_spinbox_disabled_2.setEnabled(False)
+        self.h_spinbox_disabled_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.h_spinbox_layout_2.addWidget(self.h_spinbox_disabled_2)
+
+        self.rlg_spinbox_spacer_2 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.h_spinbox_layout_2.addItem(self.rlg_spinbox_spacer_2)
+
+        self.h_doublespinbox_nobutton_2 = HDoubleSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_doublespinbox_nobutton_2.setObjectName(u"h_doublespinbox_nobutton_2")
+        self.h_doublespinbox_nobutton_2.setFrame(True)
+        self.h_doublespinbox_nobutton_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_nobutton_2.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+
+        self.h_spinbox_layout_2.addWidget(self.h_doublespinbox_nobutton_2)
+
+        self.h_doublespinbox_rw_2 = HDoubleSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_doublespinbox_rw_2.setObjectName(u"h_doublespinbox_rw_2")
+        self.h_doublespinbox_rw_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_rw_2.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.PlusMinus)
+        self.h_doublespinbox_rw_2.setProperty(u"showGroupSeparator", False)
+        self.h_doublespinbox_rw_2.setDecimals(1)
+        self.h_doublespinbox_rw_2.setMinimum(10.000000000000000)
+
+        self.h_spinbox_layout_2.addWidget(self.h_doublespinbox_rw_2)
+
+        self.h_doublespinbox_ro_2 = HDoubleSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_doublespinbox_ro_2.setObjectName(u"h_doublespinbox_ro_2")
+        self.h_doublespinbox_ro_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_ro_2.setReadOnly(True)
+
+        self.h_spinbox_layout_2.addWidget(self.h_doublespinbox_ro_2)
+
+        self.h_doublespinbox_disabled_2 = HDoubleSpinBox(self.h_frame_styled_raised, theme=theme)
+        self.h_doublespinbox_disabled_2.setObjectName(u"h_doublespinbox_disabled_2")
+        self.h_doublespinbox_disabled_2.setEnabled(False)
+        self.h_doublespinbox_disabled_2.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.h_spinbox_layout_2.addWidget(self.h_doublespinbox_disabled_2)
+
+
+        self.verticalLayout_9.addLayout(self.h_spinbox_layout_2)
+
+
+        self.q_frame_layout.addWidget(self.h_frame_styled_raised)
+
+
+        self.main_layout.addLayout(self.q_frame_layout)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout.addItem(self.verticalSpacer_2)
 
@@ -443,6 +722,46 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_readonly.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
+"", None))
+        self.h_comment_bold_2.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
+        self.h_comment_italic_2.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
+        self.h_description_2.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_label_2.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
+        self.h_label_disabled_2.setText(QCoreApplication.translate("MainWindow", u"A disabled Hlabel", None))
+        self.h_checkbox_2.setText("")
+        self.h_checkbox_clicked_2.setText("")
+        self.h_checkbox_disabled_2.setText("")
+        self.h_checkbox_disabled_clicked_2.setText("")
+        self.h_switch_2.setText("")
+        self.h_switch_checked_2.setText("")
+        self.h_switch_disabled_2.setText("")
+        self.h_switch_disabled_checked_2.setText("")
+        self.h_radiobutton_enabled_off_2.setText("")
+        self.h_radiobutton_enabled_on_2.setText("")
+        self.h_radiobutton_disabled_on_2.setText("")
+        self.h_radiobutton_disabled_off_2.setText("")
+        self.h_lineedit_editable_2.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
+        self.h_lineedit_editable_clear_button_2.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_lineedit_disabled_2.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
+        self.h_lineedit_read_only_2.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
+        self.h_plaintextedit_editable_2.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"sdsdc", None))
+        self.h_plaintextedit_editable_vscrollbar_2.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"multiple lines\n"
+"for scrollbar\n"
+"with test\n"
+"", None))
+        self.h_plaintextedit_editable_scrollbars_2.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"multiple lines with very large text for hscrollbar\n"
+"for scrollbar \n"
+"with test\n"
+"and\n"
+"a lot\n"
+"of vertical text\n"
+"", None))
+        self.h_plaintextedit_readonly_2.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
+"", None))
+        self.h_plaintextedit_disabled_2.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
     # retranslateUi
 

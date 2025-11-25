@@ -4,6 +4,7 @@ from pathlib import Path
 from dataclasses import replace, fields
 
 from .styles import (
+    FrameStyle,
     ButtonStyle,
     CheckBoxStyle,
     DescriptionStyle,
@@ -90,6 +91,8 @@ class StyleManager:
         # Map TOML key → InstallStyle attribute
         # ------------------------------
         widget_map = {
+            "frame": ("frame", FrameStyle),
+
             "label": ("label", LabelStyle),
             "title": ("title", TitleStyle),
             "subtitle": ("subtitle", SubtitleStyle),

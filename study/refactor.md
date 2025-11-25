@@ -4,7 +4,7 @@
     ✅ ✅ CheckBox
     - ✅ ComboBox
     ✅ ✅ Divider
-    - ✅ DoubleSpinBox
+    ✅ ✅ DoubleSpinBox
     - ✅ GroupBox
     ✅ ✅ HorizontalDivider
     ✅ ✅ VerticalDivider
@@ -15,10 +15,11 @@
     - ✅ IndeterminateProgress
     - ✅ RadialProgress
     ✅ ✅ RadioButton
-    - ✅ ScrollBar
-    - ✅ SpinBox
+     / ✅ ScrollBar
+    ✅ ✅ SpinBox
     ✅ ✅ Switch
     ✅ ✅ Title
+    ✅ ✅ Frame
 
 
 differenciates buttons:

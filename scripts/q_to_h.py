@@ -33,6 +33,7 @@ if __name__ == "__main__":
         "QDoubleSpinBox": "HDoubleSpinBox",
         "QSpinBox": "HSpinBox",
         "QScrollBar": "HScrollBar",
+        "QFrame": "HFrame",
     }
 
     WIDGET_NAME_MAP = {

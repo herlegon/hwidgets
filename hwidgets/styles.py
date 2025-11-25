@@ -37,6 +37,13 @@ class WidgetCommonColors:
 
 
 @dataclass
+class FrameStyle:
+    bgd: str = ""
+    radius: int = BORDER_RADIUS
+
+
+
+@dataclass
 class TitleStyle:
     height: int = NORMAL_HEIGHT + BORDER_RADIUS
     padding = 0
@@ -199,22 +206,6 @@ class GroupBoxStyle:
     pressed: str = ""
     disabled_bgd: str = ""
     border: str = ""
-
-
-
-@dataclass
-class FrameStyle:
-    bgd: str = ""
-    hover: str = ""
-    selection: str = ""
-    pressed: str = ""
-    disabled_bgd: str = ""
-    border: str = ""
-    font: FontConfig = FontConfig(size=14, weight=600)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
 
 
 

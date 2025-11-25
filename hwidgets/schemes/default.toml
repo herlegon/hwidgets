@@ -18,6 +18,9 @@ font_color_disabled = "#4E4E4E"
 font_color_selected = "#5442bd"
 # font_color_checked = "#4632c7"
 
+[frame]
+bgd ="#151417"
+
 
 [label]
 font_family = "Segoe UI"
@@ -35,13 +38,13 @@ font_color = "#7777FF"
 [subtitle]
 font_size = 14
 font_weight = 600
-font_color = "#c2c2c7ff"
+font_color = "#c2c2c7"
 # Inherits everything from [label], font is defined in code
 
 [description]
 font_size = 10
 font_weight = 500
-font_color = "#c2c2c7ff"
+font_color = "#c2c2c7"
 
 
 [comment]

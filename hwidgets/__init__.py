@@ -13,6 +13,7 @@ from .divider import (
 )
 from .button import HButton
 from .button_group import HButtonGroup
+from .frame import HFrame
 from .groupbox import HGroupBox
 from .indeterminate_progress import HIndeterminateProgress
 from .indeterminate_circular_progress import HIndeterminateCircularProgress # Not yet supported
@@ -46,6 +47,8 @@ __all__ = [
     "HDescription",
     "HComment",
     "HLabel",
+
+    "HFrame",
 
     "HButton",
     "HButtonGroup",
