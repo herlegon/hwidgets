@@ -1,7 +1,6 @@
 from string import Template
 import sys
 from typing import TYPE_CHECKING, Literal, Type
-from warnings import warn
 
 from PySide6.QtCore import (
     QSize,
@@ -30,6 +29,8 @@ from PySide6.QtWidgets import (
     QAbstractSpinBox,
     QSpinBox,
 )
+
+from hytils import red
 from .style_manager import Theme
 from .utils import load_qss
 
@@ -183,6 +184,7 @@ class HCommonSpinBox:
         **kwargs,
     ) -> None:
         # super().__init__(parent, **kwargs)
+        print(red("edrftgyhujik"))
         self.theme = theme
         radius = theme.common.radius
         height = theme.common.height
@@ -236,25 +238,28 @@ class HCommonSpinBox:
         self.setLayout(self.main_layout)
 
         qss_template = Template(load_qss("spinbox.qss"))
-        sb_theme = theme.spinbox
+        sb_style = theme.spinbox
+        le_style = theme.line_edit
+        default_style = theme.common
         qss = qss_template.substitute(
-            widget_bgd=f"{theme.common.widget_bgd}",
-            font_color=f"{sb_theme.font_color}",
             radius=f"{radius}px",
-            hover_bgd=f"{sb_theme.hover}",
-            border_color=f"{theme.common.border}",
-            disabled_bgd=f"{sb_theme.disabled}",
-            disabled_text=f"{sb_theme.font_color_disabled}",
             padding_right=f"{radius + 12}px",
-            editing_border=f"{theme.common.border_selected}",
-            selected_text=f"{sb_theme.font_color_selection}",
-            padding=f"{radius}px",
-            selection_bgd=f"{sb_theme.selected}",
-            margin_right=f"{radius+12}px",
-            button_width=f"{20}px",
-            selected=f"{sb_theme.font_color_selection}",
-            font_family=f"\"{sb_theme.font.family}\"",
-            font_size=f"{sb_theme.font.size}pt",
+            # padding=f"{radius}px",
+            margin_right=f"{radius + 12}px",
+            # button_width=f"{20}px",
+
+            widget_bgd=f"{default_style.bgd}",
+            hover=f"{le_style.selection}",
+            border_color=f"{default_style.border}",
+            border_edition=f"{le_style.selection}",
+
+            selection=f"{le_style.selection}",
+            disabled=f"{le_style.disabled}",
+
+            font_family=f"\"{sb_style.font.family}\"",
+            font_size=f"{sb_style.font.size}pt",
+            font_color=f"{sb_style.font_color}",
+            font_color_disabled=f"{sb_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
 

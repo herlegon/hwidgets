@@ -15,10 +15,11 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QButtonGroup, QCheckBox, QFrame,
-    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPlainTextEdit, QRadioButton, QSizePolicy, QSpacerItem,
-    QVBoxLayout, QWidget)
+from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCheckBox,
+    QDoubleSpinBox, QFrame, QHBoxLayout, QLabel,
+    QLineEdit, QMainWindow, QPlainTextEdit, QRadioButton,
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+    QWidget)
 
 from typing import Type
 from hwidgets import (
@@ -53,7 +54,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(662, 538)
+        MainWindow.resize(662, 567)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -311,7 +312,76 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.plaintextedit_layout)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.h_spinbox_layout = QHBoxLayout()
+        self.h_spinbox_layout.setObjectName(u"h_spinbox_layout")
+        self.h_spinbox_no_button = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_no_button.setObjectName(u"h_spinbox_no_button")
+        self.h_spinbox_no_button.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_no_button.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_no_button)
+
+        self.h_spinbox_rw = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_rw.setObjectName(u"h_spinbox_rw")
+        self.h_spinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_rw.setMinimum(10)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_rw)
+
+        self.h_spinbox_ro = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_ro.setObjectName(u"h_spinbox_ro")
+        self.h_spinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_ro.setReadOnly(True)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_ro)
+
+        self.h_spinbox_disabled = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_disabled.setObjectName(u"h_spinbox_disabled")
+        self.h_spinbox_disabled.setEnabled(False)
+        self.h_spinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_disabled)
+
+        self.rlg_spinbox_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.h_spinbox_layout.addItem(self.rlg_spinbox_spacer)
+
+        self.h_doublespinbox_nobutton = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_nobutton.setObjectName(u"h_doublespinbox_nobutton")
+        self.h_doublespinbox_nobutton.setFrame(True)
+        self.h_doublespinbox_nobutton.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_nobutton.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_nobutton)
+
+        self.h_doublespinbox_rw = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_rw.setObjectName(u"h_doublespinbox_rw")
+        self.h_doublespinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_rw.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.PlusMinus)
+        self.h_doublespinbox_rw.setProperty(u"showGroupSeparator", False)
+        self.h_doublespinbox_rw.setDecimals(1)
+        self.h_doublespinbox_rw.setMinimum(10.000000000000000)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_rw)
+
+        self.h_doublespinbox_ro = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_ro.setObjectName(u"h_doublespinbox_ro")
+        self.h_doublespinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_ro.setReadOnly(True)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_ro)
+
+        self.h_doublespinbox_disabled = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_disabled.setObjectName(u"h_doublespinbox_disabled")
+        self.h_doublespinbox_disabled.setEnabled(False)
+        self.h_doublespinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_disabled)
+
+
+        self.main_layout.addLayout(self.h_spinbox_layout)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout.addItem(self.verticalSpacer_2)
 

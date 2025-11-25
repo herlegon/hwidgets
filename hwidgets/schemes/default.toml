@@ -94,6 +94,10 @@ normal = "#66636D"
 hover = "#7777FF"
 
 
+[spinbox]
+
+
+
 
 [button]
 normal = "#5442bd"

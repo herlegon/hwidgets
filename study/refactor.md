@@ -1,24 +1,24 @@
 # refactor:
     - ✅ Button
     - ✅ ButtonGroup
-    ✅  ✅ CheckBox
+    ✅ ✅ CheckBox
     - ✅ ComboBox
-    ✅  ✅ Divider
+    ✅ ✅ Divider
     - ✅ DoubleSpinBox
     - ✅ GroupBox
-    - ✅ HorizontalDivider
-    - ✅ VerticalDivider
-    ✅  ✅ Label
-    - ✅ LineEdit
-    - ✅ PlainTextEdit
+    ✅ ✅ HorizontalDivider
+    ✅ ✅ VerticalDivider
+    ✅ ✅ Label
+    ✅ ✅ LineEdit
+    ✅ ✅ PlainTextEdit
     - ✅ Progress
     - ✅ IndeterminateProgress
     - ✅ RadialProgress
-    ✅  ✅ RadioButton
+    ✅ ✅ RadioButton
     - ✅ ScrollBar
     - ✅ SpinBox
-    ✅  ✅ Switch
-    ✅  ✅ Title
+    ✅ ✅ Switch
+    ✅ ✅ Title
 
 
 differenciates buttons:
