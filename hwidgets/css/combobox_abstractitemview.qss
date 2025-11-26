@@ -3,25 +3,25 @@
 QListView {
     /* background: $window_bgd; */
     background: transparent;
-    border: 1px solid $border_color;
+    /* border: 1px solid $border_color; */
     outline: none;
     margin: 0px;
     padding: 0px;
 
-    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
+    color: $font_color;
 }
 
 QListView::item {
     border-radius: 0px;
-    padding: 2px 0px 4px $padding_left;
+    /* padding: 2px 0px 4px $padding_left; */
 }
 
 QListView::item:hover {
-    background-color: $selection_bgd;
+    background-color: $selection;
 }
 
 QListView::item:selected {
-    background-color: $selection_bgd;
+    background-color: $selection;
 }

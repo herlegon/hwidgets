@@ -8,9 +8,9 @@ QLineEdit {
 
     padding: 0px $padding_right 2px $padding_left;
 
-    color: $font_color;
     font-family: $font_family;
     font-size: $font_size;
+    color: $font_color;
 
     selection-background-color: $selection;
 }

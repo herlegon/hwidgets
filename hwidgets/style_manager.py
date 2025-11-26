@@ -24,6 +24,7 @@ from .styles import (
     IconButtonStyle,
     SwitchStyle,
     WidgetCommonColors,
+    ComboBoxStyle,
 )
 
 class StyleManager:
@@ -109,6 +110,9 @@ class StyleManager:
 
             "spinbox": ("spinbox", SpinBoxStyle),
             # "double_spinbox": ("double_spinbox", DoubleSpinBoxStyle),
+
+            "combobox": ("combobox", ComboBoxStyle),
+
 
             "group_box": ("groupbox", GroupBoxStyle),
             "icon_button": ("icon_button", IconButtonStyle),

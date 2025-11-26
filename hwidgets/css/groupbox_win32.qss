@@ -7,10 +7,6 @@ QGroupBox::title {
     background-color: $widget_bgd;
     border-radius: 0px;
 
-    color: $font_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
-
     subcontrol-origin: margin;
     subcontrol-position: top left;
 
@@ -19,6 +15,11 @@ QGroupBox::title {
 
     margin: 0px;
     padding-top: 0px $title_margins 1px $title_margins;
+
+    font-family: "Segoe UI", "Sans Serif";
+    font-size: 10pt;
+    color: $font_color;
+
 }
 
 

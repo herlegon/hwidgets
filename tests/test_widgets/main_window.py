@@ -60,15 +60,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # p.setColor(self.backgroundRole(), hrl_style.window_bgd)
         # self.setPalette(p)
 
-        # for w in (
-        #     self.q_combobox_rw,
-        #     self.q_combobox_read_only,
-        #     self.q_combobox_disabled,
-        #     self.h_combobox_rw,
-        #     self.h_combobox_read_only,
-        #     self.h_combobox_disabled,
-        # ):
-        #     w.addItems(items)
+        for w in (
+            self.h_combobox_rw,
+            self.h_combobox_ro,
+            self.h_combobox_disabled,
+            self.h_combobox_rw_2,
+            self.h_combobox_ro_2,
+            self.h_combobox_disabled_2,
+        ):
+            w.addItems(items)
 
         # self.h_radial_progress_1.set_standard_triggers()
         # self.h_radial_progress_2.set_standard_triggers()

@@ -30,6 +30,7 @@ def draw_widget_rect(w: Type[QWidget], painter: QPainter):
     pen.setWidth(1)
     pen.setColor(QColor("#d4d4d4"))
     painter.setPen(pen)
+    # painter.drawRect(w.x(), w.y(), w.width() - 1, w.height() - 1)
     painter.drawRect(0, 0, w.width() - 1, w.height() - 1)
     painter.restore()
 

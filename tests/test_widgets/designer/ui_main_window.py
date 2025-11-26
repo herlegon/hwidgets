@@ -16,10 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCheckBox,
-    QDoubleSpinBox, QFrame, QHBoxLayout, QLabel,
-    QLineEdit, QMainWindow, QPlainTextEdit, QRadioButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
-    QWidget)
+    QComboBox, QDoubleSpinBox, QFrame, QHBoxLayout,
+    QLabel, QLineEdit, QMainWindow, QPlainTextEdit,
+    QRadioButton, QSizePolicy, QSpacerItem, QSpinBox,
+    QVBoxLayout, QWidget)
 
 from typing import Type
 from hwidgets import (
@@ -55,7 +55,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(942, 994)
+        MainWindow.resize(1353, 624)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -271,6 +271,38 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.lineedit_layout)
 
+        self.horizontalLayout_21 = QHBoxLayout()
+        self.horizontalLayout_21.setObjectName(u"horizontalLayout_21")
+        self.h_combobox_rw = HComboBox(self.h_frame, theme=theme)
+        self.h_combobox_rw.setObjectName(u"h_combobox_rw")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.h_combobox_rw.sizePolicy().hasHeightForWidth())
+        self.h_combobox_rw.setSizePolicy(sizePolicy)
+        self.h_combobox_rw.setMaximumSize(QSize(300, 16777215))
+        self.h_combobox_rw.setEditable(True)
+
+        self.horizontalLayout_21.addWidget(self.h_combobox_rw)
+
+        self.h_combobox_ro = HComboBox(self.h_frame, theme=theme)
+        self.h_combobox_ro.setObjectName(u"h_combobox_ro")
+        sizePolicy.setHeightForWidth(self.h_combobox_ro.sizePolicy().hasHeightForWidth())
+        self.h_combobox_ro.setSizePolicy(sizePolicy)
+        self.h_combobox_ro.setMaximumSize(QSize(300, 16777215))
+
+        self.horizontalLayout_21.addWidget(self.h_combobox_ro)
+
+        self.h_combobox_disabled = HComboBox(self.h_frame, theme=theme)
+        self.h_combobox_disabled.setObjectName(u"h_combobox_disabled")
+        self.h_combobox_disabled.setEnabled(False)
+        self.h_combobox_disabled.setEditable(True)
+
+        self.horizontalLayout_21.addWidget(self.h_combobox_disabled)
+
+
+        self.main_layout.addLayout(self.horizontalLayout_21)
+
         self.plaintextedit_layout = QHBoxLayout()
         self.plaintextedit_layout.setObjectName(u"plaintextedit_layout")
         self.h_plaintextedit_editable = HPlainTextEdit(self.h_frame, theme=theme)
@@ -384,6 +416,19 @@ class Ui_MainWindow(object):
 
         self.q_frame_layout = QHBoxLayout()
         self.q_frame_layout.setObjectName(u"q_frame_layout")
+
+        self.main_layout.addLayout(self.q_frame_layout)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.main_layout.addItem(self.verticalSpacer_2)
+
+
+        self.horizontalLayout_10.addLayout(self.main_layout)
+
+        self.verticalLayout_3 = QVBoxLayout()
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_3.setContentsMargins(-1, -1, 60, -1)
         self.h_frame_styled_raised = HFrame(self.h_frame, theme=theme)
         self.h_frame_styled_raised.setObjectName(u"h_frame_styled_raised")
         self.h_frame_styled_raised.setFrameShape(QFrame.Shape.StyledPanel)
@@ -547,6 +592,35 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_9.addLayout(self.lineedit_layout_2)
 
+        self.horizontalLayout_22 = QHBoxLayout()
+        self.horizontalLayout_22.setObjectName(u"horizontalLayout_22")
+        self.h_combobox_rw_2 = HComboBox(self.h_frame_styled_raised, theme=theme)
+        self.h_combobox_rw_2.setObjectName(u"h_combobox_rw_2")
+        sizePolicy.setHeightForWidth(self.h_combobox_rw_2.sizePolicy().hasHeightForWidth())
+        self.h_combobox_rw_2.setSizePolicy(sizePolicy)
+        self.h_combobox_rw_2.setMaximumSize(QSize(300, 16777215))
+        self.h_combobox_rw_2.setEditable(True)
+
+        self.horizontalLayout_22.addWidget(self.h_combobox_rw_2)
+
+        self.h_combobox_ro_2 = HComboBox(self.h_frame_styled_raised, theme=theme)
+        self.h_combobox_ro_2.setObjectName(u"h_combobox_ro_2")
+        sizePolicy.setHeightForWidth(self.h_combobox_ro_2.sizePolicy().hasHeightForWidth())
+        self.h_combobox_ro_2.setSizePolicy(sizePolicy)
+        self.h_combobox_ro_2.setMaximumSize(QSize(300, 16777215))
+
+        self.horizontalLayout_22.addWidget(self.h_combobox_ro_2)
+
+        self.h_combobox_disabled_2 = HComboBox(self.h_frame_styled_raised, theme=theme)
+        self.h_combobox_disabled_2.setObjectName(u"h_combobox_disabled_2")
+        self.h_combobox_disabled_2.setEnabled(False)
+        self.h_combobox_disabled_2.setEditable(True)
+
+        self.horizontalLayout_22.addWidget(self.h_combobox_disabled_2)
+
+
+        self.verticalLayout_9.addLayout(self.horizontalLayout_22)
+
         self.plaintextedit_layout_2 = QHBoxLayout()
         self.plaintextedit_layout_2.setObjectName(u"plaintextedit_layout_2")
         self.h_plaintextedit_editable_2 = HPlainTextEdit(self.h_frame_styled_raised, theme=theme)
@@ -655,17 +729,14 @@ class Ui_MainWindow(object):
         self.verticalLayout_9.addLayout(self.h_spinbox_layout_2)
 
 
-        self.q_frame_layout.addWidget(self.h_frame_styled_raised)
+        self.verticalLayout_3.addWidget(self.h_frame_styled_raised)
+
+        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer)
 
 
-        self.main_layout.addLayout(self.q_frame_layout)
-
-        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
-
-        self.main_layout.addItem(self.verticalSpacer_2)
-
-
-        self.horizontalLayout_10.addLayout(self.main_layout)
+        self.horizontalLayout_10.addLayout(self.verticalLayout_3)
 
 
         self.horizontalLayout.addWidget(self.h_frame)

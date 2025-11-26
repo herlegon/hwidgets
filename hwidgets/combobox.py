@@ -1,4 +1,5 @@
 import os
+from pprint import pprint
 import sys
 from typing import Any, Type
 from PySide6.QtCore import (
@@ -14,6 +15,7 @@ from PySide6.QtCore import (
     QSize,
     QTimer,
     QRectF,
+    QPointF,
 )
 from PySide6.QtGui import (
     QPen,
@@ -58,15 +60,18 @@ class RoundedListView(QListView):
         self,
         stylesheet: str,
         theme: Theme,
-        radius: int,
-        bgd_color: str,
-        border_color: str,
+        # radius: int,
+        # bgd_color: str,
+        # border_color: str,
         parent: QWidget = None
     ):
         super().__init__(parent)
-        self.radius = float(radius)
-        self.bgd_color = QColor(bgd_color)
-        self.border_color  = QColor(border_color)
+        default_style = theme.common
+
+        self.radius = float(default_style.radius)
+        self.bgd_color = QColor(default_style.bgd)
+        self.border_color  = QColor(default_style.border)
+        self.border_color  = QColor("red")
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setStyleSheet(stylesheet)
 
@@ -81,29 +86,32 @@ class RoundedListView(QListView):
     def paintEvent(self, event):
         """Paint rounded background with bottom corners rounded only."""
         painter = QPainter(self.viewport())
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
-        rect = QRectF(self.viewport().rect())
-        if sys.platform == 'win32':
-            rect.adjust(0, 0, -0.5, -0.5)
+
+        r = QRectF(self.viewport().rect())
+        # r = QRectF(self.rect())
+        r.adjust(0.5, 0, -0.5, 0)
+
+        left, top, right, bottom = r.left(), r.top(), r.right(), r.bottom()
+        radius = self.radius
+
         path = QPainterPath()
-
-        # Only bottom corners rounded
-        path.moveTo(rect.topLeft())
-        path.lineTo(rect.bottomLeft().x(), rect.bottomLeft().y() - self.radius)
-        path.quadTo(rect.bottomLeft(), rect.bottomLeft() + QPoint(self.radius, 0))
-        path.lineTo(rect.bottomRight().x() - self.radius, rect.bottomRight().y())
-        path.quadTo(rect.bottomRight(), rect.bottomRight() + QPoint(0, -self.radius))
-        path.lineTo(rect.topRight())
+        path.moveTo(left, top)
+        path.lineTo(left, bottom - radius)
+        path.quadTo(left, bottom, left + radius, bottom)
+        path.lineTo(right - radius, bottom)
+        path.quadTo(right, bottom, right, bottom - radius)
+        path.lineTo(right, top)
 
         painter.fillPath(path, self.bgd_color)
 
-        pen = QPen(self.border_color, 2.0)
+        pen = QPen(self.border_color, 1.5)
         pen.setCosmetic(True)
         pen.setJoinStyle(Qt.PenJoinStyle.RoundJoin)
         painter.setPen(pen)
         painter.setBrush(Qt.BrushStyle.NoBrush)
-        painter.setRenderHint(QPainter.RenderHint.Antialiasing, False)
+        # painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
         painter.drawPath(path)
 
         super().paintEvent(event)
@@ -138,6 +146,8 @@ class HComboBox(QComboBox):
     ) -> None:
         super().__init__(parent)
 
+        self.theme = theme
+
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
@@ -146,27 +156,27 @@ class HComboBox(QComboBox):
         self.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
         self.setAcceptDrops(True)
 
-        self.theme = theme
         default_pixmap: QPixmap = load_png_icon(
-            os.path.join(
-                TITLE_BAR_ICON_PATH,
-                "keyboard_arrow_down_20dp_000000_FILL0_wght400_GRAD0_opsz20.png"
-            ),
+            "keyboard_arrow_down_20dp_000000_FILL0_wght400_GRAD0_opsz20.png",
             theme.combobox.font_color
         )
 
         self._pixmaps: dict[str, QPixmap] = {
-            "normal" : make_tinted_pixmap(default_pixmap, theme.combobox.normal),
+            "normal" : make_tinted_pixmap(default_pixmap, theme.combobox.font_color),
             "disabled" : make_tinted_pixmap(default_pixmap, theme.combobox.disabled),
         }
+        self.border_color = QColor(self.theme.common.border)
+        self.border_edition = QColor(self.theme.line_edit.selection)
 
         super().setEditable(True)
-        self.set_stylesheet(theme=theme)
+        self._update_stylesheet()
         line_edit = self.lineEdit()
         line_edit.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         line_edit.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
         line_edit.installEventFilter(self)
         line_edit.setReadOnly(True)
+
+        super().setEditable(False)
 
         # fix bug: when clicking the first time on the combobox, the popu is not showed
         self.adjust_popup_width = True
@@ -191,6 +201,64 @@ class HComboBox(QComboBox):
         height: int = self.theme.common.height
         super().setMaximumSize(QSize(size.width(), height))
         super().setFixedHeight(height)
+
+
+
+    def _update_stylesheet(self):
+        self.variant = ""
+        default_style = self.theme.common
+        le_style = self.theme.line_edit
+
+        radius = default_style.radius
+
+        template_subst: dict = dict(
+            radius=f"{radius}px",
+            padding_left=f"{int(1.5 * radius) - 2}px",
+            padding_right=f"{int(1.5 * radius)}px",
+            margin_top=f"{radius}px",
+            popup_width = f"{self.width()}px",
+
+            window_bgd=self.theme.window_bgd,
+            widget_bgd=default_style.bgd,
+            hover=f"{le_style.hover}",
+            border_color=f"{default_style.border}",
+            border_edition=f"{le_style.selection}",
+
+            selection=le_style.selection,
+            disabled=le_style.disabled,
+
+            font_family=f"\"{le_style.font.family}\"",
+            font_size=f"{le_style.font.size}pt",
+            font_color=f"{le_style.font_color}",
+            font_color_disabled=f"{le_style.font_color_disabled}",
+        )
+
+        qss_template = Template(load_qss("combobox.qss", variant=self.variant))
+        qss = qss_template.substitute(**template_subst)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.setStyleSheet(qss)
+
+        qss_template = Template(load_qss("combobox_lineedit.qss", variant=self.variant))
+        qss = qss_template.substitute(**template_subst)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        self.lineEdit().setStyleSheet(qss)
+
+        qss_template = Template(load_qss("combobox_abstractitemview.qss", variant=self.variant))
+        self.popup_qss = qss_template.substitute(**template_subst)
+
+        if sys.platform in ('win32', 'linux'):
+            view = RoundedListView(
+                stylesheet=self.popup_qss,
+                theme=self.theme,
+                parent=self
+            )
+            self.setView(view)
+            self.view().setWindowFlags(Qt.WindowType.Widget)
+        else:
+            self.view().setStyleSheet(self.popup_qss)
+
+
+
 
 
     def _pixmap_rect(self) -> QRect:
@@ -241,9 +309,7 @@ class HComboBox(QComboBox):
             | Qt.WindowType.FramelessWindowHint
             | Qt.WindowType.NoDropShadowWindowHint
         )
-        popup.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        popup.setStyleSheet("QFrame { background: transparent; border: none; }")
-        popup.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
+
 
         if self.adjust_popup_width:
             fm = QFontMetrics(self.font())
@@ -262,13 +328,16 @@ class HComboBox(QComboBox):
         else:
             popup.resize(self.width(), popup.height() + 2 * self.theme.common.radius)
 
+        popup.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
+        popup.setStyleSheet("QFrame { background: transparent; border: none; }")
+        popup.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.view().viewport().update()
 
         if sys.platform == 'win32':
             QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(-1, self.height() - 1))))
 
         else:
-            QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(0, self.height()))))
+            QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(0.5, self.height()))))
             super().showPopup()
 
         self.setEditable(is_editable)
@@ -342,59 +411,6 @@ class HComboBox(QComboBox):
         return super().eventFilter(watched, event)
 
 
-    def set_stylesheet(self, theme: Type[Theme]):
-        self.variant = ""
-        radius = theme.common.radius
-
-        template_subst: dict = dict(
-            window_bgd=theme.window_bgd,
-            widget_bgd=theme.common.bgd,
-            hover_bgd=theme.combobox.hover,
-            selection_bgd=theme.combobox.selection,
-            disabled_bgd=theme.combobox.disabled,
-
-            font_color_disabled=theme.combobox.font_color_disabled,
-            font_color=theme.combobox.font_color,
-            selected_text=f"{theme.combobox.font_color_selected}",
-            radius=f"{radius}px",
-            margin_top=f"{radius}px",
-            popup_width = f"{self.width()}px",
-            padding_left=f"{int(1.5 * radius) - 2}px",
-            padding_right=f"{int(1.5 * radius)}px",
-            border_color=f"{theme.border}",
-            font_family=f"\"{theme.combobox.font.family}\"",
-            font_size=f"{theme.combobox.font.size}pt",
-        )
-
-        qss_template = Template(load_qss("combobox.qss", variant=self.variant))
-        qss = qss_template.substitute(**template_subst)
-        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        self.setStyleSheet(qss)
-
-        qss_template = Template(load_qss("combobox_lineedit.qss", variant=self.variant))
-        qss = qss_template.substitute(**template_subst)
-        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
-        self.lineEdit().setStyleSheet(qss)
-
-        qss_template = Template(load_qss("combobox_abstractitemview.qss", variant=self.variant))
-        self.popup_qss = qss_template.substitute(**template_subst)
-
-        if sys.platform in ('win32', 'linux'):
-            view = RoundedListView(
-                stylesheet=self.popup_qss,
-                radius=theme.common.radius,
-                bgd_color=theme.common.bgd,
-                border_color=theme.common.border,
-                parent=self
-            )
-            self.setView(view)
-            self.view().setWindowFlags(Qt.WindowType.Widget)
-        else:
-            self.view().setStyleSheet(self.popup_qss)
-
-
-
-
     def paintEvent(self, e: QPaintEvent) -> None:
         super().paintEvent(e)
 
@@ -408,48 +424,48 @@ class HComboBox(QComboBox):
             pixmap = self._pixmaps["normal"]
 
         painter = QPainter(self)
-        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing, on=True)
         if DEBUG_GEOMETRY:
             draw_widget_rect(self, painter)
 
-        # Draw centered pixmap
+        # Draw centered arrow
         x = self.width() - self.height()
         y = (self.height() - pixmap.height()) // 2
         painter.drawPixmap(x, y, pixmap)
 
+
         radius: int = self.theme.common.radius
+        border_width = 1.0
         if self.lineEdit() and self.lineEdit().hasFocus():
             # Draw rounded rectangle border
-            border_color = QColor(self.theme.common.border_selected)
-            border_width = 1
-            pen = QPen(border_color, border_width)
+            pen = QPen(self.border_edition, border_width)
             painter.setPen(pen)
             painter.setBrush(Qt.BrushStyle.NoBrush)
             painter.drawRoundedRect(self.rect(), radius, radius)
 
         # Only draw custom border for non-editable combobox
         if not self.isEditable() and self.view().isVisible():
-            border_color = QColor(self.theme.border_selected)
-            border_width = 2.0
-
-            pen = QPen(border_color, border_width)
+            pen = QPen(self.border_edition)
             # ensures 1px on any device scaling
             pen.setCosmetic(True)
+            # painter.setRenderHints(QPainter.RenderHint.Antialiasing, on=False)
+
             painter.setPen(pen)
             painter.setBrush(Qt.BrushStyle.NoBrush)
 
-            r = QRectF(self.rect())
-            r.adjust(1, 0, 0, 0)  # align to pixel grid
-
             path = QPainterPath()
-            path.moveTo(r.left(), r.bottom())                   # start bottom-left
-            path.lineTo(r.left(), r.top() + radius)             # left side
-            path.quadTo(r.left(), r.top(), r.left() + radius, r.top())  # top-left corner
-            path.lineTo(r.right() - radius, r.top())            # top side
-            path.quadTo(r.right(), r.top(), r.right(), r.top() + radius)  # top-right corner
-            path.lineTo(r.right(), r.bottom())                  # right side
-            # bottom side left open (no bottom border)
+            r = QRectF(self.rect())
+            r.adjust(0.5, 0, -0.5, -0.5)
 
+            left, top, right, bottom = r.left(), r.top(), r.right(), r.bottom()
+            path.moveTo(left, bottom)
+            path.lineTo(left, top + radius)
+            path.quadTo(left, top, left + radius, top)
+            path.lineTo(right - radius , top)
+            path.quadTo(right, top, right, top + radius)
+            path.lineTo(right, bottom)
+
+            # bottom side: no line
             painter.drawPath(path)
 
         painter.end()

@@ -5,9 +5,9 @@ QGroupBox {
     border-radius: $radius;
     margin-top: 12px;
 
-    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
+    color: $font_color;
 }
 
 
@@ -36,9 +36,10 @@ QGroupBox::title {
 */
 
 QGroupBox:disabled {
-    color: $font_color_disabled;
     background-color: $widget_disabled;
+    color: $font_color_disabled;
 }
+
 
 QGroupBox::title:disabled {
     background-color: $window_bgd;

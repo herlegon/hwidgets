@@ -11,32 +11,31 @@ QFrame {
 QComboBox {
     background-color: $widget_bgd;
 
-    color: $font_color;
-    font-family: $font_family;
-    font-size: $font_size;
-
-    selection-background-color: $selection_bgd;
-    selection-color: $font_color;
-
     border-radius: $radius;
     padding-left: $padding_left;
-    /* padding-right: $padding_right; */
+
+    font-family: $font_family;
+    font-size: $font_size;
+    color: $font_color;
+
+    selection-background-color: $selection;
+    selection-color: $font_color;
 }
 
 
 QComboBox:disabled {
-    background-color: $disabled_bgd;
+    background-color: $disabled;
     color: $font_color_disabled;
 }
 
 
 QComboBox:read-only:hover {
-    background-color: $hover_bgd;
+    background-color: $hover;
 }
 
 
 QComboBox:on {
-    background-color: $hover_bgd;
+    background-color: $hover;
     border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;
 }

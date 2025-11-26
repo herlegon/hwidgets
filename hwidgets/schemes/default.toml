@@ -103,6 +103,10 @@ button_pressed = "#66636D"
 button_disabled = "#232223"
 
 
+[combobox]
+# Use line_edit style
+
+
 [button]
 normal = "#5442bd"
 hover = "#7777FF"

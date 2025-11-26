@@ -186,6 +186,21 @@ class SpinBoxStyle:
 
 
 
+@dataclass
+class ComboBoxStyle:
+    normal: str = ""
+    hover: str = ""
+    selection: str = ""
+    disabled: str = ""
+    # button_hover: str = ""
+    # button_disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=500)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+
 
 
 
@@ -248,22 +263,6 @@ class ButtonGroupStyle(ButtonStyle):
     font_color_checked: str = ""
     font_color_disabled: str = ""
 
-
-
-
-
-@dataclass
-class ComboBoxStyle:
-    normal: str = ""
-    hover: str = ""
-    selection: str = ""
-    pressed: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_disabled: str = ""
-    font_color_selected: str = ""
 
 
 
@@ -331,10 +330,11 @@ class Theme:
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
 
     checkbox: CheckBoxStyle = field(default_factory=CheckBoxStyle)
-    combobox: ComboBoxStyle = field(default_factory=ComboBoxStyle)
 
     line_edit: LineEditStyle = field(default_factory=LineEditStyle)
     plain_text_edit: PlainTextEditStyle = field(default_factory=PlainTextEditStyle)
+
+    combobox: ComboBoxStyle = field(default_factory=ComboBoxStyle)
 
     spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
     # double_spinbox: DoubleSpinBoxStyle = field(default_factory=DoubleSpinBoxStyle)
