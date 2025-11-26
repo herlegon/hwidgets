@@ -1,6 +1,7 @@
 # refactor:
     - ✅ Button
-    - ✅ ButtonGroup
+    ✅ ✅ ButtonGroup
+    ✅ ✅ StrongButton
     ✅ ✅ CheckBox
     ✅ ✅ ComboBox
     ✅ ✅ Divider
