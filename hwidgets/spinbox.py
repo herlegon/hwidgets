@@ -20,6 +20,7 @@ from PySide6.QtGui import (
     QPainterPath,
     QPen,
     QMouseEvent,
+    QBrush,
 )
 from PySide6.QtWidgets import (
     QDoubleSpinBox,
@@ -32,7 +33,7 @@ from PySide6.QtWidgets import (
     QSpinBox,
 )
 
-from hytils import red
+from hytils import red, yellow
 from .style_manager import Theme
 from .utils import load_qss
 
@@ -110,7 +111,7 @@ class HSpinBoxButton(QPushButton):
 
             path.lineTo(0, bottom)
             path.closeSubpath()
-            painter.fillPath(path, QColor(bgd_color))
+            painter.fillPath(path, QBrush(bgd_color))
 
             # Draw symbol
             painter.setRenderHint(QPainter.RenderHint.Antialiasing, False)

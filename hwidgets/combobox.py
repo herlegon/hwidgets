@@ -88,7 +88,7 @@ class RoundedListView(QListView):
         painter.setRenderHint(QPainter.RenderHint.Antialiasing, True)
 
         r = QRectF(self.rect())
-        r.adjust(0.5, 0, -0.5, 0)
+        r.adjust(0.5, 0, -0.5, -0.5)
 
         left, top, right, bottom = r.left(), r.top(), r.right(), r.bottom()
         radius = self.radius
@@ -327,7 +327,8 @@ class HComboBox(QComboBox):
         self.view().viewport().update()
 
         if sys.platform == 'win32':
-            QTimer.singleShot(0, lambda: popup.move(self.mapToGlobal(QPoint(-1, self.height() - 1))))
+            QTimer.singleShot(0, lambda: popup.resize(popup_width, popup.height() +  radius))
+            QTimer.singleShot(0.001, lambda: popup.move(self.mapToGlobal(QPoint(0.5, self.height()))))
 
         else:
             QTimer.singleShot(0, lambda: popup.resize(popup_width, popup.height() +  radius))
@@ -459,7 +460,7 @@ class HComboBox(QComboBox):
 
             path = QPainterPath()
             r = QRectF(self.rect())
-            r.adjust(0.5, 0, -0.5, -0.5)
+            r.adjust(0.5, +0.5, -0.5, -0.5)
 
             left, top, right, bottom = r.left(), r.top(), r.right(), r.bottom()
             path.moveTo(left, bottom)

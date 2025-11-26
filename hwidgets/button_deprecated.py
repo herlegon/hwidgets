@@ -81,6 +81,7 @@ class HButton(QPushButton):
 
             font_family=f"\"{btn_style.font.family}\"",
             font_size=f"{btn_style.font.size}pt",
+            font_weight=f"{btn_style.font.weight}",
 
             font_color=f"{btn_style.font_color}",
             font_color_checked=f"{btn_style.font_color_checked}",
@@ -176,6 +177,7 @@ class HButton(QPushButton):
 
             font_family=f"\"{btn_style.font.family}\"",
             font_size=f"{btn_style.font.size}pt",
+            font_weight=f"{btn_style.font.weight}",
 
             font_color=f"{btn_style.font_color}",
             font_color_checked=f"{btn_style.font_color_checked}",
@@ -188,7 +190,7 @@ class HButton(QPushButton):
 
 
     def setIcon(self, icon: QIcon | QPixmap) -> None:
-        btn_style = self.theme
+        btn_style = self.theme.button
         self._icon = icon
 
         if icon is not None:
@@ -211,6 +213,7 @@ class HButton(QPushButton):
 
                 font_family=f"\"{btn_style.font.family}\"",
                 font_size=f"{btn_style.font.size}pt",
+                font_weight=f"{btn_style.font.weight}",
 
                 font_color=f"{btn_style.font_color}",
                 font_color_checked=f"{btn_style.font_color_checked}",

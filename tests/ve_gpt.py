@@ -10,7 +10,7 @@ import sys
 # Theme / Colors
 # ------------------------------
 
-PRIMARY_ACCENT = "#5545bd"
+PRIMARY_ACCENT = "#7777ff"
 
 DARK_THEME = {
     "background": "#212121",         # Keep the main background

@@ -218,6 +218,25 @@ class ButtonGroupStyle:
 
 
 @dataclass
+class StrongButtonStyle:
+    height: int = 32
+
+    bgd: str = ""
+
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=600)
+    font_color: str = ""
+    font_color_checked: str = ""
+    font_color_disabled: str = ""
+
+
+
+@dataclass
 class ButtonStyle:
     height: int = NORMAL_HEIGHT
 
@@ -331,6 +350,9 @@ class Theme:
 
     button: ButtonStyle = field(default_factory=ButtonStyle)
     icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
+    strong_button: StrongButtonStyle = field(default_factory=StrongButtonStyle)
+
+
     switch: SwitchStyle = field(default_factory=SwitchStyle)
     radio_button: RadioButtonStyle = field(default_factory=RadioButtonStyle)
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)

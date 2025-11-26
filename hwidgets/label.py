@@ -45,29 +45,9 @@ class HLabel(QLabel):
             self.setText(text)
 
         self.theme = theme
-        # by default, overrides by children if needed
         self._font_size = theme.label.font.size
         self._weight = theme.label.font.weight
         self._italic = False
-
-        # self.setSizePolicy(
-        #     QSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Policy.Fixed)
-        # )
-        self.setMinimumWidth(theme.common.height)
-        if isinstance(self, HDescription | HComment):
-            self.setSizePolicy(
-                QSizePolicy(
-                    QSizePolicy.Policy.Preferred,
-                    QSizePolicy.Policy.Preferred
-                )
-            )
-        else:
-            if text and '\n' not in text:
-                self.setFixedHeight(theme.common.height)
-            else:
-                self.setSizePolicy(
-                    QSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Policy.Preferred)
-                )
 
         self._update_stylesheet()
 
@@ -75,12 +55,14 @@ class HLabel(QLabel):
     def setText(self, text: str) -> None:
         super().setText(text)
         if isinstance(self, HDescription | HComment):
+            self.setWordWrap(True)
             self.setSizePolicy(
                 QSizePolicy(
                     QSizePolicy.Policy.Preferred,
-                    QSizePolicy.Policy.Preferred
+                    QSizePolicy.Policy.Minimum
                 )
             )
+            self.setMinimumHeight(0)
             self.adjustSize()
         else:
             if text and '\n' not in text:
@@ -140,16 +122,6 @@ class HLabel(QLabel):
 
 
 
-class HSubtitle(HLabel):
-    def __init__(self, /, parent: QWidget | None = None, f: Qt.WindowType = None, *, theme, text = None, textFormat = None, pixmap = None, scaledContents = None, alignment = None, wordWrap = None, margin = None, indent = None, openExternalLinks = None, textInteractionFlags = None, hasSelectedText = None, selectedText = None):
-        super().__init__(parent, f, theme=theme, text=text, textFormat=textFormat, pixmap=pixmap, scaledContents=scaledContents, alignment=alignment, wordWrap=wordWrap, margin=margin, indent=indent, openExternalLinks=openExternalLinks, textInteractionFlags=textInteractionFlags, hasSelectedText=hasSelectedText, selectedText=selectedText)
-
-        # Override defaults from theme
-        self._font_size = theme.subtitle.font.size
-        self._weight = theme.subtitle.font.weight
-        self._update_stylesheet()
-
-
 
 class HDescription(HLabel):
     def __init__(self, /, parent: QWidget | None = None, f: Qt.WindowType = None, *, theme, text = None, textFormat = None, pixmap = None, scaledContents = None, alignment = None, wordWrap = None, margin = None, indent = None, openExternalLinks = None, textInteractionFlags = None, hasSelectedText = None, selectedText = None):
@@ -207,4 +179,16 @@ class HComment(HLabel):
         self._font_size = theme.comment.font.size
         self._weight = theme.comment.font.weight
         self._italic = italic
+        self._update_stylesheet()
+
+
+
+
+class HSubtitle(HLabel):
+    def __init__(self, /, parent: QWidget | None = None, f: Qt.WindowType = None, *, theme, text = None, textFormat = None, pixmap = None, scaledContents = None, alignment = None, wordWrap = None, margin = None, indent = None, openExternalLinks = None, textInteractionFlags = None, hasSelectedText = None, selectedText = None):
+        super().__init__(parent, f, theme=theme, text=text, textFormat=textFormat, pixmap=pixmap, scaledContents=scaledContents, alignment=alignment, wordWrap=wordWrap, margin=margin, indent=indent, openExternalLinks=openExternalLinks, textInteractionFlags=textInteractionFlags, hasSelectedText=hasSelectedText, selectedText=selectedText)
+
+        # Override defaults from theme
+        self._font_size = theme.subtitle.font.size
+        self._weight = theme.subtitle.font.weight
         self._update_stylesheet()

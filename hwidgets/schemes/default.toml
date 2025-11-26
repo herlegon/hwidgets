@@ -109,13 +109,21 @@ button_disabled = "#232223"
 [button_group]
 # checked is darkened
 pressed = "#7c787f"
-checked = "#4b49c9"
+checked = "#7777ff"
 disabled = "#232223"
+
 
 [button]
 normal = "#5442bd"
 hover = "#7777FF"
 disabled = "#A3A3D1"
+
+
+[strong_button]
+bgd = "#4b49c9"
+hover = "#6a67e0"
+pressed = "#7575E6"
+font_color = "#FFFFFF"
 
 
 [flat_button]

@@ -6,9 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1353</width>
-    <height>748</height>
+    <width>1600</width>
+    <height>725</height>
    </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>1600</width>
+    <height>0</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
@@ -86,7 +92,7 @@
            <item>
             <widget class="QLabel" name="h_description">
              <property name="text">
-              <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
+              <string>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
              </property>
              <property name="wordWrap">
               <bool>true</bool>
@@ -646,6 +652,91 @@ of vertical text
            </item>
            <item>
             <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="strong_buttons_layout">
+           <item>
+            <widget class="QPushButton" name="h_strong_button_text">
+             <property name="text">
+              <string>Strong Button</string>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_strong_button_text_icon">
+             <property name="text">
+              <string>Strong Button with icon</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/linux.png</normaloff>../../../hwidgets/icons/linux.png</iconset>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_strong_button_icon">
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/linux.png</normaloff>../../../hwidgets/icons/linux.png</iconset>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_strong_button_text_icon_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Strong Button disabled</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/linux.png</normaloff>../../../hwidgets/icons/linux.png</iconset>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_strong_button_text_icon_3">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>Strong Button disabled</string>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_7">
              <property name="orientation">
               <enum>Qt::Orientation::Horizontal</enum>
              </property>

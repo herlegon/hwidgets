@@ -27,10 +27,13 @@ from .styles import (
     ComboBoxStyle,
     ButtonGroupStyle,
     FlatButtonStyle,
+    StrongButtonStyle,
 )
 
 
 def hex_to_rgba(hex_str: str, alpha: float = 1.0) -> str:
+    # Do not use rn because the colors are also used for QColor
+    # find a way to use it only for stylesheets
     """
     Convert hex color string to 'rgba(r,g,b,a)' for Qt stylesheet.
 
@@ -42,6 +45,9 @@ def hex_to_rgba(hex_str: str, alpha: float = 1.0) -> str:
         str: CSS rgba string, e.g. "rgba(33,150,243,0.2)"
     """
     # Remove leading '#'
+    if not hex_str.startswith('#'):
+        return hex_str
+
     hex_str = hex_str.lstrip('#')
 
     if len(hex_str) != 6:
@@ -95,15 +101,15 @@ class StyleManager:
                 )
 
             theme.common = replace(theme.common, **{
-                "bgd":                  hex_to_rgba(common_cfg.get("bgd", theme.common.bgd)),
-                "hover":                hex_to_rgba(common_cfg.get("hover", theme.common.hover)),
-                "selection":            hex_to_rgba(common_cfg.get("selection", theme.common.selection)),
-                "pressed":              hex_to_rgba(common_cfg.get("pressed", theme.common.pressed)),
-                "disabled":             hex_to_rgba(common_cfg.get("disabled_bgd", theme.common.disabled)),
-                "border":               hex_to_rgba(common_cfg.get("border", theme.common.border)),
-                "font_color":           hex_to_rgba(common_cfg.get("font_color", theme.common.font_color)),
-                "font_color_disabled":  hex_to_rgba(common_cfg.get("font_color_disabled", theme.common.font_color_disabled)),
-                "font_color_checked":   hex_to_rgba(common_cfg.get("font_color_checked", theme.common.font_color_checked)),
+                "bgd":                  common_cfg.get("bgd", theme.common.bgd),
+                "hover":                common_cfg.get("hover", theme.common.hover),
+                "selection":            common_cfg.get("selection", theme.common.selection),
+                "pressed":              common_cfg.get("pressed", theme.common.pressed),
+                "disabled":             common_cfg.get("disabled_bgd", theme.common.disabled),
+                "border":               common_cfg.get("border", theme.common.border),
+                "font_color":           common_cfg.get("font_color", theme.common.font_color),
+                "font_color_disabled":  common_cfg.get("font_color_disabled", theme.common.font_color_disabled),
+                "font_color_checked":   common_cfg.get("font_color_checked", theme.common.font_color_checked),
                 "font":                 font,
             })
 
@@ -144,6 +150,7 @@ class StyleManager:
 
             "button_group": ("button_group", ButtonGroupStyle),
             "flat_button": ("flat_button", FlatButtonStyle),
+            "strong_button": ("strong_button", StrongButtonStyle),
 
             "group_box": ("groupbox", GroupBoxStyle),
             "icon_button": ("icon_button", IconButtonStyle),
