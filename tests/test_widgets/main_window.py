@@ -81,10 +81,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # self.h_radial_progress_1.setFixedSize(QSize(100,100))
         # self.h_radial_progress_1.set_thickness(8)
 
-        # self.h_button_group.set_buttons([
-        #     "SafeTensors", "ONNX", "TensorRT", "NCNN"
-        # ])
-        # self.horizontalLayout_13.setAlignment(self.h_button_group, Qt.AlignCenter)
+        button_list = ["btn1", "btn2", "btn3", "btn4"]
+        self.h_button_group.set_buttons(button_list)
+        self.h_button_group.get_button(2).setEnabled(False)
+        self.h_button_group_disabled.set_buttons(button_list)
+                # self.horizontalLayout_13.setAlignment(self.h_button_group, Qt.AlignCenter)
 
         self.setMinimumWidth(800)
         if sys.platform == 'linux':

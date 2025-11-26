@@ -40,9 +40,10 @@ class HButtonGroup(QWidget):
     ) -> None:
         super().__init__(parent)
         if theme is None:
-            theme = Theme()
+            raise
         self.theme: Theme = theme
 
+        # self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
 
         # Visual Layout
@@ -80,19 +81,21 @@ class HButtonGroup(QWidget):
 
     def _update_stylesheet(self) -> None:
         qss_template = Template(load_qss(f"button_group.qss"))
-        style = self.theme.button_group
+        bg_style = self.theme.button_group
+        default_style = self.theme.common
         qss = qss_template.substitute(
+            radius=f"{default_style.radius}px",
+
             window_bgd=f"{self.theme.window_bgd}",
-            widget_bgd=f"{self.theme.common.bgd}",
-            widget_hover=f"{style.hover}",
-            disabled_bgd=f"{style.disabled}",
-            font_color=f"{style.font}",
-            selected_bgd=f"{self.theme.common.selection}",
-            checked_color=f"{style.hover}",
-            pressed_color=f"{self.theme.common.selection}",
-            radius=f"{self.theme.common.radius}px",
-            text_disabled=f"{style.font_color_disabled}",
-            checked_text=f"{style.font_color_checked}",
+            widget_bgd=f"{default_style.bgd}",
+            widget_hover=f"{bg_style.hover}",
+
+            disabled=f"{bg_style.disabled}",
+            pressed=f"{bg_style.pressed}",
+            checked=f"{bg_style.hover}",
+
+            font_color=f"{bg_style.font_color}",
+            font_color_disabled=f"{bg_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
 
@@ -162,6 +165,7 @@ class HButtonGroup(QWidget):
 
             # signal to get the real current checked button
             button.clicked.connect(lambda checked, idx=i: self._on_button_checked(idx))
+            button.setCursor(Qt.CursorShape.PointingHandCursor)
 
         if self.group.buttons():
             try:

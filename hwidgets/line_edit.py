@@ -50,10 +50,11 @@ class ClearButton(QPushButton):
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         btn_style = theme.line_edit
-        icon_filename: str = "cancel_16dp_000000_FILL0_wght400_GRAD0_opsz24.png"
-        self.normal_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.selection)
-        self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.button_hover)
-        self.disabled_pixmap = make_tinted_pixmap(load_png_image(icon_filename, h=16), btn_style.button_disabled)
+        icon_filename: str = "cancel_16dp_000000_FILL0_wght400_GRAD-25_opsz20.png"
+        self.normal_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.font_color)
+        # self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.button_hover)
+        self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.font_color)
+        self.disabled_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.button_disabled)
 
         qss = """
             QPushButton {{

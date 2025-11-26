@@ -2,10 +2,10 @@
     - ✅ Button
     - ✅ ButtonGroup
     ✅ ✅ CheckBox
-    - ✅ ComboBox
+    ✅ ✅ ComboBox
     ✅ ✅ Divider
     ✅ ✅ DoubleSpinBox
-    - ✅ GroupBox
+     / ✅ GroupBox
     ✅ ✅ HorizontalDivider
     ✅ ✅ VerticalDivider
     ✅ ✅ Label

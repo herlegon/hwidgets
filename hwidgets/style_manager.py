@@ -25,6 +25,8 @@ from .styles import (
     SwitchStyle,
     WidgetCommonColors,
     ComboBoxStyle,
+    ButtonGroupStyle,
+    FlatButtonStyle,
 )
 
 class StyleManager:
@@ -113,6 +115,8 @@ class StyleManager:
 
             "combobox": ("combobox", ComboBoxStyle),
 
+            "button_group": ("button_group", ButtonGroupStyle),
+            "flat_button": ("flat_button", FlatButtonStyle),
 
             "group_box": ("groupbox", GroupBoxStyle),
             "icon_button": ("icon_button", IconButtonStyle),

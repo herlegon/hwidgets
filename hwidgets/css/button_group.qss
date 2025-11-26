@@ -1,16 +1,18 @@
 QWidget {
-    color: $font_color;
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
+    color: $font_color;
 
 }
 
 QToolButton {
     /* border: 1px solid #BBBBBB; */
     background-color: $widget_bgd;
-    color: $font_color;
+
     padding: 0px $radius 2px $radius;
     outline: none;
+
+    color: $font_color;
 }
 
 /* --- Unchecked States --- */
@@ -18,22 +20,22 @@ QToolButton:hover {
     background-color: $widget_hover;
 }
 QToolButton:pressed {
-    background-color: $selected_bgd;
+    background-color: $pressed;
 }
 
 
 QToolButton:checked {
-    background-color: $selected_bgd;
+    background-color: $pressed;
     color: $font_color;
 }
 
 /* QToolButton:checked:hover {
-    background-color: $checked_color;
+    background-color: $checked;
 } */
 
 QToolButton:disabled {
-    background-color: $disabled_bgd;
-    color: $text_disabled;
+    background-color: $disabled;
+    color: $font_color_disabled;
 }
 
 

@@ -201,12 +201,30 @@ class ComboBoxStyle:
 
 
 
+@dataclass
+class ButtonGroupStyle:
+    height: int = NORMAL_HEIGHT
+
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=500)
+    font_color: str = ""
+    font_color_checked: str = ""
+    font_color_disabled: str = ""
 
 
 
-
-
-
+@dataclass
+class FlatButtonStyle:
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
 
 
 @dataclass
@@ -248,20 +266,6 @@ class IconButtonStyle:
     pressed: str = ""
     disabled: str = ""
 
-
-
-@dataclass
-class ButtonGroupStyle(ButtonStyle):
-    size: int = 14
-    radius: int = BORDER_RADIUS - 1
-    border_width: int = 2
-
-    normal: str = ""
-    hover: str = ""
-    disabled: str = ""
-
-    font_color_checked: str = ""
-    font_color_disabled: str = ""
 
 
 
@@ -339,7 +343,7 @@ class Theme:
     spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
     # double_spinbox: DoubleSpinBoxStyle = field(default_factory=DoubleSpinBoxStyle)
 
-
+    flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
 
     progress: ProgressStyle = field(default_factory=ProgressStyle)
     # indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)

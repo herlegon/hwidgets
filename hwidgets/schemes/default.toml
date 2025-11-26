@@ -16,7 +16,7 @@ font_weight = 500
 font_color = "#d4d4d8"
 font_color_disabled = "#4E4E4E"
 font_color_selected = "#5442bd"
-# font_color_checked = "#4632c7"
+font_color_checked = "#4632c7"
 
 [frame]
 bgd ="#151417"
@@ -106,6 +106,9 @@ button_disabled = "#232223"
 [combobox]
 # Use line_edit style
 
+[button_group]
+pressed = "#7777FF"
+disabled = "#232223"
 
 [button]
 normal = "#5442bd"

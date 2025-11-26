@@ -75,7 +75,7 @@
           </layout>
          </item>
          <item>
-          <layout class="QVBoxLayout" name="verticalLayout">
+          <layout class="QVBoxLayout" name="text_layout">
            <item>
             <widget class="QLabel" name="h_subtitles">
              <property name="text">
@@ -154,7 +154,7 @@
           </widget>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_4">
+          <layout class="QHBoxLayout" name="checkbox_layout">
            <item>
             <widget class="QCheckBox" name="h_checkbox">
              <property name="text">
@@ -370,7 +370,7 @@
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="horizontalLayout_21">
+          <layout class="QHBoxLayout" name="combobox_layout">
            <item>
             <widget class="QComboBox" name="h_combobox_rw">
              <property name="sizePolicy">
@@ -633,7 +633,31 @@ of vertical text
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="q_frame_layout"/>
+          <layout class="QHBoxLayout" name="button_group_layout">
+           <item>
+            <widget class="QWidget" name="h_button_group" native="true"/>
+           </item>
+           <item>
+            <widget class="QWidget" name="h_button_group_disabled" native="true">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_5">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
          </item>
          <item>
           <spacer name="verticalSpacer_2">

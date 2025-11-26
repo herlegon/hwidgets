@@ -164,7 +164,7 @@ class HComboBox(QComboBox):
 
         self._pixmaps: dict[str, QPixmap] = {
             "normal" : make_tinted_pixmap(default_pixmap, theme.combobox.font_color),
-            "disabled" : make_tinted_pixmap(default_pixmap, theme.combobox.disabled),
+            "disabled" : make_tinted_pixmap(default_pixmap, theme.line_edit.button_disabled),
         }
         self.border_color = QColor(self.theme.common.border)
         self.border_edition = QColor(self.theme.line_edit.selection)
@@ -179,6 +179,7 @@ class HComboBox(QComboBox):
         line_edit.setReadOnly(True)
 
         super().setEditable(False)
+        self.installEventFilter(self)
 
         # adjust to the max wifth of items
         #   currently disabled because of the borders that are not cleaned
@@ -206,7 +207,6 @@ class HComboBox(QComboBox):
         height: int = self.theme.common.height
         super().setMaximumSize(QSize(size.width(), height))
         super().setFixedHeight(height)
-
 
 
     def _update_stylesheet(self):
@@ -266,9 +266,6 @@ class HComboBox(QComboBox):
             self.view().setStyleSheet(self.popup_qss)
 
 
-
-
-
     def _pixmap_rect(self) -> QRect:
         pixmap = self._pixmaps.get("normal")
         if not pixmap:
@@ -280,22 +277,10 @@ class HComboBox(QComboBox):
 
 
     def mouseMoveEvent(self, event: QMouseEvent) -> None:
-        if self.isEnabled() and self.lineEdit() and not self.lineEdit().isReadOnly():
-            if self._pixmap_rect().contains(event.position().toPoint()):
-                self.setCursor(Qt.CursorShape.ArrowCursor)
-            else:
-                self.setCursor(Qt.CursorShape.IBeamCursor)
-        else:
-            self.setCursor(Qt.CursorShape.ArrowCursor)
+        if self.isEnabled() and not self.lineEdit():
+            self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         super().mouseMoveEvent(event)
-
-
-    def leaveEvent(self, event: QEvent) -> None:
-        """Reset cursor when leaving the widget"""
-        # print(f"{self.objectName()}: leaveEvent")
-        self.unsetCursor()
-        super().leaveEvent(event)
 
 
     def showPopup(self):
@@ -414,8 +399,12 @@ class HComboBox(QComboBox):
                     QTimer.singleShot(0, self.showPopup)
                     return True
 
-            if event.type() == QEvent.Type.ContextMenu:
+            elif event.type() == QEvent.Type.ContextMenu:
                 return False
+
+        if line_edit and event.type() == QEvent.Type.HoverMove:
+            if self._pixmap_rect().contains(event.position().toPoint()):
+                self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         return super().eventFilter(watched, event)
 
