@@ -21,6 +21,14 @@
     ✅ ✅ Title
     ✅ ✅ Frame
 
+    -  - flat icon button
+
+    -  - flat icon + text button
+
+    -  - flat button
+
+    -  - button
+
 
 differenciates buttons:
 button

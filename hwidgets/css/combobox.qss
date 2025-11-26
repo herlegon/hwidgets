@@ -51,13 +51,13 @@ QComboBox::down-arrow {
     height: 0px;
 }
 
+
+/* For debug: */
 QComboBox QLineEdit{
     margin-bottom: 2px;
     color: green;
 
 }
-
-
 QComboBox QLineEdit[editing="true"] {
-    border: 2px solid red; /* editing color */
+    border: 2px solid red;
 }
