@@ -25,7 +25,7 @@ QToolButton:pressed {
 
 
 QToolButton:checked {
-    background-color: $pressed;
+    background-color: $checked;
     color: $font_color;
 }
 

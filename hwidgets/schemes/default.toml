@@ -107,7 +107,9 @@ button_disabled = "#232223"
 # Use line_edit style
 
 [button_group]
-pressed = "#7777FF"
+# checked is darkened
+pressed = "#7c787f"
+checked = "#4b49c9"
 disabled = "#232223"
 
 [button]

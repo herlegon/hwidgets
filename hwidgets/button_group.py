@@ -1,5 +1,6 @@
 from string import Template
 from typing import overload
+from warnings import warn
 from .hstyle import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
@@ -92,7 +93,7 @@ class HButtonGroup(QWidget):
 
             disabled=f"{bg_style.disabled}",
             pressed=f"{bg_style.pressed}",
-            checked=f"{bg_style.hover}",
+            checked=f"{bg_style.checked}",
 
             font_color=f"{bg_style.font_color}",
             font_color_disabled=f"{bg_style.font_color_disabled}",
@@ -196,15 +197,7 @@ class HButtonGroup(QWidget):
             try:
                 return self._buttons[self._button_keys.index(value)]
             except:
-                print("failed")
-                print(self._button_keys)
-
-        #     for btn in self._buttons:
-        #         if getattr(btn, "key", None) == value:
-        #             return btn
-        #     raise KeyError(f"No button with key {value!r}")
-        # else:
-        #     raise TypeError(f"Expected int or str, got {type(value).__name__}")
+                warn(f"failed {self._button_keys}")
 
 
     def _update_button_states(self):

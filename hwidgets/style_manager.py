@@ -29,6 +29,33 @@ from .styles import (
     FlatButtonStyle,
 )
 
+
+def hex_to_rgba(hex_str: str, alpha: float = 1.0) -> str:
+    """
+    Convert hex color string to 'rgba(r,g,b,a)' for Qt stylesheet.
+
+    Args:
+        hex_str (str): Hex color string, e.g. "#2196F3" or "2196F3"
+        alpha (float): Opacity between 0.0 and 1.0
+
+    Returns:
+        str: CSS rgba string, e.g. "rgba(33,150,243,0.2)"
+    """
+    # Remove leading '#'
+    hex_str = hex_str.lstrip('#')
+
+    if len(hex_str) != 6:
+        raise ValueError("Hex string must be 6 characters long (RRGGBB)")
+
+    r = int(hex_str[0:2], 16)
+    g = int(hex_str[2:4], 16)
+    b = int(hex_str[4:6], 16)
+
+    return f"rgba({r},{g},{b},{alpha})"
+
+
+
+
 class StyleManager:
     SCHEMES_DIR = Path(__file__).parent / "schemes"
 
@@ -68,15 +95,15 @@ class StyleManager:
                 )
 
             theme.common = replace(theme.common, **{
-                "bgd":                  common_cfg.get("bgd", theme.common.bgd),
-                "hover":                common_cfg.get("hover", theme.common.hover),
-                "selection":            common_cfg.get("selection", theme.common.selection),
-                "pressed":              common_cfg.get("pressed", theme.common.pressed),
-                "disabled":             common_cfg.get("disabled_bgd", theme.common.disabled),
-                "border":               common_cfg.get("border", theme.common.border),
-                "font_color":           common_cfg.get("font_color", theme.common.font_color),
-                "font_color_disabled":  common_cfg.get("font_color_disabled", theme.common.font_color_disabled),
-                "font_color_checked":   common_cfg.get("font_color_checked", theme.common.font_color_checked),
+                "bgd":                  hex_to_rgba(common_cfg.get("bgd", theme.common.bgd)),
+                "hover":                hex_to_rgba(common_cfg.get("hover", theme.common.hover)),
+                "selection":            hex_to_rgba(common_cfg.get("selection", theme.common.selection)),
+                "pressed":              hex_to_rgba(common_cfg.get("pressed", theme.common.pressed)),
+                "disabled":             hex_to_rgba(common_cfg.get("disabled_bgd", theme.common.disabled)),
+                "border":               hex_to_rgba(common_cfg.get("border", theme.common.border)),
+                "font_color":           hex_to_rgba(common_cfg.get("font_color", theme.common.font_color)),
+                "font_color_disabled":  hex_to_rgba(common_cfg.get("font_color_disabled", theme.common.font_color_disabled)),
+                "font_color_checked":   hex_to_rgba(common_cfg.get("font_color_checked", theme.common.font_color_checked)),
                 "font":                 font,
             })
 

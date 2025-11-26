@@ -217,6 +217,21 @@ class ButtonGroupStyle:
     font_color_disabled: str = ""
 
 
+@dataclass
+class ButtonStyle:
+    height: int = NORMAL_HEIGHT
+
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=500)
+    font_color: str = ""
+    font_color_checked: str = ""
+    font_color_disabled: str = ""
+
 
 @dataclass
 class FlatButtonStyle:
@@ -242,19 +257,6 @@ class GroupBoxStyle:
 
 
 
-@dataclass
-class ButtonStyle:
-    height: int = NORMAL_HEIGHT
-
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    checked: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_disabled: str = ""
 
 
 @dataclass

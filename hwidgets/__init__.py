@@ -11,7 +11,7 @@ from .divider import (
     HHorizontalDivider,
     HVerticalDivider,
 )
-from .button import HButton
+from .button_deprecated import HButton
 from .button_group import HButtonGroup
 from .frame import HFrame
 from .groupbox import HGroupBox

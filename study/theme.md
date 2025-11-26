@@ -110,3 +110,18 @@ Color: #98FF9A (light green, italic)
 
 
 #7c5cd8
+
+
+
+
+| Role                   | Color Hex               |
+| ---------------------- | ----------------------- |
+| Flat button normal     | `#888888`               |
+| Flat button hover      | `#FFFFFF`               |
+| Flat button checked    | `#5C50FF` (new indigo)  |
+| Flat button checked bg | `#333366` (keep subtle) |
+| Strong button bg       | `#5C50FF`               |
+| Strong button hover    | `#4B3EDD`               |
+| Strong button pressed  | `#3A2ABB`               |
+| Strong button text     | `#FFFFFF`               |
+
