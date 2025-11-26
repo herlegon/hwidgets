@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>725</height>
+    <height>741</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -679,6 +679,9 @@ of vertical text
            </item>
            <item>
             <widget class="QPushButton" name="h_strong_button_text_icon">
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::LeftToRight</enum>
+             </property>
              <property name="text">
               <string>Strong Button with icon</string>
              </property>
@@ -723,12 +726,16 @@ of vertical text
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_strong_button_text_icon_3">
-             <property name="enabled">
-              <bool>false</bool>
+            <widget class="QPushButton" name="h_strong_button_text_icon_4">
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::RightToLeft</enum>
              </property>
              <property name="text">
-              <string>Strong Button disabled</string>
+              <string>Next</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png</iconset>
              </property>
              <property name="flat">
               <bool>true</bool>

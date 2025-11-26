@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1600, 725)
+        MainWindow.resize(1600, 741)
         MainWindow.setMinimumSize(QSize(1600, 0))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -446,6 +446,7 @@ class Ui_MainWindow(object):
 
         self.h_strong_button_text_icon = HStrongButton(self.h_frame, theme=theme)
         self.h_strong_button_text_icon.setObjectName(u"h_strong_button_text_icon")
+        self.h_strong_button_text_icon.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         icon = QIcon()
         icon.addFile(u"../../hwidgets/icons/linux.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
         self.h_strong_button_text_icon.setIcon(icon)
@@ -468,12 +469,15 @@ class Ui_MainWindow(object):
 
         self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_2)
 
-        self.h_strong_button_text_icon_3 = HStrongButton(self.h_frame, theme=theme)
-        self.h_strong_button_text_icon_3.setObjectName(u"h_strong_button_text_icon_3")
-        self.h_strong_button_text_icon_3.setEnabled(False)
-        self.h_strong_button_text_icon_3.setFlat(True)
+        self.h_strong_button_text_icon_4 = HStrongButton(self.h_frame, theme=theme)
+        self.h_strong_button_text_icon_4.setObjectName(u"h_strong_button_text_icon_4")
+        self.h_strong_button_text_icon_4.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        icon1 = QIcon()
+        icon1.addFile(u"../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.h_strong_button_text_icon_4.setIcon(icon1)
+        self.h_strong_button_text_icon_4.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_3)
+        self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_4)
 
         self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -517,15 +521,15 @@ class Ui_MainWindow(object):
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
         self.h_text_icon_button = HButton(self.h_frame, theme=theme)
         self.h_text_icon_button.setObjectName(u"h_text_icon_button")
-        icon1 = QIcon()
-        icon1.addFile(u"../../hwidgets/icons/gpu.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.h_text_icon_button.setIcon(icon1)
+        icon2 = QIcon()
+        icon2.addFile(u"../../hwidgets/icons/gpu.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.h_text_icon_button.setIcon(icon2)
 
         self.horizontalLayout_18.addWidget(self.h_text_icon_button)
 
         self.h_text_icon_button_checked = HButton(self.h_frame, theme=theme)
         self.h_text_icon_button_checked.setObjectName(u"h_text_icon_button_checked")
-        self.h_text_icon_button_checked.setIcon(icon1)
+        self.h_text_icon_button_checked.setIcon(icon2)
         self.h_text_icon_button_checked.setCheckable(True)
         self.h_text_icon_button_checked.setChecked(True)
 
@@ -534,14 +538,14 @@ class Ui_MainWindow(object):
         self.h_text_icon_button_disabled = HButton(self.h_frame, theme=theme)
         self.h_text_icon_button_disabled.setObjectName(u"h_text_icon_button_disabled")
         self.h_text_icon_button_disabled.setEnabled(False)
-        self.h_text_icon_button_disabled.setIcon(icon1)
+        self.h_text_icon_button_disabled.setIcon(icon2)
 
         self.horizontalLayout_18.addWidget(self.h_text_icon_button_disabled)
 
         self.h_text_icon_button_disabled_checked = HButton(self.h_frame, theme=theme)
         self.h_text_icon_button_disabled_checked.setObjectName(u"h_text_icon_button_disabled_checked")
         self.h_text_icon_button_disabled_checked.setEnabled(False)
-        self.h_text_icon_button_disabled_checked.setIcon(icon1)
+        self.h_text_icon_button_disabled_checked.setIcon(icon2)
         self.h_text_icon_button_disabled_checked.setCheckable(True)
         self.h_text_icon_button_disabled_checked.setChecked(True)
 
@@ -562,9 +566,9 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.h_button.sizePolicy().hasHeightForWidth())
         self.h_button.setSizePolicy(sizePolicy)
         self.h_button.setMaximumSize(QSize(24, 24))
-        icon2 = QIcon()
-        icon2.addFile(u"../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.h_button.setIcon(icon2)
+        icon3 = QIcon()
+        icon3.addFile(u"../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
+        self.h_button.setIcon(icon3)
         self.h_button.setIconSize(QSize(24, 24))
         self.h_button.setFlat(True)
 
@@ -573,7 +577,7 @@ class Ui_MainWindow(object):
         self.h_button_checked = HButton(self.h_frame, theme=theme)
         self.h_button_checked.setObjectName(u"h_button_checked")
         self.h_button_checked.setMaximumSize(QSize(24, 24))
-        self.h_button_checked.setIcon(icon2)
+        self.h_button_checked.setIcon(icon3)
         self.h_button_checked.setIconSize(QSize(24, 24))
         self.h_button_checked.setCheckable(True)
         self.h_button_checked.setChecked(True)
@@ -585,7 +589,7 @@ class Ui_MainWindow(object):
         self.h_button_disabled.setObjectName(u"h_button_disabled")
         self.h_button_disabled.setEnabled(False)
         self.h_button_disabled.setMaximumSize(QSize(24, 24))
-        self.h_button_disabled.setIcon(icon2)
+        self.h_button_disabled.setIcon(icon3)
         self.h_button_disabled.setIconSize(QSize(24, 24))
         self.h_button_disabled.setFlat(True)
 
@@ -595,7 +599,7 @@ class Ui_MainWindow(object):
         self.h_button_disabled_checked.setObjectName(u"h_button_disabled_checked")
         self.h_button_disabled_checked.setEnabled(False)
         self.h_button_disabled_checked.setMaximumSize(QSize(24, 24))
-        self.h_button_disabled_checked.setIcon(icon2)
+        self.h_button_disabled_checked.setIcon(icon3)
         self.h_button_disabled_checked.setIconSize(QSize(24, 24))
         self.h_button_disabled_checked.setCheckable(True)
         self.h_button_disabled_checked.setChecked(True)
@@ -615,7 +619,7 @@ class Ui_MainWindow(object):
         self.h_button_checked_2 = HButton(self.h_frame, theme=theme)
         self.h_button_checked_2.setObjectName(u"h_button_checked_2")
         self.h_button_checked_2.setMaximumSize(QSize(24, 24))
-        self.h_button_checked_2.setIcon(icon2)
+        self.h_button_checked_2.setIcon(icon3)
         self.h_button_checked_2.setIconSize(QSize(24, 24))
         self.h_button_checked_2.setCheckable(True)
         self.h_button_checked_2.setChecked(True)
@@ -627,7 +631,7 @@ class Ui_MainWindow(object):
         self.h_button_disabled_2.setObjectName(u"h_button_disabled_2")
         self.h_button_disabled_2.setEnabled(False)
         self.h_button_disabled_2.setMaximumSize(QSize(24, 24))
-        self.h_button_disabled_2.setIcon(icon2)
+        self.h_button_disabled_2.setIcon(icon3)
         self.h_button_disabled_2.setIconSize(QSize(24, 24))
         self.h_button_disabled_2.setFlat(False)
 
@@ -638,7 +642,7 @@ class Ui_MainWindow(object):
         sizePolicy.setHeightForWidth(self.h_button_2.sizePolicy().hasHeightForWidth())
         self.h_button_2.setSizePolicy(sizePolicy)
         self.h_button_2.setMaximumSize(QSize(24, 24))
-        self.h_button_2.setIcon(icon2)
+        self.h_button_2.setIcon(icon3)
         self.h_button_2.setIconSize(QSize(24, 24))
         self.h_button_2.setFlat(False)
 
@@ -648,7 +652,7 @@ class Ui_MainWindow(object):
         self.h_button_disabled_checked_2.setObjectName(u"h_button_disabled_checked_2")
         self.h_button_disabled_checked_2.setEnabled(False)
         self.h_button_disabled_checked_2.setMaximumSize(QSize(24, 24))
-        self.h_button_disabled_checked_2.setIcon(icon2)
+        self.h_button_disabled_checked_2.setIcon(icon3)
         self.h_button_disabled_checked_2.setIconSize(QSize(24, 24))
         self.h_button_disabled_checked_2.setCheckable(True)
         self.h_button_disabled_checked_2.setChecked(True)
@@ -1038,7 +1042,7 @@ class Ui_MainWindow(object):
         self.h_strong_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Strong Button with icon", None))
         self.h_strong_button_icon.setText("")
         self.h_strong_button_text_icon_2.setText(QCoreApplication.translate("MainWindow", u"Strong Button disabled", None))
-        self.h_strong_button_text_icon_3.setText(QCoreApplication.translate("MainWindow", u"Strong Button disabled", None))
+        self.h_strong_button_text_icon_4.setText(QCoreApplication.translate("MainWindow", u"Next", None))
         self.h_text_button.setText(QCoreApplication.translate("MainWindow", u"Button", None))
         self.h_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"Button (checked)", None))
         self.h_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"Button (disabled)", None))

@@ -24,6 +24,8 @@ from PySide6.QtGui import (
     QPainter,
     QColor,
     QMouseEvent,
+    QFontMetrics,
+    QFont,
 )
 from PySide6.QtWidgets import (
     QPushButton,
@@ -48,6 +50,7 @@ class HStrongButton(QPushButton):
         autoDefault: bool | None = None,
         default: bool | None = None,
         flat: bool | None = True,
+
     ) -> None:
         super().__init__(parent)
 
@@ -57,6 +60,10 @@ class HStrongButton(QPushButton):
         self.default_style = theme.common
 
         self._icon = None
+        self.text_width = 0
+        # space between icon and text
+        self.space: int = 12
+
         if text is not None:
             self.setText(text)
         if icon is not None:
@@ -80,10 +87,10 @@ class HStrongButton(QPushButton):
             if self._icon:
                 # Text with icon: radius + icon_width + spacing + text + radius
                 icon_width = height
-                total_width = radius + icon_width + 6 + text_width + radius
+                total_width = radius + icon_width + self.space + text_width + radius
             else:
-                # Text only: radius + text + radius
-                total_width = 2 * radius + text_width
+                # Text only: radius + text + radius + space for better perception
+                total_width = 2 * radius + text_width + self.space
 
             hint.setWidth(max(total_width, strong_btn_style.height))
         else:
@@ -181,6 +188,15 @@ class HStrongButton(QPushButton):
         )
         self.setStyleSheet(qss)
 
+        # Create the font based on FontConfig
+        # Calculate text width using QFontMetrics
+        font = QFont(
+            strong_btn_style.font.family,
+            strong_btn_style.font.size,
+            strong_btn_style.font.weight
+        )
+        font_metrics = QFontMetrics(font)
+        self.text_width = font_metrics.horizontalAdvance(self.text())
 
 
     def paintEvent(self, event):
@@ -223,21 +239,32 @@ class HStrongButton(QPushButton):
             else:
                 pixmap = self._pixmaps["normal"]
 
+            if not self.text():
+                x = (self.width() - self.pixmap_size.width()) // 2
+
+            elif self.layoutDirection() == Qt.LayoutDirection.RightToLeft:
+                x = (self.width() + (self.text_width + self.space) - pixmap.width() ) // 2
+
+            else:
+                x = (self.width() - self.text_width - self.space - pixmap.width()) // 2
+
             # Draw centered pixmap if no text
-            x = (
-                radius
-                if self.text()
-                else (self.width() - self.pixmap_size.width()) // 2
-            )
             y = (self.height() - self.pixmap_size.height()) // 2
             painter.drawPixmap(x, y, pixmap)
 
         # Draw text, better
         if self.text():
             if self._icon:
-                left = radius + height + 6
-                right = self.width() - radius
-                alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
+                if self.layoutDirection() == Qt.LayoutDirection.RightToLeft:
+                    alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
+                    left = radius + (self.width() - self.text_width - self.space - pixmap.width()) // 2
+                    right = left + self.text_width
+
+                else:
+                    left = radius + pixmap.width() + self.space
+                    right = self.width() - radius
+                    alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
+
             else:
                 left = 0
                 right = self.width()
