@@ -12,6 +12,7 @@ from PySide6.QtCore import (
     Signal,
     QPoint,
     QSize,
+    QMargins
 )
 from PySide6.QtGui import (
     QAction,
@@ -68,6 +69,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.move(QPoint(400,50))
         else:
             self.move(QPoint(400,200))
-
 
 

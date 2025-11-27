@@ -43,13 +43,13 @@ class HScrollBar(QScrollBar):
         theme = self.theme
 
         qss = self.qss_template.substitute(
-            radius=f"{self.theme.common.radius}px",
-            hover_bgd=f"{self.theme.common.hover}",
-            selection_bgd=f"{self.theme.common.selection}",
+            radius=f"{self.theme.default.radius}px",
+            hover_bgd=f"{self.theme.default.hover}",
+            selection_bgd=f"{self.theme.default.selection}",
 
-            widget_bgd=f"{theme.common.bgd}",
-            handle_bgd=f"{theme.common.hover}",
-            handle_bgd_hover=f"{theme.common.selection}",
+            widget_bgd=f"{theme.default.bgd}",
+            handle_bgd=f"{theme.default.hover}",
+            handle_bgd_hover=f"{theme.default.selection}",
 
             widget_margin=1,
             track_width=self.width(),
@@ -75,7 +75,7 @@ class HScrollBar(QScrollBar):
             return
 
         parent: QWidget = self.parent()
-        radius = self.theme.common.radius
+        radius = self.theme.default.radius
         full_rect = parent.rect()
         # shrink height by 2*corner_radius, and move down by corner_radius
         self.setGeometry(

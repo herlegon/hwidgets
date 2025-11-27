@@ -52,9 +52,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.h_frame.setStyleSheet(f"""
             background-color: {theme.window_bgd};
 
-            color: {theme.common.font_color};
-            font-family: {theme.common.font.family};
-            font-size: {theme.common.font.size};
+            color: {theme.default.font_color};
+            font-family: {theme.default.font.family};
+            font-size: {theme.default.font.size};
         """)
         # p = self.palette()
         # p.setColor(self.backgroundRole(), hrl_style.window_bgd)

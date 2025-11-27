@@ -51,7 +51,7 @@ class HButton(QPushButton):
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.theme = theme
-        self.default_style = theme.common
+        self.default_style = theme.default
 
         # self.setFlat(True)
         self.setSizePolicy(
@@ -65,8 +65,8 @@ class HButton(QPushButton):
 
         qss_template = Template(load_qss("button.qss"))
         btn_style = theme.button
-        default_style = theme.common
-        radius: int = theme.common.radius
+        default_style = theme.default
+        radius: int = theme.default.radius
         qss = qss_template.substitute(
             radius=f"{radius}px",
             margin_left=f"{radius + default_style.height + 6}px",
@@ -158,9 +158,9 @@ class HButton(QPushButton):
                 QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
             )
 
-        radius: int = self.theme.common.radius
+        radius: int = self.theme.default.radius
         btn_style = self.theme.button
-        default_style = self.theme.common
+        default_style = self.theme.default
 
         qss_template = Template(load_qss("button.qss"))
         qss = qss_template.substitute(
@@ -194,9 +194,9 @@ class HButton(QPushButton):
         self._icon = icon
 
         if icon is not None:
-            radius: int = self.theme.common.radius
+            radius: int = self.theme.default.radius
             btn_style = self.theme.button
-            default_style = self.theme.common
+            default_style = self.theme.default
 
             qss_template = Template(load_qss("button.qss"))
             qss = qss_template.substitute(
@@ -263,8 +263,8 @@ class HButton(QPushButton):
 
 
         # Draw centered pixmap if no text
-        radius = self.theme.common.radius
-        height = self.theme.common.height
+        radius = self.theme.default.radius
+        height = self.theme.default.height
         x = (
             radius
             if self.text()

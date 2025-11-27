@@ -66,7 +66,7 @@ class HLabel(QLabel):
             self.adjustSize()
         else:
             if text and '\n' not in text:
-                self.setFixedHeight(self.theme.common.height)
+                self.setFixedHeight(self.theme.default.height)
             else:
                 self.setSizePolicy(
                     QSizePolicy(self.sizePolicy().horizontalPolicy(), QSizePolicy.Policy.Preferred)
@@ -109,9 +109,9 @@ class HLabel(QLabel):
         qss_template = Template(load_qss("label.css"))
         qss = qss_template.substitute(
             window_bgd=f"{self.theme.window_bgd}",
-            widget_bgd=f"{self.theme.common.bgd}",
-            radius=f"{self.theme.common.radius}px",
-            font_color_disabled=f"{self.theme.common.font_color_disabled}",
+            widget_bgd=f"{self.theme.default.bgd}",
+            radius=f"{self.theme.default.radius}px",
+            font_color_disabled=f"{self.theme.default.font_color_disabled}",
             font_color=f"{style.font_color}",
             font_family=f"\"{style.font.family}\"",
             font_size=f"{self._font_size}pt",

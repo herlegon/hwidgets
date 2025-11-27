@@ -43,7 +43,7 @@ class ClearButton(QPushButton):
         margin_right: int = 0,
     ):
         super().__init__(parent)
-        size_hint = QSize(theme.common.height, theme.common.height)
+        size_hint = QSize(theme.default.height, theme.default.height)
         self.setFixedSize(size_hint)
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
@@ -149,7 +149,7 @@ class HLineEdit(QLineEdit):
         self.theme = theme
         self.le_theme = theme.line_edit
 
-        self.setFixedHeight(theme.common.height)
+        self.setFixedHeight(theme.default.height)
         self.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
 
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
@@ -184,9 +184,9 @@ class HLineEdit(QLineEdit):
 
     def _update_stylesheet(self) -> None:
         theme: Theme = self.theme
-        default_style = theme.common
+        default_style = theme.default
         le_style = self.le_theme
-        radius = theme.common.radius
+        radius = theme.default.radius
 
         if self.clear_button_enabled:
             # self.clear_button.setFixedWidth(theme.common.height)

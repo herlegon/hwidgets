@@ -9,7 +9,7 @@ def test_line_edit_style():
     pprint(line_edit_style)
 
     print("\nCommon:")
-    pprint(theme.common)
+    pprint(theme.default)
 
     # Check if empty members in LineEditStyle are overridden by common members
     # expected: hover, selection, disabled should be taken from common if they are "" in default LineEditStyle
@@ -38,15 +38,15 @@ def test_line_edit_style():
     if line_edit_style.disabled != "#232223":
         failures.append(f"disabled: expected '#232223', got '{line_edit_style.disabled}'")
 
-    if line_edit_style.selection != theme.common.selection:
-         failures.append(f"selection: expected '{theme.common.selection}', got '{line_edit_style.selection}'")
+    if line_edit_style.selection != theme.default.selection:
+         failures.append(f"selection: expected '{theme.default.selection}', got '{line_edit_style.selection}'")
 
     # 'hover' IS in toml as "". So we expect line_edit_style.hover to be "".
     if line_edit_style.hover != "":
          failures.append(f"hover: expected '', got '{line_edit_style.hover}'")
 
-    if line_edit_style.font_color != theme.common.font_color:
-         failures.append(f"font_color: expected '{theme.common.font_color}', got '{line_edit_style.font_color}'")
+    if line_edit_style.font_color != theme.default.font_color:
+         failures.append(f"font_color: expected '{theme.default.font_color}', got '{line_edit_style.font_color}'")
 
     if failures:
         print("\nFAILURES:")

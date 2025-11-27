@@ -66,7 +66,7 @@ class RoundedListView(QListView):
         parent: QWidget = None
     ):
         super().__init__(parent)
-        default_style = theme.common
+        default_style = theme.default
 
         self.radius = float(default_style.radius)
         self.bgd_color = QColor(default_style.bgd)
@@ -78,9 +78,9 @@ class RoundedListView(QListView):
         self.setSpacing(0)
         self.setUniformItemSizes(True)
         self.margin_top = (
-            theme.common.height + theme.common.radius + 2
+            theme.default.height + theme.default.radius + 2
         )
-        self.margin_bottom = theme.common.radius
+        self.margin_bottom = theme.default.radius
 
 
     def paintEvent(self, event: QPaintEvent) -> None:
@@ -152,7 +152,7 @@ class HComboBox(QComboBox):
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         )
-        self.setFixedHeight(theme.common.height)
+        self.setFixedHeight(theme.default.height)
 
         self.setInsertPolicy(QComboBox.InsertPolicy.InsertAtCurrent)
         self.setAcceptDrops(True)
@@ -166,7 +166,7 @@ class HComboBox(QComboBox):
             "normal" : make_tinted_pixmap(default_pixmap, theme.combobox.font_color),
             "disabled" : make_tinted_pixmap(default_pixmap, theme.line_edit.button_disabled),
         }
-        self.border_color = QColor(self.theme.common.border)
+        self.border_color = QColor(self.theme.default.border)
         self.border_edition = QColor(self.theme.line_edit.selection)
         self.border_disabled = QColor(self.theme.line_edit.font_color_disabled)
 
@@ -198,20 +198,20 @@ class HComboBox(QComboBox):
 
 
     def setMinimumSize(self, size: QSize) -> None:
-        height: int = self.theme.common.height
+        height: int = self.theme.default.height
         super().setMinimumSize(QSize(size.width(), height))
         super().setFixedHeight(height)
 
 
     def setMaximumSize(self, size: QSize) -> None:
-        height: int = self.theme.common.height
+        height: int = self.theme.default.height
         super().setMaximumSize(QSize(size.width(), height))
         super().setFixedHeight(height)
 
 
     def _update_stylesheet(self):
         self.variant = ""
-        default_style = self.theme.common
+        default_style = self.theme.default
         le_style = self.theme.line_edit
 
         radius = default_style.radius
@@ -271,7 +271,7 @@ class HComboBox(QComboBox):
         if not pixmap:
             return QRect()
 
-        x = self.width() - self.height() - self.theme.common.radius
+        x = self.width() - self.height() - self.theme.default.radius
         button_rect = QRect(x, 0, self.width() - x, self.height())
         return button_rect
 
@@ -304,7 +304,7 @@ class HComboBox(QComboBox):
         )
 
 
-        radius = self.theme.common.radius
+        radius = self.theme.default.radius
         popup_width = self.width()
         if self.adjust_popup_width:
             fm = QFontMetrics(self.font())
@@ -434,7 +434,7 @@ class HComboBox(QComboBox):
 
 
         # Border color
-        radius: int = self.theme.common.radius
+        radius: int = self.theme.default.radius
         border_width = 1.0
         pen = QPen(self.border_color, border_width)
         painter.setPen(pen)

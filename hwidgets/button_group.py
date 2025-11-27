@@ -83,7 +83,7 @@ class HButtonGroup(QWidget):
     def _update_stylesheet(self) -> None:
         qss_template = Template(load_qss(f"button_group.qss"))
         bg_style = self.theme.button_group
-        default_style = self.theme.common
+        default_style = self.theme.default
         qss = qss_template.substitute(
             radius=f"{default_style.radius}px",
 

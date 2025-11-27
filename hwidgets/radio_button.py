@@ -43,9 +43,9 @@ class HRadioButton(QRadioButton):
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         self.rb_style = theme.radio_button
-        self.size_hint = QSize(theme.common.height, theme.common.height)
+        self.size_hint = QSize(theme.default.height, theme.default.height)
 
-        self.margin = (theme.common.height - self.rb_style.size) / 2
+        self.margin = (theme.default.height - self.rb_style.size) / 2
         self.radius = self.rb_style.radius
         self.border_width = self.rb_style.border_thickness
 

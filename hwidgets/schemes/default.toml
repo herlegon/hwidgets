@@ -1,91 +1,97 @@
 [window]
-window = "#1C1B1D"
+window = "#1b1c20"
 
+[default]
+bgd = "#2a2a2a"
+hover = "#3a3a3a"
+selection = "#5e7ce0"
+pressed = "#5e5e5e"
+disabled_bgd = "#2a2a2a"
+border = "#4a4a4a"
+border_radius = 8
+height = 40
 
-[common]
-bgd = "#424048"
-hover = "#66636D"
-selection = "#7777FF"
-pressed = "#5555B3"
-disabled_bgd = "#313131"
-border = "#505053"
-
-font_family = "Segoe UI"
-font_size = 10
-font_weight = 500
-font_color = "#d4d4d8"
-font_color_disabled = "#4E4E4E"
-font_color_selected = "#5442bd"
-font_color_checked = "#4632c7"
+font_family = "Inter"
+font_size = 13
+font_weight = 400
+font_color = "#d4d4d4"
+font_color_disabled = "#666666"
+font_color_selected = "#ffffff"
+font_color_checked = "#ffffff"
 
 [frame]
-bgd ="#151417"
+bgd ="#212224"
 
+[card]
+bgd = "#212224"
+border = "#4a4a4a"
+
+[divider]
+normal ="#4a4a4a"
 
 [label]
-font_family = "Segoe UI"
-font_size = 10
+font_family = "Inter"
+font_size = 12
 font_weight = 400
-font_color = "#d4d4d8"
+font_color = "#b0b0b0"
 
 [title]
-font_family = "Segoe UI"
-font_size = 16
-font_weight = 800
-font_color = "#7777FF"
+font_family = "Inter"
+font_size = 18
+font_weight = 600
+font_color = "#5e7ce0"
 
 # subtitle and comment only appear in TOML if they override label
 [subtitle]
-font_size = 14
+font_size = 20
 font_weight = 600
-font_color = "#c2c2c7"
+font_color = "#d4d4d8"
 # Inherits everything from [label], font is defined in code
 
 [description]
-font_size = 10
-font_weight = 500
-font_color = "#c2c2c7"
+font_size = 13
+font_weight = 600
+font_color = "#d4d4d8"
 
 
 [comment]
-font_size = 9
-font_color = "#a7a7a7"
+font_size = 13
+font_color = "#cfcfcf"
 # Inherits font_color_disabled from label
 
-
-[divider]
-normal ="#474747"
 
 
 [checkbox]
 size = 16
-border = "#7c787f"
-pressed = "#7c787f"
-checked = "#7777FF"
-disabled = "#474747"
+border = "#4a4a4a"
+pressed = "#5e5e5e"
+checked = "#5e7ce0"
+disabled = "#4a4a4a"
+font_color_disabled = "#666666"
 
 
 [switch]
-track_off = "#4E4E4E"
-track_on = "#4E4E4E"
-handle_off = "#66636D"
-handle_on = "#7777FF"
-track_disabled = "#36343B"
-handle_disabled = "#232223"
+track_off = "#4a4a4a"
+track_on = "#3d4a99"
+handle_off = "#d4d4d4"
+handle_on = "#d4d4d4"
+track_disabled = "#4a4a4a"
+handle_disabled = "#d4d4d4"
 
 
 [radio_button]
-unchecked = "#66636D"
-pressed = "#7c787f"
-checked = "#7777FF"
-disabled = "#232223"
+unchecked = "#4a4a4a"
+pressed = "#5e7ce0"
+checked = "#5e7ce0"
+disabled = "#4a4a4a"
 
 
 [line_edit]
-disabled = "#232223"
+disabled = "#2a2a2a"
+border_read_only = "#4a4a4a"
 hover = ""
-button_hover = "#7777FF"
-button_disabled = "#4E4E4E"
+button_hover = "#5e7ce0"
+button_disabled = "#4a4a4a"
 
 
 [plain_text_edit]
@@ -93,14 +99,15 @@ button_disabled = "#4E4E4E"
 
 
 [scrollbar]
-normal = "#66636D"
-hover = "#7777FF"
+normal = "#4a4a4a"
+hover = "#5a5a5a"
+thickness = 8
 
 
 [spinbox]
-button_hover = "#66636D"
-button_pressed = "#66636D"
-button_disabled = "#232223"
+button_hover = "#3a3a3a"
+button_pressed = "#5e5e5e"
+button_disabled = "#2a2a2a"
 
 
 [combobox]
@@ -108,41 +115,77 @@ button_disabled = "#232223"
 
 [button_group]
 # checked is darkened
-pressed = "#7c787f"
-checked = "#7777ff"
-disabled = "#232223"
+pressed = "#5e5e5e"
+checked = "#2d3875"
+disabled = "#2a2a2a"
 
 
 [button]
-normal = "#5442bd"
-hover = "#7777FF"
-disabled = "#A3A3D1"
+normal = "#5e7ce0"
+hover = "#4a5ba8"
+disabled = "#4a4a4a"
 
 
 [strong_button]
-bgd = "#4b49c9"
-hover = "#6a67e0"
-pressed = "#7575E6"
+bgd = "#4a4a4a"
+hover = "#3a3a3a"
+pressed = "#424242"
 font_color = "#FFFFFF"
 
 
 [flat_button]
-normal = "#5442bd"
-disabled = "#A3A3D1"
+normal = "#5e7ce0"
+disabled = "#4a4a4a"
 
 
 [icon_button]
 # normal = icon line color
-normal = "#5442bd"
-disabled = "#A3A3D1"
+normal = "#5e7ce0"
+border = "#5e5e5e"
+disabled = "#4a4a4a"
 
 
+[frameless_button]
+normal = "#b0b0b0"
+hover = "#e8e8e8"
+pressed = "#ffffff"
+disabled = "#4a4a4a"
+
+[slider]
+track = "#4a4a4a"
+handle = "#5e7ce0"
+handle_hover = "#5e7ce0"
+handle_pressed = "#8a9eff"
+track_height = 4
+handle_width = 12
+handle_height = 12
+
+
+[checkable_button]
+normal = "#2a2a2a"
+border = "#5e5e5e"
+hover = "#3a3a3a"
+border_hover = "#8a9eff"
+pressed = "#5e5e5e"
+border_pressed = "#5e5e5e"
+checked = "#2d3875"
+border_checked = "#2d3875"
+disabled = "#2a2a2a"
 
 
 [progress_bar]
-track = "#A3A3D1"
-bar = "#5442bd"
+track = "#4a4a4a"
+bar = "#5e7ce0"
 
 [button_label]
-font_size = 12
+font_size = 13
 font_weight = 500
+
+[log]
+bgd = "#000000"
+border = "#444444"
+border_radius = 5
+font_family = "monospace"
+font_size = 13
+font_color = "#ffffff"
+text_bgd = "#111111"

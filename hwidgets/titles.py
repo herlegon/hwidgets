@@ -234,7 +234,7 @@ class HTitle(QWidget):
             font_size=f"{self.title_style.font.size}pt",
             font_weight=f"{self.title_style.font.weight}",
             font_style="normal",
-            font_color_disabled=f"{self.theme.common.font_color_disabled}",
+            font_color_disabled=f"{self.theme.default.font_color_disabled}",
         )
         qss += " padding-bottom: 10px;"
         self.setStyleSheet(qss)

@@ -36,15 +36,15 @@ class HGroupBox(QGroupBox):
 
         qss_template = Template(load_qss("groupbox.css"))
         title_left_adjust = 0
-        radius: int = theme.common.radius
+        radius: int = theme.default.radius
         qss = qss_template.substitute(
             window_bgd=f"{theme.window_bgd}",
             widget_bgd=f"{theme.window_bgd}",
-            font_color=f"{theme.common.font_color}",
-            radius=f"{theme.common.radius}",
-            border_color=f"{theme.common.border}",
+            font_color=f"{theme.default.font_color}",
+            radius=f"{theme.default.radius}",
+            border_color=f"{theme.default.border}",
             margin_top=f"{int(radius + theme.groupbox.height) - 1}",
-            disabled_text=f"{theme.common.font_color_disabled}",
+            disabled_text=f"{theme.default.font_color_disabled}",
             widget_disabled=f"{theme.window_bgd}",
             padding=f"{radius + title_left_adjust}",
             title_margins=f"{title_left_adjust}",

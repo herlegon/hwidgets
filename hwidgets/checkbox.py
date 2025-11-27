@@ -13,6 +13,7 @@ from PySide6.QtCore import (
     QSize,
     QPointF,
     QPoint,
+    QRect,
 )
 from PySide6.QtGui import (
     QPolygonF,
@@ -43,29 +44,82 @@ class HCheckBox(QCheckBox):
         tristate: bool | None = None,
     ) -> None:
         super().__init__(parent)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.theme = theme
 
-        cb_style = theme.checkbox
+        self.cb_style = theme.checkbox
+        self.cb_height = theme.default.height
+        self._spacing: int = 8
+        self._cached_size: QSize = None
 
-        self._radius: int = 1
+        self.text_rect: QRect = QRect()
+        self.box_rect: QRectF = QRectF()
+        self.inner_box_rect: QRectF = QRectF()
+        self.tick_mark: QPolygonF = None
+
+        # Colors
+        self.border = QColor(self.cb_style.border)
+        self.border_pressed = QColor(self.cb_style.border)
+
+        self.pressed = QColor(self.cb_style.pressed)
+        self.checked = QColor(self.cb_style.checked)
+        self.disabled = QColor(self.cb_style.disabled)
+        self.font_enabled = QColor(self.cb_style.font_color)
+        self.font_disabled = QColor(self.cb_style.font_color_disabled)
+
+        self.tick_pen = QPen(
+            self.checked,
+            2,
+            Qt.PenStyle.SolidLine,
+            Qt.PenCapStyle.RoundCap,
+            Qt.PenJoinStyle.RoundJoin
+        )
+        self.setMinimumSize(self.sizeHint())
+
+
+    def spacing(self) -> None:
+        return self._spacing
+
+
+    def setSpacing(self, spacing: int) -> None:
+        self._spacing = spacing
+
+
+    def _recalculate_size(self) -> None:
+        cb_style = self.cb_style
+        self.radius: int = 1
         thickness = 2
 
-        self.cb_size = cb_style.size
-        margin = (cb_style.size - cb_style.box_size) / 2
-
+        top_margin = (self.cb_height - cb_style.box_size) / 2
         self.box_rect = QRectF(
-            margin, margin, cb_style.size - 2 * margin, cb_style.size - 2 * margin
+            thickness - 1,
+            top_margin,
+            cb_style.box_size,
+            cb_style.box_size
         )
 
-        self.inner_box_rect: QRectF = QRectF(
-            margin + thickness - 1,
-            margin + thickness - 1,
-            cb_style.size - 2 * thickness,
-            cb_style.size - 2 * thickness,
-        )
-        self.click_rect = QRectF(
-            margin, margin, cb_style.size, cb_style.size,
-        ).adjusted(-thickness, -thickness, thickness, thickness)
+        # self.inner_box_rect: QRectF = QRectF(
+        #     thickness - 1,
+        #     top_margin + thickness - 1,
+        #     cb_style.size - 2 * thickness,
+        #     cb_style.size - 2 * thickness,
+        # )
+
+        content_width = cb_style.box_size + thickness
+        text = self.text()
+        self.text_rect = QRect()
+        if text:
+            text_width = self.fontMetrics().horizontalAdvance(text)
+            text_spacing = self._spacing + text_width
+            content_width += text_spacing
+
+            if self.layoutDirection() == Qt.LayoutDirection.RightToLeft:
+                self.text_rect = QRect(0, 0, text_width, self.cb_height)
+                self.box_rect.adjust(text_spacing, 0, text_spacing, 0)
+            else:
+                self.text_rect = QRect(
+                    cb_style.size + self._spacing, 0, text_width, self.cb_height
+                )
 
         self.tick_mark = QPolygonF([
             QPointF(self.box_rect.left() + self.box_rect.width() * 0.22, self.box_rect.top() + self.box_rect.height() * 0.52),
@@ -73,44 +127,40 @@ class HCheckBox(QCheckBox):
             QPointF(self.box_rect.left() + self.box_rect.width() * 0.78, self.box_rect.top() + self.box_rect.height() * 0.28),
         ])
 
-        self.setContentsMargins(0, 0, 0, 0)
-        self.setMinimumSize(self.sizeHint())
-
-        # Colors
-        self.border = QColor(cb_style.border)
-        self.border_pressed = QColor(cb_style.border)
-
-        self.tick_color = QColor(theme.window_bgd)
-        self.pressed = QColor(cb_style.pressed)
-        self.checked = QColor(cb_style.checked)
-        self.disabled = QColor(cb_style.disabled)
-
-        self.tick_pen = QPen(
-            self.tick_color,
-            2,
-            Qt.PenStyle.SolidLine,
-            Qt.PenCapStyle.RoundCap,
-            Qt.PenJoinStyle.RoundJoin
-        )
+        self._cached_size = QSize(content_width, self.cb_height)
 
 
     def sizeHint(self) -> QSize:
-        """Return a fixed height, width = checkbox + margins"""
-        return QSize(self.cb_size, self.cb_size)
+        if self._cached_size is None:
+            self._recalculate_size()
+        return self._cached_size
 
 
-    def mouseMoveEvent(self, event: QMouseEvent):
-        # Change cursor only if inside the drawn checkbox
-        if self.hitButton(event.pos()):
-            self.setCursor(Qt.CursorShape.PointingHandCursor)
-        else:
-            self.unsetCursor()
-        super().mouseMoveEvent(event)
+    def minimumSizeHint(self) -> QSize:
+        """Return the same as sizeHint to prevent shrinking below desired size."""
+        return self.sizeHint()
 
 
-    def hitButton(self, pos: QPoint) -> bool:
-        """Only accept clicks inside the visible 16x16 box"""
-        return self.click_rect.contains(pos)
+    def setText(self, text: str) -> None:
+        super().setText(text)
+        self._recalculate_size()
+        self.setMinimumWidth(self.sizeHint().width())
+        self.setFixedHeight(self._cached_size.height())
+
+
+    # def mouseMoveEvent(self, event: QMouseEvent):
+    #     # Change cursor only if inside the drawn checkbox
+    #     if self.hitButton(event.pos()):
+    #         self.setCursor(Qt.CursorShape.PointingHandCursor)
+    #     else:
+    #         self.unsetCursor()
+    #     super().mouseMoveEvent(event)
+
+
+    # def hitButton(self, pos: QPoint) -> bool:
+    #     """Only accept clicks inside the visible 16x16 box"""
+    #     return self.click_rect.contains(pos)
+
 
 
     def paintEvent(self, event: QPaintEvent) -> None:
@@ -120,13 +170,11 @@ class HCheckBox(QCheckBox):
             draw_widget_rect(self, painter)
 
         # Use this only to get current states (hover, pressed, checked)
-        option: QStyleOptionButton = QStyleOptionButton()
+        option = QStyleOptionButton()
         self.initStyleOption(option)
         pressed = bool(option.state & QStyle.StateFlag.State_Sunken)
         checked = bool(option.state & QStyle.StateFlag.State_On)
         enabled = bool(option.state & QStyle.StateFlag.State_Enabled)
-
-        # Checkbox itself
 
         # Draw box
         pen = QPen()
@@ -135,7 +183,7 @@ class HCheckBox(QCheckBox):
             if pressed:
                 pen.setColor(self.pressed)
             elif checked:
-                pen.setColor(self.checked)
+                pen.setColor(self.border)
             else:
                 pen.setColor(self.border)
         else:
@@ -143,30 +191,36 @@ class HCheckBox(QCheckBox):
 
         painter.setPen(pen)
         painter.setBrush(Qt.BrushStyle.NoBrush)
-        painter.drawRoundedRect(self.box_rect, self._radius, self._radius)
+        painter.drawRoundedRect(self.box_rect, self.radius, self.radius)
 
         # Draw inner rect when pressed
-        painter.setPen(Qt.PenStyle.NoPen)
-        skip_draw = False
-        if enabled:
-            if checked:
-                painter.setBrush(QBrush(self.checked))
-            if pressed:
-                painter.setBrush(QBrush(self.pressed))
-            if checked and pressed:
-                painter.setBrush(QBrush(self.pressed))
-        else:
-            if checked:
-                painter.setBrush(QBrush(self.disabled))
-            else:
-                skip_draw = True
-        if not skip_draw:
-            painter.drawRect(self.inner_box_rect)
+        # painter.setPen(Qt.PenStyle.NoPen)
+        # skip_draw = False
+        # if enabled:
+        #     if checked:
+        #         painter.setBrush(QBrush(self.checked))
+        #     if pressed:
+        #         painter.setBrush(QBrush(self.pressed))
+        #     if checked and pressed:
+        #         painter.setBrush(QBrush(self.pressed))
+        # else:
+        #     if checked:
+        #         painter.setBrush(QBrush(self.disabled))
+        #     else:
+        #         skip_draw = True
+        # if not skip_draw:
+        #     painter.drawRect(self.inner_box_rect)
 
         # Check mark
         if checked:
+            self.tick_pen.setColor(self.checked if enabled else self.disabled)
             painter.setPen(self.tick_pen)
             painter.drawPolyline(self.tick_mark)
 
+        # Draw text, better
+        if self.text():
+            alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
+            painter.setPen(self.font_enabled if enabled else self.font_disabled)
+            painter.drawText(self.text_rect, alignment, self.text())
         painter.end()
 

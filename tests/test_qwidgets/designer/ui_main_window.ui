@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>721</width>
-    <height>860</height>
+    <width>665</width>
+    <height>801</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -255,8 +255,12 @@
            </item>
            <item>
             <widget class="QCheckBox" name="q_checkbox">
+             <property name="styleSheet">
+              <string notr="true">border-color: rgb(255, 0, 0);
+border:1px solid;</string>
+             </property>
              <property name="text">
-              <string/>
+              <string>label</string>
              </property>
             </widget>
            </item>
@@ -971,9 +975,7 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
-  <buttongroup name="buttonGroup"/>
   <buttongroup name="buttonGroup_4"/>
  </buttongroups>
 </ui>

@@ -26,7 +26,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(721, 860)
+        MainWindow.resize(665, 801)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -178,6 +178,8 @@ class Ui_MainWindow(object):
 
         self.q_checkbox = QCheckBox(self.q_frame)
         self.q_checkbox.setObjectName(u"q_checkbox")
+        self.q_checkbox.setStyleSheet(u"border-color: rgb(255, 0, 0);\n"
+"border:1px solid;")
 
         self.horizontalLayout_5.addWidget(self.q_checkbox)
 
@@ -584,7 +586,7 @@ class Ui_MainWindow(object):
         self.q_label.setText(QCoreApplication.translate("MainWindow", u"A Qlabel", None))
         self.q_label_disabled.setText(QCoreApplication.translate("MainWindow", u"A disabled Qlabel", None))
         self.q_label_checkbox.setText(QCoreApplication.translate("MainWindow", u"A Qlabel", None))
-        self.q_checkbox.setText("")
+        self.q_checkbox.setText(QCoreApplication.translate("MainWindow", u"label", None))
         self.q_checkbox_clicked.setText("")
         self.q_checkbox_disabled.setText("")
         self.q_checkbox_disabled_clicked.setText("")

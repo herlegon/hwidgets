@@ -16,10 +16,10 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCheckBox,
-    QComboBox, QDoubleSpinBox, QFrame, QHBoxLayout,
-    QLabel, QLineEdit, QMainWindow, QPlainTextEdit,
-    QPushButton, QRadioButton, QSizePolicy, QSpacerItem,
-    QSpinBox, QVBoxLayout, QWidget)
+    QComboBox, QDoubleSpinBox, QFrame, QGridLayout,
+    QHBoxLayout, QLabel, QLineEdit, QMainWindow,
+    QPlainTextEdit, QPushButton, QRadioButton, QSizePolicy,
+    QSpacerItem, QSpinBox, QVBoxLayout, QWidget)
 
 from typing import Type
 from hwidgets import (
@@ -102,23 +102,41 @@ class Ui_MainWindow(object):
 
         self.text_layout.addWidget(self.h_description)
 
+        self.h_description_3 = HDescription(self.h_frame, theme=theme)
+        self.h_description_3.setObjectName(u"h_description_3")
+        self.h_description_3.setWordWrap(True)
+
+        self.text_layout.addWidget(self.h_description_3)
+
+        self.h_description_4 = HDescription(self.h_frame, theme=theme)
+        self.h_description_4.setObjectName(u"h_description_4")
+        self.h_description_4.setWordWrap(True)
+
+        self.text_layout.addWidget(self.h_description_4)
+
+        self.horizontalLayout_2 = QHBoxLayout()
+        self.horizontalLayout_2.setSpacing(32)
+        self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
+        self.h_comment_small_italic = HComment(self.h_frame, theme=theme)
+        self.h_comment_small_italic.setObjectName(u"h_comment_small_italic")
+        self.h_comment_small_italic.setWordWrap(True)
+
+        self.horizontalLayout_2.addWidget(self.h_comment_small_italic, 0, Qt.AlignmentFlag.AlignLeft)
+
         self.h_comment_bold = HComment(self.h_frame, theme=theme)
         self.h_comment_bold.setObjectName(u"h_comment_bold")
         self.h_comment_bold.setWordWrap(True)
 
-        self.text_layout.addWidget(self.h_comment_bold)
+        self.horizontalLayout_2.addWidget(self.h_comment_bold)
 
         self.h_comment_italic = HComment(self.h_frame, theme=theme)
         self.h_comment_italic.setObjectName(u"h_comment_italic")
         self.h_comment_italic.setWordWrap(True)
 
-        self.text_layout.addWidget(self.h_comment_italic)
+        self.horizontalLayout_2.addWidget(self.h_comment_italic, 0, Qt.AlignmentFlag.AlignLeft)
 
-        self.h_comment_small_italic = HComment(self.h_frame, theme=theme)
-        self.h_comment_small_italic.setObjectName(u"h_comment_small_italic")
-        self.h_comment_small_italic.setWordWrap(True)
 
-        self.text_layout.addWidget(self.h_comment_small_italic)
+        self.text_layout.addLayout(self.horizontalLayout_2)
 
 
         self.main_layout.addLayout(self.text_layout)
@@ -148,58 +166,112 @@ class Ui_MainWindow(object):
 
         self.checkbox_layout = QHBoxLayout()
         self.checkbox_layout.setObjectName(u"checkbox_layout")
-        self.h_checkbox = HCheckBox(self.h_frame, theme=theme)
-        self.h_checkbox.setObjectName(u"h_checkbox")
+        self.gridLayout = QGridLayout()
+        self.gridLayout.setObjectName(u"gridLayout")
+        self.h_checkbox_disabled_3 = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox_disabled_3.setObjectName(u"h_checkbox_disabled_3")
+        self.h_checkbox_disabled_3.setEnabled(False)
+        self.h_checkbox_disabled_3.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
 
-        self.checkbox_layout.addWidget(self.h_checkbox)
-
-        self.h_checkbox_clicked = HCheckBox(self.h_frame, theme=theme)
-        self.h_checkbox_clicked.setObjectName(u"h_checkbox_clicked")
-        self.h_checkbox_clicked.setChecked(True)
-
-        self.checkbox_layout.addWidget(self.h_checkbox_clicked)
-
-        self.h_checkbox_disabled = HCheckBox(self.h_frame, theme=theme)
-        self.h_checkbox_disabled.setObjectName(u"h_checkbox_disabled")
-        self.h_checkbox_disabled.setEnabled(False)
-
-        self.checkbox_layout.addWidget(self.h_checkbox_disabled)
-
-        self.h_checkbox_disabled_clicked = HCheckBox(self.h_frame, theme=theme)
-        self.h_checkbox_disabled_clicked.setObjectName(u"h_checkbox_disabled_clicked")
-        self.h_checkbox_disabled_clicked.setEnabled(False)
-        self.h_checkbox_disabled_clicked.setChecked(True)
-
-        self.checkbox_layout.addWidget(self.h_checkbox_disabled_clicked)
-
-        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.checkbox_layout.addItem(self.horizontalSpacer_3)
-
-        self.h_switch = HSwitch(self.h_frame, theme=theme)
-        self.h_switch.setObjectName(u"h_switch")
-
-        self.checkbox_layout.addWidget(self.h_switch)
-
-        self.h_switch_checked = HSwitch(self.h_frame, theme=theme)
-        self.h_switch_checked.setObjectName(u"h_switch_checked")
-        self.h_switch_checked.setChecked(True)
-
-        self.checkbox_layout.addWidget(self.h_switch_checked)
-
-        self.h_switch_disabled = HSwitch(self.h_frame, theme=theme)
-        self.h_switch_disabled.setObjectName(u"h_switch_disabled")
-        self.h_switch_disabled.setEnabled(False)
-        self.h_switch_disabled.setCheckable(True)
-
-        self.checkbox_layout.addWidget(self.h_switch_disabled)
+        self.gridLayout.addWidget(self.h_checkbox_disabled_3, 2, 1, 1, 1, Qt.AlignmentFlag.AlignRight)
 
         self.h_switch_disabled_checked = HSwitch(self.h_frame, theme=theme)
         self.h_switch_disabled_checked.setObjectName(u"h_switch_disabled_checked")
         self.h_switch_disabled_checked.setEnabled(False)
         self.h_switch_disabled_checked.setChecked(True)
 
-        self.checkbox_layout.addWidget(self.h_switch_disabled_checked)
+        self.gridLayout.addWidget(self.h_switch_disabled_checked, 3, 3, 1, 1)
+
+        self.h_checkbox_disabled_clicked_3 = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox_disabled_clicked_3.setObjectName(u"h_checkbox_disabled_clicked_3")
+        self.h_checkbox_disabled_clicked_3.setEnabled(False)
+        self.h_checkbox_disabled_clicked_3.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.h_checkbox_disabled_clicked_3.setChecked(True)
+
+        self.gridLayout.addWidget(self.h_checkbox_disabled_clicked_3, 3, 1, 1, 1, Qt.AlignmentFlag.AlignRight)
+
+        self.h_checkbox_r = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox_r.setObjectName(u"h_checkbox_r")
+        self.h_checkbox_r.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+
+        self.gridLayout.addWidget(self.h_checkbox_r, 0, 1, 1, 1, Qt.AlignmentFlag.AlignRight)
+
+        self.h_checkbox_checked = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox_checked.setObjectName(u"h_checkbox_checked")
+        self.h_checkbox_checked.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.h_checkbox_checked.setChecked(True)
+
+        self.gridLayout.addWidget(self.h_checkbox_checked, 1, 0, 1, 1)
+
+        self.h_checkbox_disabled_clicked = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox_disabled_clicked.setObjectName(u"h_checkbox_disabled_clicked")
+        self.h_checkbox_disabled_clicked.setEnabled(False)
+        self.h_checkbox_disabled_clicked.setChecked(True)
+
+        self.gridLayout.addWidget(self.h_checkbox_disabled_clicked, 3, 0, 1, 1)
+
+        self.h_checkbox_checked_r = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox_checked_r.setObjectName(u"h_checkbox_checked_r")
+        self.h_checkbox_checked_r.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.h_checkbox_checked_r.setChecked(True)
+
+        self.gridLayout.addWidget(self.h_checkbox_checked_r, 1, 1, 1, 1, Qt.AlignmentFlag.AlignRight)
+
+        self.h_checkbox = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox.setObjectName(u"h_checkbox")
+
+        self.gridLayout.addWidget(self.h_checkbox, 0, 0, 1, 1)
+
+        self.label = HLabel(self.h_frame, theme=theme)
+        self.label.setObjectName(u"label")
+
+        self.gridLayout.addWidget(self.label, 0, 2, 1, 1)
+
+        self.label_2 = HLabel(self.h_frame, theme=theme)
+        self.label_2.setObjectName(u"label_2")
+
+        self.gridLayout.addWidget(self.label_2, 1, 2, 1, 1)
+
+        self.h_switch_disabled = HSwitch(self.h_frame, theme=theme)
+        self.h_switch_disabled.setObjectName(u"h_switch_disabled")
+        self.h_switch_disabled.setEnabled(False)
+        self.h_switch_disabled.setCheckable(True)
+
+        self.gridLayout.addWidget(self.h_switch_disabled, 2, 3, 1, 1)
+
+        self.h_switch_checked = HSwitch(self.h_frame, theme=theme)
+        self.h_switch_checked.setObjectName(u"h_switch_checked")
+        self.h_switch_checked.setChecked(True)
+
+        self.gridLayout.addWidget(self.h_switch_checked, 1, 3, 1, 1)
+
+        self.h_switch_off = HSwitch(self.h_frame, theme=theme)
+        self.h_switch_off.setObjectName(u"h_switch_off")
+        self.h_switch_off.setEnabled(True)
+        self.h_switch_off.setCheckable(True)
+
+        self.gridLayout.addWidget(self.h_switch_off, 0, 3, 1, 1)
+
+        self.label_3 = HLabel(self.h_frame, theme=theme)
+        self.label_3.setObjectName(u"label_3")
+
+        self.gridLayout.addWidget(self.label_3, 2, 2, 1, 1)
+
+        self.label_4 = HLabel(self.h_frame, theme=theme)
+        self.label_4.setObjectName(u"label_4")
+
+        self.gridLayout.addWidget(self.label_4, 3, 2, 1, 1)
+
+        self.h_checkbox_checked_2 = HCheckBox(self.h_frame, theme=theme)
+        self.h_checkbox_checked_2.setObjectName(u"h_checkbox_checked_2")
+        self.h_checkbox_checked_2.setEnabled(False)
+        self.h_checkbox_checked_2.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.h_checkbox_checked_2.setChecked(False)
+
+        self.gridLayout.addWidget(self.h_checkbox_checked_2, 2, 0, 1, 1)
+
+
+        self.checkbox_layout.addLayout(self.gridLayout)
 
 
         self.main_layout.addLayout(self.checkbox_layout)
@@ -997,20 +1069,30 @@ class Ui_MainWindow(object):
         self.h_title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon", None))
         self.h_title_icon.setText("")
         self.h_subtitles.setText(QCoreApplication.translate("MainWindow", u"Subtitle", None))
-        self.h_description.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_description.setText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_description_4.setText(QCoreApplication.translate("MainWindow", u"Description (italic): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_comment_small_italic.setText(QCoreApplication.translate("MainWindow", u"Small italic comment", None))
         self.h_comment_bold.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
         self.h_comment_italic.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
-        self.h_comment_small_italic.setText(QCoreApplication.translate("MainWindow", u"Small italic comment", None))
         self.h_label.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
         self.h_label_disabled.setText(QCoreApplication.translate("MainWindow", u"A disabled Hlabel", None))
-        self.h_checkbox.setText("")
-        self.h_checkbox_clicked.setText("")
-        self.h_checkbox_disabled.setText("")
-        self.h_checkbox_disabled_clicked.setText("")
-        self.h_switch.setText("")
-        self.h_switch_checked.setText("")
-        self.h_switch_disabled.setText("")
+        self.h_checkbox_disabled_3.setText(QCoreApplication.translate("MainWindow", u"480p", None))
         self.h_switch_disabled_checked.setText("")
+        self.h_checkbox_disabled_clicked_3.setText(QCoreApplication.translate("MainWindow", u"360p", None))
+        self.h_checkbox_r.setText(QCoreApplication.translate("MainWindow", u"1080p", None))
+        self.h_checkbox_checked.setText(QCoreApplication.translate("MainWindow", u"720p", None))
+        self.h_checkbox_disabled_clicked.setText(QCoreApplication.translate("MainWindow", u"360p", None))
+        self.h_checkbox_checked_r.setText(QCoreApplication.translate("MainWindow", u"720p", None))
+        self.h_checkbox.setText(QCoreApplication.translate("MainWindow", u"1080p", None))
+        self.label.setText(QCoreApplication.translate("MainWindow", u"switch off", None))
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"switch on", None))
+        self.h_switch_disabled.setText("")
+        self.h_switch_checked.setText("")
+        self.h_switch_off.setText("")
+        self.label_3.setText(QCoreApplication.translate("MainWindow", u"switch disabled off", None))
+        self.label_4.setText(QCoreApplication.translate("MainWindow", u"switch enabled on", None))
+        self.h_checkbox_checked_2.setText(QCoreApplication.translate("MainWindow", u"480p", None))
         self.h_radiobutton_enabled_off.setText("")
         self.h_radiobutton_enabled_on.setText("")
         self.h_radiobutton_disabled_on.setText("")

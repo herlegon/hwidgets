@@ -224,7 +224,7 @@ class HPlainTextEdit(QPlainTextEdit):
         self.overlay_vbar: OverlayVScrollBar = None
         self._update_timer: QTimer = None
 
-        radius: int = theme.common.radius
+        radius: int = theme.default.radius
         self.overlay_vbar = OverlayVScrollBar(self, theme=theme, radius=radius, width=radius)
 
         # use QTimer to throttle updates for smoother scrolling
@@ -281,9 +281,9 @@ class HPlainTextEdit(QPlainTextEdit):
 
     def _update_stylesheet(self) -> None:
         theme: Theme = self.theme
-        default_style = theme.common
+        default_style = theme.default
         le_style = self.le_theme
-        radius = theme.common.radius
+        radius = theme.default.radius
 
         padding_left, padding_right = radius, radius
         if self.clear_button_enabled:

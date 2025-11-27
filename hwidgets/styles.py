@@ -14,7 +14,7 @@ class FontConfig(NamedTuple):
 
 
 @dataclass
-class WidgetCommonColors:
+class DefaultStyle:
     height: int = NORMAL_HEIGHT
     radius: int = BORDER_RADIUS
 
@@ -39,42 +39,13 @@ class WidgetCommonColors:
 @dataclass
 class FrameStyle:
     bgd: str = ""
-    radius: int = BORDER_RADIUS
-
-
-
-@dataclass
-class TitleStyle:
-    height: int = NORMAL_HEIGHT + BORDER_RADIUS
-    padding = 0
-
-    font: FontConfig = FontConfig(size=16, weight=800)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
+    radius: int = BORDER_RADIUS * 1.5
 
 
 @dataclass
-class SubtitleStyle:
-    font: FontConfig = FontConfig(size=12, weight=400)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
-@dataclass
-class DescriptionStyle:
-    font: FontConfig = FontConfig(size=12, weight=400)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
-
-@dataclass
-class CommentStyle:
-    font: FontConfig = FontConfig(size=10, weight=400)
-    font_color: str = ""
-    font_color_disabled: str = ""
-
+class CardStyle(FrameStyle):
+    # bgd: str = ""
+    border: str = ""
 
 
 @dataclass
@@ -86,9 +57,40 @@ class DividerStyle:
     padding: int = 16
 
 
+@dataclass
+class LabelStyle:
+    padding = 0
+
+    font: FontConfig = FontConfig()
+    font_color: str = ""
+    font_color_disabled: str = ""
+
 
 @dataclass
-class CheckBoxStyle:
+class TitleStyle(LabelStyle):
+    height: int = NORMAL_HEIGHT + BORDER_RADIUS
+    font: FontConfig = FontConfig(size=16, weight=800)
+
+
+@dataclass
+class SubtitleStyle(LabelStyle):
+    font: FontConfig = FontConfig(size=12, weight=400)
+
+
+@dataclass
+class DescriptionStyle(LabelStyle):
+    font: FontConfig = FontConfig(size=12, weight=400)
+
+
+@dataclass
+class CommentStyle(LabelStyle):
+    font: FontConfig = FontConfig(size=10, weight=400)
+
+
+
+
+@dataclass
+class CheckBoxStyle(LabelStyle):
     size: int = 16
     box_size: int = 14
     box_thickness: int = 2
@@ -101,6 +103,9 @@ class CheckBoxStyle:
     checked: str = ""
     checked_text: str = ""
 
+    font: FontConfig = FontConfig()
+    font_color: str = ""
+    font_color_disabled: str = ""
 
 
 @dataclass
@@ -138,10 +143,12 @@ class LineEditStyle:
     hover: str = ""
     selection: str = ""
     disabled: str = ""
+    border_read_only: str = ""
+
     button_hover: str = ""
     button_disabled: str = ""
 
-    font: FontConfig = FontConfig(weight=500)
+    font: FontConfig = FontConfig()
     font_color: str = ""
     font_color_disabled: str = ""
 
@@ -155,7 +162,7 @@ class PlainTextEditStyle(LineEditStyle):
 
 @dataclass
 class ScrollBarStyle:
-    vtrack_width: int = 8
+    thickness: int = 8
     normal: str = ""
     hover: str = ""
 
@@ -287,19 +294,10 @@ class IconButtonStyle:
     pressed: str = ""
     disabled: str = ""
 
+    border: str = ""
 
 
 
-
-
-
-@dataclass
-class LabelStyle:
-    padding = BORDER_RADIUS
-
-    font: FontConfig = FontConfig()
-    font_color: str = ""
-    font_color_disabled: str = ""
 
 
 
@@ -330,11 +328,11 @@ class ProgressStyle:
 @dataclass
 class Theme:
     window_bgd: str = "#303034"
-    common: WidgetCommonColors = field(default_factory=WidgetCommonColors)
+    default: DefaultStyle = field(default_factory=DefaultStyle)
 
     groupbox: GroupBoxStyle = field(default_factory=GroupBoxStyle)
     frame: FrameStyle = field(default_factory=FrameStyle)
-
+    card: CardStyle = field(default_factory=CardStyle)
     divider: DividerStyle = field(default_factory=DividerStyle)
     # horizontal_divider: DividerStyle = field(default_factory=DividerStyle)
     # vertical_divider: DividerStyle = field(default_factory=DividerStyle)

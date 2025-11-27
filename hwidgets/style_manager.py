@@ -23,11 +23,12 @@ from .styles import (
     TitleStyle,
     IconButtonStyle,
     SwitchStyle,
-    WidgetCommonColors,
+    DefaultStyle,
     ComboBoxStyle,
     ButtonGroupStyle,
     FlatButtonStyle,
     StrongButtonStyle,
+    CardStyle,
 )
 
 
@@ -92,7 +93,7 @@ class StyleManager:
             common_cfg = config["common"]
 
             # Font parsing
-            font = theme.common.font
+            font = theme.default.font
             if "font_family" in common_cfg or "font_size" in common_cfg or "font_weight" in common_cfg:
                 font = FontConfig(
                     family=common_cfg.get("font_family", font.family),
@@ -100,16 +101,16 @@ class StyleManager:
                     weight=common_cfg.get("font_weight", font.weight),
                 )
 
-            theme.common = replace(theme.common, **{
-                "bgd":                  common_cfg.get("bgd", theme.common.bgd),
-                "hover":                common_cfg.get("hover", theme.common.hover),
-                "selection":            common_cfg.get("selection", theme.common.selection),
-                "pressed":              common_cfg.get("pressed", theme.common.pressed),
-                "disabled":             common_cfg.get("disabled_bgd", theme.common.disabled),
-                "border":               common_cfg.get("border", theme.common.border),
-                "font_color":           common_cfg.get("font_color", theme.common.font_color),
-                "font_color_disabled":  common_cfg.get("font_color_disabled", theme.common.font_color_disabled),
-                "font_color_checked":   common_cfg.get("font_color_checked", theme.common.font_color_checked),
+            theme.default = replace(theme.default, **{
+                "bgd":                  common_cfg.get("bgd", theme.default.bgd),
+                "hover":                common_cfg.get("hover", theme.default.hover),
+                "selection":            common_cfg.get("selection", theme.default.selection),
+                "pressed":              common_cfg.get("pressed", theme.default.pressed),
+                "disabled":             common_cfg.get("disabled_bgd", theme.default.disabled),
+                "border":               common_cfg.get("border", theme.default.border),
+                "font_color":           common_cfg.get("font_color", theme.default.font_color),
+                "font_color_disabled":  common_cfg.get("font_color_disabled", theme.default.font_color_disabled),
+                "font_color_checked":   common_cfg.get("font_color_checked", theme.default.font_color_checked),
                 "font":                 font,
             })
 
@@ -121,6 +122,7 @@ class StyleManager:
             "subtitle": "label",
             "comment": "label",
             "description": "label",
+            "checkbox": "label",
         }
 
         # ------------------------------
@@ -128,13 +130,17 @@ class StyleManager:
         # ------------------------------
         widget_map = {
             "frame": ("frame", FrameStyle),
+            "card": ("card", CardStyle),
+            "divider": ("divider", DividerStyle),
 
             "label": ("label", LabelStyle),
             "title": ("title", TitleStyle),
             "subtitle": ("subtitle", SubtitleStyle),
             "description": ("description", DescriptionStyle),
             "comment": ("comment", CommentStyle),
-            "divider": ("divider", DividerStyle),
+
+
+
             "checkbox": ("checkbox", CheckBoxStyle),
             "switch": ("switch", SwitchStyle),
             "radio_button": ("radio_button", RadioButtonStyle),
@@ -195,13 +201,13 @@ class StyleManager:
                 widget_cfg.pop("font_weight", None)
 
             # Fill missing colors from common
-            common_fields = [f.name for f in fields(WidgetCommonColors)]
+            common_fields = [f.name for f in fields(DefaultStyle)]
 
             for field in common_fields:
                 if field not in widget_cfg and hasattr(widget, field):
                     # Only override if the default value is empty
                     if getattr(widget, field) == "":
-                        widget_cfg[field] = getattr(theme.common, field)
+                        widget_cfg[field] = getattr(theme.default, field)
 
             # Remove keys that are not in the dataclass fields to avoid TypeError in replace
             # (Optional but good practice if toml has extra keys)

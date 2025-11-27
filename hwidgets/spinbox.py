@@ -58,7 +58,7 @@ class HSpinBoxButton(QPushButton):
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
 
         self.kind = kind
-        radius = theme.common.radius
+        radius = theme.default.radius
         button_width, button_height = size.toTuple()
         self.setFixedSize(button_width, button_height)
         # symbol
@@ -70,7 +70,7 @@ class HSpinBoxButton(QPushButton):
         self.setCheckable(False)
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
-        default_style = theme.common
+        default_style = theme.default
         sb_style = theme.spinbox
         # background, text
         states = {
@@ -204,8 +204,8 @@ class HCommonSpinBox:
     ) -> None:
         # super().__init__(parent, **kwargs)
         self.theme = theme
-        radius = theme.common.radius
-        height = theme.common.height
+        radius = theme.default.radius
+        height = theme.default.height
 
         self.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
 
@@ -258,7 +258,7 @@ class HCommonSpinBox:
         qss_template = Template(load_qss("spinbox.qss"))
         sb_style = theme.spinbox
         le_style = theme.line_edit
-        default_style = theme.common
+        default_style = theme.default
         qss = qss_template.substitute(
             radius=f"{radius}px",
             padding_right=f"{radius + 12}px",

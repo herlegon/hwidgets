@@ -26,6 +26,7 @@ from PySide6.QtGui import (
     QMouseEvent,
     QFontMetrics,
     QFont,
+    QPaintEvent,
 )
 from PySide6.QtWidgets import (
     QPushButton,
@@ -57,12 +58,14 @@ class HStrongButton(QPushButton):
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
         self.theme = theme
-        self.default_style = theme.common
+        self.default_style = theme.default
 
         self._icon = None
         self.text_width = 0
         # space between icon and text
         self.space: int = 12
+
+        self._cached_size: QSize = None
 
         if text is not None:
             self.setText(text)
@@ -74,46 +77,48 @@ class HStrongButton(QPushButton):
         self._update_stylesheet()
 
 
-    def sizeHint(self) -> QSize:
-        hint = super().sizeHint()
-        strong_btn_style = self.theme.strong_button
-        radius = self.theme.common.radius
-        height = strong_btn_style.height
+    def _recalculate_size(self) -> None:
+        """Recalculate the width and height of the button and store it in cache."""
+        radius: int = self.theme.default.radius
+        height: int = self.theme.strong_button.height
 
         if self.text():
-            # If there's text, calculate the width based on text + icon
             text_width = self.fontMetrics().horizontalAdvance(self.text())
 
             if self._icon:
-                # Text with icon: radius + icon_width + spacing + text + radius
                 icon_width = height
                 total_width = radius + icon_width + self.space + text_width + radius
             else:
-                # Text only: radius + text + radius + space for better perception
                 total_width = 2 * radius + text_width + self.space
 
-            hint.setWidth(max(total_width, strong_btn_style.height))
+            width = max(total_width, height)
         else:
-            # Icon only: use fixed square size
-            hint.setWidth(strong_btn_style.height)
+            width = height
 
-        hint.setHeight(strong_btn_style.height)
-        return hint
+        self._cached_size = QSize(width, height)
+
+
+    def sizeHint(self) -> QSize:
+        if self._cached_size is None:
+            self._recalculate_size()
+        return self._cached_size
 
 
     def minimumSizeHint(self) -> QSize:
-        # Return the same as sizeHint to prevent shrinking below desired size
+        """Return the same as sizeHint to prevent shrinking below desired size."""
         return self.sizeHint()
 
 
     def setText(self, text: str) -> None:
         super().setText(text)
+        self._recalculate_size()
         self._update_stylesheet()
 
 
     def setIcon(self, icon: QIcon | QPixmap) -> None:
         self._icon = icon
         self.populate_pixmaps()
+        self._recalculate_size()
         self._update_stylesheet()
 
 
@@ -160,9 +165,9 @@ class HStrongButton(QPushButton):
             )
         self.setMinimumWidth(self.sizeHint().width())
 
-        radius: int = self.theme.common.radius
+        radius: int = self.theme.default.radius
         strong_btn_style = self.theme.strong_button
-        default_style = self.theme.common
+        default_style = self.theme.default
         self.setFixedHeight(strong_btn_style.height)
 
         qss_template = Template(load_qss("button.qss"))
@@ -199,25 +204,18 @@ class HStrongButton(QPushButton):
         self.text_width = font_metrics.horizontalAdvance(self.text())
 
 
-    def paintEvent(self, event):
-        opt = QStyleOptionButton()
-        self.initStyleOption(opt)
+    def paintEvent(self, event: QPaintEvent) -> None:
+        option = QStyleOptionButton()
+        self.initStyleOption(option)
 
         painter = QPainter(self)
+        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
         if DEBUG_GEOMETRY:
             draw_widget_rect(self, painter)
 
-        painter.setRenderHints(QPainter.RenderHint.Antialiasing)
-
-        self.style().drawControl(QStyle.ControlElement.CE_PushButtonBevel, opt, painter, self)
-        # if not self._pixmaps:
-        #     # This button is a text button
-        #     self.style().drawControl(QStyle.ControlElement.CE_PushButtonLabel, opt, painter, self)
-        #     painter.end()
-        #     return
-        radius = self.theme.common.radius
-        height = self.theme.common.height
-        state = opt.state
+        self.style().drawControl(QStyle.ControlElement.CE_PushButtonBevel, option, painter, self)
+        radius = self.theme.default.radius
+        state = option.state
 
         if self._icon is not None:
             # This button has an icon
