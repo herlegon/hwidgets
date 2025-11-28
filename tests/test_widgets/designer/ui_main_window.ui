@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>727</height>
+    <height>844</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -1286,6 +1286,34 @@
               </size>
              </property>
             </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QVBoxLayout" name="progress_layout">
+           <property name="spacing">
+            <number>3</number>
+           </property>
+           <item>
+            <widget class="QProgressBar" name="h_progress_bar_0">
+             <property name="value">
+              <number>0</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_progress_bar_25">
+             <property name="value">
+              <number>25</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_progress_bar_100">
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
            </item>
           </layout>
          </item>

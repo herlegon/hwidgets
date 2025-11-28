@@ -1,3 +1,4 @@
+from pprint import pprint
 from typing import Type
 
 from .hstyle import (
@@ -25,7 +26,7 @@ from PySide6.QtWidgets import (
 
 
 
-class HProgress(QProgressBar):
+class HProgressBar(QProgressBar):
     """A linear progress bar from 0 to 100
     """
     def __init__(
@@ -44,18 +45,22 @@ class HProgress(QProgressBar):
         invertedAppearance: bool | None = None,
         textDirection: QProgressBar.Direction | None = None,
         format: str | None = None,
+        m3: bool = False
     ):
         super().__init__(parent)
 
-        self.thickness = theme.progress.thickness
+        self.m3: bool = m3
+
+        self.thickness = theme.progress_bar.thickness
         self.setFixedHeight(self.thickness)
         self.setMinimumWidth(self.thickness*4)
 
         self.setAttribute(Qt.WidgetAttribute.WA_NoSystemBackground)
         self.set_colors(
-            track=theme.progress.track,
-            bar=theme.progress.bar,
+            track=theme.progress_bar.track,
+            bar=theme.progress_bar.bar,
         )
+        pprint(theme.progress_bar)
 
         self._progress = 0
         self.setMinimum(0)
@@ -110,27 +115,71 @@ class HProgress(QProgressBar):
         pen = QPen()
         pen.setWidth(thickness)
         pen.setCapStyle(Qt.PenCapStyle.RoundCap)
-        pen.setColor(self.bar_color)
-        painter.setPen(pen)
 
-        # Active
-        painter.drawLine(track_x0, track_y, track_x, track_y)
-
-        # Inactive
-        x = (track_x + cap_offset) + (4 + cap_offset)
-        if x < track_x1:
+        # Inactive: not M3
+        if not self.m3:
             pen.setColor(self.track_color)
             painter.setPen(pen)
-            painter.drawLine(
-                x, track_y, track_x1 - int(thickness/2), track_y
-            )
+            painter.drawLine(track_x0, track_y, track_x1, track_y)
+
+        # Active
+        pen.setColor(self.bar_color)
+        painter.setPen(pen)
+        painter.drawLine(track_x0, track_y, track_x, track_y)
+
+        # Inactive: M3
+        if self.m3:
+            x = (track_x + cap_offset) + (4 + cap_offset)
+            if x < track_x1:
+                pen.setColor(self.track_color)
+                painter.setPen(pen)
+                painter.drawLine(
+                    x, track_y, track_x1 - int(thickness/2), track_y
+                )
 
         pen.setWidth(thickness)
         pen.setColor(self.bar_color)
         painter.setPen(pen)
-        painter.drawPoint(QPoint(track_x1, track_y))
-        painter.drawPoint(QPoint(track_x0, track_y))
+        if self.m3:
+            painter.drawPoint(QPoint(track_x1, track_y))
+            painter.drawPoint(QPoint(track_x0, track_y))
 
         painter.end()
 
 
+
+class HProgressBarM3(HProgressBar):
+    """A linear progress bar from 0 to 100
+    """
+    def __init__(
+        self,
+        /,
+        parent: QWidget | None = None,
+        *,
+        theme: Type[Theme],
+        minimum: int | None = None,
+        maximum: int | None = None,
+        text: str | None = None,
+        value: int | None = None,
+        alignment: Qt.AlignmentFlag | None = None,
+        textVisible: bool | None = None,
+        orientation: Qt.Orientation | None = None,
+        invertedAppearance: bool | None = None,
+        textDirection: QProgressBar.Direction | None = None,
+        format: str | None = None,
+    ):
+        super().__init__(
+            parent,
+            theme=theme,
+            minimum=minimum,
+            maximum=maximum,
+            text=text,
+            value=value,
+            alignment=alignment,
+            textVisible=textVisible,
+            orientation=orientation,
+            invertedAppearance=invertedAppearance,
+            textDirection=textDirection,
+            format=format,
+            m3=True
+        )

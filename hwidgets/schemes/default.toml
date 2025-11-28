@@ -155,8 +155,8 @@ pressed = "#424242"
 [button_group]
 bgd = "#2a2a2a"
 hover = "#3a3a3a"
-pressed = "#666667"
-checked = "#354185"
+pressed = "#354185"
+checked = "#3d4a99"
 disabled = "#1c1d20"
 disabled_checked = "#2a2a2a"
 
@@ -167,20 +167,28 @@ font_color_disabled = "#666667"
 
 
 [grey_button_group]
-checked = "#5e5e5e"
+checked = "#6a6a6a"
+pressed = "#5e5e5e"
 
 
 [toggle_button]
 bgd = "#2a2a2a"
 hover = "#3a3a3a"
-pressed = "#5070d4"
-checked = "#354185"
+pressed = "#354185"
+checked = "#3d4a99"
 font_size = 9
 font_weight = 400
 font_color = "#d4d4d4"
 
 [toggle_grey_button]
-checked = "#5e5e5e"
+checked = "#6a6a6a"
+pressed = "#5e5e5e"
+
+
+[progress_bar]
+thickness = 8
+track = "#3a3a3a"
+bar = "#5e7ce0"
 
 
 
@@ -233,9 +241,6 @@ border_checked = "#2d3875"
 disabled = "#2a2a2a"
 
 
-[progress_bar]
-track = "#4a4a4a"
-bar = "#5e7ce0"
 
 [button_label]
 font_size = 13

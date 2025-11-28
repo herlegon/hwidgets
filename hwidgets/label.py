@@ -111,8 +111,10 @@ class HLabel(QLabel):
             window_bgd=f"{self.theme.window_bgd}",
             widget_bgd=f"{self.theme.default.bgd}",
             radius=f"{self.theme.default.radius}px",
+
             font_color_disabled=f"{self.theme.default.font_color_disabled}",
             font_color=f"{style.font_color}",
+
             font_family=f"\"{style.font.family}\"",
             font_size=f"{self._font_size}pt",
             font_weight=f"{self._weight}",

@@ -89,7 +89,7 @@ class HRadialProgress(QProgressBar):
         bar_color: str = MC_COLORS['green700']
 
         self.bar_width = bar_width
-        self.bar_thickness = theme.progress.thickness
+        self.bar_thickness = theme.progress_bar.thickness
         self.set_colors(
             track=QColor(bgd_color),
             bar=QColor(bar_color)

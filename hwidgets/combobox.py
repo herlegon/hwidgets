@@ -236,6 +236,7 @@ class HComboBox(QComboBox):
 
             font_family=f"{cb_style.font.family}",
             font_size=f"{cb_style.font.size}pt",
+            font_weight=f"{cb_style.font.weight}pt",
             font_color=f"{cb_style.font_color}",
             font_color_disabled=f"{cb_style.font_color_disabled}",
 

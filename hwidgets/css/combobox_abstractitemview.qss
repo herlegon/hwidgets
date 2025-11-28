@@ -7,8 +7,10 @@ QListView {
     outline: none;
     margin: 0px;
     padding: 0px;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+
+    font-family: $font_family;
+    font-size: $font_size;
+    font-weight: $font_weight;
     color: $font_color;
 }
 

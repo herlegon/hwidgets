@@ -51,7 +51,7 @@ class HIndeterminateProgress(QProgressBar):
 
         super().__init__(parent)
 
-        self.thickness = theme.progress.thickness
+        self.thickness = theme.progress_bar.thickness
         self.setFixedHeight(self.thickness)
         self.setMinimumWidth(self.thickness*4)
 

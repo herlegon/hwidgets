@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hwidgets import HProgress
+from hwidgets import HProgressBar
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
@@ -31,7 +31,7 @@ class HProgressPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HProgress(parent, theme=Theme())
+        t = HProgressBar(parent, theme=Theme())
         return t
 
     def domXml(self):

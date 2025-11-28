@@ -31,7 +31,7 @@ from .scrollbar import HScrollBar
 from .spinbox import HDoubleSpinBox, HSpinBox
 from .switch import HSwitch
 from .titles import HTitle
-from .progress import HProgress
+from .progress_bar import HProgressBar, HProgressBarM3
 from .utils import load_png_image
 from .style_manager import StyleManager, Theme
 from .strong_button import HStrongButton, HStrongGreyButton
@@ -75,9 +75,12 @@ __all__ = [
     "HButtonGroup",
     "HGreyButtonGroup",
 
+    "HProgressBar",
+    "HProgressBarM3",
+
+
     "HIndeterminateProgress",
     "HButton",
-    "HProgress",
     "HRadialProgress",
     "HScrollBar",
 

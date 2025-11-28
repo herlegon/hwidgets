@@ -32,25 +32,29 @@
 
     ✅ ButtonGroup
     ✅ GreyButtonGroup
+    ✅ ProgressBar
 
-    Progress
+    Frameless icon button, checkable only   (davinci resolve log button)
+    Frame icon/text button, not checkable, with border   (vscode update dialog)
+
     IndeterminateProgress
     RadialProgress
 
-    -  - flat icon button
-    -  - flat icon + text button
-    -  - flat button
-    -  - button
 
 # todo
-    !!! missing weight in nearly all css
+    !!! missing weight/font size in checkbox/radiobutton/strong button/toggle button because it is painted; use QFont
+ is it due to         self.style().drawControl(QStyle.ControlElement.CE_PushButtonBevel, option, painter, self)
+or else ?
+
     !!! sizehint is not correct for checkbox/radiobutton
+    (?) missing border for checkable buttons
+
     Card
     Unselectable read-only lineedit
     remove GroupBox ?
     strong button: clean recalculate_size/paint event to not calculate anything in the paintEvent method
 ~~  add a thin border to teh strong buttons (?) ~~
-
+    missing font_style in css for italic
 
 
 differenciates buttons:

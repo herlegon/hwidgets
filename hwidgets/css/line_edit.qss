@@ -10,6 +10,7 @@ QLineEdit {
 
     font-family: $font_family;
     font-size: $font_size;
+    font-weight: $font_weight;
     color: $font_color;
 
     selection-background-color: $selection;

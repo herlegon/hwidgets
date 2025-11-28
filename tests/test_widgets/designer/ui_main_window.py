@@ -18,8 +18,9 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCheckBox,
     QComboBox, QDoubleSpinBox, QFrame, QGridLayout,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
-    QPlainTextEdit, QPushButton, QRadioButton, QSizePolicy,
-    QSpacerItem, QSpinBox, QVBoxLayout, QWidget)
+    QPlainTextEdit, QProgressBar, QPushButton, QRadioButton,
+    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
+    QWidget)
 
 from typing import Type
 from hwidgets import (
@@ -43,7 +44,7 @@ from hwidgets import (
     HHorizontalDivider,
     HIndeterminateCircularProgress,
     HIndeterminateProgress,
-    HProgress,
+    HProgressBar,
     HRadialProgress,
     HStrongButton,
     HStrongGreyButton,
@@ -60,7 +61,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1600, 727)
+        MainWindow.resize(1600, 844)
         MainWindow.setMinimumSize(QSize(1600, 0))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -781,6 +782,30 @@ class Ui_MainWindow(object):
 
 
         self.main_layout.addLayout(self.grey_button_group)
+
+        self.progress_layout = QVBoxLayout()
+        self.progress_layout.setSpacing(3)
+        self.progress_layout.setObjectName(u"progress_layout")
+        self.h_progress_bar_0 = HProgressBar(self.h_frame, theme=theme)
+        self.h_progress_bar_0.setObjectName(u"h_progress_bar_0")
+        self.h_progress_bar_0.setValue(0)
+
+        self.progress_layout.addWidget(self.h_progress_bar_0)
+
+        self.h_progress_bar_25 = HProgressBar(self.h_frame, theme=theme)
+        self.h_progress_bar_25.setObjectName(u"h_progress_bar_25")
+        self.h_progress_bar_25.setValue(25)
+
+        self.progress_layout.addWidget(self.h_progress_bar_25)
+
+        self.h_progress_bar_100 = HProgressBar(self.h_frame, theme=theme)
+        self.h_progress_bar_100.setObjectName(u"h_progress_bar_100")
+        self.h_progress_bar_100.setValue(100)
+
+        self.progress_layout.addWidget(self.h_progress_bar_100)
+
+
+        self.main_layout.addLayout(self.progress_layout)
 
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 

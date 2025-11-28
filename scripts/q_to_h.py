@@ -46,7 +46,10 @@ if __name__ == "__main__":
 
         "h_vertical_divider": "HVerticalDivider",
         "h_horizontal_divider": "HHorizontalDivider",
-        "h_progress": "HProgress",
+
+        "h_progress_bar": "HProgressBar",
+        "h_progress_bar_m3": "HProgressBarM3",
+
         "h_indeterminate_progress": "HIndeterminateProgress",
         "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
         "h_radial_progress": "HRadialProgress",

@@ -316,6 +316,7 @@ class HCommonSpinBox:
 
             font_family=f"{sb_style.font.family}",
             font_size=f"{sb_style.font.size}pt",
+            font_weight=f"{sb_style.font.weight}pt",
             font_color=f"{sb_style.font_color}",
             font_color_disabled=f"{sb_style.font_color_disabled}",
         )

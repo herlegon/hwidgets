@@ -4,6 +4,7 @@ from typing import NamedTuple
 
 BORDER_RADIUS: int = 6
 DEFAULT_HEIGHT: int = 24
+PROGRESS_TRACK_THICKNESS: int = 12
 
 
 class FontConfig(NamedTuple):
@@ -237,6 +238,30 @@ class GreyButtonGroupStyle(ButtonGroupStyle):
 
 
 @dataclass
+class ProgressBarStyle:
+    thickness: int = PROGRESS_TRACK_THICKNESS
+
+    track: str = ""
+    bar: str = ""
+
+
+
+
+
+
+
+
+
+
+
+
+################################
+
+
+
+
+
+@dataclass
 class ButtonStyle:
     height: int = DEFAULT_HEIGHT
 
@@ -297,15 +322,6 @@ class IconButtonStyle:
 
 
 
-PROGRESS_TRACK_THICKNESS: int = 12
-@dataclass
-class ProgressStyle:
-    thickness: int = PROGRESS_TRACK_THICKNESS
-
-    track: str = ""
-    bar: str = ""
-
-
 
 # @dataclass
 # class IndeterminateProgressStyle(ProgressStyle):
@@ -362,7 +378,7 @@ class Theme:
     flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
     icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
 
-    progress: ProgressStyle = field(default_factory=ProgressStyle)
+    progress_bar: ProgressBarStyle = field(default_factory=ProgressBarStyle)
     # indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)
     # radial_progress: RadialProgressStyle = field(default_factory=RadialProgressStyle)
 

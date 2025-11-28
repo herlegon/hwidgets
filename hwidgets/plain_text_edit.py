@@ -363,6 +363,7 @@ class HPlainTextEdit(QPlainTextEdit):
 
             font_family=f"{pte_style.font.family}",
             font_size=f"{pte_style.font.size}pt",
+            font_weight=f"{pte_style.font.weight}",
             font_color=f"{pte_style.font_color}",
             font_color_disabled=f"{pte_style.font_color_disabled}",
         )

@@ -18,6 +18,7 @@ QGroupBox::title {
 
     font-family: "Segoe UI", "Sans Serif";
     font-size: 10pt;
+    font-weight: $font_weight;
     color: $font_color;
 
 }

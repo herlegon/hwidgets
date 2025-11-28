@@ -33,6 +33,7 @@ from .styles import (
     CardStyle,
     ToggleButtonStyle,
     ToggleGreyButtonStyle,
+    ProgressBarStyle,
 )
 
 
@@ -178,6 +179,10 @@ class StyleManager:
 
             "button_group": ("button_group", ButtonGroupStyle),
             "grey_button_group": ("grey_button_group", GreyButtonGroupStyle),
+
+            "progress_bar": ("progress_bar", ProgressBarStyle),
+
+
 
             "flat_button": ("flat_button", FlatButtonStyle),
 
