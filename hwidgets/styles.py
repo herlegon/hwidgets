@@ -174,6 +174,26 @@ class SpinBoxStyle(LineEditStyle):
 
 
 @dataclass
+class StrongButtonStyle:
+    height: int = 32
+
+    bgd: str = ""
+    hover: str = ""
+    pressed: str = ""
+    disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=600, size=16)
+    font_color: str = ""
+    font_color_disabled: str = ""
+
+
+@dataclass
+class StrongGreyButtonStyle(StrongButtonStyle):
+    ...
+
+
+
+@dataclass
 class ButtonGroupStyle:
     height: int = NORMAL_HEIGHT
 
@@ -184,24 +204,6 @@ class ButtonGroupStyle:
     disabled: str = ""
 
     font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_checked: str = ""
-    font_color_disabled: str = ""
-
-
-@dataclass
-class StrongButtonStyle:
-    height: int = 32
-
-    bgd: str = ""
-
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    checked: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=600)
     font_color: str = ""
     font_color_checked: str = ""
     font_color_disabled: str = ""
@@ -317,21 +319,19 @@ class Theme:
 
     scrollbar: ScrollBarStyle = field(default_factory=ScrollBarStyle)
 
-    button: ButtonStyle = field(default_factory=ButtonStyle)
-    icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
+    combobox: ComboBoxStyle = field(default_factory=ComboBoxStyle)
+    spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
+
     strong_button: StrongButtonStyle = field(default_factory=StrongButtonStyle)
+    strong_grey_button: StrongGreyButtonStyle = field(default_factory=StrongGreyButtonStyle)
 
-
-
+    button: ButtonStyle = field(default_factory=ButtonStyle)
+    flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
+    icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
 
 
-    combobox: ComboBoxStyle = field(default_factory=ComboBoxStyle)
 
-    spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
-    # double_spinbox: DoubleSpinBoxStyle = field(default_factory=DoubleSpinBoxStyle)
-
-    flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
 
     progress: ProgressStyle = field(default_factory=ProgressStyle)
     # indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)

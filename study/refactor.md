@@ -24,9 +24,11 @@
     ✅ SpinBox
     ✅ DoubleSpinBox
 
+    ✅ StrongButton
+    ✅ StrongGreyButton
+
     Button
     ButtonGroup
-    StrongButton
 
     Progress
     IndeterminateProgress
@@ -44,6 +46,7 @@
     Card
     Unselectable read-only lineedit
     remove GroupBox ?
+    strong button: clean recalculate_size/paint event to not calculate anything in the paintEvent method
 
 
 

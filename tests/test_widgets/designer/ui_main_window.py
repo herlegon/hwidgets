@@ -45,6 +45,7 @@ from hwidgets import (
     HProgress,
     HRadialProgress,
     HStrongButton,
+    HStrongGreyButton,
     HSubtitle,
     HSwitch,
     HTitle,
@@ -56,7 +57,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1600, 899)
+        MainWindow.resize(1600, 727)
         MainWindow.setMinimumSize(QSize(1600, 0))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -372,6 +373,22 @@ class Ui_MainWindow(object):
         self.h_strong_button_text_icon_4.setFlat(True)
 
         self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_4)
+
+        self.h_strong_button_text_icon_5 = HStrongButton(self.h_frame, theme=theme)
+        self.h_strong_button_text_icon_5.setObjectName(u"h_strong_button_text_icon_5")
+        self.h_strong_button_text_icon_5.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.h_strong_button_text_icon_5.setIcon(icon1)
+        self.h_strong_button_text_icon_5.setFlat(True)
+
+        self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_5)
+
+        self.h_strong_grey_button_text_icon = HStrongGreyButton(self.h_frame, theme=theme)
+        self.h_strong_grey_button_text_icon.setObjectName(u"h_strong_grey_button_text_icon")
+        self.h_strong_grey_button_text_icon.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.h_strong_grey_button_text_icon.setIcon(icon1)
+        self.h_strong_grey_button_text_icon.setFlat(True)
+
+        self.strong_buttons_layout.addWidget(self.h_strong_grey_button_text_icon)
 
         self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -1113,10 +1130,12 @@ class Ui_MainWindow(object):
         self.h_radiobutton_disabled_on.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
         self.h_radiobutton_disabled_off.setText(QCoreApplication.translate("MainWindow", u"Disabled, checked", None))
         self.h_strong_button_text.setText(QCoreApplication.translate("MainWindow", u"Strong Button", None))
-        self.h_strong_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Strong Button with icon", None))
+        self.h_strong_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Strong icon", None))
         self.h_strong_button_icon.setText("")
-        self.h_strong_button_text_icon_2.setText(QCoreApplication.translate("MainWindow", u"Strong Button disabled", None))
+        self.h_strong_button_text_icon_2.setText(QCoreApplication.translate("MainWindow", u"Strong disabled", None))
         self.h_strong_button_text_icon_4.setText(QCoreApplication.translate("MainWindow", u"Next", None))
+        self.h_strong_button_text_icon_5.setText(QCoreApplication.translate("MainWindow", u"Next", None))
+        self.h_strong_grey_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Next", None))
         self.h_text_button.setText(QCoreApplication.translate("MainWindow", u"Button", None))
         self.h_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"Button (checked)", None))
         self.h_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"Button (disabled)", None))

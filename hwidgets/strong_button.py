@@ -1,3 +1,4 @@
+from pprint import pprint
 from string import Template
 from typing import Type
 
@@ -54,17 +55,17 @@ class HStrongButton(QPushButton):
 
     ) -> None:
         super().__init__(parent)
-
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
+
         self.theme = theme
         self.default_style = theme.default
+        self.useGreyscale(False)
 
         self._icon = None
         self.text_width = 0
         # space between icon and text
-        self.space: int = 12
-
+        self._spacing: int = 12
         self._cached_size: QSize = None
 
         if text is not None:
@@ -77,19 +78,34 @@ class HStrongButton(QPushButton):
         self._update_stylesheet()
 
 
+    def spacing(self) -> None:
+        return self._spacing
+
+
+    def setSpacing(self, spacing: int) -> None:
+        self._spacing = spacing
+
+
+    def useGreyscale(self, b: bool) -> None:
+        if b:
+            self.btn_style = self.theme.strong_grey_button
+        else:
+            self.btn_style = self.theme.strong_button
+
+
     def _recalculate_size(self) -> None:
         """Recalculate the width and height of the button and store it in cache."""
         radius: int = self.theme.default.radius
-        height: int = self.theme.strong_button.height
+        height: int = self.btn_style.height
 
         if self.text():
             text_width = self.fontMetrics().horizontalAdvance(self.text())
 
             if self._icon:
                 icon_width = height
-                total_width = radius + icon_width + self.space + text_width + radius
+                total_width = radius + icon_width + self._spacing + text_width + radius
             else:
-                total_width = 2 * radius + text_width + self.space
+                total_width = 2 * radius + text_width + self._spacing
 
             width = max(total_width, height)
         else:
@@ -135,11 +151,11 @@ class HStrongButton(QPushButton):
             self.pixmap_size = QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
         pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
 
-        btn_style = self.theme.button
-        normal = QColor(btn_style.font_color)
-        pressed = QColor(btn_style.font_color)
-        disabled = QColor(btn_style.font_color_disabled)
-        hover = QColor(btn_style.font_color)
+
+        normal = QColor(self.btn_style.font_color)
+        pressed = QColor(self.btn_style.font_color)
+        disabled = QColor(self.btn_style.font_color_disabled)
+        hover = QColor(self.btn_style.font_color)
 
         self._pixmaps: dict[str, QPixmap] = {
             "normal" : make_tinted_pixmap(pixmap, normal),
@@ -166,42 +182,42 @@ class HStrongButton(QPushButton):
         self.setMinimumWidth(self.sizeHint().width())
 
         radius: int = self.theme.default.radius
-        strong_btn_style = self.theme.strong_button
+        btn_style = self.btn_style
         default_style = self.theme.default
-        self.setFixedHeight(strong_btn_style.height)
+        self.setFixedHeight(btn_style.height)
 
         qss_template = Template(load_qss("button.qss"))
         qss = qss_template.substitute(
             radius=f"{radius}px",
             margin_left=f"{radius + default_style.height + 6}px",
 
-            window_bgd=f"{self.theme.window_bgd}",
-            widget_bgd=f"{strong_btn_style.bgd}",
+            widget_bgd=f"{btn_style.bgd}",
 
-            hover=f"{strong_btn_style.hover}",
-            pressed=f"{strong_btn_style.pressed}",
-            checked=f"{strong_btn_style.checked}",
-            disabled=f"{strong_btn_style.disabled}",
+            hover=f"{btn_style.hover}",
+            pressed=f"{btn_style.pressed}",
+            checked=f"{btn_style.pressed}",
+            disabled=f"{btn_style.disabled}",
 
-            font_family=f"\"{strong_btn_style.font.family}\"",
-            font_size=f"{strong_btn_style.font.size}pt",
-            font_weight=f"{strong_btn_style.font.weight}",
+            font_family=f"\"{btn_style.font.family}\"",
+            font_size=f"{btn_style.font.size}pt",
+            font_weight=f"{btn_style.font.weight}",
 
-            font_color=f"{strong_btn_style.font_color}",
-            font_color_checked=f"{strong_btn_style.font_color_checked}",
-            font_color_disabled=f"{strong_btn_style.font_color_disabled}",
+            font_color=f"{btn_style.font_color}",
+            font_color_disabled=f"{btn_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
 
         # Create the font based on FontConfig
         # Calculate text width using QFontMetrics
         font = QFont(
-            strong_btn_style.font.family,
-            strong_btn_style.font.size,
-            strong_btn_style.font.weight
+            btn_style.font.family,
+            btn_style.font.size,
+            btn_style.font.weight
         )
         font_metrics = QFontMetrics(font)
         self.text_width = font_metrics.horizontalAdvance(self.text())
+        self.font_color = btn_style.font_color
+        self.font_color_disabled = btn_style.font_color_disabled
 
 
     def paintEvent(self, event: QPaintEvent) -> None:
@@ -241,10 +257,10 @@ class HStrongButton(QPushButton):
                 x = (self.width() - self.pixmap_size.width()) // 2
 
             elif self.layoutDirection() == Qt.LayoutDirection.RightToLeft:
-                x = (self.width() + (self.text_width + self.space) - pixmap.width() ) // 2
+                x = (self.width() + (self.text_width + self._spacing) - pixmap.width() ) // 2
 
             else:
-                x = (self.width() - self.text_width - self.space - pixmap.width()) // 2
+                x = (self.width() - self.text_width - self._spacing - pixmap.width()) // 2
 
             # Draw centered pixmap if no text
             y = (self.height() - self.pixmap_size.height()) // 2
@@ -255,11 +271,11 @@ class HStrongButton(QPushButton):
             if self._icon:
                 if self.layoutDirection() == Qt.LayoutDirection.RightToLeft:
                     alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
-                    left = radius + (self.width() - self.text_width - self.space - pixmap.width()) // 2
+                    left = radius + (self.width() - self.text_width - self._spacing - pixmap.width()) // 2
                     right = left + self.text_width
 
                 else:
-                    left = radius + pixmap.width() + self.space
+                    left = radius + pixmap.width() + self._spacing
                     right = self.width() - radius
                     alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
 
@@ -268,14 +284,42 @@ class HStrongButton(QPushButton):
                 right = self.width()
                 alignment = Qt.AlignmentFlag.AlignCenter
 
-            text_rect = QRect(left, 0, right - left, self.height() - 4)
+            text_rect = QRect(left, 0, right - left, self.height())
             painter.setPen(QColor(
-                self.theme.button.font_color
+                self.font_color
                 if state & QStyle.StateFlag.State_Enabled
-                else self.theme.button.font_color_disabled
+                else self.font_color_disabled
             ))
             painter.drawText(text_rect, alignment, self.text())
 
         painter.end()
 
 
+
+
+class HStrongGreyButton(HStrongButton):
+
+    def __init__(
+        self,
+        /,
+        parent: QWidget | None = ...,
+        *,
+        icon: QIcon | QPixmap | None = None,
+        text: str | None = None,
+        theme: Type[Theme],
+        autoDefault: bool | None = None,
+        default: bool | None = None,
+        flat: bool | None = True,
+
+    ) -> None:
+        super().__init__(
+            parent,
+            icon=icon,
+            text=text,
+            theme=theme,
+            autoDefault=autoDefault,
+            default=default,
+            flat=flat
+        )
+
+        self.useGreyscale(True)

@@ -39,7 +39,7 @@ QPushButton:disabled {
 
 
 QPushButton:disabled:checked {
-    background-color: $hover;
+    background-color: $disabled;
     color: $font_color_disabled;
 }
 

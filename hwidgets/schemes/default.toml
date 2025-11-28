@@ -12,7 +12,7 @@ border_radius = 8
 height = 40
 
 font_family = "Inter"
-font_size = 13
+font_size = 10
 font_weight = 400
 font_color = "#d4d4d4"
 font_color_disabled = "#666667"
@@ -32,32 +32,32 @@ normal ="#4a4a4a"
 
 [label]
 font_family = "Inter"
-font_size = 12
+font_size = 10
 font_weight = 400
-font_color = "#b0b0b0"
+font_color = "#d4d4d4"
 
 
 [title]
 font_family = "Inter"
-font_size = 18
+font_size = 16
 font_weight = 600
 font_color = "#5e7ce0"
 
 
 [subtitle]
-font_size = 20
+font_size = 14
 font_weight = 600
 font_color = "#d4d4d8"
 
 
 [description]
-font_size = 13
+font_size = 10
 font_weight = 600
 font_color = "#d4d4d8"
 
 
 [comment]
-font_size = 13
+font_size = 8
 font_color = "#cfcfcf"
 
 
@@ -133,6 +133,23 @@ button_pressed = "#5e5e5e"
 button_disabled = "#2a2a2a"
 
 
+[strong_button]
+bgd = "#5070d4"
+hover = "#4c60b9"
+pressed = "#5e7ce0"
+disabled = "#2a2a2a"
+
+font_family = "Inter"
+font_size = 11
+font_weight = 500
+font_color = "#FFFFFF"
+
+
+[strong_grey_button]
+bgd = "#424242"
+hover = "#3a3a3a"
+pressed = "#424242"
+
 
 
 [button_group]
@@ -148,11 +165,7 @@ hover = "#4a5ba8"
 disabled = "#4a4a4a"
 
 
-[strong_button]
-bgd = "#4a4a4a"
-hover = "#3a3a3a"
-pressed = "#424242"
-font_color = "#FFFFFF"
+
 
 
 [flat_button]

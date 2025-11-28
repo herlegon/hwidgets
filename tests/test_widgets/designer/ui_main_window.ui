@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>899</height>
+    <height>727</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -460,7 +460,7 @@
               <enum>Qt::LayoutDirection::LeftToRight</enum>
              </property>
              <property name="text">
-              <string>Strong Button with icon</string>
+              <string>Strong icon</string>
              </property>
              <property name="icon">
               <iconset>
@@ -491,7 +491,7 @@
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Strong Button disabled</string>
+              <string>Strong disabled</string>
              </property>
              <property name="icon">
               <iconset>
@@ -504,6 +504,40 @@
            </item>
            <item>
             <widget class="QPushButton" name="h_strong_button_text_icon_4">
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::RightToLeft</enum>
+             </property>
+             <property name="text">
+              <string>Next</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png</iconset>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_strong_button_text_icon_5">
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::LeftToRight</enum>
+             </property>
+             <property name="text">
+              <string>Next</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png</iconset>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_strong_grey_button_text_icon">
              <property name="layoutDirection">
               <enum>Qt::LayoutDirection::RightToLeft</enum>
              </property>

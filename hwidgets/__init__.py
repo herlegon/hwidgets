@@ -34,7 +34,7 @@ from .titles import HTitle
 from .progress import HProgress
 from .utils import load_png_image
 from .style_manager import StyleManager, Theme
-from .strong_button import HStrongButton
+from .strong_button import HStrongButton, HStrongGreyButton
 
 # By order of validation
 __all__ = [
@@ -53,6 +53,7 @@ __all__ = [
     "HButton",
 
     "HStrongButton",
+    "HStrongGreyButton",
 
     "HButtonGroup",
     "HCheckBox",
