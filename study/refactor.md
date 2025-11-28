@@ -27,9 +27,10 @@
     ✅ StrongButton
     ✅ StrongGreyButton
 
-    Button
-    ButtonGroup
+    ✅ ButtonGroup
+    ✅ GreyButtonGroup
 
+    Button
     Progress
     IndeterminateProgress
     RadialProgress
@@ -43,10 +44,12 @@
     -  - button
 
 # todo
+    !!! missing weight in nearly all css
     Card
     Unselectable read-only lineedit
     remove GroupBox ?
     strong button: clean recalculate_size/paint event to not calculate anything in the paintEvent method
+~~  add a thin border to teh strong buttons (?) ~~
 
 
 

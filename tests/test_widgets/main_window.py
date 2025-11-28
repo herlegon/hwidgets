@@ -93,7 +93,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.h_button_group.set_buttons(button_list)
         self.h_button_group.get_button(2).setEnabled(False)
         self.h_button_group_disabled.set_buttons(button_list)
-                # self.horizontalLayout_13.setAlignment(self.h_button_group, Qt.AlignCenter)
+
+        self.h_grey_button_group.set_buttons(button_list)
+        self.h_grey_button_group.get_button(2).setEnabled(False)
+        self.h_grey_button_group_disabled.set_buttons(button_list)
 
         self.setMinimumWidth(800)
         if sys.platform == 'linux':

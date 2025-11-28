@@ -3,11 +3,11 @@ from typing import NamedTuple
 
 
 BORDER_RADIUS: int = 6
-NORMAL_HEIGHT: int = 24
+DEFAULT_HEIGHT: int = 24
 
 
 class FontConfig(NamedTuple):
-    family: str = "Segoe UI"
+    family: str = "Inter"
     size: int = 10
     weight: int = 400
 
@@ -15,7 +15,7 @@ class FontConfig(NamedTuple):
 
 @dataclass
 class DefaultStyle:
-    height: int = NORMAL_HEIGHT
+    height: int = DEFAULT_HEIGHT
     radius: int = BORDER_RADIUS
 
     bgd: str = ""
@@ -68,7 +68,7 @@ class LabelStyle:
 
 @dataclass
 class TitleStyle(LabelStyle):
-    height: int = NORMAL_HEIGHT + BORDER_RADIUS
+    height: int = DEFAULT_HEIGHT + BORDER_RADIUS
     font: FontConfig = FontConfig(size=16, weight=800)
 
 
@@ -166,9 +166,9 @@ class ComboBoxStyle(LineEditStyle):
 
 @dataclass
 class SpinBoxStyle(LineEditStyle):
-    radius: int = NORMAL_HEIGHT
+    radius: int = DEFAULT_HEIGHT
     padding: int = 12
-    min_width: int = (NORMAL_HEIGHT + BORDER_RADIUS) * 2
+    min_width: int = (DEFAULT_HEIGHT + BORDER_RADIUS) * 2
 
     button_pressed: str = ""
 
@@ -192,27 +192,35 @@ class StrongGreyButtonStyle(StrongButtonStyle):
     ...
 
 
-
 @dataclass
 class ButtonGroupStyle:
-    height: int = NORMAL_HEIGHT
+    height: int = DEFAULT_HEIGHT
 
-    normal: str = ""
+    bgd: str = ""
     hover: str = ""
     pressed: str = ""
     checked: str = ""
     disabled: str = ""
+    disabled_checked: str = ""
+
+    border: str = ""
 
     font: FontConfig = FontConfig(weight=500)
     font_color: str = ""
-    font_color_checked: str = ""
+    # font_color_checked: str = ""
     font_color_disabled: str = ""
+
+
+@dataclass
+class GreyButtonGroupStyle(ButtonGroupStyle):
+    ...
+
 
 
 
 @dataclass
 class ButtonStyle:
-    height: int = NORMAL_HEIGHT
+    height: int = DEFAULT_HEIGHT
 
     normal: str = ""
     hover: str = ""
@@ -237,7 +245,7 @@ class FlatButtonStyle:
 
 @dataclass
 class GroupBoxStyle:
-    height: int = BORDER_RADIUS * 2 + NORMAL_HEIGHT
+    height: int = BORDER_RADIUS * 2 + DEFAULT_HEIGHT
     title_padding: int = BORDER_RADIUS + 4
     title_height: int = 10
 
@@ -254,7 +262,7 @@ class GroupBoxStyle:
 
 @dataclass
 class IconButtonStyle:
-    height: int = NORMAL_HEIGHT
+    height: int = DEFAULT_HEIGHT
 
     normal: str = ""
     hover: str = ""
@@ -325,10 +333,13 @@ class Theme:
     strong_button: StrongButtonStyle = field(default_factory=StrongButtonStyle)
     strong_grey_button: StrongGreyButtonStyle = field(default_factory=StrongGreyButtonStyle)
 
+    button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
+    grey_button_group: GreyButtonGroupStyle = field(default_factory=GreyButtonGroupStyle)
+
+
     button: ButtonStyle = field(default_factory=ButtonStyle)
     flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
     icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
-    button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
 
 
 

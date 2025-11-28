@@ -1,24 +1,24 @@
 QWidget {
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    font-family: $font_family;
+    font-size: $font_size;
+    font-weight: $font_weight;
     color: $font_color;
-
 }
 
 QToolButton {
-    /* border: 1px solid #BBBBBB; */
     background-color: $widget_bgd;
-
     padding: 0px $radius 2px $radius;
-    outline: none;
+    border: 1px solid $border_color;
 
     color: $font_color;
 }
 
-/* --- Unchecked States --- */
+
 QToolButton:hover {
-    background-color: $widget_hover;
+    background-color: $hover;
 }
+
+
 QToolButton:pressed {
     background-color: $pressed;
 }
@@ -26,15 +26,16 @@ QToolButton:pressed {
 
 QToolButton:checked {
     background-color: $checked;
-    color: $font_color;
 }
 
-/* QToolButton:checked:hover {
-    background-color: $checked;
-} */
 
 QToolButton:disabled {
     background-color: $disabled;
+    color: $font_color_disabled;
+}
+
+QToolButton:disabled:checked {
+    background-color: $disabled_checked;
     color: $font_color_disabled;
 }
 
@@ -56,14 +57,3 @@ QToolButton#segment-right {
     border-bottom-right-radius: $radius;
 }
 
-/* Restore borders on selected segments */
-/* QToolButton#segment-left:checked {
-    border-right-width: 1px;
-}
-QToolButton#segment-center:checked {
-    border-left-width: 1px;
-    border-right-width: 1px;
-}
-QToolButton#segment-right:checked {
-    border-left-width: 1px;
-} */

@@ -39,6 +39,7 @@ from hwidgets import (
     HComment,
     HDescription,
     HDivider,
+    HGreyButtonGroup,
     HHorizontalDivider,
     HIndeterminateCircularProgress,
     HIndeterminateProgress,
@@ -725,6 +726,26 @@ class Ui_MainWindow(object):
 
 
         self.main_layout.addLayout(self.button_group_layout)
+
+        self.grey_button_group = QHBoxLayout()
+        self.grey_button_group.setObjectName(u"grey_button_group")
+        self.h_grey_button_group = HGreyButtonGroup(self.h_frame, theme=theme)
+        self.h_grey_button_group.setObjectName(u"h_grey_button_group")
+
+        self.grey_button_group.addWidget(self.h_grey_button_group)
+
+        self.h_grey_button_group_disabled = HGreyButtonGroup(self.h_frame, theme=theme)
+        self.h_grey_button_group_disabled.setObjectName(u"h_grey_button_group_disabled")
+        self.h_grey_button_group_disabled.setEnabled(False)
+
+        self.grey_button_group.addWidget(self.h_grey_button_group_disabled)
+
+        self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.grey_button_group.addItem(self.horizontalSpacer_8)
+
+
+        self.main_layout.addLayout(self.grey_button_group)
 
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 

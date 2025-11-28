@@ -12,7 +12,7 @@ from .divider import (
     HVerticalDivider,
 )
 from .button_deprecated import HButton
-from .button_group import HButtonGroup
+from .button_group import HButtonGroup, HGreyButtonGroup
 from .frame import HFrame
 from .groupbox import HGroupBox
 from .indeterminate_progress import HIndeterminateProgress
@@ -42,36 +42,39 @@ __all__ = [
     "StyleManager",
     "Theme",
 
+    "HFrame",
+    "HGroupBox",
+    "HDivider",
+    "HHorizontalDivider",
+    "HVerticalDivider",
+
     "HTitle",
     "HSubtitle",
     "HDescription",
     "HComment",
     "HLabel",
 
-    "HFrame",
+    "HSwitch",
+    "HCheckBox",
+    "HRadioButton",
 
-    "HButton",
+    "HLineEdit",
+    "HPlainTextEdit",
+    "HComboBox",
+    "HSpinBox",
+    "HDoubleSpinBox",
 
     "HStrongButton",
     "HStrongGreyButton",
 
     "HButtonGroup",
-    "HCheckBox",
-    "HComboBox",
-    "HDivider",
-    "HDoubleSpinBox",
-    "HGroupBox",
-    "HHorizontalDivider",
-    "HVerticalDivider",
+    "HGreyButtonGroup",
+
     "HIndeterminateProgress",
-    "HLineEdit",
-    "HPlainTextEdit",
+    "HButton",
     "HProgress",
     "HRadialProgress",
-    "HRadioButton",
     "HScrollBar",
-    "HSpinBox",
-    "HSwitch",
 
     "load_png_image",
 ]

@@ -25,9 +25,11 @@ from .styles import (
     SwitchStyle,
     DefaultStyle,
     ComboBoxStyle,
-    ButtonGroupStyle,
     FlatButtonStyle,
     StrongButtonStyle,
+    StrongGreyButtonStyle,
+    ButtonGroupStyle,
+    GreyButtonGroupStyle,
     CardStyle,
 )
 
@@ -132,6 +134,9 @@ class StyleManager:
             "combobox": "line_edit",
             "spinbox": "line_edit",
 
+            "strong_grey_button": "strong_button",
+            "grey_button_group": "button_group",
+
         }
 
         # ------------------------------
@@ -157,14 +162,17 @@ class StyleManager:
 
             "scrollbar": ("scrollbar", ScrollBarStyle),
 
+            "combobox": ("combobox", ComboBoxStyle),
             "spinbox": ("spinbox", SpinBoxStyle),
             # "double_spinbox": ("double_spinbox", DoubleSpinBoxStyle),
 
-            "combobox": ("combobox", ComboBoxStyle),
+            "strong_button": ("strong_button", StrongButtonStyle),
+            "strong_grey_button": ("strong_grey_button", StrongGreyButtonStyle),
 
             "button_group": ("button_group", ButtonGroupStyle),
+            "grey_button_group": ("grey_button_group", GreyButtonGroupStyle),
+
             "flat_button": ("flat_button", FlatButtonStyle),
-            "strong_button": ("strong_button", StrongButtonStyle),
 
             "group_box": ("groupbox", GroupBoxStyle),
             "icon_button": ("icon_button", IconButtonStyle),

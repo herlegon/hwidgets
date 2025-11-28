@@ -220,6 +220,7 @@ class HLineEdit(QLineEdit):
 
             font_family=f"{le_style.font.family}",
             font_size=f"{le_style.font.size}pt",
+            font_weight=f"{le_style.font.weight}",
             font_color=f"{le_style.font_color}",
             font_color_disabled=f"{le_style.font_color_disabled}",
         )

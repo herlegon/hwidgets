@@ -40,17 +40,18 @@ class HButtonGroup(QWidget):
         theme: Theme = None,
     ) -> None:
         super().__init__(parent)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
+
         if theme is None:
             raise
         self.theme: Theme = theme
-
-        # self.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
+        self.useGreyscale(False)
 
         # Visual Layout
         self._layout = QHBoxLayout(self)
         self._layout.setContentsMargins(0, 0, 0, 0)
-        self._layout.setSpacing(1)
+        self._layout.setSpacing(0)
         self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
         self.setFixedHeight(theme.button.height)
 
@@ -69,6 +70,13 @@ class HButtonGroup(QWidget):
         self.group.buttonClicked.connect(self.on_button_clicked)
 
 
+    def useGreyscale(self, b: bool) -> None:
+        if b:
+            self.btn_group_style = self.theme.grey_button_group
+        else:
+            self.btn_group_style = self.theme.button_group
+
+
     def sizeHint(self) -> QSize:
         # width = self._buttons[0].width() * len(self._buttons)
         return QSize(self.width(), self.theme.button.height)
@@ -81,22 +89,27 @@ class HButtonGroup(QWidget):
 
 
     def _update_stylesheet(self) -> None:
+        radius: int = self.theme.default.radius
+        btn_style = self.btn_group_style
+
         qss_template = Template(load_qss(f"button_group.qss"))
-        bg_style = self.theme.button_group
-        default_style = self.theme.default
         qss = qss_template.substitute(
-            radius=f"{default_style.radius}px",
+            radius=f"{radius}px",
 
-            window_bgd=f"{self.theme.window_bgd}",
-            widget_bgd=f"{default_style.bgd}",
-            widget_hover=f"{bg_style.hover}",
+            widget_bgd=f"{btn_style.bgd}",
+            hover=f"{btn_style.hover}",
+            pressed=f"{btn_style.pressed}",
+            checked=f"{btn_style.checked}",
+            disabled=f"{btn_style.disabled}",
+            disabled_checked=f"{btn_style.disabled_checked}",
 
-            disabled=f"{bg_style.disabled}",
-            pressed=f"{bg_style.pressed}",
-            checked=f"{bg_style.checked}",
+            border_color=f"{btn_style.border}",
 
-            font_color=f"{bg_style.font_color}",
-            font_color_disabled=f"{bg_style.font_color_disabled}",
+            font_family=f"{btn_style.font.family}",
+            font_size=f"{btn_style.font.size}pt",
+            font_weight=f"{btn_style.font.weight}",
+            font_color=f"{btn_style.font_color}",
+            font_color_disabled=f"{btn_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
 
@@ -295,3 +308,23 @@ class HButtonGroup(QWidget):
         buttons = [s.strip() for s in value.split(";") if s.strip()]
         self.set_buttons(buttons)
         self.buttons_changed.emit(value)
+
+
+
+class HGreyButtonGroup(HButtonGroup):
+
+    def __init__(
+        self,
+        /,
+        parent: QWidget | None = ...,
+        *,
+        buttons: list[str] | tuple[str] | None = None,
+        theme: Theme = None,
+    ) -> None:
+        super().__init__(
+            parent,
+            buttons=buttons,
+            theme=theme,
+        )
+
+        self.useGreyscale(True)

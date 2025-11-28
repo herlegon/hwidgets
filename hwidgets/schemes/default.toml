@@ -109,7 +109,7 @@ font_size = 10
 font_weight = 400
 font_color = "#d4d4d4"
 font_color_read_only = "#666667"
-font_color_disabled = "#666667"
+font_color_disabled = "#d4d4d4"
 
 
 [plain_text_edit]
@@ -143,6 +143,7 @@ font_family = "Inter"
 font_size = 11
 font_weight = 500
 font_color = "#FFFFFF"
+font_color_disabled = "#666667"
 
 
 [strong_grey_button]
@@ -151,21 +152,31 @@ hover = "#3a3a3a"
 pressed = "#424242"
 
 
-
 [button_group]
-# checked is darkened
-pressed = "#5e5e5e"
+bgd = "#2a2a2a"
+hover = "#3a3a3a"
+pressed = "#666667"
 checked = "#2d3875"
-disabled = "#2a2a2a"
+disabled = "#1c1d20"
+disabled_checked = "#2a2a2a"
 
+border = "#4a4a4a"
+
+font_color = "#d4d4d4"
+font_color_disabled = "#666667"
+
+
+[grey_button_group]
+checked = "#5e5e5e"
+
+
+###################################################
+# to be modified
 
 [button]
 normal = "#5e7ce0"
 hover = "#4a5ba8"
 disabled = "#4a4a4a"
-
-
-
 
 
 [flat_button]

@@ -50,9 +50,12 @@ if __name__ == "__main__":
         "h_indeterminate_progress": "HIndeterminateProgress",
         "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
         "h_radial_progress": "HRadialProgress",
-        "h_button_group": "HButtonGroup",
+
         "h_strong_button": "HStrongButton",
         "h_strong_grey_button": "HStrongGreyButton",
+
+        "h_button_group": "HButtonGroup",
+        "h_grey_button_group": "HGreyButtonGroup",
     }
 
 
