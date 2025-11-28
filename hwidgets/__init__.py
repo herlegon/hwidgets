@@ -34,9 +34,14 @@ from .strong_button import HStrongButton, HStrongGreyButton
 from .toggle_button import HToggleButton, HToggleGreyButton
 
 from .progress_bar import HProgressBar, HProgressBarM3
-from .indet_progress_bar import HIndetProgressBar, HIndetProgressBarM3
+from .indet_progress_bar import (
+    HIndetProgressBar,
+    HIndetProgressBarR,
+)
+from .indet_progress_bar_m2 import HIndetProgressBarM2
 from .indeterminate_circular_progress import HIndeterminateCircularProgress # Not yet supported
 from .radial_progress_bar import HRadialProgress
+from .frameless_button import HFramelessButton
 
 
 # By order of validation
@@ -73,13 +78,16 @@ __all__ = [
     "HToggleButton",
     "HToggleGreyButton",
 
+    "HFramelessButton",
+
     "HButtonGroup",
     "HGreyButtonGroup",
 
     "HProgressBar",
     "HProgressBarM3",
     "HIndetProgressBar",
-    "HIndetProgressBarM3",
+    "HIndetProgressBarR",
+    "HIndetProgressBarM2",
 
     "HButton",
     "HRadialProgress",

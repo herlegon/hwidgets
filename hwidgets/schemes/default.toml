@@ -109,7 +109,7 @@ font_size = 10
 font_weight = 400
 font_color = "#d4d4d4"
 font_color_read_only = "#666667"
-font_color_disabled = "#d4d4d4"
+font_color_disabled = "#666667"
 
 
 [plain_text_edit]
@@ -180,9 +180,20 @@ font_size = 9
 font_weight = 400
 font_color = "#d4d4d4"
 
+
 [toggle_grey_button]
 checked = "#6a6a6a"
 pressed = "#5e5e5e"
+
+
+[frameless_button]
+active = "#b0b0b0"
+hover = "#d4d4d4"
+pressed = "#5e7ce0"
+checked = "#5e7ce0"
+disabled = "#3a3a3a"
+font_size = 9
+font_weight = 400
 
 
 [progress_bar]
@@ -190,12 +201,8 @@ thickness = 8
 track = "#3a3a3a"
 bar = "#5e7ce0"
 
-[indet_progress_bar]
-thickness = 8
-track = "#2a2a2a"
-bar = "#5e7ce0"
 
-[indet_progress_bar_m3]
+[indet_progress_bar]
 thickness = 8
 track = "#2a2a2a"
 bar = "#5e7ce0"
@@ -222,11 +229,6 @@ border = "#5e5e5e"
 disabled = "#4a4a4a"
 
 
-[frameless_button]
-normal = "#b0b0b0"
-hover = "#e8e8e8"
-pressed = "#ffffff"
-disabled = "#4a4a4a"
 
 [slider]
 track = "#4a4a4a"

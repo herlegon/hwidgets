@@ -211,6 +211,20 @@ class ToggleGreyButtonStyle(ToggleButtonStyle):
 
 
 @dataclass
+class FramelessButtonStyle:
+    height: int = DEFAULT_HEIGHT
+
+    # use teh same colors for lines and font
+    active: str = ""
+    hover: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=400, size=11)
+
+
+@dataclass
 class ButtonGroupStyle:
     height: int = DEFAULT_HEIGHT
 
@@ -244,12 +258,6 @@ class ProgressBarStyle:
 @dataclass
 class IndetProgressBarStyle(ProgressBarStyle):
     ...
-
-
-@dataclass
-class IndetProgressBarM3Style(IndetProgressBarStyle):
-    ...
-
 
 
 
@@ -373,9 +381,11 @@ class Theme:
     toggle_button: ToggleButtonStyle = field(default_factory=ToggleButtonStyle)
     toggle_grey_button: ToggleGreyButtonStyle = field(default_factory=ToggleGreyButtonStyle)
 
+    frameless_button: FramelessButtonStyle = field(default_factory=FramelessButtonStyle)
 
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
     grey_button_group: GreyButtonGroupStyle = field(default_factory=GreyButtonGroupStyle)
+
 
     button: ButtonStyle = field(default_factory=ButtonStyle)
     flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
@@ -383,7 +393,6 @@ class Theme:
 
     progress_bar: ProgressBarStyle = field(default_factory=ProgressBarStyle)
     indet_progress_bar: IndetProgressBarStyle = field(default_factory=IndetProgressBarStyle)
-    indet_progress_bar_m3: IndetProgressBarM3Style = field(default_factory=IndetProgressBarM3Style)
 
     # radial_progress: RadialProgressStyle = field(default_factory=RadialProgressStyle)
 

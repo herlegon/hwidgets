@@ -28,6 +28,7 @@ from .styles import (
     FlatButtonStyle,
     StrongButtonStyle,
     StrongGreyButtonStyle,
+    FramelessButtonStyle,
     ButtonGroupStyle,
     GreyButtonGroupStyle,
     CardStyle,
@@ -35,7 +36,6 @@ from .styles import (
     ToggleGreyButtonStyle,
     ProgressBarStyle,
     IndetProgressBarStyle,
-    IndetProgressBarM3Style,
 )
 
 
@@ -179,12 +179,13 @@ class StyleManager:
             "toggle_button": ("toggle_button", ToggleButtonStyle),
             "toggle_grey_button": ("toggle_grey_button", ToggleGreyButtonStyle),
 
+            "frameless_button": ("frameless_button", FramelessButtonStyle),
+
             "button_group": ("button_group", ButtonGroupStyle),
             "grey_button_group": ("grey_button_group", GreyButtonGroupStyle),
 
             "progress_bar": ("progress_bar", ProgressBarStyle),
             "indet_progress_bar": ("indet_progress_bar", IndetProgressBarStyle),
-            "indet_progress_bar_m3": ("indet_progress_bar_m3", IndetProgressBarM3Style),
 
             "flat_button": ("flat_button", FlatButtonStyle),
 

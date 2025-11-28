@@ -40,10 +40,12 @@ from hwidgets import (
     HComment,
     HDescription,
     HDivider,
+    HFramelessButton,
     HGreyButtonGroup,
     HHorizontalDivider,
     HIndetProgressBar,
-    HIndetProgressBarM3,
+    HIndetProgressBarM2,
+    HIndetProgressBarR,
     HIndeterminateCircularProgress,
     HProgressBar,
     HProgressBarM3,
@@ -506,59 +508,82 @@ class Ui_MainWindow(object):
 
         self.h_button_layout = QHBoxLayout()
         self.h_button_layout.setObjectName(u"h_button_layout")
-        self.h_label_4 = HLabel(self.h_frame, theme=theme)
-        self.h_label_4.setObjectName(u"h_label_4")
-
-        self.h_button_layout.addWidget(self.h_label_4)
-
-        self.h_button = HButton(self.h_frame, theme=theme)
-        self.h_button.setObjectName(u"h_button")
+        self.h_frameless_button = HFramelessButton(self.h_frame, theme=theme)
+        self.h_frameless_button.setObjectName(u"h_frameless_button")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.h_button.sizePolicy().hasHeightForWidth())
-        self.h_button.setSizePolicy(sizePolicy)
-        self.h_button.setMaximumSize(QSize(24, 24))
+        sizePolicy.setHeightForWidth(self.h_frameless_button.sizePolicy().hasHeightForWidth())
+        self.h_frameless_button.setSizePolicy(sizePolicy)
+        self.h_frameless_button.setMaximumSize(QSize(24, 24))
         icon3 = QIcon()
         icon3.addFile(u"../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.h_button.setIcon(icon3)
-        self.h_button.setIconSize(QSize(24, 24))
-        self.h_button.setFlat(True)
+        self.h_frameless_button.setIcon(icon3)
+        self.h_frameless_button.setIconSize(QSize(24, 24))
+        self.h_frameless_button.setCheckable(True)
+        self.h_frameless_button.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_button)
+        self.h_button_layout.addWidget(self.h_frameless_button)
 
-        self.h_button_checked = HButton(self.h_frame, theme=theme)
-        self.h_button_checked.setObjectName(u"h_button_checked")
-        self.h_button_checked.setMaximumSize(QSize(24, 24))
-        self.h_button_checked.setIcon(icon3)
-        self.h_button_checked.setIconSize(QSize(24, 24))
-        self.h_button_checked.setCheckable(True)
-        self.h_button_checked.setChecked(True)
-        self.h_button_checked.setFlat(True)
+        self.h_frameless_button_checked = HFramelessButton(self.h_frame, theme=theme)
+        self.h_frameless_button_checked.setObjectName(u"h_frameless_button_checked")
+        self.h_frameless_button_checked.setMaximumSize(QSize(24, 24))
+        self.h_frameless_button_checked.setIcon(icon3)
+        self.h_frameless_button_checked.setIconSize(QSize(24, 24))
+        self.h_frameless_button_checked.setCheckable(True)
+        self.h_frameless_button_checked.setChecked(True)
+        self.h_frameless_button_checked.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_button_checked)
+        self.h_button_layout.addWidget(self.h_frameless_button_checked)
 
-        self.h_button_disabled = HButton(self.h_frame, theme=theme)
-        self.h_button_disabled.setObjectName(u"h_button_disabled")
-        self.h_button_disabled.setEnabled(False)
-        self.h_button_disabled.setMaximumSize(QSize(24, 24))
-        self.h_button_disabled.setIcon(icon3)
-        self.h_button_disabled.setIconSize(QSize(24, 24))
-        self.h_button_disabled.setFlat(True)
+        self.h_frameless_button_disabled = HFramelessButton(self.h_frame, theme=theme)
+        self.h_frameless_button_disabled.setObjectName(u"h_frameless_button_disabled")
+        self.h_frameless_button_disabled.setEnabled(False)
+        self.h_frameless_button_disabled.setMaximumSize(QSize(24, 24))
+        self.h_frameless_button_disabled.setIcon(icon3)
+        self.h_frameless_button_disabled.setIconSize(QSize(24, 24))
+        self.h_frameless_button_disabled.setCheckable(True)
+        self.h_frameless_button_disabled.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_button_disabled)
+        self.h_button_layout.addWidget(self.h_frameless_button_disabled)
 
-        self.h_button_disabled_checked = HButton(self.h_frame, theme=theme)
-        self.h_button_disabled_checked.setObjectName(u"h_button_disabled_checked")
-        self.h_button_disabled_checked.setEnabled(False)
-        self.h_button_disabled_checked.setMaximumSize(QSize(24, 24))
-        self.h_button_disabled_checked.setIcon(icon3)
-        self.h_button_disabled_checked.setIconSize(QSize(24, 24))
-        self.h_button_disabled_checked.setCheckable(True)
-        self.h_button_disabled_checked.setChecked(True)
-        self.h_button_disabled_checked.setFlat(True)
+        self.h_frameless_button_disabled_checked = HFramelessButton(self.h_frame, theme=theme)
+        self.h_frameless_button_disabled_checked.setObjectName(u"h_frameless_button_disabled_checked")
+        self.h_frameless_button_disabled_checked.setEnabled(False)
+        self.h_frameless_button_disabled_checked.setMaximumSize(QSize(24, 24))
+        self.h_frameless_button_disabled_checked.setIcon(icon3)
+        self.h_frameless_button_disabled_checked.setIconSize(QSize(24, 24))
+        self.h_frameless_button_disabled_checked.setCheckable(True)
+        self.h_frameless_button_disabled_checked.setChecked(True)
+        self.h_frameless_button_disabled_checked.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_button_disabled_checked)
+        self.h_button_layout.addWidget(self.h_frameless_button_disabled_checked)
+
+        self.horizontalSpacer = QSpacerItem(30, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
+
+        self.h_button_layout.addItem(self.horizontalSpacer)
+
+        self.h_frameless_button_log = HFramelessButton(self.h_frame, theme=theme)
+        self.h_frameless_button_log.setObjectName(u"h_frameless_button_log")
+        self.h_frameless_button_log.setMaximumSize(QSize(16777215, 24))
+        self.h_frameless_button_log.setIcon(icon3)
+        self.h_frameless_button_log.setIconSize(QSize(24, 24))
+        self.h_frameless_button_log.setCheckable(True)
+        self.h_frameless_button_log.setFlat(True)
+
+        self.h_button_layout.addWidget(self.h_frameless_button_log)
+
+        self.h_frameless_button_non_checkable = HFramelessButton(self.h_frame, theme=theme)
+        self.h_frameless_button_non_checkable.setObjectName(u"h_frameless_button_non_checkable")
+        sizePolicy.setHeightForWidth(self.h_frameless_button_non_checkable.sizePolicy().hasHeightForWidth())
+        self.h_frameless_button_non_checkable.setSizePolicy(sizePolicy)
+        self.h_frameless_button_non_checkable.setMaximumSize(QSize(24, 24))
+        self.h_frameless_button_non_checkable.setIcon(icon3)
+        self.h_frameless_button_non_checkable.setIconSize(QSize(24, 24))
+        self.h_frameless_button_non_checkable.setCheckable(False)
+        self.h_frameless_button_non_checkable.setFlat(True)
+
+        self.h_button_layout.addWidget(self.h_frameless_button_non_checkable)
 
         self.h_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -1170,16 +1195,21 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.h_indet_progress_bar)
 
+        self.h_indet_progress_bar_m2 = HIndetProgressBarM2(self.h_frame, theme=theme)
+        self.h_indet_progress_bar_m2.setObjectName(u"h_indet_progress_bar_m2")
+        self.h_indet_progress_bar_m2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+
+        self.verticalLayout_3.addWidget(self.h_indet_progress_bar_m2)
+
+        self.h_indet_progress_bar_r = HIndetProgressBarR(self.h_frame, theme=theme)
+        self.h_indet_progress_bar_r.setObjectName(u"h_indet_progress_bar_r")
+        self.h_indet_progress_bar_r.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+
+        self.verticalLayout_3.addWidget(self.h_indet_progress_bar_r)
+
         self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_3)
-
-        self.h_indet_progress_bar_m3 = HIndetProgressBarM3(self.h_frame, theme=theme)
-        self.h_indet_progress_bar_m3.setObjectName(u"h_indet_progress_bar_m3")
-        self.h_indet_progress_bar_m3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_indet_progress_bar_m3.setValue(24)
-
-        self.verticalLayout_3.addWidget(self.h_indet_progress_bar_m3)
 
 
         self.horizontalLayout_10.addLayout(self.verticalLayout_3)
@@ -1245,11 +1275,12 @@ class Ui_MainWindow(object):
         self.h_text_icon_button_checked.setText(QCoreApplication.translate("MainWindow", u"ibutton (checked)", None))
         self.h_text_icon_button_disabled.setText(QCoreApplication.translate("MainWindow", u"ibutton (disabled)", None))
         self.h_text_icon_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"ibutton (Checked Disabled)", None))
-        self.h_label_4.setText(QCoreApplication.translate("MainWindow", u"flat", None))
-        self.h_button.setText("")
-        self.h_button_checked.setText("")
-        self.h_button_disabled.setText("")
-        self.h_button_disabled_checked.setText("")
+        self.h_frameless_button.setText("")
+        self.h_frameless_button_checked.setText("")
+        self.h_frameless_button_disabled.setText("")
+        self.h_frameless_button_disabled_checked.setText("")
+        self.h_frameless_button_log.setText(QCoreApplication.translate("MainWindow", u"log", None))
+        self.h_frameless_button_non_checkable.setText("")
         self.h_label_3.setText(QCoreApplication.translate("MainWindow", u"non flat", None))
         self.h_button_checked_2.setText("")
         self.h_button_disabled_2.setText("")

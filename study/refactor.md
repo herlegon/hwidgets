@@ -33,11 +33,13 @@
     ✅ ButtonGroup
     ✅ GreyButtonGroup
     ✅ ProgressBar
+    ✅ IndeterminateProgress
 
-    Frameless icon button, checkable only   (davinci resolve log button)
-    Frame icon/text button, not checkable, with border   (vscode update dialog)
+    ✅ Frameless icon button: toggle/simple
 
-    IndeterminateProgress
+    - Frame icon/text button, not checkable, with border   (vscode update dialog)
+
+    ✅ IndeterminateProgress
     RadialProgress
 
 

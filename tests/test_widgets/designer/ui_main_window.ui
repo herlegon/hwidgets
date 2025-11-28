@@ -743,14 +743,7 @@
          <item>
           <layout class="QHBoxLayout" name="h_button_layout">
            <item>
-            <widget class="QLabel" name="h_label_4">
-             <property name="text">
-              <string>flat</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="h_button">
+            <widget class="QPushButton" name="h_frameless_button">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -776,13 +769,16 @@
                <height>24</height>
               </size>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
              <property name="flat">
               <bool>true</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_button_checked">
+            <widget class="QPushButton" name="h_frameless_button_checked">
              <property name="maximumSize">
               <size>
                <width>24</width>
@@ -814,7 +810,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_button_disabled">
+            <widget class="QPushButton" name="h_frameless_button_disabled">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -837,13 +833,16 @@
                <height>24</height>
               </size>
              </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
              <property name="flat">
               <bool>true</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_button_disabled_checked">
+            <widget class="QPushButton" name="h_frameless_button_disabled_checked">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -871,6 +870,86 @@
              </property>
              <property name="checked">
               <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeType">
+              <enum>QSizePolicy::Policy::Fixed</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>30</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_frameless_button_log">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>log</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="flat">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_frameless_button_non_checkable">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="text">
+              <string/>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</normaloff>../../../hwidgets/icons/settings_FILL0_wght400_GRAD0_opsz24.png</iconset>
+             </property>
+             <property name="iconSize">
+              <size>
+               <width>24</width>
+               <height>24</height>
+              </size>
+             </property>
+             <property name="checkable">
+              <bool>false</bool>
              </property>
              <property name="flat">
               <bool>true</bool>
@@ -1976,6 +2055,20 @@ of vertical text
           </widget>
          </item>
          <item>
+          <widget class="QProgressBar" name="h_indet_progress_bar_m2">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 253, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="h_indet_progress_bar_r">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 253, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer_3">
            <property name="orientation">
             <enum>Qt::Orientation::Vertical</enum>
@@ -1987,16 +2080,6 @@ of vertical text
             </size>
            </property>
           </spacer>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="h_indet_progress_bar_m3">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(231, 253, 255);</string>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
          </item>
         </layout>
        </item>

@@ -51,7 +51,8 @@ if __name__ == "__main__":
         "h_progress_bar": "HProgressBar",
 
         "h_indet_progress_bar": "HIndetProgressBar",
-        "h_indet_progress_bar_m3": "HIndetProgressBarM3",
+        "h_indet_progress_bar_m2": "HIndetProgressBarM2",
+        "h_indet_progress_bar_r": "HIndetProgressBarR",
 
         "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
         "h_radial_progress": "HRadialProgress",
@@ -61,6 +62,8 @@ if __name__ == "__main__":
 
         "h_toggle_button": "HToggleButton",
         "h_toggle_grey_button": "HToggleGreyButton",
+
+        "h_frameless_button": "HFramelessButton",
 
         "h_button_group": "HButtonGroup",
         "h_grey_button_group": "HGreyButtonGroup",
