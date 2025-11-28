@@ -165,27 +165,12 @@ class ComboBoxStyle(LineEditStyle):
 
 
 @dataclass
-class SpinBoxStyle:
+class SpinBoxStyle(LineEditStyle):
     radius: int = NORMAL_HEIGHT
     padding: int = 12
     min_width: int = (NORMAL_HEIGHT + BORDER_RADIUS) * 2
 
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    disabled: str = ""
-
-    selection: str = ""
-    button_color: str = ""
-    button_hover: str = ""
     button_pressed: str = ""
-    button_disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_selection: str = ""
-    font_color_disabled: str = ""
-
 
 
 @dataclass

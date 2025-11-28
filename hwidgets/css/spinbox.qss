@@ -5,10 +5,9 @@ QDoubleSpinBox {
     min-width: 40px;
     border: 1px solid $border_color;
     border-radius: $radius;
-    margin: 0px;
-    /* margin-right: $margin_right; */
-    padding: 0px $padding_right 2px 0px;
 
+    margin: 0px;
+    padding: 0px $padding_right 2px 0px;
 
     font-family: $font_family;
     font-size: $font_size;
@@ -18,9 +17,15 @@ QDoubleSpinBox {
 }
 
 
-QSpinBox:focus,
-QDoubleSpinBox:focus{
+HSpinBox[editing="true"],
+HDoubleSpinBox[editing="true"] {
     border: 1px solid $border_edition;
+}
+
+
+HSpinBox[editing="false"],
+HDoubleSpinBox[editing="false"] {
+    border: 1px solid $border_color;
 }
 
 
@@ -31,26 +36,15 @@ QDoubleSpinBox:disabled {
 }
 
 
-HSpinBox[editing="true"],
-HDoubleSpinBox[editing="true"] {
-    border: 1px solid $border_edition;
-}
-
-HSpinBox[editing="false"],
-HDoubleSpinBox[editing="false"] {
-    border: 1px solid $border_color;
-}
-
-
-/* Moved to bottom to ensure precedence */
 QSpinBox:read-only,
-QDoubleSpinBox:read-only,
-QSpinBox:read-only:focus,
-QDoubleSpinBox:read-only:focus,
-QSpinBox:read-only:hover,
-QDoubleSpinBox:read-only:hover,
-HSpinBox:read-only,
-HDoubleSpinBox:read-only {
+QDoubleSpinBox:read-only {
     background-color: $widget_bgd;
     border: 1px solid $border_color;
 }
+
+
+HSpinBox[focused="true"],
+HDoubleSpinBox[focused="true"] {
+    border: 1px solid $border_read_only_color;
+}
+

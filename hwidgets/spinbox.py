@@ -70,14 +70,13 @@ class HSpinBoxButton(QPushButton):
         self.setCheckable(False)
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, False)
 
-        default_style = theme.default
         sb_style = theme.spinbox
         # background, text
         states = {
-            'normal': (default_style.bgd, sb_style.font_color),
-            'hover': (sb_style.button_hover, sb_style.font_color),
-            'pressed': (sb_style.button_pressed, sb_style.font_color),
-            'disabled': (sb_style.button_disabled, sb_style.font_color_disabled),
+            'normal':   (sb_style.bgd,              sb_style.font_color),
+            'hover':    (sb_style.button_hover,     sb_style.font_color),
+            'pressed':  (sb_style.button_pressed,   sb_style.font_color),
+            'disabled': (sb_style.button_disabled,  sb_style.font_color_disabled),
         }
 
         self.pixmaps = {}
@@ -180,6 +179,7 @@ class HSpinBoxButton(QPushButton):
         painter.end()
 
 
+
 class HCommonSpinBox:
     if TYPE_CHECKING:
         self: "QAbstractSpinBox"
@@ -209,7 +209,7 @@ class HCommonSpinBox:
 
         self.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
 
-        self.lineEdit().setFocusPolicy(Qt.FocusPolicy.NoFocus)
+        # self.lineEdit().setFocusPolicy(Qt.FocusPolicy.NoFocus)
         # self.setFocusPolicy(Qt.FocusPolicy.StrongFocus)
         self.setFocusPolicy(Qt.FocusPolicy.WheelFocus)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
@@ -255,31 +255,7 @@ class HCommonSpinBox:
         self.main_layout.addLayout(button_layout)
         self.setLayout(self.main_layout)
 
-        qss_template = Template(load_qss("spinbox.qss"))
-        sb_style = theme.spinbox
-        le_style = theme.line_edit
-        default_style = theme.default
-        qss = qss_template.substitute(
-            radius=f"{radius}px",
-            padding_right=f"{radius + 12}px",
-            # padding=f"{radius}px",
-            margin_right=f"{radius + 12}px",
-            # button_width=f"{20}px",
-
-            widget_bgd=f"{default_style.bgd}",
-            # hover=f"{le_style.selection}",
-            border_color=f"{default_style.border}",
-            border_edition=f"{le_style.selection}",
-
-            selection=f"{le_style.selection}",
-            disabled=f"{le_style.disabled}",
-
-            font_family=f"\"{sb_style.font.family}\"",
-            font_size=f"{sb_style.font.size}pt",
-            font_color=f"{sb_style.font_color}",
-            font_color_disabled=f"{sb_style.font_color_disabled}",
-        )
-        self.setStyleSheet(qss)
+        self._update_stylesheet()
 
         self._last_valid_value = self.value()
         self._editing = False
@@ -288,8 +264,6 @@ class HCommonSpinBox:
         # When focus in/out happens the QLineEdit will emit signals and generate events.
         self._hovered = False
         self._pressed = False
-
-        self.lineEdit().installEventFilter(self)
 
         self._user_selecting = False
         if sys.platform == 'win32':
@@ -314,6 +288,38 @@ class HCommonSpinBox:
         self.signals_connected = True
         self.plus_button.clicked.connect(self.stepUp)
         self.minus_button.clicked.connect(self.stepDown)
+
+        # self.installEventFilter(self)
+        self.lineEdit().installEventFilter(self)
+
+
+    def _update_stylesheet(self) -> None:
+        theme: Theme = self.theme
+        sb_style = theme.spinbox
+
+        radius = theme.default.radius
+        qss_template = Template(load_qss("spinbox.qss"))
+        qss = qss_template.substitute(
+            radius=f"{radius}px",
+            padding_right=f"{radius + 12}px",
+            margin_right=f"{radius + 12}px",
+
+            widget_bgd=f"{sb_style.bgd}",
+            hover=f"{sb_style.hover}",
+            disabled=f"{sb_style.disabled}",
+
+            border_color=f"{sb_style.border}",
+            border_read_only_color=f"{sb_style.border_read_only}",
+            border_edition=f"{sb_style.selection}",
+
+            selection=f"{sb_style.selection}",
+
+            font_family=f"{sb_style.font.family}",
+            font_size=f"{sb_style.font.size}pt",
+            font_color=f"{sb_style.font_color}",
+            font_color_disabled=f"{sb_style.font_color_disabled}",
+        )
+        self.setStyleSheet(qss)
 
 
     def setButtonSymbols(self: QAbstractSpinBox, bs: QAbstractSpinBox.ButtonSymbols) -> None:
@@ -345,42 +351,55 @@ class HCommonSpinBox:
         self.blockSignals(False)
         super().setReadOnly(b)
 
-
-    # def enterEvent(self, event):
-    #     self._set_hover(True)
-    #     super().enterEvent(event)
+        # Force style update to apply read-only CSS rules
+        self.update_style()
 
 
-    # def leaveEvent(self, event):
-    #     self._set_hover(False)
-    #     super().leaveEvent(event)
+    def update_style(self):
+        style = self.style()
+        style.unpolish(self)
+        style.polish(self)
+        self.update()
+        # self.repaint()
 
 
     def eventFilter(self, source: QWidget, event: QEvent):
         if source == self.lineEdit():
             if event.type() == QEvent.Type.FocusOut:
                 self._set_editing(False)
+                if self.isReadOnly():
+                    # Set focused to false on focus out for read-only spinbox
+                    self.setProperty("focused", "false")
+                    self.update_style()
 
             elif event.type() in (
                 QEvent.Type.MouseButtonPress,
-                QEvent.Type.Wheel,
+                QEvent.Type.Wheel
             ):
-                self._set_editing(True)
+                if self.isReadOnly():
+                    self.setProperty("editing", "false")
+                    if event.type() == QEvent.Type.MouseButtonPress:
+                        self.setProperty("focused", "true")
+                    else:
+                        self.setProperty("focused", "false")
+                        return True
+                    self.update_style()
+
+                else:
+                    self._set_editing(True)
 
         return super().eventFilter(source, event)
 
 
     def focusOutEvent(self, event):
         self._set_editing(False)
+        # Clear focused property
+        self.setProperty("focused", "false")
+        style = self.style()
+        style.unpolish(self)
+        style.polish(self)
+        self.update()
         super().focusOutEvent(event)
-
-
-    def focusInEvent(self, event):
-        if self.isReadOnly():
-            self._set_editing(False)
-            self.deselect_and_clear_focus_delayed()
-            return
-        super().focusInEvent(event)
 
 
     def _on_button_hover_changed(self, hovered: bool):
@@ -426,7 +445,6 @@ class HCommonSpinBox:
 
 
     def event_value_changed(self, value: float | int = 0):
-        # print(f"{__class__.__name__} event_value_changed ({value})")
         if sys.platform == 'win32':
             # QTimer.singleShot(0, self.deselect_and_clear_focus)
             QTimer.singleShot(0, self.deselect_value)
@@ -435,6 +453,10 @@ class HCommonSpinBox:
 
 
     def wheelEvent(self, event):
+        if self.isReadOnly():
+            self.setProperty("editing", "false")
+
+            return
         super().wheelEvent(event)
         if sys.platform == 'win32':
             QTimer.singleShot(0, self.deselect_and_clear_focus)
@@ -443,7 +465,6 @@ class HCommonSpinBox:
 
 
     def deselect_value(self) -> None:
-        # print(f"{__class__.__name__}   deselect value")
         line_edit = self.lineEdit()
         line_edit.blockSignals(True)
         cursor_pos = len(line_edit.text())
@@ -454,13 +475,10 @@ class HCommonSpinBox:
 
 
     def deselect_and_clear_focus(self):
-        # print(f"{__class__.__name__} deselect and clear focus")
         self.deselect_value()
-        # self.lineEdit().clearFocus()
 
 
     def deselect_and_clear_focus_delayed(self):
-        # print(f"{__class__.__name__} deselect and clear focus delayed")
         QTimer.singleShot(0, self.deselect_and_clear_focus)
 
 
@@ -487,7 +505,6 @@ class HCommonSpinBox:
         if key in (Qt.Key.Key_Return, Qt.Key.Key_Enter):
             if self.lineEdit().hasFocus():
                 self._editing = False
-                # print(f"{__class__.__name__} keyPressEvent: enter/return")
                 QTimer.singleShot(0, self.deselect_and_clear_focus)
                 event.accept()
                 return
@@ -495,7 +512,6 @@ class HCommonSpinBox:
         elif key == Qt.Key.Key_Escape:
             if self.lineEdit().hasFocus():
                 self._editing = False
-                # print(f"{__class__.__name__} keyPressEvent: escape")
                 QTimer.singleShot(0, self.deselect_and_clear_focus)
                 event.accept()
                 return

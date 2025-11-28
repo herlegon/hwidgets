@@ -1,10 +1,8 @@
 # refactor:
     ✅ Frame
-    Card
     ✅ Divider
         (HorizontalDivider)
         (VerticalDivider)
-    GroupBox
 
     ✅ Label
     ✅ Title
@@ -17,25 +15,22 @@
     ✅ Switch
 
     ✅ LineEdit
-    Unselectable read-only lineedit
+
     ✅ PlainTextEdit
     ✅ Overlay Vertical Scrollbar
 
     ✅ ComboBox
 
-    SpinBox
-    DoubleSpinBox
+    ✅ SpinBox
+    ✅ DoubleSpinBox
 
     Button
     ButtonGroup
     StrongButton
 
-
     Progress
     IndeterminateProgress
     RadialProgress
-    ScrollBar
-    SpinBox
 
     -  - flat icon button
 
@@ -45,7 +40,10 @@
 
     -  - button
 
-
+# todo
+    Card
+    Unselectable read-only lineedit
+    remove GroupBox ?
 
 
 

@@ -130,6 +130,7 @@ class StyleManager:
             "plain_text_edit": "line_edit",
 
             "combobox": "line_edit",
+            "spinbox": "line_edit",
 
         }
 
