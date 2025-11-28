@@ -69,13 +69,12 @@ class HIndetProgressBar(QProgressBar):
 
         LinearAnimationDuration = 1800
 
-        speed_r = 1.5
+        speed_r = 1
         last_pause = 435 * speed_r
-        last_pause = 0
+        # last_pause = 0
 
 
         if not m3:
-            print("M2")
             # Duration of the head and tail animations for both lines
             # M2
             FirstLineHeadDuration = 750
@@ -93,9 +92,8 @@ class HIndetProgressBar(QProgressBar):
             FirstLineTailEasing = ((0.4, 0), (1, 1))
             SecondLineHeadEasing = ((0, 0), (0.65, 1))
             SecondLineTailEasing = ((0.1, 0), (0.45, 1))
-        else:
-            print("M2")
 
+        else:
             FirstLineHeadDelay = 0
             FirstLineTailDelay = 120
             SecondLineHeadDelay = 635
@@ -419,5 +417,5 @@ class HIndetProgressBarM3(HIndetProgressBar):
             format=format,
             m3=True
         )
-        print("PROGRESS BATR M3")
+
 

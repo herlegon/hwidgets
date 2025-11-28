@@ -192,12 +192,12 @@ bar = "#5e7ce0"
 
 [indet_progress_bar]
 thickness = 8
-track = "#1c1d20"
+track = "#2a2a2a"
 bar = "#5e7ce0"
 
 [indet_progress_bar_m3]
 thickness = 8
-track = "#1c1d20"
+track = "#2a2a2a"
 bar = "#5e7ce0"
 
 
