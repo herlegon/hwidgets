@@ -14,6 +14,7 @@ from PySide6.QtGui import (
     QPainter,
     QColor,
     QBrush,
+    QPaintEvent,
 )
 from PySide6.QtWidgets import (
     QWidget,
@@ -152,7 +153,7 @@ class OverlayVScrollBar(QWidget):
         return rect
 
 
-    def paintEvent(self, event):
+    def paintEvent(self, event: QPaintEvent):
         painter = QPainter(self)
         # anti-aliasing off for performance
         painter.fillRect(self.rect(), Qt.GlobalColor.transparent)

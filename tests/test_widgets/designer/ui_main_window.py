@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1600, 750)
+        MainWindow.resize(1600, 899)
         MainWindow.setMinimumSize(QSize(1600, 0))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -276,40 +276,54 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.checkbox_layout)
 
-        self.gridLayout_2 = QGridLayout()
-        self.gridLayout_2.setObjectName(u"gridLayout_2")
+        self.radio_buttons_layout = QHBoxLayout()
+        self.radio_buttons_layout.setObjectName(u"radio_buttons_layout")
+        self.verticalLayout = QVBoxLayout()
+        self.verticalLayout.setObjectName(u"verticalLayout")
         self.h_radiobutton_enabled_off = HRadioButton(self.h_frame, theme=theme)
-        self.buttonGroup = QButtonGroup(MainWindow)
-        self.buttonGroup.setObjectName(u"buttonGroup")
-        self.buttonGroup.addButton(self.h_radiobutton_enabled_off)
+        self.radioButtonGroup = QButtonGroup(MainWindow)
+        self.radioButtonGroup.setObjectName(u"radioButtonGroup")
+        self.radioButtonGroup.addButton(self.h_radiobutton_enabled_off)
         self.h_radiobutton_enabled_off.setObjectName(u"h_radiobutton_enabled_off")
         self.h_radiobutton_enabled_off.setChecked(False)
 
-        self.gridLayout_2.addWidget(self.h_radiobutton_enabled_off, 0, 0, 1, 1)
+        self.verticalLayout.addWidget(self.h_radiobutton_enabled_off)
 
         self.h_radiobutton_enabled_on = HRadioButton(self.h_frame, theme=theme)
-        self.buttonGroup.addButton(self.h_radiobutton_enabled_on)
+        self.radioButtonGroup.addButton(self.h_radiobutton_enabled_on)
         self.h_radiobutton_enabled_on.setObjectName(u"h_radiobutton_enabled_on")
         self.h_radiobutton_enabled_on.setChecked(True)
 
-        self.gridLayout_2.addWidget(self.h_radiobutton_enabled_on, 1, 0, 1, 1)
+        self.verticalLayout.addWidget(self.h_radiobutton_enabled_on)
 
-        self.h_radiobutton_disabled_off = HRadioButton(self.h_frame, theme=theme)
-        self.h_radiobutton_disabled_off.setObjectName(u"h_radiobutton_disabled_off")
-        self.h_radiobutton_disabled_off.setEnabled(False)
-        self.h_radiobutton_disabled_off.setChecked(True)
 
-        self.gridLayout_2.addWidget(self.h_radiobutton_disabled_off, 1, 1, 1, 1)
+        self.radio_buttons_layout.addLayout(self.verticalLayout)
 
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.h_radiobutton_disabled_on = HRadioButton(self.h_frame, theme=theme)
+        self.radioButtonGroup_disabled = QButtonGroup(MainWindow)
+        self.radioButtonGroup_disabled.setObjectName(u"radioButtonGroup_disabled")
+        self.radioButtonGroup_disabled.addButton(self.h_radiobutton_disabled_on)
         self.h_radiobutton_disabled_on.setObjectName(u"h_radiobutton_disabled_on")
         self.h_radiobutton_disabled_on.setEnabled(False)
         self.h_radiobutton_disabled_on.setChecked(False)
 
-        self.gridLayout_2.addWidget(self.h_radiobutton_disabled_on, 0, 1, 1, 1)
+        self.verticalLayout_2.addWidget(self.h_radiobutton_disabled_on)
+
+        self.h_radiobutton_disabled_off = HRadioButton(self.h_frame, theme=theme)
+        self.radioButtonGroup_disabled.addButton(self.h_radiobutton_disabled_off)
+        self.h_radiobutton_disabled_off.setObjectName(u"h_radiobutton_disabled_off")
+        self.h_radiobutton_disabled_off.setEnabled(False)
+        self.h_radiobutton_disabled_off.setChecked(True)
+
+        self.verticalLayout_2.addWidget(self.h_radiobutton_disabled_off)
 
 
-        self.main_layout.addLayout(self.gridLayout_2)
+        self.radio_buttons_layout.addLayout(self.verticalLayout_2)
+
+
+        self.main_layout.addLayout(self.radio_buttons_layout)
 
         self.radio_layout = QHBoxLayout()
         self.radio_layout.setObjectName(u"radio_layout")
@@ -1096,8 +1110,8 @@ class Ui_MainWindow(object):
         self.h_checkbox_checked_2.setText(QCoreApplication.translate("MainWindow", u"480p", None))
         self.h_radiobutton_enabled_off.setText(QCoreApplication.translate("MainWindow", u"Enabled", None))
         self.h_radiobutton_enabled_on.setText(QCoreApplication.translate("MainWindow", u"Enabled, checked", None))
-        self.h_radiobutton_disabled_off.setText(QCoreApplication.translate("MainWindow", u"Disabled, checked", None))
         self.h_radiobutton_disabled_on.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
+        self.h_radiobutton_disabled_off.setText(QCoreApplication.translate("MainWindow", u"Disabled, checked", None))
         self.h_strong_button_text.setText(QCoreApplication.translate("MainWindow", u"Strong Button", None))
         self.h_strong_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Strong Button with icon", None))
         self.h_strong_button_icon.setText("")

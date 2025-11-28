@@ -146,12 +146,9 @@ class LineEditStyle(LabelStyle):
     button_disabled: str = ""
 
 
-
-
 @dataclass
 class PlainTextEditStyle(LineEditStyle):
     ...
-
 
 
 @dataclass
@@ -160,6 +157,11 @@ class ScrollBarStyle:
     normal: str = ""
     hover: str = ""
     pressed: str = ""
+
+
+@dataclass
+class ComboBoxStyle(LineEditStyle):
+    ...
 
 
 @dataclass
@@ -182,21 +184,6 @@ class SpinBoxStyle:
     font: FontConfig = FontConfig(weight=500)
     font_color: str = ""
     font_color_selection: str = ""
-    font_color_disabled: str = ""
-
-
-
-@dataclass
-class ComboBoxStyle:
-    normal: str = ""
-    hover: str = ""
-    selection: str = ""
-    disabled: str = ""
-    # button_hover: str = ""
-    # button_disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
     font_color_disabled: str = ""
 
 

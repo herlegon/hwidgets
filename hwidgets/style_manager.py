@@ -129,6 +129,8 @@ class StyleManager:
             "line_edit": "label",
             "plain_text_edit": "line_edit",
 
+            "combobox": "line_edit",
+
         }
 
         # ------------------------------

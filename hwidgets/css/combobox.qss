@@ -1,7 +1,9 @@
 /* top, right, bottom, left */
 QFrame {
-    background-color: $window_bgd;
-    background: $window_bgd;
+    /* background-color: $window_bgd;
+    background: $window_bgd; */
+    background-color: transparent;
+    background: transparent;
 
     color: $font_color;
     font-family: $font_family;

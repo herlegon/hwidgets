@@ -60,18 +60,17 @@ class RoundedListView(QListView):
         self,
         stylesheet: str,
         theme: Theme,
-        # radius: int,
-        # bgd_color: str,
-        # border_color: str,
         parent: QWidget = None
     ):
         super().__init__(parent)
         default_style = theme.default
+        cb_style = theme.combobox
 
         self.radius = float(default_style.radius)
-        self.bgd_color = QColor(default_style.bgd)
-        self.border_color = QColor(theme.line_edit.selection)
-        self.top_border_color = QColor(default_style.border)
+        self.bgd_color = QColor(cb_style.bgd)
+        self.border_color = QColor(cb_style.selection)
+        self.top_border_color = QColor(cb_style.border)
+
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setStyleSheet(stylesheet)
 
@@ -148,6 +147,7 @@ class HComboBox(QComboBox):
         super().__init__(parent)
 
         self.theme = theme
+        self.cb_style = theme.combobox
 
         self.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
@@ -166,9 +166,9 @@ class HComboBox(QComboBox):
             "normal" : make_tinted_pixmap(default_pixmap, theme.combobox.font_color),
             "disabled" : make_tinted_pixmap(default_pixmap, theme.line_edit.button_disabled),
         }
-        self.border_color = QColor(self.theme.default.border)
-        self.border_edition = QColor(self.theme.line_edit.selection)
-        self.border_disabled = QColor(self.theme.line_edit.font_color_disabled)
+        self.border_color = QColor(self.cb_style.border)
+        self.border_edition = QColor(self.cb_style.selection)
+        self.border_disabled = QColor(self.cb_style.font_color_disabled)
 
         super().setEditable(True)
         self._update_stylesheet()
@@ -210,35 +210,38 @@ class HComboBox(QComboBox):
 
 
     def _update_stylesheet(self):
+        theme: Theme = self.theme
+        default_style = theme.default
+        cb_style = self.theme.combobox
         self.variant = ""
-        default_style = self.theme.default
-        le_style = self.theme.line_edit
 
-        radius = default_style.radius
+        radius = theme.default.radius
+        padding_left, padding_right = radius, radius
 
         template_subst: dict = dict(
+            window_bgd="red",
             radius=f"{radius}px",
-            padding_left=f"{int(1.5 * radius) - 2}px",
-            padding_right=f"{int(1.5 * radius)}px",
-            margin_top=f"{radius}px",
-            popup_width = f"{self.width()}px",
+            padding_right=f"{padding_right}px",
+            padding_left=f"{padding_left}px",
 
+            widget_bgd=f"{cb_style.bgd}",
+            hover=f"{cb_style.hover}",
+            disabled=f"{cb_style.disabled}",
+
+            border_color=f"{cb_style.border}",
+            border_read_only_color=f"{cb_style.border_read_only}",
+            border_edition=f"{cb_style.selection}",
+
+            selection=f"{cb_style.selection}",
+
+            font_family=f"{cb_style.font.family}",
+            font_size=f"{cb_style.font.size}pt",
+            font_color=f"{cb_style.font_color}",
+            font_color_disabled=f"{cb_style.font_color_disabled}",
+
+            # listview
             item_padding_top = f"2px",
             item_padding_bottom = f"2px",
-
-            window_bgd=self.theme.window_bgd,
-            widget_bgd=default_style.bgd,
-            hover=f"{le_style.hover}",
-            border_color=f"{default_style.border}",
-            border_edition=f"{le_style.selection}",
-
-            selection=le_style.selection,
-            disabled=le_style.disabled,
-
-            font_family=f"\"{le_style.font.family}\"",
-            font_size=f"{le_style.font.size}pt",
-            font_color=f"{le_style.font_color}",
-            font_color_disabled=f"{le_style.font_color_disabled}",
         )
 
         qss_template = Template(load_qss("combobox.qss", variant=self.variant))

@@ -221,10 +221,11 @@ class HCheckBox(QCheckBox):
         if self.text():
             alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
             if enabled:
-                if pressed:
-                    text_color = self.font_pressed
-                else:
-                    text_color = self.font_enabled
+                # if pressed:
+                #     text_color = self.font_pressed
+                # else:
+                #     text_color = self.font_enabled
+                text_color = self.font_enabled
             else:
                 text_color = self.font_disabled
             painter.setPen(text_color)

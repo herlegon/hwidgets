@@ -15,7 +15,7 @@ font_family = "Inter"
 font_size = 13
 font_weight = 400
 font_color = "#d4d4d4"
-font_color_disabled = "#666666"
+font_color_disabled = "#666667"
 font_color_selected = "#ffffff"
 font_color_checked = "#ffffff"
 
@@ -73,19 +73,19 @@ handle_disabled = "#d4d4d4"
 [checkbox]
 box_size = 16
 border = "#4a4a4a"
-pressed = "#5e5e5e"
+pressed = "#666667"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
-font_color_disabled = "#666666"
+font_color_disabled = "#666667"
 
 
 [radio_button]
-circle_size = 16
+circle_size = 14
 border = "#4a4a4a"
-pressed = "#5e7ce0"
+pressed = "#5e5e5e"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
-font_color_disabled = "#666666"
+font_color_disabled = "#666667"
 
 
 [line_edit]
@@ -100,16 +100,16 @@ disabled = "#2a2a2a"
 
 selection = "#5e7ce0"
 
-button = "#666666"
+button = "#666667"
 button_hover = "#5e7ce0"
-button_disabled = "#666666"
+button_disabled = "#666667"
 
 font_family = "Inter"
 font_size = 10
 font_weight = 400
 font_color = "#d4d4d4"
-font_color_read_only = "#666666"
-font_color_disabled = "#666666"
+font_color_read_only = "#666667"
+font_color_disabled = "#666667"
 
 
 [plain_text_edit]
@@ -123,14 +123,17 @@ hover = "#4a4a4a"
 pressed = "#5e5e5e"
 
 
+[combobox]
+# Use line_edit style
+
+
 [spinbox]
 button_hover = "#3a3a3a"
 button_pressed = "#5e5e5e"
 button_disabled = "#2a2a2a"
 
 
-[combobox]
-# Use line_edit style
+
 
 [button_group]
 # checked is darkened

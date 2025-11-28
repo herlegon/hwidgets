@@ -2,8 +2,9 @@
     ✅ Frame
     Card
     ✅ Divider
-        HorizontalDivider
-        VerticalDivider
+        (HorizontalDivider)
+        (VerticalDivider)
+    GroupBox
 
     ✅ Label
     ✅ Title
@@ -16,14 +17,19 @@
     ✅ Switch
 
     ✅ LineEdit
+    Unselectable read-only lineedit
     ✅ PlainTextEdit
+    ✅ Overlay Vertical Scrollbar
+
+    ✅ ComboBox
+
+    SpinBox
+    DoubleSpinBox
 
     Button
     ButtonGroup
     StrongButton
-    ComboBox
-    DoubleSpinBox
-    GroupBox
+
 
     Progress
     IndeterminateProgress
@@ -38,6 +44,9 @@
     -  - flat button
 
     -  - button
+
+
+
 
 
 differenciates buttons:

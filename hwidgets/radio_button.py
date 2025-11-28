@@ -90,13 +90,13 @@ class HRadioButton(QRadioButton):
         )
 
         # use thickness to define space between outer circle and inner
-        inner_radius = self.thickness / 2 + 1
+        inner_diameter = rb_style.circle_size - 4 * self.thickness + 1
         center: QPointF = self.outer_circle_box.center()
-        self.inner_rect = QRectF(
-            center.x() - inner_radius,
-            center.y() - inner_radius,
-            inner_radius * 2,
-            inner_radius * 2
+        self.inner_circle_rect = QRectF(
+            center.x() - inner_diameter / 2,
+            center.y() - inner_diameter / 2,
+            inner_diameter,
+            inner_diameter
         )
 
         content_width = rb_style.circle_size + self.thickness
@@ -153,41 +153,38 @@ class HRadioButton(QRadioButton):
         pen = QPen()
         pen.setWidth(2)
         if enabled:
-            if pressed:
-                pen.setColor(self.pressed)
-            elif checked:
-                pen.setColor(self.border)
+            if checked:
+                pen_color = self.border
+            elif pressed:
+                pen_color = self.pressed
             else:
-                pen.setColor(self.border)
+                pen_color = self.border
         else:
-            pen.setColor(self.disabled)
-
+            pen_color = self.disabled
+        pen.setColor(pen_color)
         painter.setPen(pen)
         painter.setBrush(Qt.BrushStyle.NoBrush)
         painter.drawEllipse(self.outer_circle_box)
 
         # Inner circle
-        if enabled:
-            if pressed:
-                pen.setColor(self.pressed)
-            elif checked:
-                pen.setColor(self.border)
+        if checked:
+            if enabled:
+                brush = self.checked
             else:
-                pen.setColor(self.border)
-        else:
-            pen.setColor(self.disabled)
-
-        painter.setPen(pen)
-        painter.drawEllipse(self.outer_circle_box)
+                brush = self.disabled
+            painter.setPen(Qt.PenStyle.NoPen)
+            painter.setBrush(QBrush(brush))
+            painter.drawEllipse(self.inner_circle_rect)
 
         # Draw text
         if self.text():
             alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
             if enabled:
-                if pressed:
-                    text_color = self.font_pressed
-                else:
-                    text_color = self.font_enabled
+                text_color = self.font_enabled
+                # if pressed and not checked:
+                #     text_color = self.font_pressed
+                # else:
+                #     text_color = self.font_enabled
             else:
                 text_color = self.font_disabled
             painter.setPen(text_color)
