@@ -193,14 +193,12 @@ class HLineEdit(QLineEdit):
         radius = theme.default.radius
 
         if self.clear_button_enabled:
-            # self.clear_button.setFixedWidth(theme.common.height)
             self.clear_button.show()
             self.main_layout.invalidate()
             padding_left, padding_right = radius, default_style.height
 
         else:
             self.clear_button.hide()
-            # self.clear_button.setFixedWidth(0)
             self.main_layout.invalidate()
             padding_left, padding_right = radius, radius
 
@@ -220,7 +218,7 @@ class HLineEdit(QLineEdit):
 
             selection=f"{le_style.selection}",
 
-            font_family=f"\"{le_style.font.family}\"",
+            font_family=f"{le_style.font.family}",
             font_size=f"{le_style.font.size}pt",
             font_color=f"{le_style.font_color}",
             font_color_disabled=f"{le_style.font_color_disabled}",

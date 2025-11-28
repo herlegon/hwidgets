@@ -15,17 +15,14 @@ QLineEdit {
     selection-background-color: $selection;
 }
 
-
 QLineEdit:focus {
     color: $font_color;
     border: 1px solid $border_edition;
 }
 
-
 QLineEdit:hover {
     background-color: $hover;
 }
-
 
 QLineEdit:read-only,
 QLineEdit:read-only:hover {
@@ -33,12 +30,10 @@ QLineEdit:read-only:hover {
     border: 1px solid $border_color;
 }
 
-
 QLineEdit:read-only:focus {
     background-color: $widget_bgd;
     border: 1px solid $border_read_only_color;
 }
-
 
 QLineEdit:disabled {
     background-color: $disabled;

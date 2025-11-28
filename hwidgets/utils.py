@@ -22,8 +22,12 @@ def load_qss(qss_fp: str, variant: str = "") -> str:
     variant = f"_{variant}" if variant else ""
     css_dir: Path = Path(__file__).parent / "css"
 
+    name = path_basename(qss_fp)
+    if name.endswith(".qss"):
+        name = name[:-4]
+
     common_fp = css_dir.joinpath(
-        Path(f"{path_basename(qss_fp)}{variant}.qss")
+        Path(f"{name}{variant}.qss")
     )
     if not common_fp.exists():
         raise FileNotFoundError(f"missing file: {common_fp}")

@@ -117,9 +117,10 @@ font_color_disabled = "#666666"
 
 
 [scrollbar]
-normal = "#4a4a4a"
-hover = "#5a5a5a"
 thickness = 8
+normal = "#4a4a4a"
+hover = "#4a4a4a"
+pressed = "#5e5e5e"
 
 
 [spinbox]

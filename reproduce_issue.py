@@ -1,59 +1,72 @@
+
+import sys
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
+from PySide6.QtCore import QTimer
+from hwidgets.plain_text_edit import HPlainTextEdit
 from hwidgets.style_manager import StyleManager
-from pprint import pprint
 
-def test_line_edit_style():
-    theme = StyleManager.get_theme("default")
-    line_edit_style = theme.line_edit
+def test_issue():
+    app = QApplication(sys.argv)
+    theme = StyleManager.get_theme()
 
-    print("LineEditStyle:")
-    pprint(line_edit_style)
+    widget = QWidget()
+    layout = QVBoxLayout(widget)
 
-    print("\nCommon:")
-    pprint(theme.default)
+    # Case 1: Initialization with long text
+    long_text = "line\n" * 100
+    pte = HPlainTextEdit(long_text, theme=theme)
+    layout.addWidget(pte)
 
-    # Check if empty members in LineEditStyle are overridden by common members
-    # expected: hover, selection, disabled should be taken from common if they are "" in default LineEditStyle
-    # and not present in toml.
+    widget.resize(400, 300)
+    widget.show()
 
-    # In default.toml:
-    # [line_edit]
-    # disabled = "#232223"
-    # # selection = "#7777FF"
+    def check_initialization():
+        scrollbar_visible = pte.overlay_vbar.isVisible()
+        button_pos = pte.clear_button.pos()
+        print(f"Init - Scrollbar visible: {scrollbar_visible}")
+        print(f"Init - Button pos: {button_pos}")
 
-    # So 'disabled' is set in toml, it should be "#232223".
-    # 'selection' is commented out, so it is NOT in toml. Default LineEditStyle.selection is "".
-    # Common.selection is "#7777FF".
-    # So we expect line_edit_style.selection to be "#7777FF".
+        scrollbar_width = pte.overlay_vbar.width() + 4 if scrollbar_visible else 4
+        expected_x = pte.width() - pte.clear_button.width() - scrollbar_width
 
-    # 'hover' is not in toml. Default LineEditStyle.hover is "".
-    # Common.hover is "#66636D".
-    # So we expect line_edit_style.hover to be "#66636D".
+        print(f"Init - Expected x: {expected_x}, Actual x: {button_pos.x()}")
 
-    # 'font_color' is not in toml. Default LineEditStyle.font_color is "".
-    # Common.font_color is "#d4d4d8".
-    # So we expect line_edit_style.font_color to be "#d4d4d8".
+        if abs(expected_x - button_pos.x()) > 2:
+            print("FAIL: Button position incorrect after initialization")
+        else:
+            print("PASS: Button position correct after initialization")
 
-    failures = []
+        # Case 2: Paste long text into empty
+        pte.clear()
+        QTimer.singleShot(100, check_paste)
 
-    if line_edit_style.disabled != "#232223":
-        failures.append(f"disabled: expected '#232223', got '{line_edit_style.disabled}'")
+    def check_paste():
+        print("\nClearing text and simulating paste...")
+        pte.setPlainText(long_text)
 
-    if line_edit_style.selection != theme.default.selection:
-         failures.append(f"selection: expected '{theme.default.selection}', got '{line_edit_style.selection}'")
+        # Give time for timer to fire
+        QTimer.singleShot(100, verify_paste)
 
-    # 'hover' IS in toml as "". So we expect line_edit_style.hover to be "".
-    if line_edit_style.hover != "":
-         failures.append(f"hover: expected '', got '{line_edit_style.hover}'")
+    def verify_paste():
+        scrollbar_visible = pte.overlay_vbar.isVisible()
+        button_pos = pte.clear_button.pos()
+        print(f"Paste - Scrollbar visible: {scrollbar_visible}")
+        print(f"Paste - Button pos: {button_pos}")
 
-    if line_edit_style.font_color != theme.default.font_color:
-         failures.append(f"font_color: expected '{theme.default.font_color}', got '{line_edit_style.font_color}'")
+        scrollbar_width = pte.overlay_vbar.width() + 4 if scrollbar_visible else 4
+        expected_x = pte.width() - pte.clear_button.width() - scrollbar_width
 
-    if failures:
-        print("\nFAILURES:")
-        for f in failures:
-            print(f)
-    else:
-        print("\nSUCCESS: All checks passed.")
+        print(f"Paste - Expected x: {expected_x}, Actual x: {button_pos.x()}")
+
+        if abs(expected_x - button_pos.x()) > 2:
+            print("FAIL: Button position incorrect after paste")
+        else:
+            print("PASS: Button position correct after paste")
+
+        app.quit()
+
+    QTimer.singleShot(500, check_initialization)
+    app.exec()
 
 if __name__ == "__main__":
-    test_line_edit_style()
+    test_issue()

@@ -16,7 +16,7 @@
     ✅ Switch
 
     ✅ LineEdit
-    PlainTextEdit
+    ✅ PlainTextEdit
 
     Button
     ButtonGroup

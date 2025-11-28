@@ -20,7 +20,7 @@ from PySide6.QtWidgets import (
     QPlainTextEdit,
 )
 
-from .style_manager import Theme
+from .style_manager import Theme, ScrollBarStyle
 from .line_edit import ClearButton
 from .utils import (
     load_png_icon,
@@ -34,7 +34,7 @@ from .utils import (
 class OverlayVScrollBar(QWidget):
     valueChanged = Signal(int)
 
-    def __init__(self, parent, theme: Theme, radius=8, width=12):
+    def __init__(self, parent, scrollbar_style: ScrollBarStyle, radius=8, thickness=12):
         super().__init__(parent)
         self.corner_radius = radius
         self._base_width = 3
@@ -50,10 +50,11 @@ class OverlayVScrollBar(QWidget):
         self._maximum = 100
         self._page_step = 10
         self.setMouseTracking(True)
-        self.setFixedWidth(width)
+        self.setFixedWidth(thickness)
 
-        self.normal_brush = QBrush(QColor(theme.scrollbar.normal))
-        self.hover_brush = QBrush(QColor(theme.scrollbar.hover))
+        self.normal_brush = QBrush(QColor(scrollbar_style.normal))
+        self.hover_brush = QBrush(QColor(scrollbar_style.hover))
+        self.pressed_brush = QBrush(QColor(scrollbar_style.pressed))
 
 
     def setRange(self, minimum, maximum):
@@ -103,6 +104,7 @@ class OverlayVScrollBar(QWidget):
                 self._pressed = True
                 self._press_offset = event.position().y() - handle_rect.top()
             else:
+                self._pressed = True
                 self._jump_to_click(event.position().y())
         super().mousePressEvent(event)
 
@@ -153,14 +155,18 @@ class OverlayVScrollBar(QWidget):
     def paintEvent(self, event):
         painter = QPainter(self)
         # anti-aliasing off for performance
-        painter.fillRect(self.rect(), Qt.transparent)
+        painter.fillRect(self.rect(), Qt.GlobalColor.transparent)
         handle_rect = self._handle_rect()
-        painter.setBrush(
-            self.hover_brush if self._hovered else self.normal_brush
-        )
+        if self._pressed:
+            brush = self.pressed_brush
+        elif self._hovered:
+            brush = self.hover_brush
+        else:
+            brush = self.normal_brush
+
+        painter.setBrush(brush)
         painter.setPen(Qt.PenStyle.NoPen)
         radius = round(self.width() /2)
-        # print(f"radius= {radius}")
         painter.drawRoundedRect(handle_rect, radius, radius)
 
 
@@ -169,10 +175,11 @@ class OverlayVScrollBar(QWidget):
         if not parent:
             return
         pw = parent.width()
-        cr = self.corner_radius
+        corner_radius = self.corner_radius
+        corner_radius = self.corner_radius // 2
         x = pw - self.width() - self.padding_right
-        y = cr + 1
-        h = max(cr, parent.height() - 2 * cr - 2)
+        y = corner_radius + 1
+        h = max(corner_radius, parent.height() - 2 * corner_radius - 2)
         self.setGeometry(
             QRect(x, y, self.width(), h)
         )
@@ -184,7 +191,7 @@ class HPlainTextEdit(QPlainTextEdit):
 
     def __init__(
         self,
-        text: str,
+        text: str | QWidget | None = None,
         /,
         parent: QWidget | None = None,
         *,
@@ -206,9 +213,15 @@ class HPlainTextEdit(QPlainTextEdit):
         placeholderText: str | None = None,
         clearButtonEnabled: bool = True,
     ) -> None:
+        if isinstance(text, QWidget):
+            parent = text
+            text = ""
+        elif text is None:
+            text = ""
+
         super().__init__(parent)
         self.theme = theme
-        self.le_theme = theme.line_edit
+        self.pte_style = theme.plain_text_edit
         self.signals_connected = False
 
         # self.setCursor(Qt.CursorShape.ArrowCursor)
@@ -225,7 +238,12 @@ class HPlainTextEdit(QPlainTextEdit):
         self._update_timer: QTimer = None
 
         radius: int = theme.default.radius
-        self.overlay_vbar = OverlayVScrollBar(self, theme=theme, radius=radius, width=radius)
+        self.overlay_vbar = OverlayVScrollBar(
+            self,
+            scrollbar_style=theme.scrollbar,
+            radius=radius,
+            thickness=radius,
+        )
 
         # use QTimer to throttle updates for smoother scrolling
         self._update_timer = QTimer(self)
@@ -238,7 +256,7 @@ class HPlainTextEdit(QPlainTextEdit):
         self.overlay_vbar.valueChanged.connect(self._on_overlay_value_changed)
         self._sync_overlay_from_native()
 
-        self.clear_button = ClearButton(self, style=theme.plain_text_edit)
+        self.clear_button = ClearButton(self, style=self.pte_style)
 
         self.viewport().setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.viewport().setStyleSheet("background: transparent;")
@@ -275,49 +293,79 @@ class HPlainTextEdit(QPlainTextEdit):
         # horitical_scrollbar.rangeChanged.connect(self.on_scrollbar_changed)
         # horitical_scrollbar.valueChanged.connect(self.on_scrollbar_changed)
 
+
+        native_vbar = super().verticalScrollBar()
+        native_vbar.rangeChanged.connect(self._on_native_range_changed)
+        native_vbar.valueChanged.connect(self._on_native_value_changed)
+
+        # Connect the visibility change for native scrollbar
+        native_vbar.sliderMoved.connect(self._on_scrollbar_visibility_changed)
+        native_vbar.valueChanged.connect(self._on_scrollbar_visibility_changed)
+
+        self.overlay_vbar.valueChanged.connect(self._on_overlay_value_changed)
+        self._sync_overlay_from_native()
+
         self.overlay_vbar.leaveEvent(None)
+        self.setPlainText(text)
+        self.update_clear_button_position()
+
+        self.textChanged.connect(self.on_text_changed)
+
+        # Initial update when the widget is created
+        self.on_text_changed()
+
         self.update_clear_button_position()
 
 
+    def setPlainText(self, text):
+        super().setPlainText(text)
+        self.update_clear_button_position()
+
+
+    def on_text_changed(self):
+        # After text changes, update the clear button position
+        self.update_clear_button_position()
+
+
+    @Slot()
+    def _on_scrollbar_visibility_changed(self):
+        self.update_clear_button_position()
+
     def _update_stylesheet(self) -> None:
         theme: Theme = self.theme
-        default_style = theme.default
-        le_style = self.le_theme
+        pte_style = self.pte_style
         radius = theme.default.radius
 
         padding_left, padding_right = radius, radius
         if self.clear_button_enabled:
-            # self.clear_button.setFixedWidth(theme.common.height)
             self.clear_button.show()
+
         else:
             self.clear_button.hide()
-            # self.clear_button.setFixedWidth(0)
 
-        # Use line_edit style
+        # Same style sheet as line edit
         qss_template = Template(load_qss("plain_text_edit.qss"))
         qss = qss_template.substitute(
             radius=f"{radius}px",
             padding_right=f"{padding_right}px",
             padding_left=f"{padding_left}px",
 
-            widget_bgd=f"{default_style.bgd}",
-            hover=f"{le_style.hover}",
-            border_color=f"{default_style.border}",
-            border_edition=f"{le_style.selection}",
+            widget_bgd=f"{pte_style.bgd}",
+            hover=f"{pte_style.hover}",
+            disabled=f"{pte_style.disabled}",
 
-            selection=f"{le_style.selection}",
-            disabled=f"{le_style.disabled}",
+            border_color=f"{pte_style.border}",
+            border_read_only_color=f"{pte_style.border_read_only}",
+            border_edition=f"{pte_style.selection}",
 
-            font_family=f"\"{le_style.font.family}\"",
-            font_size=f"{le_style.font.size}pt",
-            font_color=f"{le_style.font_color}",
-            font_color_disabled=f"{le_style.font_color_disabled}",
+            selection=f"{pte_style.selection}",
+
+            font_family=f"{pte_style.font.family}",
+            font_size=f"{pte_style.font.size}pt",
+            font_color=f"{pte_style.font_color}",
+            font_color_disabled=f"{pte_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
-
-        # for HLineEdit, it's set in the qss file. here because the button has
-        #   to be moved, it can't be done in the stylesheet
-        self.margin = 6
 
 
     @Slot(int, int)
@@ -351,10 +399,14 @@ class HPlainTextEdit(QPlainTextEdit):
             self.overlay_vbar.setPageStep(native.pageStep())
             self.overlay_vbar.setValue(native.value())
             # Auto-hide if not needed
+            was_visible = self.overlay_vbar.isVisible()
             if native.maximum() == native.minimum():
                 self.overlay_vbar.hide()
             else:
                 self.overlay_vbar.show()
+
+            if self.overlay_vbar.isVisible() != was_visible:
+                self.update_clear_button_position()
         finally:
             self.overlay_vbar.blockSignals(False)
 
@@ -379,12 +431,16 @@ class HPlainTextEdit(QPlainTextEdit):
 
     def update_clear_button_position(self):
         v_scrollbar = self.overlay_vbar
-        adjust: int = v_scrollbar.width() if v_scrollbar.isVisible() else 0
-        x = self.width() - self.clear_button.width() - adjust - self.margin
+        scrollbar_width: int = (
+            self.theme.scrollbar.thickness + 4
+            if v_scrollbar.isVisible()
+            else 4
+        )
+        x = self.width() - self.clear_button.width() - scrollbar_width
 
         h_scrollbar = self.horizontalScrollBar()
         adjust: int = h_scrollbar.height() if h_scrollbar.isVisible() else 0
-        y = self.height() - self.clear_button.height() - adjust - self.margin
+        y = self.height() - self.clear_button.height() - adjust - 4
 
         x0, y0 = self.clear_button.pos().toTuple()
         if x != x0 or y != y0:
@@ -426,7 +482,6 @@ class HPlainTextEdit(QPlainTextEdit):
 
 
     def setReadOnly(self, enable: bool=True) -> None:
-        # print(f"{__class__.__name__} set ro={enable}")
         super().setReadOnly(enable)
         if self.isEnabled():
             self.setClearButtonEnabled(not enable)
@@ -437,7 +492,6 @@ class HPlainTextEdit(QPlainTextEdit):
 
 
     def setEnabled(self, enable: bool) -> bool:
-        # print(f"{__class__.__name__} set enabled={enable}")
         super().setEnabled(enable)
         if self.isReadOnly():
             self.setClearButtonEnabled(False)
@@ -447,5 +501,4 @@ class HPlainTextEdit(QPlainTextEdit):
 
 
     def setDisabled(self, enable: bool) -> bool:
-        # print(f"{__class__.__name__} set disabled={enable}")
         self.setEnabled(not enable)

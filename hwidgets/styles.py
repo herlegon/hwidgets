@@ -156,10 +156,10 @@ class PlainTextEditStyle(LineEditStyle):
 
 @dataclass
 class ScrollBarStyle:
-    thickness: int = 8
+    thickness: int = 12
     normal: str = ""
     hover: str = ""
-
+    pressed: str = ""
 
 
 @dataclass
@@ -178,7 +178,6 @@ class SpinBoxStyle:
     button_hover: str = ""
     button_pressed: str = ""
     button_disabled: str = ""
-
 
     font: FontConfig = FontConfig(weight=500)
     font_color: str = ""
@@ -321,7 +320,7 @@ class ProgressStyle:
 
 @dataclass
 class Theme:
-    window_bgd: str = "#303034"
+    window_bgd: str = "black"
     default: DefaultStyle = field(default_factory=DefaultStyle)
 
     groupbox: GroupBoxStyle = field(default_factory=GroupBoxStyle)
@@ -337,6 +336,12 @@ class Theme:
     description: DescriptionStyle = field(default_factory=DescriptionStyle)
     comment: CommentStyle = field(default_factory=CommentStyle)
 
+    switch: SwitchStyle = field(default_factory=SwitchStyle)
+    checkbox: CheckBoxStyle = field(default_factory=CheckBoxStyle)
+    radio_button: RadioButtonStyle = field(default_factory=RadioButtonStyle)
+
+    line_edit: LineEditStyle = field(default_factory=LineEditStyle)
+    plain_text_edit: PlainTextEditStyle = field(default_factory=PlainTextEditStyle)
 
     scrollbar: ScrollBarStyle = field(default_factory=ScrollBarStyle)
 
@@ -345,14 +350,9 @@ class Theme:
     strong_button: StrongButtonStyle = field(default_factory=StrongButtonStyle)
 
 
-    switch: SwitchStyle = field(default_factory=SwitchStyle)
-    radio_button: RadioButtonStyle = field(default_factory=RadioButtonStyle)
+
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
 
-    checkbox: CheckBoxStyle = field(default_factory=CheckBoxStyle)
-
-    line_edit: LineEditStyle = field(default_factory=LineEditStyle)
-    plain_text_edit: PlainTextEditStyle = field(default_factory=PlainTextEditStyle)
 
     combobox: ComboBoxStyle = field(default_factory=ComboBoxStyle)
 
