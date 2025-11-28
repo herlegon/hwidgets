@@ -193,6 +193,24 @@ class StrongGreyButtonStyle(StrongButtonStyle):
 
 
 @dataclass
+class ToggleButtonStyle(StrongButtonStyle):
+    height: int = DEFAULT_HEIGHT
+
+    checked: str = ""
+
+    border: str = ""
+
+    font: FontConfig = FontConfig(weight=400, size=12)
+    font_color_checked: str = ""
+
+
+@dataclass
+class ToggleGreyButtonStyle(ToggleButtonStyle):
+    ...
+
+
+
+@dataclass
 class ButtonGroupStyle:
     height: int = DEFAULT_HEIGHT
 
@@ -333,16 +351,16 @@ class Theme:
     strong_button: StrongButtonStyle = field(default_factory=StrongButtonStyle)
     strong_grey_button: StrongGreyButtonStyle = field(default_factory=StrongGreyButtonStyle)
 
+    toggle_button: ToggleButtonStyle = field(default_factory=ToggleButtonStyle)
+    toggle_grey_button: ToggleGreyButtonStyle = field(default_factory=ToggleGreyButtonStyle)
+
+
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
     grey_button_group: GreyButtonGroupStyle = field(default_factory=GreyButtonGroupStyle)
-
 
     button: ButtonStyle = field(default_factory=ButtonStyle)
     flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
     icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
-
-
-
 
     progress: ProgressStyle = field(default_factory=ProgressStyle)
     # indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)

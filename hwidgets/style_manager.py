@@ -31,6 +31,8 @@ from .styles import (
     ButtonGroupStyle,
     GreyButtonGroupStyle,
     CardStyle,
+    ToggleButtonStyle,
+    ToggleGreyButtonStyle,
 )
 
 
@@ -137,6 +139,8 @@ class StyleManager:
             "strong_grey_button": "strong_button",
             "grey_button_group": "button_group",
 
+            "toggle_button": "strong_button",
+            "toggle_grey_button": "toggle_button",
         }
 
         # ------------------------------
@@ -168,6 +172,9 @@ class StyleManager:
 
             "strong_button": ("strong_button", StrongButtonStyle),
             "strong_grey_button": ("strong_grey_button", StrongGreyButtonStyle),
+
+            "toggle_button": ("toggle_button", ToggleButtonStyle),
+            "toggle_grey_button": ("toggle_grey_button", ToggleGreyButtonStyle),
 
             "button_group": ("button_group", ButtonGroupStyle),
             "grey_button_group": ("grey_button_group", GreyButtonGroupStyle),

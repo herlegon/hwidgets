@@ -54,6 +54,9 @@ if __name__ == "__main__":
         "h_strong_button": "HStrongButton",
         "h_strong_grey_button": "HStrongGreyButton",
 
+        "h_toggle_button": "HToggleButton",
+        "h_toggle_grey_button": "HToggleGreyButton",
+
         "h_button_group": "HButtonGroup",
         "h_grey_button_group": "HGreyButtonGroup",
     }

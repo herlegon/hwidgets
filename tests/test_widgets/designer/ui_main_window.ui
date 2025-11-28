@@ -569,18 +569,21 @@
           </layout>
          </item>
          <item>
-          <layout class="QHBoxLayout" name="text_buttons_layout">
+          <layout class="QHBoxLayout" name="toggle_buttons_layout">
            <item>
-            <widget class="QPushButton" name="h_text_button">
+            <widget class="QPushButton" name="h_toggle_button">
              <property name="text">
-              <string>Button</string>
+              <string>toggle</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_text_button_checked">
+            <widget class="QPushButton" name="h_toggle_button_checked">
              <property name="text">
-              <string>Button (checked)</string>
+              <string>toggle (checked)</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -591,22 +594,75 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_text_button_disabled">
+            <widget class="QPushButton" name="h_toggle_button_disabled">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Button (disabled)</string>
+              <string>toggle (disabled)</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_text_button_disabled_checked">
+            <widget class="QPushButton" name="h_toggle_button_disabled_checked">
              <property name="enabled">
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>Button (Checked Disabled)</string>
+              <string>toggle (Checked Disabled)</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="toggle_grey_buttons_layout">
+           <item>
+            <widget class="QPushButton" name="h_toggle_grey_button">
+             <property name="text">
+              <string>toggle</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_toggle_grey_button_checked_2">
+             <property name="text">
+              <string>toggle (checked)</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_toggle_grey_button_disabled_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>toggle (disabled)</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_toggle_grey_button_disabled_checked_2">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>toggle (Checked Disabled)</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -1905,7 +1961,7 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="radioButtonGroup"/>
   <buttongroup name="radioButtonGroup_disabled"/>
+  <buttongroup name="radioButtonGroup"/>
  </buttongroups>
 </ui>

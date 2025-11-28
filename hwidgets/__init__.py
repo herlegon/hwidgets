@@ -35,6 +35,8 @@ from .progress import HProgress
 from .utils import load_png_image
 from .style_manager import StyleManager, Theme
 from .strong_button import HStrongButton, HStrongGreyButton
+from .toggle_button import HToggleButton, HToggleGreyButton
+
 
 # By order of validation
 __all__ = [
@@ -66,6 +68,9 @@ __all__ = [
 
     "HStrongButton",
     "HStrongGreyButton",
+
+    "HToggleButton",
+    "HToggleGreyButton",
 
     "HButtonGroup",
     "HGreyButtonGroup",

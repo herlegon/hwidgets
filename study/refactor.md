@@ -27,24 +27,24 @@
     ✅ StrongButton
     ✅ StrongGreyButton
 
+    ✅ ToggleButton
+    ✅ ToggleGreyButton
+
     ✅ ButtonGroup
     ✅ GreyButtonGroup
 
-    Button
     Progress
     IndeterminateProgress
     RadialProgress
 
     -  - flat icon button
-
     -  - flat icon + text button
-
     -  - flat button
-
     -  - button
 
 # todo
     !!! missing weight in nearly all css
+    !!! sizehint is not correct for checkbox/radiobutton
     Card
     Unselectable read-only lineedit
     remove GroupBox ?

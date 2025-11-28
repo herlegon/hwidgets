@@ -50,6 +50,8 @@ from hwidgets import (
     HSubtitle,
     HSwitch,
     HTitle,
+    HToggleButton,
+    HToggleGreyButton,
     HVerticalDivider,
     Theme,
 )
@@ -398,36 +400,69 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.strong_buttons_layout)
 
-        self.text_buttons_layout = QHBoxLayout()
-        self.text_buttons_layout.setObjectName(u"text_buttons_layout")
-        self.h_text_button = HButton(self.h_frame, theme=theme)
-        self.h_text_button.setObjectName(u"h_text_button")
+        self.toggle_buttons_layout = QHBoxLayout()
+        self.toggle_buttons_layout.setObjectName(u"toggle_buttons_layout")
+        self.h_toggle_button = HToggleButton(self.h_frame, theme=theme)
+        self.h_toggle_button.setObjectName(u"h_toggle_button")
+        self.h_toggle_button.setCheckable(True)
 
-        self.text_buttons_layout.addWidget(self.h_text_button)
+        self.toggle_buttons_layout.addWidget(self.h_toggle_button)
 
-        self.h_text_button_checked = HButton(self.h_frame, theme=theme)
-        self.h_text_button_checked.setObjectName(u"h_text_button_checked")
-        self.h_text_button_checked.setCheckable(True)
-        self.h_text_button_checked.setChecked(True)
+        self.h_toggle_button_checked = HToggleButton(self.h_frame, theme=theme)
+        self.h_toggle_button_checked.setObjectName(u"h_toggle_button_checked")
+        self.h_toggle_button_checked.setCheckable(True)
+        self.h_toggle_button_checked.setChecked(True)
 
-        self.text_buttons_layout.addWidget(self.h_text_button_checked)
+        self.toggle_buttons_layout.addWidget(self.h_toggle_button_checked)
 
-        self.h_text_button_disabled = HButton(self.h_frame, theme=theme)
-        self.h_text_button_disabled.setObjectName(u"h_text_button_disabled")
-        self.h_text_button_disabled.setEnabled(False)
+        self.h_toggle_button_disabled = HToggleButton(self.h_frame, theme=theme)
+        self.h_toggle_button_disabled.setObjectName(u"h_toggle_button_disabled")
+        self.h_toggle_button_disabled.setEnabled(False)
 
-        self.text_buttons_layout.addWidget(self.h_text_button_disabled)
+        self.toggle_buttons_layout.addWidget(self.h_toggle_button_disabled)
 
-        self.h_text_button_disabled_checked = HButton(self.h_frame, theme=theme)
-        self.h_text_button_disabled_checked.setObjectName(u"h_text_button_disabled_checked")
-        self.h_text_button_disabled_checked.setEnabled(False)
-        self.h_text_button_disabled_checked.setCheckable(True)
-        self.h_text_button_disabled_checked.setChecked(True)
+        self.h_toggle_button_disabled_checked = HToggleButton(self.h_frame, theme=theme)
+        self.h_toggle_button_disabled_checked.setObjectName(u"h_toggle_button_disabled_checked")
+        self.h_toggle_button_disabled_checked.setEnabled(False)
+        self.h_toggle_button_disabled_checked.setCheckable(True)
+        self.h_toggle_button_disabled_checked.setChecked(True)
 
-        self.text_buttons_layout.addWidget(self.h_text_button_disabled_checked)
+        self.toggle_buttons_layout.addWidget(self.h_toggle_button_disabled_checked)
 
 
-        self.main_layout.addLayout(self.text_buttons_layout)
+        self.main_layout.addLayout(self.toggle_buttons_layout)
+
+        self.toggle_grey_buttons_layout = QHBoxLayout()
+        self.toggle_grey_buttons_layout.setObjectName(u"toggle_grey_buttons_layout")
+        self.h_toggle_grey_button = HToggleGreyButton(self.h_frame, theme=theme)
+        self.h_toggle_grey_button.setObjectName(u"h_toggle_grey_button")
+        self.h_toggle_grey_button.setCheckable(True)
+
+        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button)
+
+        self.h_toggle_grey_button_checked_2 = HToggleGreyButton(self.h_frame, theme=theme)
+        self.h_toggle_grey_button_checked_2.setObjectName(u"h_toggle_grey_button_checked_2")
+        self.h_toggle_grey_button_checked_2.setCheckable(True)
+        self.h_toggle_grey_button_checked_2.setChecked(True)
+
+        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button_checked_2)
+
+        self.h_toggle_grey_button_disabled_2 = HToggleGreyButton(self.h_frame, theme=theme)
+        self.h_toggle_grey_button_disabled_2.setObjectName(u"h_toggle_grey_button_disabled_2")
+        self.h_toggle_grey_button_disabled_2.setEnabled(False)
+
+        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button_disabled_2)
+
+        self.h_toggle_grey_button_disabled_checked_2 = HToggleGreyButton(self.h_frame, theme=theme)
+        self.h_toggle_grey_button_disabled_checked_2.setObjectName(u"h_toggle_grey_button_disabled_checked_2")
+        self.h_toggle_grey_button_disabled_checked_2.setEnabled(False)
+        self.h_toggle_grey_button_disabled_checked_2.setCheckable(True)
+        self.h_toggle_grey_button_disabled_checked_2.setChecked(True)
+
+        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button_disabled_checked_2)
+
+
+        self.main_layout.addLayout(self.toggle_grey_buttons_layout)
 
         self.horizontalLayout_18 = QHBoxLayout()
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
@@ -1157,10 +1192,14 @@ class Ui_MainWindow(object):
         self.h_strong_button_text_icon_4.setText(QCoreApplication.translate("MainWindow", u"Next", None))
         self.h_strong_button_text_icon_5.setText(QCoreApplication.translate("MainWindow", u"Next", None))
         self.h_strong_grey_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Next", None))
-        self.h_text_button.setText(QCoreApplication.translate("MainWindow", u"Button", None))
-        self.h_text_button_checked.setText(QCoreApplication.translate("MainWindow", u"Button (checked)", None))
-        self.h_text_button_disabled.setText(QCoreApplication.translate("MainWindow", u"Button (disabled)", None))
-        self.h_text_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"Button (Checked Disabled)", None))
+        self.h_toggle_button.setText(QCoreApplication.translate("MainWindow", u"toggle", None))
+        self.h_toggle_button_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (checked)", None))
+        self.h_toggle_button_disabled.setText(QCoreApplication.translate("MainWindow", u"toggle (disabled)", None))
+        self.h_toggle_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (Checked Disabled)", None))
+        self.h_toggle_grey_button.setText(QCoreApplication.translate("MainWindow", u"toggle", None))
+        self.h_toggle_grey_button_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle (checked)", None))
+        self.h_toggle_grey_button_disabled_2.setText(QCoreApplication.translate("MainWindow", u"toggle (disabled)", None))
+        self.h_toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle (Checked Disabled)", None))
         self.h_text_icon_button.setText(QCoreApplication.translate("MainWindow", u"ibutton", None))
         self.h_text_icon_button_checked.setText(QCoreApplication.translate("MainWindow", u"ibutton (checked)", None))
         self.h_text_icon_button_disabled.setText(QCoreApplication.translate("MainWindow", u"ibutton (disabled)", None))
