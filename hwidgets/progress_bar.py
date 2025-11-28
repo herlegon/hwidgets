@@ -60,7 +60,6 @@ class HProgressBar(QProgressBar):
             track=theme.progress_bar.track,
             bar=theme.progress_bar.bar,
         )
-        pprint(theme.progress_bar)
 
         self._progress = 0
         self.setMinimum(0)

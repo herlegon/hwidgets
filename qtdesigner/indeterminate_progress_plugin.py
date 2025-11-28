@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hwidgets import HIndeterminateProgress
+from hwidgets import HIndetProgressBar
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
@@ -28,7 +28,7 @@ class HIndeterminateProgressPlugin(QDesignerCustomWidgetInterface):
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HIndeterminateProgress(parent, Theme=Theme())
+        t = HIndetProgressBar(parent, Theme=Theme())
         return t
 
     def domXml(self):

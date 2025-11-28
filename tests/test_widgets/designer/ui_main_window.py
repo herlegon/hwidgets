@@ -42,9 +42,11 @@ from hwidgets import (
     HDivider,
     HGreyButtonGroup,
     HHorizontalDivider,
+    HIndetProgressBar,
+    HIndetProgressBarM3,
     HIndeterminateCircularProgress,
-    HIndeterminateProgress,
     HProgressBar,
+    HProgressBarM3,
     HRadialProgress,
     HStrongButton,
     HStrongGreyButton,
@@ -61,7 +63,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1600, 844)
+        MainWindow.resize(1600, 782)
         MainWindow.setMinimumSize(QSize(1600, 0))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -1161,9 +1163,23 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addLayout(self.plaintextedit_layout)
 
-        self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.h_indet_progress_bar = HIndetProgressBar(self.h_frame, theme=theme)
+        self.h_indet_progress_bar.setObjectName(u"h_indet_progress_bar")
+        self.h_indet_progress_bar.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_indet_progress_bar.setValue(24)
 
-        self.verticalLayout_3.addItem(self.verticalSpacer)
+        self.verticalLayout_3.addWidget(self.h_indet_progress_bar)
+
+        self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+
+        self.verticalLayout_3.addItem(self.verticalSpacer_3)
+
+        self.h_indet_progress_bar_m3 = HIndetProgressBarM3(self.h_frame, theme=theme)
+        self.h_indet_progress_bar_m3.setObjectName(u"h_indet_progress_bar_m3")
+        self.h_indet_progress_bar_m3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_indet_progress_bar_m3.setValue(24)
+
+        self.verticalLayout_3.addWidget(self.h_indet_progress_bar_m3)
 
 
         self.horizontalLayout_10.addLayout(self.verticalLayout_3)

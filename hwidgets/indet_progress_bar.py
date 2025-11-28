@@ -26,9 +26,7 @@ from PySide6.QtWidgets import (
 )
 
 
-class HIndeterminateProgress(QProgressBar):
-    """A linear progress bar from 0 to 100
-    """
+class HIndetProgressBar(QProgressBar):
 
     def __init__(
         self,
@@ -36,7 +34,6 @@ class HIndeterminateProgress(QProgressBar):
         parent: QWidget | None = None,
         *,
         theme: Type[Theme],
-        is_m2: bool = False,
         minimum: int | None = None,
         maximum: int | None = None,
         text: str | None = None,
@@ -47,15 +44,18 @@ class HIndeterminateProgress(QProgressBar):
         invertedAppearance: bool | None = None,
         textDirection: QProgressBar.Direction | None = None,
         format: str | None = None,
+        m3: bool = False
     ):
-
         super().__init__(parent)
-
-        self.thickness = theme.progress_bar.thickness
+        pb_style = theme.indet_progress_bar
+        self.thickness = pb_style.thickness
         self.setFixedHeight(self.thickness)
         self.setMinimumWidth(self.thickness*4)
 
-        self.set_colors(track=Theme.widget_bgd, bar=Theme.selected)
+        self.set_colors(
+            track=pb_style.track,
+            bar=pb_style.bar
+        )
 
         self._progress = 0
         self.setMinimum(0)
@@ -69,11 +69,13 @@ class HIndeterminateProgress(QProgressBar):
 
         LinearAnimationDuration = 1800
 
-        speed_r = 1
+        speed_r = 1.5
         last_pause = 435 * speed_r
         last_pause = 0
 
-        if is_m2:
+
+        if not m3:
+            print("M2")
             # Duration of the head and tail animations for both lines
             # M2
             FirstLineHeadDuration = 750
@@ -92,6 +94,7 @@ class HIndeterminateProgress(QProgressBar):
             SecondLineHeadEasing = ((0, 0), (0.65, 1))
             SecondLineTailEasing = ((0.1, 0), (0.45, 1))
         else:
+            print("M2")
 
             FirstLineHeadDelay = 0
             FirstLineTailDelay = 120
@@ -381,4 +384,40 @@ class HIndeterminateProgress(QProgressBar):
 
 
 
+
+class HIndetProgressBarM3(HIndetProgressBar):
+
+    def __init__(
+        self,
+        /,
+        parent: QWidget | None = None,
+        *,
+        theme: Type[Theme],
+        minimum: int | None = None,
+        maximum: int | None = None,
+        text: str | None = None,
+        value: int | None = None,
+        alignment: Qt.AlignmentFlag | None = None,
+        textVisible: bool | None = None,
+        orientation: Qt.Orientation | None = None,
+        invertedAppearance: bool | None = None,
+        textDirection: QProgressBar.Direction | None = None,
+        format: str | None = None,
+    ):
+        super().__init__(
+            parent=parent,
+            theme=theme,
+            minimum=minimum,
+            maximum=maximum,
+            text=text,
+            value=value,
+            alignment=alignment,
+            textVisible=textVisible,
+            orientation=orientation,
+            invertedAppearance=invertedAppearance,
+            textDirection=textDirection,
+            format=format,
+            m3=True
+        )
+        print("PROGRESS BATR M3")
 

@@ -34,6 +34,8 @@ from .styles import (
     ToggleButtonStyle,
     ToggleGreyButtonStyle,
     ProgressBarStyle,
+    IndetProgressBarStyle,
+    IndetProgressBarM3Style,
 )
 
 
@@ -181,8 +183,8 @@ class StyleManager:
             "grey_button_group": ("grey_button_group", GreyButtonGroupStyle),
 
             "progress_bar": ("progress_bar", ProgressBarStyle),
-
-
+            "indet_progress_bar": ("indet_progress_bar", IndetProgressBarStyle),
+            "indet_progress_bar_m3": ("indet_progress_bar_m3", IndetProgressBarM3Style),
 
             "flat_button": ("flat_button", FlatButtonStyle),
 

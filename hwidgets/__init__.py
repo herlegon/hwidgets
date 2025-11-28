@@ -15,8 +15,6 @@ from .button_deprecated import HButton
 from .button_group import HButtonGroup, HGreyButtonGroup
 from .frame import HFrame
 from .groupbox import HGroupBox
-from .indeterminate_progress import HIndeterminateProgress
-from .indeterminate_circular_progress import HIndeterminateCircularProgress # Not yet supported
 from .label import (
     HLabel,
     HSubtitle,
@@ -25,17 +23,20 @@ from .label import (
 )
 from .line_edit import HLineEdit
 from .plain_text_edit import HPlainTextEdit
-from .radial_progress_bar import HRadialProgress
 from .radio_button import HRadioButton
 from .scrollbar import HScrollBar
 from .spinbox import HDoubleSpinBox, HSpinBox
 from .switch import HSwitch
 from .titles import HTitle
-from .progress_bar import HProgressBar, HProgressBarM3
 from .utils import load_png_image
 from .style_manager import StyleManager, Theme
 from .strong_button import HStrongButton, HStrongGreyButton
 from .toggle_button import HToggleButton, HToggleGreyButton
+
+from .progress_bar import HProgressBar, HProgressBarM3
+from .indet_progress_bar import HIndetProgressBar, HIndetProgressBarM3
+from .indeterminate_circular_progress import HIndeterminateCircularProgress # Not yet supported
+from .radial_progress_bar import HRadialProgress
 
 
 # By order of validation
@@ -77,9 +78,9 @@ __all__ = [
 
     "HProgressBar",
     "HProgressBarM3",
+    "HIndetProgressBar",
+    "HIndetProgressBarM3",
 
-
-    "HIndeterminateProgress",
     "HButton",
     "HRadialProgress",
     "HScrollBar",

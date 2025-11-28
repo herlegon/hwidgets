@@ -210,7 +210,6 @@ class ToggleGreyButtonStyle(ToggleButtonStyle):
     ...
 
 
-
 @dataclass
 class ButtonGroupStyle:
     height: int = DEFAULT_HEIGHT
@@ -235,17 +234,21 @@ class GreyButtonGroupStyle(ButtonGroupStyle):
     ...
 
 
-
-
 @dataclass
 class ProgressBarStyle:
     thickness: int = PROGRESS_TRACK_THICKNESS
-
     track: str = ""
     bar: str = ""
 
 
+@dataclass
+class IndetProgressBarStyle(ProgressBarStyle):
+    ...
 
+
+@dataclass
+class IndetProgressBarM3Style(IndetProgressBarStyle):
+    ...
 
 
 
@@ -324,7 +327,7 @@ class IconButtonStyle:
 
 
 # @dataclass
-# class IndeterminateProgressStyle(ProgressStyle):
+# class IndetProgressBarStyle(ProgressStyle):
 #     ...
 
 
@@ -379,7 +382,9 @@ class Theme:
     icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
 
     progress_bar: ProgressBarStyle = field(default_factory=ProgressBarStyle)
-    # indeterminate_progress: IndeterminateProgressStyle = field(default_factory=IndeterminateProgressStyle)
+    indet_progress_bar: IndetProgressBarStyle = field(default_factory=IndetProgressBarStyle)
+    indet_progress_bar_m3: IndetProgressBarM3Style = field(default_factory=IndetProgressBarM3Style)
+
     # radial_progress: RadialProgressStyle = field(default_factory=RadialProgressStyle)
 
 

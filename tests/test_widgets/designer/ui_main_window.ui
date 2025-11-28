@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1600</width>
-    <height>844</height>
+    <height>782</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -1966,7 +1966,17 @@ of vertical text
           </layout>
          </item>
          <item>
-          <spacer name="verticalSpacer">
+          <widget class="QProgressBar" name="h_indet_progress_bar">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 253, 255);</string>
+           </property>
+           <property name="value">
+            <number>24</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="verticalSpacer_3">
            <property name="orientation">
             <enum>Qt::Orientation::Vertical</enum>
            </property>
@@ -1977,6 +1987,16 @@ of vertical text
             </size>
            </property>
           </spacer>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="h_indet_progress_bar_m3">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 253, 255);</string>
+           </property>
+           <property name="value">
+            <number>24</number>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>

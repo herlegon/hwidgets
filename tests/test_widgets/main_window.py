@@ -114,3 +114,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.h_plaintextedit_editable.setClearButtonEnabled(False)
 
+        self.h_indet_progress_bar.start()
+        self.h_indet_progress_bar_m3.start()

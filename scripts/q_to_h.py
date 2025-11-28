@@ -47,10 +47,12 @@ if __name__ == "__main__":
         "h_vertical_divider": "HVerticalDivider",
         "h_horizontal_divider": "HHorizontalDivider",
 
-        "h_progress_bar": "HProgressBar",
         "h_progress_bar_m3": "HProgressBarM3",
+        "h_progress_bar": "HProgressBar",
 
-        "h_indeterminate_progress": "HIndeterminateProgress",
+        "h_indet_progress_bar": "HIndetProgressBar",
+        "h_indet_progress_bar_m3": "HIndetProgressBarM3",
+
         "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
         "h_radial_progress": "HRadialProgress",
 
@@ -111,6 +113,9 @@ if __name__ == "__main__":
         pattern = rf"(\s*self\.(?!q)\w*\s*=\s*){q_widget}\((.*?)\)"
         replacement = rf"\1{h_widget}(\2, theme=theme)"
         text = re.sub(pattern, replacement, text)
+
+    text = re.sub("theme=theme, theme=theme", "theme=theme", text)
+
 
     Path(ui_path).write_text(text, encoding="utf-8")
     print("✅ Replaced QWidgets by HWidgets")
