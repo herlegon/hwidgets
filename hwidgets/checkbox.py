@@ -45,7 +45,6 @@ class HCheckBox(QCheckBox):
     ) -> None:
         super().__init__(parent)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
-        self.theme = theme
 
         self.cb_style = theme.checkbox
         self.cb_height = theme.default.height
@@ -59,12 +58,13 @@ class HCheckBox(QCheckBox):
 
         # Colors
         self.border = QColor(self.cb_style.border)
-        self.border_pressed = QColor(self.cb_style.border)
 
         self.pressed = QColor(self.cb_style.pressed)
         self.checked = QColor(self.cb_style.checked)
         self.disabled = QColor(self.cb_style.disabled)
+
         self.font_enabled = QColor(self.cb_style.font_color)
+        self.font_pressed = self.pressed
         self.font_disabled = QColor(self.cb_style.font_color_disabled)
 
         self.tick_pen = QPen(
@@ -118,7 +118,7 @@ class HCheckBox(QCheckBox):
                 self.box_rect.adjust(text_spacing, 0, text_spacing, 0)
             else:
                 self.text_rect = QRect(
-                    cb_style.size + self._spacing, 0, text_width, self.cb_height
+                    cb_style.box_size + self._spacing, 0, text_width, self.cb_height
                 )
 
         self.tick_mark = QPolygonF([
@@ -217,10 +217,18 @@ class HCheckBox(QCheckBox):
             painter.setPen(self.tick_pen)
             painter.drawPolyline(self.tick_mark)
 
-        # Draw text, better
+        # Draw text
         if self.text():
             alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
-            painter.setPen(self.font_enabled if enabled else self.font_disabled)
+            if enabled:
+                if pressed:
+                    text_color = self.font_pressed
+                else:
+                    text_color = self.font_enabled
+            else:
+                text_color = self.font_disabled
+            painter.setPen(text_color)
             painter.drawText(self.text_rect, alignment, self.text())
+
         painter.end()
 

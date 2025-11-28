@@ -49,6 +49,14 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             "Right-click won't work"
         ]
 
+        self.setStyleSheet(f"""
+            background-color: {theme.window_bgd};
+
+            color: {theme.default.font_color};
+            font-family: {theme.default.font.family};
+            font-size: {theme.default.font.size};
+        """)
+
         self.h_frame.setStyleSheet(f"""
             background-color: {theme.window_bgd};
 

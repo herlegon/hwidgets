@@ -1,26 +1,35 @@
 # refactor:
-    - ✅ Button
-    ✅ ✅ ButtonGroup
-    ✅ ✅ StrongButton
-    ✅ ✅ CheckBox
-    ✅ ✅ ComboBox
-    ✅ ✅ Divider
-    ✅ ✅ DoubleSpinBox
-     / ✅ GroupBox
-    ✅ ✅ HorizontalDivider
-    ✅ ✅ VerticalDivider
-    ✅ ✅ Label
-    ✅ ✅ LineEdit
-    ✅ ✅ PlainTextEdit
-    - ✅ Progress
-    - ✅ IndeterminateProgress
-    - ✅ RadialProgress
-    ✅ ✅ RadioButton
-     / ✅ ScrollBar
-    ✅ ✅ SpinBox
-    ✅ ✅ Switch
-    ✅ ✅ Title
-    ✅ ✅ Frame
+    ✅ Frame
+    Card
+    ✅ Divider
+        HorizontalDivider
+        VerticalDivider
+
+    ✅ Label
+    ✅ Title
+    ✅ subtitle
+    ✅ description
+    ✅ comment
+
+    ✅ CheckBox
+    ✅ RadioButton
+    ✅ Switch
+
+    ✅ LineEdit
+    PlainTextEdit
+
+    Button
+    ButtonGroup
+    StrongButton
+    ComboBox
+    DoubleSpinBox
+    GroupBox
+
+    Progress
+    IndeterminateProgress
+    RadialProgress
+    ScrollBar
+    SpinBox
 
     -  - flat icon button
 

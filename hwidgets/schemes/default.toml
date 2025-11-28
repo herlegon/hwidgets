@@ -1,5 +1,5 @@
 [window]
-window = "#1b1c20"
+window = "#1c1d20"
 
 [default]
 bgd = "#2a2a2a"
@@ -29,11 +29,13 @@ border = "#4a4a4a"
 [divider]
 normal ="#4a4a4a"
 
+
 [label]
 font_family = "Inter"
 font_size = 12
 font_weight = 400
 font_color = "#b0b0b0"
+
 
 [title]
 font_family = "Inter"
@@ -41,12 +43,12 @@ font_size = 18
 font_weight = 600
 font_color = "#5e7ce0"
 
-# subtitle and comment only appear in TOML if they override label
+
 [subtitle]
 font_size = 20
 font_weight = 600
 font_color = "#d4d4d8"
-# Inherits everything from [label], font is defined in code
+
 
 [description]
 font_size = 13
@@ -57,17 +59,6 @@ font_color = "#d4d4d8"
 [comment]
 font_size = 13
 font_color = "#cfcfcf"
-# Inherits font_color_disabled from label
-
-
-
-[checkbox]
-size = 16
-border = "#4a4a4a"
-pressed = "#5e5e5e"
-checked = "#5e7ce0"
-disabled = "#4a4a4a"
-font_color_disabled = "#666666"
 
 
 [switch]
@@ -79,19 +70,46 @@ track_disabled = "#4a4a4a"
 handle_disabled = "#d4d4d4"
 
 
+[checkbox]
+box_size = 16
+border = "#4a4a4a"
+pressed = "#5e5e5e"
+checked = "#5e7ce0"
+disabled = "#4a4a4a"
+font_color_disabled = "#666666"
+
+
 [radio_button]
-unchecked = "#4a4a4a"
+circle_size = 16
+border = "#4a4a4a"
 pressed = "#5e7ce0"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
+font_color_disabled = "#666666"
 
 
 [line_edit]
-disabled = "#2a2a2a"
-border_read_only = "#4a4a4a"
+bgd = "#2a2a2a"
 hover = ""
+border = "#4a4a4a"
+border_hover = "#5e7ce0"
+border_edition = "#5e7ce0"
+border_read_only = "#5e5e5e"
+
+disabled = "#2a2a2a"
+
+selection = "#5e7ce0"
+
+button = "#666666"
 button_hover = "#5e7ce0"
-button_disabled = "#4a4a4a"
+button_disabled = "#666666"
+
+font_family = "Inter"
+font_size = 10
+font_weight = 400
+font_color = "#d4d4d4"
+font_color_read_only = "#666666"
+font_color_disabled = "#666666"
 
 
 [plain_text_edit]

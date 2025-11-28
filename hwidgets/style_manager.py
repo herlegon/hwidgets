@@ -122,7 +122,13 @@ class StyleManager:
             "subtitle": "label",
             "comment": "label",
             "description": "label",
+
             "checkbox": "label",
+            "radio_button": "label",
+
+            "line_edit": "label",
+            "plain_text_edit": "line_edit",
+
         }
 
         # ------------------------------
@@ -139,14 +145,13 @@ class StyleManager:
             "description": ("description", DescriptionStyle),
             "comment": ("comment", CommentStyle),
 
-
-
-            "checkbox": ("checkbox", CheckBoxStyle),
             "switch": ("switch", SwitchStyle),
+            "checkbox": ("checkbox", CheckBoxStyle),
             "radio_button": ("radio_button", RadioButtonStyle),
 
             "line_edit": ("line_edit", LineEditStyle),
             "plain_text_edit": ("plain_text_edit", PlainTextEditStyle),
+
             "scrollbar": ("scrollbar", ScrollBarStyle),
 
             "spinbox": ("spinbox", SpinBoxStyle),

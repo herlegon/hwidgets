@@ -56,7 +56,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1600, 741)
+        MainWindow.resize(1600, 750)
         MainWindow.setMinimumSize(QSize(1600, 0))
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
@@ -96,23 +96,22 @@ class Ui_MainWindow(object):
 
         self.text_layout.addWidget(self.h_subtitles)
 
-        self.h_description = HDescription(self.h_frame, theme=theme)
-        self.h_description.setObjectName(u"h_description")
-        self.h_description.setWordWrap(True)
-
-        self.text_layout.addWidget(self.h_description)
-
+        self.horizontalLayout_3 = QHBoxLayout()
+        self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
         self.h_description_3 = HDescription(self.h_frame, theme=theme)
         self.h_description_3.setObjectName(u"h_description_3")
         self.h_description_3.setWordWrap(True)
 
-        self.text_layout.addWidget(self.h_description_3)
+        self.horizontalLayout_3.addWidget(self.h_description_3)
 
-        self.h_description_4 = HDescription(self.h_frame, theme=theme)
-        self.h_description_4.setObjectName(u"h_description_4")
-        self.h_description_4.setWordWrap(True)
+        self.h_description = HDescription(self.h_frame, theme=theme)
+        self.h_description.setObjectName(u"h_description")
+        self.h_description.setWordWrap(True)
 
-        self.text_layout.addWidget(self.h_description_4)
+        self.horizontalLayout_3.addWidget(self.h_description)
+
+
+        self.text_layout.addLayout(self.horizontalLayout_3)
 
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setSpacing(32)
@@ -167,6 +166,7 @@ class Ui_MainWindow(object):
         self.checkbox_layout = QHBoxLayout()
         self.checkbox_layout.setObjectName(u"checkbox_layout")
         self.gridLayout = QGridLayout()
+        self.gridLayout.setSpacing(0)
         self.gridLayout.setObjectName(u"gridLayout")
         self.h_checkbox_disabled_3 = HCheckBox(self.h_frame, theme=theme)
         self.h_checkbox_disabled_3.setObjectName(u"h_checkbox_disabled_3")
@@ -276,8 +276,8 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.checkbox_layout)
 
-        self.radio_layout = QHBoxLayout()
-        self.radio_layout.setObjectName(u"radio_layout")
+        self.gridLayout_2 = QGridLayout()
+        self.gridLayout_2.setObjectName(u"gridLayout_2")
         self.h_radiobutton_enabled_off = HRadioButton(self.h_frame, theme=theme)
         self.buttonGroup = QButtonGroup(MainWindow)
         self.buttonGroup.setObjectName(u"buttonGroup")
@@ -285,228 +285,36 @@ class Ui_MainWindow(object):
         self.h_radiobutton_enabled_off.setObjectName(u"h_radiobutton_enabled_off")
         self.h_radiobutton_enabled_off.setChecked(False)
 
-        self.radio_layout.addWidget(self.h_radiobutton_enabled_off)
+        self.gridLayout_2.addWidget(self.h_radiobutton_enabled_off, 0, 0, 1, 1)
 
         self.h_radiobutton_enabled_on = HRadioButton(self.h_frame, theme=theme)
         self.buttonGroup.addButton(self.h_radiobutton_enabled_on)
         self.h_radiobutton_enabled_on.setObjectName(u"h_radiobutton_enabled_on")
         self.h_radiobutton_enabled_on.setChecked(True)
 
-        self.radio_layout.addWidget(self.h_radiobutton_enabled_on)
+        self.gridLayout_2.addWidget(self.h_radiobutton_enabled_on, 1, 0, 1, 1)
+
+        self.h_radiobutton_disabled_off = HRadioButton(self.h_frame, theme=theme)
+        self.h_radiobutton_disabled_off.setObjectName(u"h_radiobutton_disabled_off")
+        self.h_radiobutton_disabled_off.setEnabled(False)
+        self.h_radiobutton_disabled_off.setChecked(True)
+
+        self.gridLayout_2.addWidget(self.h_radiobutton_disabled_off, 1, 1, 1, 1)
 
         self.h_radiobutton_disabled_on = HRadioButton(self.h_frame, theme=theme)
         self.h_radiobutton_disabled_on.setObjectName(u"h_radiobutton_disabled_on")
         self.h_radiobutton_disabled_on.setEnabled(False)
         self.h_radiobutton_disabled_on.setChecked(False)
 
-        self.radio_layout.addWidget(self.h_radiobutton_disabled_on)
+        self.gridLayout_2.addWidget(self.h_radiobutton_disabled_on, 0, 1, 1, 1)
 
-        self.h_radiobutton_disabled_off = HRadioButton(self.h_frame, theme=theme)
-        self.h_radiobutton_disabled_off.setObjectName(u"h_radiobutton_disabled_off")
-        self.h_radiobutton_disabled_off.setEnabled(False)
 
-        self.radio_layout.addWidget(self.h_radiobutton_disabled_off)
+        self.main_layout.addLayout(self.gridLayout_2)
 
-        self.horizontalSpacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.radio_layout.addItem(self.horizontalSpacer)
-
+        self.radio_layout = QHBoxLayout()
+        self.radio_layout.setObjectName(u"radio_layout")
 
         self.main_layout.addLayout(self.radio_layout)
-
-        self.lineedit_layout = QHBoxLayout()
-        self.lineedit_layout.setObjectName(u"lineedit_layout")
-        self.h_lineedit_editable = HLineEdit(self.h_frame, theme=theme)
-        self.h_lineedit_editable.setObjectName(u"h_lineedit_editable")
-        self.h_lineedit_editable.setClearButtonEnabled(False)
-
-        self.lineedit_layout.addWidget(self.h_lineedit_editable)
-
-        self.h_lineedit_editable_clear_button = HLineEdit(self.h_frame, theme=theme)
-        self.h_lineedit_editable_clear_button.setObjectName(u"h_lineedit_editable_clear_button")
-        self.h_lineedit_editable_clear_button.setClearButtonEnabled(True)
-
-        self.lineedit_layout.addWidget(self.h_lineedit_editable_clear_button)
-
-        self.h_lineedit_disabled = HLineEdit(self.h_frame, theme=theme)
-        self.h_lineedit_disabled.setObjectName(u"h_lineedit_disabled")
-        self.h_lineedit_disabled.setEnabled(False)
-        self.h_lineedit_disabled.setClearButtonEnabled(True)
-
-        self.lineedit_layout.addWidget(self.h_lineedit_disabled)
-
-        self.h_lineedit_read_only = HLineEdit(self.h_frame, theme=theme)
-        self.h_lineedit_read_only.setObjectName(u"h_lineedit_read_only")
-        self.h_lineedit_read_only.setReadOnly(True)
-        self.h_lineedit_read_only.setClearButtonEnabled(True)
-
-        self.lineedit_layout.addWidget(self.h_lineedit_read_only)
-
-
-        self.main_layout.addLayout(self.lineedit_layout)
-
-        self.combobox_layout = QHBoxLayout()
-        self.combobox_layout.setObjectName(u"combobox_layout")
-        self.h_combobox_rw = HComboBox(self.h_frame, theme=theme)
-        self.h_combobox_rw.setObjectName(u"h_combobox_rw")
-        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.h_combobox_rw.sizePolicy().hasHeightForWidth())
-        self.h_combobox_rw.setSizePolicy(sizePolicy)
-        self.h_combobox_rw.setMaximumSize(QSize(300, 16777215))
-        self.h_combobox_rw.setEditable(True)
-
-        self.combobox_layout.addWidget(self.h_combobox_rw)
-
-        self.h_combobox_ro = HComboBox(self.h_frame, theme=theme)
-        self.h_combobox_ro.setObjectName(u"h_combobox_ro")
-        sizePolicy.setHeightForWidth(self.h_combobox_ro.sizePolicy().hasHeightForWidth())
-        self.h_combobox_ro.setSizePolicy(sizePolicy)
-        self.h_combobox_ro.setMaximumSize(QSize(300, 16777215))
-
-        self.combobox_layout.addWidget(self.h_combobox_ro)
-
-        self.h_combobox_disabled = HComboBox(self.h_frame, theme=theme)
-        self.h_combobox_disabled.setObjectName(u"h_combobox_disabled")
-        self.h_combobox_disabled.setEnabled(False)
-        self.h_combobox_disabled.setEditable(True)
-
-        self.combobox_layout.addWidget(self.h_combobox_disabled)
-
-
-        self.main_layout.addLayout(self.combobox_layout)
-
-        self.plaintextedit_layout = QHBoxLayout()
-        self.plaintextedit_layout.setObjectName(u"plaintextedit_layout")
-        self.h_plaintextedit_editable = HPlainTextEdit(self.h_frame, theme=theme)
-        self.h_plaintextedit_editable.setObjectName(u"h_plaintextedit_editable")
-        self.h_plaintextedit_editable.setMaximumSize(QSize(100, 150))
-
-        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable)
-
-        self.h_plaintextedit_editable_vscrollbar = HPlainTextEdit(self.h_frame, theme=theme)
-        self.h_plaintextedit_editable_vscrollbar.setObjectName(u"h_plaintextedit_editable_vscrollbar")
-        self.h_plaintextedit_editable_vscrollbar.setMaximumSize(QSize(100, 150))
-
-        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable_vscrollbar)
-
-        self.h_plaintextedit_editable_scrollbars = HPlainTextEdit(self.h_frame, theme=theme)
-        self.h_plaintextedit_editable_scrollbars.setObjectName(u"h_plaintextedit_editable_scrollbars")
-        self.h_plaintextedit_editable_scrollbars.setMaximumSize(QSize(150, 150))
-        self.h_plaintextedit_editable_scrollbars.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
-
-        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable_scrollbars)
-
-        self.h_plaintextedit_readonly = HPlainTextEdit(self.h_frame, theme=theme)
-        self.h_plaintextedit_readonly.setObjectName(u"h_plaintextedit_readonly")
-        self.h_plaintextedit_readonly.setMaximumSize(QSize(100, 150))
-        self.h_plaintextedit_readonly.setReadOnly(True)
-
-        self.plaintextedit_layout.addWidget(self.h_plaintextedit_readonly)
-
-        self.h_plaintextedit_disabled = HPlainTextEdit(self.h_frame, theme=theme)
-        self.h_plaintextedit_disabled.setObjectName(u"h_plaintextedit_disabled")
-        self.h_plaintextedit_disabled.setEnabled(False)
-        self.h_plaintextedit_disabled.setMaximumSize(QSize(100, 150))
-
-        self.plaintextedit_layout.addWidget(self.h_plaintextedit_disabled)
-
-        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.plaintextedit_layout.addItem(self.horizontalSpacer_6)
-
-
-        self.main_layout.addLayout(self.plaintextedit_layout)
-
-        self.h_spinbox_layout = QHBoxLayout()
-        self.h_spinbox_layout.setObjectName(u"h_spinbox_layout")
-        self.h_spinbox_no_button = HSpinBox(self.h_frame, theme=theme)
-        self.h_spinbox_no_button.setObjectName(u"h_spinbox_no_button")
-        self.h_spinbox_no_button.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.h_spinbox_no_button.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
-
-        self.h_spinbox_layout.addWidget(self.h_spinbox_no_button)
-
-        self.h_spinbox_rw = HSpinBox(self.h_frame, theme=theme)
-        self.h_spinbox_rw.setObjectName(u"h_spinbox_rw")
-        self.h_spinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.h_spinbox_rw.setMinimum(10)
-
-        self.h_spinbox_layout.addWidget(self.h_spinbox_rw)
-
-        self.h_spinbox_ro = HSpinBox(self.h_frame, theme=theme)
-        self.h_spinbox_ro.setObjectName(u"h_spinbox_ro")
-        self.h_spinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.h_spinbox_ro.setReadOnly(True)
-
-        self.h_spinbox_layout.addWidget(self.h_spinbox_ro)
-
-        self.h_spinbox_disabled = HSpinBox(self.h_frame, theme=theme)
-        self.h_spinbox_disabled.setObjectName(u"h_spinbox_disabled")
-        self.h_spinbox_disabled.setEnabled(False)
-        self.h_spinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-
-        self.h_spinbox_layout.addWidget(self.h_spinbox_disabled)
-
-        self.rlg_spinbox_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.h_spinbox_layout.addItem(self.rlg_spinbox_spacer)
-
-        self.h_doublespinbox_nobutton = HDoubleSpinBox(self.h_frame, theme=theme)
-        self.h_doublespinbox_nobutton.setObjectName(u"h_doublespinbox_nobutton")
-        self.h_doublespinbox_nobutton.setFrame(True)
-        self.h_doublespinbox_nobutton.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.h_doublespinbox_nobutton.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
-
-        self.h_spinbox_layout.addWidget(self.h_doublespinbox_nobutton)
-
-        self.h_doublespinbox_rw = HDoubleSpinBox(self.h_frame, theme=theme)
-        self.h_doublespinbox_rw.setObjectName(u"h_doublespinbox_rw")
-        self.h_doublespinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.h_doublespinbox_rw.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.PlusMinus)
-        self.h_doublespinbox_rw.setProperty(u"showGroupSeparator", False)
-        self.h_doublespinbox_rw.setDecimals(1)
-        self.h_doublespinbox_rw.setMinimum(10.000000000000000)
-
-        self.h_spinbox_layout.addWidget(self.h_doublespinbox_rw)
-
-        self.h_doublespinbox_ro = HDoubleSpinBox(self.h_frame, theme=theme)
-        self.h_doublespinbox_ro.setObjectName(u"h_doublespinbox_ro")
-        self.h_doublespinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-        self.h_doublespinbox_ro.setReadOnly(True)
-
-        self.h_spinbox_layout.addWidget(self.h_doublespinbox_ro)
-
-        self.h_doublespinbox_disabled = HDoubleSpinBox(self.h_frame, theme=theme)
-        self.h_doublespinbox_disabled.setObjectName(u"h_doublespinbox_disabled")
-        self.h_doublespinbox_disabled.setEnabled(False)
-        self.h_doublespinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
-
-        self.h_spinbox_layout.addWidget(self.h_doublespinbox_disabled)
-
-
-        self.main_layout.addLayout(self.h_spinbox_layout)
-
-        self.button_group_layout = QHBoxLayout()
-        self.button_group_layout.setObjectName(u"button_group_layout")
-        self.h_button_group = HButtonGroup(self.h_frame, theme=theme)
-        self.h_button_group.setObjectName(u"h_button_group")
-
-        self.button_group_layout.addWidget(self.h_button_group)
-
-        self.h_button_group_disabled = HButtonGroup(self.h_frame, theme=theme)
-        self.h_button_group_disabled.setObjectName(u"h_button_group_disabled")
-        self.h_button_group_disabled.setEnabled(False)
-
-        self.button_group_layout.addWidget(self.h_button_group_disabled)
-
-        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.button_group_layout.addItem(self.horizontalSpacer_5)
-
-
-        self.main_layout.addLayout(self.button_group_layout)
 
         self.strong_buttons_layout = QHBoxLayout()
         self.strong_buttons_layout.setObjectName(u"strong_buttons_layout")
@@ -635,6 +443,9 @@ class Ui_MainWindow(object):
 
         self.h_button = HButton(self.h_frame, theme=theme)
         self.h_button.setObjectName(u"h_button")
+        sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.h_button.sizePolicy().hasHeightForWidth())
         self.h_button.setSizePolicy(sizePolicy)
         self.h_button.setMaximumSize(QSize(24, 24))
@@ -735,7 +546,156 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.h_button_layout)
 
-        self.verticalSpacer_2 = QSpacerItem(20, 10, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.lineedit_layout = QHBoxLayout()
+        self.lineedit_layout.setObjectName(u"lineedit_layout")
+        self.h_lineedit_editable = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_editable.setObjectName(u"h_lineedit_editable")
+        self.h_lineedit_editable.setClearButtonEnabled(False)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_editable)
+
+        self.h_lineedit_editable_clear_button = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_editable_clear_button.setObjectName(u"h_lineedit_editable_clear_button")
+        self.h_lineedit_editable_clear_button.setClearButtonEnabled(True)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_editable_clear_button)
+
+        self.h_lineedit_read_only = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_read_only.setObjectName(u"h_lineedit_read_only")
+        self.h_lineedit_read_only.setReadOnly(True)
+        self.h_lineedit_read_only.setClearButtonEnabled(True)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_read_only)
+
+        self.h_lineedit_disabled = HLineEdit(self.h_frame, theme=theme)
+        self.h_lineedit_disabled.setObjectName(u"h_lineedit_disabled")
+        self.h_lineedit_disabled.setEnabled(False)
+        self.h_lineedit_disabled.setClearButtonEnabled(True)
+
+        self.lineedit_layout.addWidget(self.h_lineedit_disabled)
+
+
+        self.main_layout.addLayout(self.lineedit_layout)
+
+        self.combobox_layout = QHBoxLayout()
+        self.combobox_layout.setObjectName(u"combobox_layout")
+        self.h_combobox_rw = HComboBox(self.h_frame, theme=theme)
+        self.h_combobox_rw.setObjectName(u"h_combobox_rw")
+        sizePolicy.setHeightForWidth(self.h_combobox_rw.sizePolicy().hasHeightForWidth())
+        self.h_combobox_rw.setSizePolicy(sizePolicy)
+        self.h_combobox_rw.setMaximumSize(QSize(300, 16777215))
+        self.h_combobox_rw.setEditable(True)
+
+        self.combobox_layout.addWidget(self.h_combobox_rw)
+
+        self.h_combobox_ro = HComboBox(self.h_frame, theme=theme)
+        self.h_combobox_ro.setObjectName(u"h_combobox_ro")
+        sizePolicy.setHeightForWidth(self.h_combobox_ro.sizePolicy().hasHeightForWidth())
+        self.h_combobox_ro.setSizePolicy(sizePolicy)
+        self.h_combobox_ro.setMaximumSize(QSize(300, 16777215))
+
+        self.combobox_layout.addWidget(self.h_combobox_ro)
+
+        self.h_combobox_disabled = HComboBox(self.h_frame, theme=theme)
+        self.h_combobox_disabled.setObjectName(u"h_combobox_disabled")
+        self.h_combobox_disabled.setEnabled(False)
+        self.h_combobox_disabled.setEditable(True)
+
+        self.combobox_layout.addWidget(self.h_combobox_disabled)
+
+
+        self.main_layout.addLayout(self.combobox_layout)
+
+        self.h_spinbox_layout = QHBoxLayout()
+        self.h_spinbox_layout.setObjectName(u"h_spinbox_layout")
+        self.h_spinbox_no_button = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_no_button.setObjectName(u"h_spinbox_no_button")
+        self.h_spinbox_no_button.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_no_button.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_no_button)
+
+        self.h_spinbox_rw = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_rw.setObjectName(u"h_spinbox_rw")
+        self.h_spinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_rw.setMinimum(10)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_rw)
+
+        self.h_spinbox_ro = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_ro.setObjectName(u"h_spinbox_ro")
+        self.h_spinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_spinbox_ro.setReadOnly(True)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_ro)
+
+        self.h_spinbox_disabled = HSpinBox(self.h_frame, theme=theme)
+        self.h_spinbox_disabled.setObjectName(u"h_spinbox_disabled")
+        self.h_spinbox_disabled.setEnabled(False)
+        self.h_spinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.h_spinbox_layout.addWidget(self.h_spinbox_disabled)
+
+        self.rlg_spinbox_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.h_spinbox_layout.addItem(self.rlg_spinbox_spacer)
+
+        self.h_doublespinbox_nobutton = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_nobutton.setObjectName(u"h_doublespinbox_nobutton")
+        self.h_doublespinbox_nobutton.setFrame(True)
+        self.h_doublespinbox_nobutton.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_nobutton.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.NoButtons)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_nobutton)
+
+        self.h_doublespinbox_rw = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_rw.setObjectName(u"h_doublespinbox_rw")
+        self.h_doublespinbox_rw.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_rw.setButtonSymbols(QAbstractSpinBox.ButtonSymbols.PlusMinus)
+        self.h_doublespinbox_rw.setProperty(u"showGroupSeparator", False)
+        self.h_doublespinbox_rw.setDecimals(1)
+        self.h_doublespinbox_rw.setMinimum(10.000000000000000)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_rw)
+
+        self.h_doublespinbox_ro = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_ro.setObjectName(u"h_doublespinbox_ro")
+        self.h_doublespinbox_ro.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+        self.h_doublespinbox_ro.setReadOnly(True)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_ro)
+
+        self.h_doublespinbox_disabled = HDoubleSpinBox(self.h_frame, theme=theme)
+        self.h_doublespinbox_disabled.setObjectName(u"h_doublespinbox_disabled")
+        self.h_doublespinbox_disabled.setEnabled(False)
+        self.h_doublespinbox_disabled.setAlignment(Qt.AlignmentFlag.AlignRight|Qt.AlignmentFlag.AlignTrailing|Qt.AlignmentFlag.AlignVCenter)
+
+        self.h_spinbox_layout.addWidget(self.h_doublespinbox_disabled)
+
+
+        self.main_layout.addLayout(self.h_spinbox_layout)
+
+        self.button_group_layout = QHBoxLayout()
+        self.button_group_layout.setObjectName(u"button_group_layout")
+        self.h_button_group = HButtonGroup(self.h_frame, theme=theme)
+        self.h_button_group.setObjectName(u"h_button_group")
+
+        self.button_group_layout.addWidget(self.h_button_group)
+
+        self.h_button_group_disabled = HButtonGroup(self.h_frame, theme=theme)
+        self.h_button_group_disabled.setObjectName(u"h_button_group_disabled")
+        self.h_button_group_disabled.setEnabled(False)
+
+        self.button_group_layout.addWidget(self.h_button_group_disabled)
+
+        self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.button_group_layout.addItem(self.horizontalSpacer_5)
+
+
+        self.main_layout.addLayout(self.button_group_layout)
+
+        self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout.addItem(self.verticalSpacer_2)
 
@@ -1047,7 +1007,49 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.h_frame_styled_raised)
 
-        self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
+        self.plaintextedit_layout = QHBoxLayout()
+        self.plaintextedit_layout.setObjectName(u"plaintextedit_layout")
+        self.h_plaintextedit_editable = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_editable.setObjectName(u"h_plaintextedit_editable")
+        self.h_plaintextedit_editable.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable)
+
+        self.h_plaintextedit_editable_vscrollbar = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_editable_vscrollbar.setObjectName(u"h_plaintextedit_editable_vscrollbar")
+        self.h_plaintextedit_editable_vscrollbar.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable_vscrollbar)
+
+        self.h_plaintextedit_editable_scrollbars = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_editable_scrollbars.setObjectName(u"h_plaintextedit_editable_scrollbars")
+        self.h_plaintextedit_editable_scrollbars.setMaximumSize(QSize(150, 150))
+        self.h_plaintextedit_editable_scrollbars.setLineWrapMode(QPlainTextEdit.LineWrapMode.WidgetWidth)
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_editable_scrollbars)
+
+        self.h_plaintextedit_readonly = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_readonly.setObjectName(u"h_plaintextedit_readonly")
+        self.h_plaintextedit_readonly.setMaximumSize(QSize(100, 150))
+        self.h_plaintextedit_readonly.setReadOnly(True)
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_readonly)
+
+        self.h_plaintextedit_disabled = HPlainTextEdit(self.h_frame, theme=theme)
+        self.h_plaintextedit_disabled.setObjectName(u"h_plaintextedit_disabled")
+        self.h_plaintextedit_disabled.setEnabled(False)
+        self.h_plaintextedit_disabled.setMaximumSize(QSize(100, 150))
+
+        self.plaintextedit_layout.addWidget(self.h_plaintextedit_disabled)
+
+        self.horizontalSpacer_6 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.plaintextedit_layout.addItem(self.horizontalSpacer_6)
+
+
+        self.verticalLayout_3.addLayout(self.plaintextedit_layout)
+
+        self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer)
 
@@ -1069,9 +1071,8 @@ class Ui_MainWindow(object):
         self.h_title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon", None))
         self.h_title_icon.setText("")
         self.h_subtitles.setText(QCoreApplication.translate("MainWindow", u"Subtitle", None))
-        self.h_description.setText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
-        self.h_description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
-        self.h_description_4.setText(QCoreApplication.translate("MainWindow", u"Description (italic): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", None))
+        self.h_description.setText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
         self.h_comment_small_italic.setText(QCoreApplication.translate("MainWindow", u"Small italic comment", None))
         self.h_comment_bold.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
         self.h_comment_italic.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
@@ -1093,33 +1094,10 @@ class Ui_MainWindow(object):
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"switch disabled off", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"switch enabled on", None))
         self.h_checkbox_checked_2.setText(QCoreApplication.translate("MainWindow", u"480p", None))
-        self.h_radiobutton_enabled_off.setText("")
-        self.h_radiobutton_enabled_on.setText("")
-        self.h_radiobutton_disabled_on.setText("")
-        self.h_radiobutton_disabled_off.setText("")
-        self.h_lineedit_editable.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
-        self.h_lineedit_editable_clear_button.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
-        self.h_lineedit_disabled.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
-        self.h_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
-        self.h_plaintextedit_editable.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
-"sdsdc", None))
-        self.h_plaintextedit_editable_vscrollbar.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
-"multiple lines\n"
-"for scrollbar\n"
-"with test\n"
-"", None))
-        self.h_plaintextedit_editable_scrollbars.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
-"multiple lines with very large text for hscrollbar\n"
-"for scrollbar \n"
-"with test\n"
-"and\n"
-"a lot\n"
-"of vertical text\n"
-"", None))
-        self.h_plaintextedit_readonly.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
-"", None))
-        self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
-"", None))
+        self.h_radiobutton_enabled_off.setText(QCoreApplication.translate("MainWindow", u"Enabled", None))
+        self.h_radiobutton_enabled_on.setText(QCoreApplication.translate("MainWindow", u"Enabled, checked", None))
+        self.h_radiobutton_disabled_off.setText(QCoreApplication.translate("MainWindow", u"Disabled, checked", None))
+        self.h_radiobutton_disabled_on.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
         self.h_strong_button_text.setText(QCoreApplication.translate("MainWindow", u"Strong Button", None))
         self.h_strong_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Strong Button with icon", None))
         self.h_strong_button_icon.setText("")
@@ -1143,6 +1121,10 @@ class Ui_MainWindow(object):
         self.h_button_disabled_2.setText("")
         self.h_button_2.setText("")
         self.h_button_disabled_checked_2.setText("")
+        self.h_lineedit_editable.setText(QCoreApplication.translate("MainWindow", u"Editable", None))
+        self.h_lineedit_editable_clear_button.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.h_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
+        self.h_lineedit_disabled.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
         self.h_comment_bold_2.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
         self.h_comment_italic_2.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
         self.h_description_2.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
@@ -1182,6 +1164,25 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_readonly_2.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
         self.h_plaintextedit_disabled_2.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
+"", None))
+        self.h_plaintextedit_editable.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"sdsdc", None))
+        self.h_plaintextedit_editable_vscrollbar.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"multiple lines\n"
+"for scrollbar\n"
+"with test\n"
+"", None))
+        self.h_plaintextedit_editable_scrollbars.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
+"multiple lines with very large text for hscrollbar\n"
+"for scrollbar \n"
+"with test\n"
+"and\n"
+"a lot\n"
+"of vertical text\n"
+"", None))
+        self.h_plaintextedit_readonly.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
+"", None))
+        self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
     # retranslateUi
 

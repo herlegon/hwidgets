@@ -12,18 +12,22 @@ from PySide6.QtGui import (
     QIcon,
     QKeyEvent,
     QPainter,
+    QPaintEvent,
 )
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QPushButton,
     QWidget,
     QLineEdit,
-    QProxyStyle,
 )
 
+from .hstyle import DEBUG_GEOMETRY, draw_widget_rect
 from hytils import red, yellow
 
-from .style_manager import Theme
+from .style_manager import (
+    Theme,
+    LineEditStyle,
+)
 from .utils import (
     load_png_icon,
     load_png_image,
@@ -39,31 +43,31 @@ class ClearButton(QPushButton):
         /,
         parent: QWidget | None = None,
         *,
-        theme: Theme,
-        margin_right: int = 0,
+        style: LineEditStyle,
     ):
         super().__init__(parent)
-        size_hint = QSize(theme.default.height, theme.default.height)
-        self.setFixedSize(size_hint)
+        # size_hint = QSize(theme.default.height, theme.default.height)
+        # self.setFixedSize(size_hint)
         self.setFlat(True)
         self.setFocusPolicy(Qt.FocusPolicy.NoFocus)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
-        btn_style = theme.line_edit
         icon_filename: str = "cancel_16dp_000000_FILL0_wght400_GRAD-25_opsz20.png"
-        self.normal_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.font_color)
+        self.normal_pixmap = make_tinted_pixmap(load_png_image(icon_filename), style.button)
         # self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.button_hover)
-        self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.font_color)
-        self.disabled_pixmap = make_tinted_pixmap(load_png_image(icon_filename), btn_style.button_disabled)
+        self.hover_pixmap = make_tinted_pixmap(load_png_image(icon_filename), style.button_hover)
+        self.disabled_pixmap = make_tinted_pixmap(load_png_image(icon_filename), style.button_disabled)
 
-        qss = """
-            QPushButton {{
-                background-color: transparent;
-                border: solid 1px white;
-                margin_right={margin_right}px;
-            }}
-        """.format(margin_right=margin_right)
-        self.setStyleSheet(qss)
+        self.setFixedSize(QSize(self.normal_pixmap.size()))
+
+        # qss = """
+        #     QPushButton {{
+        #         background-color: red;
+        #         border: solid 1px white;
+        #         margin-right: {margin_right}px;
+        #     }}
+        # """.format(margin_right=margin_right)
+        # self.setStyleSheet(qss)
 
 
     def sizeHint(self):
@@ -89,11 +93,14 @@ class ClearButton(QPushButton):
         self.setAttribute(Qt.WidgetAttribute.WA_TransparentForMouseEvents, not b)
 
 
-    def paintEvent(self, event):
+    def paintEvent(self, event: QPaintEvent) -> None:
         if not self.isVisible():
             return
         painter = QPainter(self)
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
+
 
         # Draw background (transparent)
         painter.fillRect(self.rect(), Qt.GlobalColor.transparent)
@@ -156,18 +163,15 @@ class HLineEdit(QLineEdit):
 
         # Replace the clear button
         self.main_layout = QHBoxLayout(self)
-        self.main_layout.setContentsMargins(0,0,0,0)
+        self.main_layout.setContentsMargins(0, 0, theme.default.radius, 0)
         self.main_layout.setSpacing(0)
         self.main_layout.setAlignment(Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter)
         self.main_layout.addStretch(1)
-        self.clear_button = ClearButton(self, theme=theme, margin_right=4)
+        self.clear_button = ClearButton(self, style=theme.line_edit)
         self.main_layout.addWidget(
             self.clear_button, Qt.AlignmentFlag.AlignRight | Qt.AlignmentFlag.AlignVCenter
         )
-        self.setLayout(self.main_layout)
 
-
-        # print(f"{__class__.__name__} Instanciate: ro={readOnly}, button={clearButtonEnabled}")
         self.signals_connected = False
         self.clear_button_enabled: bool = False
         if readOnly is not None and readOnly:
@@ -177,9 +181,9 @@ class HLineEdit(QLineEdit):
         self.setClearButtonEnabled(self.clear_button_enabled)
 
         self._update_stylesheet()
+        self.setLayout(self.main_layout)
 
         self.clear_button.clicked.connect(self.clear_button_clicked)
-        # print(f"{__class__.__name__} Instanciated")
 
 
     def _update_stylesheet(self) -> None:
@@ -206,13 +210,15 @@ class HLineEdit(QLineEdit):
             padding_right=f"{padding_right}px",
             padding_left=f"{padding_left}px",
 
-            widget_bgd=f"{default_style.bgd}",
+            widget_bgd=f"{le_style.bgd}",
             hover=f"{le_style.hover}",
-            border_color=f"{default_style.border}",
+            disabled=f"{le_style.disabled}",
+
+            border_color=f"{le_style.border}",
+            border_read_only_color=f"{le_style.border_read_only}",
             border_edition=f"{le_style.selection}",
 
             selection=f"{le_style.selection}",
-            disabled=f"{le_style.disabled}",
 
             font_family=f"\"{le_style.font.family}\"",
             font_size=f"{le_style.font.size}pt",
@@ -332,3 +338,11 @@ class HLineEdit(QLineEdit):
                 return
 
         super().keyPressEvent(event)
+
+
+    # def paintEvent(self, event: QPaintEvent) -> None:
+    #     super().paintEvent(event)
+    #     painter = QPainter(self)
+    #     if DEBUG_GEOMETRY:
+    #         draw_widget_rect(self, painter)
+    #     painter.end()

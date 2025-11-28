@@ -87,27 +87,6 @@ class CommentStyle(LabelStyle):
     font: FontConfig = FontConfig(size=10, weight=400)
 
 
-
-
-@dataclass
-class CheckBoxStyle(LabelStyle):
-    size: int = 16
-    box_size: int = 14
-    box_thickness: int = 2
-
-    pressed: str = ""
-    border: str = ""
-    normal: str = ""
-    hover: str = ""
-    disabled: str = ""
-    checked: str = ""
-    checked_text: str = ""
-
-    font: FontConfig = FontConfig()
-    font_color: str = ""
-    font_color_disabled: str = ""
-
-
 @dataclass
 class SwitchStyle:
     track_height: int = 24
@@ -124,33 +103,48 @@ class SwitchStyle:
     handle_disabled: str = ""
 
 
-
 @dataclass
-class RadioButtonStyle:
-    size: int = 14
-    radius: int = BORDER_RADIUS - 1
-    border_thickness: int = 2
+class CheckBoxStyle(LabelStyle):
+    box_size: int = 14
+    box_thickness: int = 2
 
-    unchecked: str = ""
+    border: str = ""
     pressed: str = ""
     checked: str = ""
     disabled: str = ""
 
 
+@dataclass
+class RadioButtonStyle(LabelStyle):
+    circle_size: int = 14
+    circle_thickness: int = 2
+
+    border: str = ""
+    pressed: str = ""
+    checked: str = ""
+    disabled: str = ""
+
 
 @dataclass
-class LineEditStyle:
+class LineEditStyle(LabelStyle):
+    bgd: str = ""
     hover: str = ""
-    selection: str = ""
     disabled: str = ""
+
+    border: str = ""
+    border_hover: str = ""
+    border_edition: str = ""
     border_read_only: str = ""
 
+    selection: str = ""
+    # font_color: str = ""
+    font_color_read_only: str = ""
+    font_color_disabled: str = ""
+
+    button: str = ""
     button_hover: str = ""
     button_disabled: str = ""
 
-    font: FontConfig = FontConfig()
-    font_color: str = ""
-    font_color_disabled: str = ""
 
 
 

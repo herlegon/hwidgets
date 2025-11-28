@@ -6,21 +6,13 @@ QLineEdit {
     border-radius: $radius;
     border: 1px solid $border_color;
 
-    padding: 0px $padding_right 2px $padding_left;
+    padding: 2px $padding_right 2px $padding_left;
 
     font-family: $font_family;
     font-size: $font_size;
     color: $font_color;
 
     selection-background-color: $selection;
-}
-
-
-QLineEdit:read-only,
-QLineEdit:read-only:focus,
-QLineEdit:read-only:hover {
-    background-color: $widget_bgd;
-    border: 1px solid $border_color;
 }
 
 
@@ -32,6 +24,19 @@ QLineEdit:focus {
 
 QLineEdit:hover {
     background-color: $hover;
+}
+
+
+QLineEdit:read-only,
+QLineEdit:read-only:hover {
+    background-color: $widget_bgd;
+    border: 1px solid $border_color;
+}
+
+
+QLineEdit:read-only:focus {
+    background-color: $widget_bgd;
+    border: 1px solid $border_read_only_color;
 }
 
 

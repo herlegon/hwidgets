@@ -238,7 +238,7 @@ class HPlainTextEdit(QPlainTextEdit):
         self.overlay_vbar.valueChanged.connect(self._on_overlay_value_changed)
         self._sync_overlay_from_native()
 
-        self.clear_button = ClearButton(self, theme=theme)
+        self.clear_button = ClearButton(self, style=theme.plain_text_edit)
 
         self.viewport().setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.viewport().setStyleSheet("background: transparent;")
