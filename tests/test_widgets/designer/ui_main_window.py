@@ -37,6 +37,7 @@ from hwidgets import (
     HScrollBar,
     HSpinBox,
     HButtonGroup,
+    HCard,
     HComment,
     HDescription,
     HDivider,
@@ -66,8 +67,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1600, 782)
-        MainWindow.setMinimumSize(QSize(1600, 0))
+        MainWindow.resize(1444, 793)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -1220,6 +1220,99 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.h_indet_progress_bar_r)
 
+        self.radial_progress_layout = QHBoxLayout()
+        self.radial_progress_layout.setObjectName(u"radial_progress_layout")
+        self.h_radial_progress_1 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_1.setObjectName(u"h_radial_progress_1")
+        self.h_radial_progress_1.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_1.setValue(24)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_1)
+
+        self.h_radial_progress_2 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_2.setObjectName(u"h_radial_progress_2")
+        self.h_radial_progress_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_2.setValue(51)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_2)
+
+        self.h_radial_progress_3 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_3.setObjectName(u"h_radial_progress_3")
+        self.h_radial_progress_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_3.setValue(76)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_3)
+
+        self.h_radial_progress_4 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_4.setObjectName(u"h_radial_progress_4")
+        self.h_radial_progress_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_4.setValue(100)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_4)
+
+        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.radial_progress_layout.addItem(self.horizontalSpacer_11)
+
+
+        self.verticalLayout_3.addLayout(self.radial_progress_layout)
+
+        self.h_card_consumption = HCard(self.h_frame, theme=theme)
+        self.h_card_consumption.setObjectName(u"h_card_consumption")
+        self.h_card_consumption.setFrameShape(QFrame.Shape.StyledPanel)
+        self.h_card_consumption.setFrameShadow(QFrame.Shadow.Plain)
+        self.horizontalLayout_4 = QHBoxLayout(self.h_card_consumption)
+        self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
+        self.h_radial_progress_vram = HRadialProgress(self.h_card_consumption, theme=theme)
+        self.h_radial_progress_vram.setObjectName(u"h_radial_progress_vram")
+        self.h_radial_progress_vram.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_vram.setValue(24)
+
+        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram)
+
+        self.h_radial_progress_vram_4 = HRadialProgress(self.h_card_consumption, theme=theme)
+        self.h_radial_progress_vram_4.setObjectName(u"h_radial_progress_vram_4")
+        self.h_radial_progress_vram_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_vram_4.setValue(51)
+
+        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram_4)
+
+        self.h_radial_progress_vram_3 = HRadialProgress(self.h_card_consumption, theme=theme)
+        self.h_radial_progress_vram_3.setObjectName(u"h_radial_progress_vram_3")
+        self.h_radial_progress_vram_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_vram_3.setValue(76)
+
+        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram_3)
+
+        self.h_radial_progress_vram_2 = HRadialProgress(self.h_card_consumption, theme=theme)
+        self.h_radial_progress_vram_2.setObjectName(u"h_radial_progress_vram_2")
+        self.h_radial_progress_vram_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_vram_2.setValue(100)
+
+        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram_2)
+
+        self.h_divider_2 = HDivider(self.h_card_consumption, theme=theme)
+        self.h_divider_2.setObjectName(u"h_divider_2")
+        self.h_divider_2.setMinimumSize(QSize(50, 10))
+        self.h_divider_2.setFrameShape(QFrame.Shape.VLine)
+        self.h_divider_2.setFrameShadow(QFrame.Shadow.Sunken)
+
+        self.horizontalLayout_4.addWidget(self.h_divider_2, 0, Qt.AlignmentFlag.AlignVCenter)
+
+        self.h_radial_progress_ram = HRadialProgress(self.h_card_consumption, theme=theme)
+        self.h_radial_progress_ram.setObjectName(u"h_radial_progress_ram")
+        self.h_radial_progress_ram.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_ram.setValue(65)
+
+        self.horizontalLayout_4.addWidget(self.h_radial_progress_ram)
+
+        self.horizontalSpacer_12 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.horizontalLayout_4.addItem(self.horizontalSpacer_12)
+
+
+        self.verticalLayout_3.addWidget(self.h_card_consumption)
+
         self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_3)
@@ -1240,7 +1333,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.h_title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon", None))
-        self.h_title_icon.setText(QCoreApplication.translate("MainWindow", u"With an icon", None))
+        self.h_title_icon.setText("")
         self.h_subtitles.setText(QCoreApplication.translate("MainWindow", u"Subtitle", None))
         self.h_description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", None))
         self.h_description.setText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
@@ -1283,7 +1376,7 @@ class Ui_MainWindow(object):
         self.h_toggle_grey_button.setText(QCoreApplication.translate("MainWindow", u"toggle grey", None))
         self.h_toggle_grey_button_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (checked)", None))
         self.h_toggle_grey_button_disabled_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (disabled)", None))
-        self.h_toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (Checked Disabled)", None))
+        self.h_toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (Checked Disabled) Never use that!", None))
         self.h_outlined_button.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
         self.h_outlined_button_icon.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
         self.h_outlined_button_icon_r.setText(QCoreApplication.translate("MainWindow", u"outlined", None))

@@ -2,7 +2,8 @@ __version__ = "0.1.0"
 
 from .logger import hlogger
 
-# from .hstyle import Theme
+from .frame import HFrame, HCard
+
 
 from .checkbox import HCheckBox
 from .combobox import HComboBox
@@ -12,7 +13,6 @@ from .divider import (
     HVerticalDivider,
 )
 from .button_group import HButtonGroup, HGreyButtonGroup
-from .frame import HFrame
 from .groupbox import HGroupBox
 from .label import (
     HLabel,
@@ -51,7 +51,7 @@ __all__ = [
     "Theme",
 
     "HFrame",
-    "HGroupBox",
+    "HCard",
     "HDivider",
     "HHorizontalDivider",
     "HVerticalDivider",
@@ -94,4 +94,7 @@ __all__ = [
     "HRadialProgress",
 
     "load_png_image",
+
+    # not working
+    "HGroupBox",
 ]

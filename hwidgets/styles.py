@@ -40,14 +40,14 @@ class DefaultStyle:
 
 @dataclass
 class FrameStyle:
-    bgd: str = ""
     radius: int = BORDER_RADIUS * 1.5
+    bgd: str = ""
+    border: str = ""
 
 
 @dataclass
 class CardStyle(FrameStyle):
-    # bgd: str = ""
-    border: str = ""
+    border: str = "red"
 
 
 @dataclass

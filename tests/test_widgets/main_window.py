@@ -117,3 +117,33 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.h_indet_progress_bar.hide()
         self.h_indet_progress_bar_m2.start()
         self.h_indet_progress_bar_r.hide()
+
+        for rp in (
+            self.h_radial_progress_1,
+            self.h_radial_progress_2,
+            self.h_radial_progress_3,
+            self.h_radial_progress_4,
+        ):
+            rp.setThickness(4)
+
+
+        for rp in (
+            self.h_radial_progress_vram,
+            self.h_radial_progress_vram_2,
+            self.h_radial_progress_vram_3,
+            self.h_radial_progress_vram_4,
+        ):
+            rp.setFixedWidth(64)
+            rp.setThickness(6)
+            rp.useColoredTriggers()
+            rp.setLegendText("RTX 4080\nVRAM")
+            rp.setLabelText("label")
+            rp.displayValue(True)
+
+        self.h_radial_progress_ram.setFixedWidth(rp.bar_width)
+        self.h_radial_progress_ram.setThickness(6)
+        self.h_radial_progress_ram.useColoredTriggers()
+        self.h_radial_progress_ram.setLegendText("RAM")
+        self.h_radial_progress_ram.displayValue(True)
+
+        self.h_divider_2.setMinimumHeight(rp.height())

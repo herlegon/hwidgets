@@ -1922,7 +1922,7 @@ of vertical text
            <item>
             <widget class="QLabel" name="h_title1_2">
              <property name="text">
-              <string>This is a HTitle1 widget WITH icon</string>
+              <string/>
              </property>
              <property name="pixmap">
               <pixmap>../../../hwidgets/icons/gpu.png</pixmap>
@@ -2044,6 +2044,63 @@ of vertical text
           </layout>
          </item>
          <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_24">
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_vram">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_vram_4">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>51</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_vram_3">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>76</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_vram_2">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_12">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
           <layout class="QHBoxLayout" name="horizontalLayout_13">
            <item>
             <widget class="QWidget" name="h_button_group" native="true"/>
@@ -2074,9 +2131,9 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="buttonGroup_2"/>
-  <buttongroup name="buttonGroup_4"/>
   <buttongroup name="buttonGroup"/>
+  <buttongroup name="buttonGroup_2"/>
   <buttongroup name="buttonGroup_3"/>
+  <buttongroup name="buttonGroup_4"/>
  </buttongroups>
 </ui>

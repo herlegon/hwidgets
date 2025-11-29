@@ -90,7 +90,7 @@ class HRadialProgress(QProgressBar):
 
         self.bar_width = bar_width
         self.bar_thickness = theme.progress_bar.thickness
-        self.set_colors(
+        self.setColors(
             track=QColor(bgd_color),
             bar=QColor(bar_color)
         )
@@ -111,7 +111,7 @@ class HRadialProgress(QProgressBar):
             trigger_style.warning = (75, MC_COLORS['yellow800'])
             trigger_style.danger = (90, MC_COLORS['deep_orange800'])
         trigger_style.normal = (0, self.bar_color)
-        self.set_trigger_style(trigger_style)
+        self.setTriggerStyle(trigger_style)
 
         self.legend: RpText = RpText()
         self.legend.font = QFont("Roboto-Bold", pointSize=10)
@@ -123,6 +123,7 @@ class HRadialProgress(QProgressBar):
         self.label.font = QFont("Roboto-Bold", pointSize=10)
         self.label.font.setBold(False)
         self.label.text = ""
+        self._display_value: bool = False
 
         self.smooth = smooth
         self.smooth_ms: float = smooth_duration_ms / 100
@@ -133,7 +134,7 @@ class HRadialProgress(QProgressBar):
         self.valueChanged.connect(self.percent_changed_event)
 
 
-    def set_thickness(self, thickness: int) -> None:
+    def setThickness(self, thickness: int) -> None:
         self.bar_thickness = thickness
 
 
@@ -168,15 +169,15 @@ class HRadialProgress(QProgressBar):
 
 
 
-    def set_standard_triggers(self) -> None:
+    def useColoredTriggers(self) -> None:
         trigger_style: RadialProgressTriggerStyle = RadialProgressTriggerStyle()
         trigger_style.warning = (75, MC_COLORS['yellow800'])
         trigger_style.danger = (90, MC_COLORS['deep_orange800'])
         trigger_style.normal = (0, self.bar_color)
-        self.set_trigger_style(trigger_style)
+        self.setTriggerStyle(trigger_style)
 
 
-    def set_colors(self, track: str, bar: str) -> None:
+    def setColors(self, track: str, bar: str) -> None:
         self.track_color = QColor(track)
         self.bar_color = QColor(bar)
 
@@ -209,7 +210,9 @@ class HRadialProgress(QProgressBar):
     def _update_geometry(self) -> None:
         widget_width = max(
             self.bar_width,
-            QFontMetrics(self.legend.font).boundingRect(self.legend.text).width() + 2
+            QFontMetrics(self.legend.font)
+            .boundingRect(self.legend.text)
+            .width() + 2
         )
         height = int(
             self.bar_width * (1 + math.cos(math.radians(self.angle))) / 2
@@ -226,17 +229,17 @@ class HRadialProgress(QProgressBar):
         super().setFixedSize(QSize(w, w))
 
 
-    def set_bar_width(self, width: int) -> None:
+    def setBarWidth(self, width: int) -> None:
         self.bar_width = width
         self._update_geometry()
 
 
-    def set_thickness(self, point: int) -> None:
+    def setThickness(self, point: int) -> None:
         self.bar_thickness = point
         self._update_geometry()
 
 
-    def set_trigger_style(self, triggers: RadialProgressTriggerStyle) -> None:
+    def setTriggerStyle(self, triggers: RadialProgressTriggerStyle) -> None:
         self.value_warning, color_warning = triggers.warning
         if self.value_warning > 100 or color_warning is None:
             self.value_warning = 101
@@ -252,14 +255,20 @@ class HRadialProgress(QProgressBar):
         self.color_danger = color_danger
 
 
-    def set_legend_text(self, text: str) -> None:
+    def setLegendText(self, text: str) -> None:
         self.legend.text = text
         self._update_geometry()
         self.update()
 
 
-    def set_label_text(self, text: str) -> None:
+    def setLabelText(self, text: str) -> None:
         self.label.text = text
+        self._update_geometry()
+        self.update()
+
+
+    def displayValue(self, b: bool) -> None:
+        self._display_value = b
         self._update_geometry()
         self.update()
 
@@ -316,7 +325,7 @@ class HRadialProgress(QProgressBar):
             painter.setPen(pen)
             painter.drawArc(self.bar_rect, self.start, int(self.span * percent / 100))
 
-        if self.legend.text != "":
+        if self.legend.text or self._display_value:
             painter.setFont(self.legend.font)
             painter.setPen(self.legend.color)
             painter.drawText(
@@ -325,13 +334,14 @@ class HRadialProgress(QProgressBar):
                 self.legend.text
             )
 
-        if self.label.text != "":
+        if self.label.text or self._display_value:
             painter.setFont(self.label.font)
             painter.setPen(self.label.color)
+            label_text: str = (
+                f"{self.value()}%" if self._display_value else self.label.text
+            )
             painter.drawText(
-                self.bar_rect,
-                Qt.AlignmentFlag.AlignCenter,
-                self.label.text
+                self.bar_rect, label_text, Qt.AlignmentFlag.AlignCenter
             )
 
         painter.end()

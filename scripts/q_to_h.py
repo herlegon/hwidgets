@@ -37,25 +37,18 @@ if __name__ == "__main__":
     }
 
     WIDGET_NAME_MAP = {
+        "h_card": "HCard",
+
+        "h_divider": "HDivider",
+        "h_vertical_divider": "HVerticalDivider",
+        "h_horizontal_divider": "HHorizontalDivider",
+
         "h_title": "HTitle",
         "h_subtitle": "HSubtitle",
         "h_comment": "HComment",
         "h_description": "HDescription",
-        "h_divider": "HDivider",
+
         "h_switch": "HSwitch",
-
-        "h_vertical_divider": "HVerticalDivider",
-        "h_horizontal_divider": "HHorizontalDivider",
-
-        "h_progress_bar_m3": "HProgressBarM3",
-        "h_progress_bar": "HProgressBar",
-
-        "h_indet_progress_bar": "HIndetProgressBar",
-        "h_indet_progress_bar_m2": "HIndetProgressBarM2",
-        "h_indet_progress_bar_r": "HIndetProgressBarR",
-
-        "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
-        "h_radial_progress": "HRadialProgress",
 
         "h_strong_button": "HStrongButton",
         "h_strong_grey_button": "HStrongGreyButton",
@@ -69,6 +62,16 @@ if __name__ == "__main__":
 
         "h_button_group": "HButtonGroup",
         "h_grey_button_group": "HGreyButtonGroup",
+
+        "h_progress_bar_m3": "HProgressBarM3",
+        "h_progress_bar": "HProgressBar",
+
+        "h_indet_progress_bar": "HIndetProgressBar",
+        "h_indet_progress_bar_m2": "HIndetProgressBarM2",
+        "h_indet_progress_bar_r": "HIndetProgressBarR",
+        "h_radial_progress": "HRadialProgress",
+
+        "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
     }
 
 

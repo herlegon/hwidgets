@@ -11,10 +11,11 @@ from PySide6.QtWidgets import (
     QFrame,
 )
 
-from .styles import DividerStyle, Theme
+from .styles import Theme
 
 
 class HDivider(QFrame):
+
     def __init__(
         self,
         parent: QWidget,
@@ -24,31 +25,22 @@ class HDivider(QFrame):
         super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         self.setFrameShadow(QFrame.Shadow.Plain)
-
-        if orientation == 'vertical':
-            self.setFrameShape(QFrame.Shape.VLine)
-            self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding))
-            self.setMinimumHeight(theme.divider.min_length)
-            self.setFixedWidth(theme.divider.thickness)
-
-        else:
-            self.setFrameShape(QFrame.Shape.HLine)
-            self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed))
-            self.setMinimumWidth(theme.divider.min_length)
-            self.setFixedHeight(theme.divider.thickness)
-
-        self._update_stylesheet(theme.divider)
+        self.w_style = theme.divider
+        self.setFrameShape(
+            QFrame.Shape.VLine if orientation == 'vertical' else QFrame.Shape.HLine
+        )
+        self._update_stylesheet()
         self.adjustSize()
 
 
-    def _update_stylesheet(self, divider_style: DividerStyle) -> None:
+    def _update_stylesheet(self) -> None:
         stylesheet = """
             QFrame {{
                 border: {thickness}px solid {divider};
             }}
         """.format(
-            divider=divider_style.normal,
-            thickness=divider_style.thickness,
+            divider=self.w_style.normal,
+            thickness=self.w_style.thickness,
         )
         self.setStyleSheet(stylesheet)
 
@@ -56,11 +48,23 @@ class HDivider(QFrame):
     def setFrameShadow(self, shadow: QFrame.Shadow) -> None:
         return
 
+
     def setFrameShape(self, shape: QFrame.Shape) -> None:
-        return
+        super().setFrameShape(shape)
+        if shape == QFrame.Shape.VLine:
+            self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Expanding))
+            self.setMinimumHeight(self.w_style.min_length)
+            self.setFixedWidth(self.w_style.thickness)
+
+        else:
+            self.setSizePolicy(QSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed))
+            self.setMinimumWidth(self.w_style.min_length)
+            self.setFixedHeight(self.w_style.thickness)
+        self.adjustSize()
 
     def setFrameStyle(self, style: int) -> None:
         return
+
 
     def set_line_color(self, color: str) -> None:
         self._update_stylesheet(line_color=color)

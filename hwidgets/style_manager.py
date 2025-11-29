@@ -3,36 +3,43 @@ from pathlib import Path
 import tomllib
 
 from .styles import (
+    Theme,
+    FontConfig,
+    DefaultStyle,
+
     FrameStyle,
-    CheckBoxStyle,
+    CardStyle,
+    DividerStyle,
+    ScrollBarStyle,
+
+    TitleStyle,
+    SubtitleStyle,
     DescriptionStyle,
     CommentStyle,
-    DividerStyle,
-    FontConfig,
-    GroupBoxStyle,
+    LabelStyle,
+
+    CheckBoxStyle,
+    RadioButtonStyle,
+    SwitchStyle,
+
     LineEditStyle,
     PlainTextEditStyle,
-    ScrollBarStyle,
-    SpinBoxStyle,
-    Theme,
-    LabelStyle,
-    RadioButtonStyle,
-    SubtitleStyle,
-    TitleStyle,
-    SwitchStyle,
-    DefaultStyle,
     ComboBoxStyle,
+    SpinBoxStyle,
+
     StrongButtonStyle,
     StrongGreyButtonStyle,
     FramelessButtonStyle,
-    ButtonGroupStyle,
-    GreyButtonGroupStyle,
-    CardStyle,
     ToggleButtonStyle,
     ToggleGreyButtonStyle,
+    ButtonGroupStyle,
+    GreyButtonGroupStyle,
+
     ProgressBarStyle,
     IndetProgressBarStyle,
     OutlinedButtonStyle,
+
+    GroupBoxStyle,
 )
 
 
@@ -122,6 +129,8 @@ class StyleManager:
         # Inheritance rules
         # ------------------------------
         inheritance = {
+            "card": "frame",
+
             "title": "label",
             "subtitle": "label",
             "comment": "label",
@@ -132,7 +141,6 @@ class StyleManager:
 
             "line_edit": "label",
             "plain_text_edit": "line_edit",
-
             "combobox": "line_edit",
             "spinbox": "line_edit",
 

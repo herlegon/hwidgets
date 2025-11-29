@@ -1,5 +1,6 @@
 # refactor:
     ✅ Frame
+    ✅ Card
     ✅ Divider
         (HorizontalDivider)
         (VerticalDivider)
@@ -39,16 +40,20 @@
     ✅ Outlined button
 
     ✅ IndeterminateProgress
-    RadialProgress
+
+    ✅ RadialProgress
+    - TextProgressIndicator
+    - Log
+    - Slider
 
 
 # todo
+    !!! BUG: button group
     (?) missing border for checkable buttons
 
-    Card
-    Unselectable read-only lineedit
     remove GroupBox ?
-    strong button: clean recalculate_size/paint event to not calculate anything in the paintEvent method
+    rework: button base
+    rework: strong button: clean recalculate_size/paint event to not calculate anything in the paintEvent method
 ~~  add a thin border to teh strong buttons (?) ~~
     (low) missing font_style in css for italic
 
