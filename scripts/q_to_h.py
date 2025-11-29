@@ -27,7 +27,7 @@ if __name__ == "__main__":
         "QCheckBox": "HCheckBox",
         "QLabel": "HLabel",
         "QPushButton": "HOutlinedButton",
-        "QGroupBox": "HGroupBox",
+        # "QGroupBox": "HGroupBox",
         "QLineEdit": "HLineEdit",
         "QPlainTextEdit": "HPlainTextEdit",
         "QDoubleSpinBox": "HDoubleSpinBox",
@@ -50,6 +50,8 @@ if __name__ == "__main__":
 
         "h_switch": "HSwitch",
 
+        "h_log_viewer": "HLogViewer",
+
         "h_strong_button": "HStrongButton",
         "h_strong_grey_button": "HStrongGreyButton",
         "h_outlined_button": "HOutlinedButton",
@@ -71,7 +73,7 @@ if __name__ == "__main__":
         "h_indet_progress_bar_r": "HIndetProgressBarR",
         "h_radial_progress": "HRadialProgress",
 
-        "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
+        # "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
     }
 
 

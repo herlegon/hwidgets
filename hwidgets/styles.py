@@ -60,6 +60,14 @@ class DividerStyle:
 
 
 @dataclass
+class ScrollBarStyle:
+    thickness: int = 12
+    normal: str = ""
+    hover: str = ""
+    pressed: str = ""
+
+
+@dataclass
 class LabelStyle:
     padding = 0
 
@@ -154,11 +162,8 @@ class PlainTextEditStyle(LineEditStyle):
 
 
 @dataclass
-class ScrollBarStyle:
-    thickness: int = 12
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
+class LogViewerStyle(PlainTextEditStyle):
+    ...
 
 
 @dataclass
@@ -281,7 +286,6 @@ class IndetProgressBarStyle(ProgressBarStyle):
     ...
 
 
-
 ################################
 
 
@@ -311,6 +315,7 @@ class Theme:
     divider: DividerStyle = field(default_factory=DividerStyle)
     # horizontal_divider: DividerStyle = field(default_factory=DividerStyle)
     # vertical_divider: DividerStyle = field(default_factory=DividerStyle)
+    scrollbar: ScrollBarStyle = field(default_factory=ScrollBarStyle)
 
     label: LabelStyle = field(default_factory=LabelStyle)
     title: TitleStyle = field(default_factory=TitleStyle)
@@ -324,8 +329,7 @@ class Theme:
 
     line_edit: LineEditStyle = field(default_factory=LineEditStyle)
     plain_text_edit: PlainTextEditStyle = field(default_factory=PlainTextEditStyle)
-
-    scrollbar: ScrollBarStyle = field(default_factory=ScrollBarStyle)
+    log_viewer: LogViewerStyle = field(default_factory=LogViewerStyle)
 
     combobox: ComboBoxStyle = field(default_factory=ComboBoxStyle)
     spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)

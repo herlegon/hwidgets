@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1444</width>
-    <height>793</height>
+    <height>986</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1429,6 +1429,87 @@
           </layout>
          </item>
          <item>
+          <widget class="QProgressBar" name="h_indet_progress_bar">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 253, 255);</string>
+           </property>
+           <property name="value">
+            <number>24</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="h_indet_progress_bar_m2">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 253, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QProgressBar" name="h_indet_progress_bar_r">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(231, 253, 255);</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <layout class="QHBoxLayout" name="radial_progress_layout">
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_1">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>24</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_2">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>51</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_3">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>76</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QProgressBar" name="h_radial_progress_4">
+             <property name="styleSheet">
+              <string notr="true">background-color: rgb(231, 253, 255);</string>
+             </property>
+             <property name="value">
+              <number>100</number>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_11">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+          </layout>
+         </item>
+         <item>
           <spacer name="verticalSpacer_2">
            <property name="orientation">
             <enum>Qt::Orientation::Vertical</enum>
@@ -2077,87 +2158,6 @@ of vertical text
           </layout>
          </item>
          <item>
-          <widget class="QProgressBar" name="h_indet_progress_bar">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(231, 253, 255);</string>
-           </property>
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="h_indet_progress_bar_m2">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(231, 253, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QProgressBar" name="h_indet_progress_bar_r">
-           <property name="styleSheet">
-            <string notr="true">background-color: rgb(231, 253, 255);</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <layout class="QHBoxLayout" name="radial_progress_layout">
-           <item>
-            <widget class="QProgressBar" name="h_radial_progress_1">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(231, 253, 255);</string>
-             </property>
-             <property name="value">
-              <number>24</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QProgressBar" name="h_radial_progress_2">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(231, 253, 255);</string>
-             </property>
-             <property name="value">
-              <number>51</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QProgressBar" name="h_radial_progress_3">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(231, 253, 255);</string>
-             </property>
-             <property name="value">
-              <number>76</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QProgressBar" name="h_radial_progress_4">
-             <property name="styleSheet">
-              <string notr="true">background-color: rgb(231, 253, 255);</string>
-             </property>
-             <property name="value">
-              <number>100</number>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <spacer name="horizontalSpacer_11">
-             <property name="orientation">
-              <enum>Qt::Orientation::Horizontal</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>40</width>
-               <height>20</height>
-              </size>
-             </property>
-            </spacer>
-           </item>
-          </layout>
-         </item>
-         <item>
           <widget class="QFrame" name="h_card_consumption">
            <property name="frameShape">
             <enum>QFrame::Shape::StyledPanel</enum>
@@ -2243,6 +2243,32 @@ of vertical text
              </spacer>
             </item>
            </layout>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPlainTextEdit" name="h_log_viewer">
+           <property name="maximumSize">
+            <size>
+             <width>16777215</width>
+             <height>200</height>
+            </size>
+           </property>
+           <property name="tabChangesFocus">
+            <bool>true</bool>
+           </property>
+           <property name="documentTitle">
+            <string>essai</string>
+           </property>
+           <property name="readOnly">
+            <bool>true</bool>
+           </property>
+           <property name="plainText">
+            <string>read only
+</string>
+           </property>
+           <property name="placeholderText">
+            <string notr="true"/>
+           </property>
           </widget>
          </item>
          <item>

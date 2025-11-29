@@ -24,6 +24,7 @@ from .styles import (
 
     LineEditStyle,
     PlainTextEditStyle,
+    LogViewerStyle,
     ComboBoxStyle,
     SpinBoxStyle,
 
@@ -141,6 +142,8 @@ class StyleManager:
 
             "line_edit": "label",
             "plain_text_edit": "line_edit",
+            "log_viewer": "plain_text_edit",
+
             "combobox": "line_edit",
             "spinbox": "line_edit",
 
@@ -158,6 +161,7 @@ class StyleManager:
             "frame": ("frame", FrameStyle),
             "card": ("card", CardStyle),
             "divider": ("divider", DividerStyle),
+            "scrollbar": ("scrollbar", ScrollBarStyle),
 
             "label": ("label", LabelStyle),
             "title": ("title", TitleStyle),
@@ -171,8 +175,7 @@ class StyleManager:
 
             "line_edit": ("line_edit", LineEditStyle),
             "plain_text_edit": ("plain_text_edit", PlainTextEditStyle),
-
-            "scrollbar": ("scrollbar", ScrollBarStyle),
+            "log_viewer": ("log_viewer", LogViewerStyle),
 
             "combobox": ("combobox", ComboBoxStyle),
             "spinbox": ("spinbox", SpinBoxStyle),
@@ -245,7 +248,6 @@ class StyleManager:
             # Remove keys that are not in the dataclass fields to avoid TypeError in replace
             # (Optional but good practice if toml has extra keys)
             # For now, assuming toml is correct or replace will raise TypeError which is fine.
-
             setattr(theme, attr, replace(widget, **widget_cfg, **font_args))
 
         return theme

@@ -28,7 +28,6 @@ from hwidgets import (
     HComboBox,
     HDoubleSpinBox,
     HFrame,
-    HGroupBox,
     HLabel,
     HLineEdit,
     HOutlinedButton,
@@ -47,7 +46,7 @@ from hwidgets import (
     HIndetProgressBar,
     HIndetProgressBarM2,
     HIndetProgressBarR,
-    HIndeterminateCircularProgress,
+    HLogViewer,
     HOutlinedButton,
     HProgressBar,
     HProgressBarM3,
@@ -67,7 +66,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1444, 793)
+        MainWindow.resize(1444, 986)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -847,6 +846,62 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.progress_layout)
 
+        self.h_indet_progress_bar = HIndetProgressBar(self.h_frame, theme=theme)
+        self.h_indet_progress_bar.setObjectName(u"h_indet_progress_bar")
+        self.h_indet_progress_bar.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_indet_progress_bar.setValue(24)
+
+        self.main_layout.addWidget(self.h_indet_progress_bar)
+
+        self.h_indet_progress_bar_m2 = HIndetProgressBarM2(self.h_frame, theme=theme)
+        self.h_indet_progress_bar_m2.setObjectName(u"h_indet_progress_bar_m2")
+        self.h_indet_progress_bar_m2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+
+        self.main_layout.addWidget(self.h_indet_progress_bar_m2)
+
+        self.h_indet_progress_bar_r = HIndetProgressBarR(self.h_frame, theme=theme)
+        self.h_indet_progress_bar_r.setObjectName(u"h_indet_progress_bar_r")
+        self.h_indet_progress_bar_r.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+
+        self.main_layout.addWidget(self.h_indet_progress_bar_r)
+
+        self.radial_progress_layout = QHBoxLayout()
+        self.radial_progress_layout.setObjectName(u"radial_progress_layout")
+        self.h_radial_progress_1 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_1.setObjectName(u"h_radial_progress_1")
+        self.h_radial_progress_1.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_1.setValue(24)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_1)
+
+        self.h_radial_progress_2 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_2.setObjectName(u"h_radial_progress_2")
+        self.h_radial_progress_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_2.setValue(51)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_2)
+
+        self.h_radial_progress_3 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_3.setObjectName(u"h_radial_progress_3")
+        self.h_radial_progress_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_3.setValue(76)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_3)
+
+        self.h_radial_progress_4 = HRadialProgress(self.h_frame, theme=theme)
+        self.h_radial_progress_4.setObjectName(u"h_radial_progress_4")
+        self.h_radial_progress_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.h_radial_progress_4.setValue(100)
+
+        self.radial_progress_layout.addWidget(self.h_radial_progress_4)
+
+        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.radial_progress_layout.addItem(self.horizontalSpacer_11)
+
+
+        self.main_layout.addLayout(self.radial_progress_layout)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout.addItem(self.verticalSpacer_2)
@@ -1201,62 +1256,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addLayout(self.plaintextedit_layout)
 
-        self.h_indet_progress_bar = HIndetProgressBar(self.h_frame, theme=theme)
-        self.h_indet_progress_bar.setObjectName(u"h_indet_progress_bar")
-        self.h_indet_progress_bar.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_indet_progress_bar.setValue(24)
-
-        self.verticalLayout_3.addWidget(self.h_indet_progress_bar)
-
-        self.h_indet_progress_bar_m2 = HIndetProgressBarM2(self.h_frame, theme=theme)
-        self.h_indet_progress_bar_m2.setObjectName(u"h_indet_progress_bar_m2")
-        self.h_indet_progress_bar_m2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-
-        self.verticalLayout_3.addWidget(self.h_indet_progress_bar_m2)
-
-        self.h_indet_progress_bar_r = HIndetProgressBarR(self.h_frame, theme=theme)
-        self.h_indet_progress_bar_r.setObjectName(u"h_indet_progress_bar_r")
-        self.h_indet_progress_bar_r.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-
-        self.verticalLayout_3.addWidget(self.h_indet_progress_bar_r)
-
-        self.radial_progress_layout = QHBoxLayout()
-        self.radial_progress_layout.setObjectName(u"radial_progress_layout")
-        self.h_radial_progress_1 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_1.setObjectName(u"h_radial_progress_1")
-        self.h_radial_progress_1.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_1.setValue(24)
-
-        self.radial_progress_layout.addWidget(self.h_radial_progress_1)
-
-        self.h_radial_progress_2 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_2.setObjectName(u"h_radial_progress_2")
-        self.h_radial_progress_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_2.setValue(51)
-
-        self.radial_progress_layout.addWidget(self.h_radial_progress_2)
-
-        self.h_radial_progress_3 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_3.setObjectName(u"h_radial_progress_3")
-        self.h_radial_progress_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_3.setValue(76)
-
-        self.radial_progress_layout.addWidget(self.h_radial_progress_3)
-
-        self.h_radial_progress_4 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_4.setObjectName(u"h_radial_progress_4")
-        self.h_radial_progress_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_4.setValue(100)
-
-        self.radial_progress_layout.addWidget(self.h_radial_progress_4)
-
-        self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
-
-        self.radial_progress_layout.addItem(self.horizontalSpacer_11)
-
-
-        self.verticalLayout_3.addLayout(self.radial_progress_layout)
-
         self.h_card_consumption = HCard(self.h_frame, theme=theme)
         self.h_card_consumption.setObjectName(u"h_card_consumption")
         self.h_card_consumption.setFrameShape(QFrame.Shape.StyledPanel)
@@ -1312,6 +1311,15 @@ class Ui_MainWindow(object):
 
 
         self.verticalLayout_3.addWidget(self.h_card_consumption)
+
+        self.h_log_viewer = HLogViewer(self.h_frame, theme=theme)
+        self.h_log_viewer.setObjectName(u"h_log_viewer")
+        self.h_log_viewer.setMaximumSize(QSize(16777215, 200))
+        self.h_log_viewer.setTabChangesFocus(True)
+        self.h_log_viewer.setReadOnly(True)
+        self.h_log_viewer.setPlaceholderText(u"")
+
+        self.verticalLayout_3.addWidget(self.h_log_viewer)
 
         self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -1454,6 +1462,9 @@ class Ui_MainWindow(object):
         self.h_plaintextedit_readonly.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
+"", None))
+        self.h_log_viewer.setDocumentTitle(QCoreApplication.translate("MainWindow", u"essai", None))
+        self.h_log_viewer.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
     # retranslateUi
 
