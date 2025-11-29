@@ -4,6 +4,7 @@
     ✅ Divider
         (HorizontalDivider)
         (VerticalDivider)
+    ✅ Overlay Vertical Scrollbar
 
     ✅ Label
     ✅ Title
@@ -16,12 +17,10 @@
     ✅ Switch
 
     ✅ LineEdit
-
     ✅ PlainTextEdit
-    ✅ Overlay Vertical Scrollbar
+    ✅ Log
 
     ✅ ComboBox
-
     ✅ SpinBox
     ✅ DoubleSpinBox
 
@@ -31,19 +30,17 @@
     ✅ ToggleButton
     ✅ ToggleGreyButton
 
-    ✅ ButtonGroup
-    ✅ GreyButtonGroup
-    ✅ ProgressBar
-    ✅ IndeterminateProgress
-
     ✅ Frameless icon button: toggle/simple
     ✅ Outlined button
 
-    ✅ IndeterminateProgress
+    ✅ ButtonGroup
+    ✅ GreyButtonGroup
 
+    ✅ ProgressBar
+    ✅ IndeterminateProgress M2
     ✅ RadialProgress
+
     - TextProgressIndicator
-    - Log
     - Slider
 
 

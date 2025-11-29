@@ -163,3 +163,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.h_log_viewer.appendPlainText("[pip] ✓ Successfully installed matplotlib")
         self.h_log_viewer.appendPlainText("[pip] Installing scikit-learn...")
         self.h_log_viewer.appendPlainText("[pip] ✓ Successfully installed scikit-learn")
+
+        # Timer to append text
+        self.timer = QTimer(self)
+        self.timer.timeout.connect(self._append_timer_log)
+        self.timer.start(1000)
+
+    def _append_timer_log(self):
+        import random
+        messages = [
+            "[System] Checking for updates...",
+            "[Network] Ping 24ms",
+            "[App] Memory usage: 45MB",
+            "[User] Activity detected",
+            "[Log] Background process running"
+        ]
+        self.h_log_viewer.appendPlainText(random.choice(messages))
