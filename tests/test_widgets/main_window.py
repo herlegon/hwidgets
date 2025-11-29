@@ -90,13 +90,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # self.h_radial_progress_1.set_thickness(8)
 
         button_list = ["btn1", "btn2", "btn3", "btn4"]
-        self.h_button_group.set_buttons(button_list)
-        self.h_button_group.get_button(2).setEnabled(False)
-        self.h_button_group_disabled.set_buttons(button_list)
+        # self.h_button_group.set_buttons(button_list)
+        # self.h_button_group.get_button(2).setEnabled(False)
+        # self.h_button_group_disabled.set_buttons(button_list)
 
-        self.h_grey_button_group.set_buttons(button_list)
-        self.h_grey_button_group.get_button(2).setEnabled(False)
-        self.h_grey_button_group_disabled.set_buttons(button_list)
+        # self.h_grey_button_group.set_buttons(button_list)
+        # self.h_grey_button_group.get_button(2).setEnabled(False)
+        # self.h_grey_button_group_disabled.set_buttons(button_list)
 
         self.setMinimumWidth(800)
         if sys.platform == 'linux':

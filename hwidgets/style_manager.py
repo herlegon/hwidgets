@@ -1,11 +1,9 @@
-from pprint import pprint
-import tomllib
-from pathlib import Path
 from dataclasses import replace, fields
+from pathlib import Path
+import tomllib
 
 from .styles import (
     FrameStyle,
-    ButtonStyle,
     CheckBoxStyle,
     DescriptionStyle,
     CommentStyle,
@@ -21,11 +19,9 @@ from .styles import (
     RadioButtonStyle,
     SubtitleStyle,
     TitleStyle,
-    IconButtonStyle,
     SwitchStyle,
     DefaultStyle,
     ComboBoxStyle,
-    FlatButtonStyle,
     StrongButtonStyle,
     StrongGreyButtonStyle,
     FramelessButtonStyle,
@@ -36,6 +32,7 @@ from .styles import (
     ToggleGreyButtonStyle,
     ProgressBarStyle,
     IndetProgressBarStyle,
+    OutlinedButtonStyle,
 )
 
 
@@ -175,6 +172,7 @@ class StyleManager:
 
             "strong_button": ("strong_button", StrongButtonStyle),
             "strong_grey_button": ("strong_grey_button", StrongGreyButtonStyle),
+            "outlined_button": ("outlined_button", OutlinedButtonStyle),
 
             "toggle_button": ("toggle_button", ToggleButtonStyle),
             "toggle_grey_button": ("toggle_grey_button", ToggleGreyButtonStyle),
@@ -187,11 +185,7 @@ class StyleManager:
             "progress_bar": ("progress_bar", ProgressBarStyle),
             "indet_progress_bar": ("indet_progress_bar", IndetProgressBarStyle),
 
-            "flat_button": ("flat_button", FlatButtonStyle),
-
             "group_box": ("groupbox", GroupBoxStyle),
-            "icon_button": ("icon_button", IconButtonStyle),
-            "button": ("button", ButtonStyle),
         }
 
         # ------------------------------

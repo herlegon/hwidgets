@@ -91,12 +91,12 @@ font_color_disabled = "#666667"
 [line_edit]
 bgd = "#2a2a2a"
 hover = ""
+disabled = "#2a2a2a"
+
 border = "#4a4a4a"
 border_hover = "#5e7ce0"
 border_edition = "#5e7ce0"
 border_read_only = "#5e5e5e"
-
-disabled = "#2a2a2a"
 
 selection = "#5e7ce0"
 
@@ -152,6 +152,37 @@ hover = "#3a3a3a"
 pressed = "#424242"
 
 
+[outlined_button]
+bgd = "transparent"
+hover = "#2a2a2a"
+pressed = "#6a6a6a"
+disabled = "#2a2a2a"
+
+border = "#424242"
+border_disabled = "#3a3a3a"
+
+font_family = "Inter"
+font_size = 11
+font_weight = 400
+font_color = "#d4d4d4"
+font_color_disabled = "#666667"
+
+
+[toggle_button]
+bgd = "#2a2a2a"
+hover = "#3a3a3a"
+pressed = "#354185"
+checked = "#3d4a99"
+font_size = 9
+font_weight = 400
+font_color = "#d4d4d4"
+
+
+[toggle_grey_button]
+pressed = "#5e5e5e"
+checked = "#6a6a6a"
+
+
 [button_group]
 bgd = "#2a2a2a"
 hover = "#3a3a3a"
@@ -171,19 +202,6 @@ checked = "#6a6a6a"
 pressed = "#5e5e5e"
 
 
-[toggle_button]
-bgd = "#2a2a2a"
-hover = "#3a3a3a"
-pressed = "#354185"
-checked = "#3d4a99"
-font_size = 9
-font_weight = 400
-font_color = "#d4d4d4"
-
-
-[toggle_grey_button]
-checked = "#6a6a6a"
-pressed = "#5e5e5e"
 
 
 [frameless_button]
@@ -211,34 +229,6 @@ bar = "#5e7ce0"
 ###################################################
 # to be modified
 
-[button]
-normal = "#5e7ce0"
-hover = "#4a5ba8"
-disabled = "#4a4a4a"
-
-
-[flat_button]
-normal = "#5e7ce0"
-disabled = "#4a4a4a"
-
-
-[icon_button]
-# normal = icon line color
-normal = "#5e7ce0"
-border = "#5e5e5e"
-disabled = "#4a4a4a"
-
-
-
-[slider]
-track = "#4a4a4a"
-handle = "#5e7ce0"
-handle_hover = "#5e7ce0"
-handle_pressed = "#8a9eff"
-track_height = 4
-handle_width = 12
-handle_height = 12
-
 
 [checkable_button]
 normal = "#2a2a2a"
@@ -253,15 +243,21 @@ disabled = "#2a2a2a"
 
 
 
-[button_label]
-font_size = 13
-font_weight = 500
+[slider]
+track = "#4a4a4a"
+handle = "#5e7ce0"
+handle_hover = "#5e7ce0"
+handle_pressed = "#8a9eff"
+track_height = 4
+handle_width = 12
+handle_height = 12
+
+
 
 [log]
 bgd = "#000000"
-border = "#444444"
-border_radius = 5
+border = "#4a4a4a"
 font_family = "monospace"
-font_size = 13
-font_color = "#ffffff"
+font_size = 12
+font_color = "#b0b0b0"
 text_bgd = "#111111"

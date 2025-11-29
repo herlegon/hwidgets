@@ -10,7 +10,6 @@ from .utils import (
     load_qss,
 )
 from PySide6.QtCore import (
-    Property,
     Qt,
     QSize,
     Signal,
@@ -53,7 +52,7 @@ class HButtonGroup(QWidget):
         self._layout.setContentsMargins(0, 0, 0, 0)
         self._layout.setSpacing(0)
         self.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        self.setFixedHeight(theme.button.height)
+        self.setFixedHeight(theme.button_group.height)
 
         # Logical Group
         self.group = QButtonGroup(self)
@@ -79,7 +78,7 @@ class HButtonGroup(QWidget):
 
     def sizeHint(self) -> QSize:
         # width = self._buttons[0].width() * len(self._buttons)
-        return QSize(self.width(), self.theme.button.height)
+        return QSize(self.width(), self.theme.button_group.height)
 
 
     def minimumSizeHint(self):
@@ -95,6 +94,7 @@ class HButtonGroup(QWidget):
         qss_template = Template(load_qss(f"button_group.qss"))
         qss = qss_template.substitute(
             radius=f"{radius}px",
+            padding=f"{btn_style.padding}px",
 
             widget_bgd=f"{btn_style.bgd}",
             hover=f"{btn_style.hover}",

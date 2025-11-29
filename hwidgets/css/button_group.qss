@@ -7,7 +7,7 @@ QWidget {
 
 QToolButton {
     background-color: $widget_bgd;
-    padding: 0px $radius 2px $radius;
+    padding: 0px $padding 2px $padding;
     border: 1px solid $border_color;
 
     color: $font_color;

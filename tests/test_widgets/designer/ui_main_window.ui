@@ -71,7 +71,7 @@
            <item>
             <widget class="QLabel" name="h_title_icon">
              <property name="text">
-              <string/>
+              <string>With an icon</string>
              </property>
              <property name="pixmap">
               <pixmap>../../../hwidgets/icons/gpu.png</pixmap>
@@ -619,6 +619,19 @@
              </property>
             </widget>
            </item>
+           <item>
+            <spacer name="horizontalSpacer_10">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
           </layout>
          </item>
          <item>
@@ -626,7 +639,7 @@
            <item>
             <widget class="QPushButton" name="h_toggle_grey_button">
              <property name="text">
-              <string>toggle</string>
+              <string>toggle grey</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -636,7 +649,7 @@
            <item>
             <widget class="QPushButton" name="h_toggle_grey_button_checked_2">
              <property name="text">
-              <string>toggle (checked)</string>
+              <string>toggle grey (checked)</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -652,7 +665,7 @@
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>toggle (disabled)</string>
+              <string>toggle grey (disabled)</string>
              </property>
             </widget>
            </item>
@@ -662,7 +675,7 @@
               <bool>false</bool>
              </property>
              <property name="text">
-              <string>toggle (Checked Disabled)</string>
+              <string>toggle grey (Checked Disabled)</string>
              </property>
              <property name="checkable">
               <bool>true</bool>
@@ -671,72 +684,97 @@
               <bool>true</bool>
              </property>
             </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_9">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </item>
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_18">
            <item>
-            <widget class="QPushButton" name="h_text_icon_button">
+            <widget class="QPushButton" name="h_outlined_button">
              <property name="text">
-              <string>ibutton</string>
+              <string>outlined</string>
              </property>
-             <property name="icon">
-              <iconset>
-               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             <property name="flat">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_text_icon_button_checked">
+            <widget class="QPushButton" name="h_outlined_button_icon">
              <property name="text">
-              <string>ibutton (checked)</string>
+              <string>outlined</string>
              </property>
              <property name="icon">
               <iconset>
                <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
              </property>
              <property name="checkable">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="checked">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_text_icon_button_disabled">
-             <property name="enabled">
-              <bool>false</bool>
+            <widget class="QPushButton" name="h_outlined_button_icon_r">
+             <property name="layoutDirection">
+              <enum>Qt::LayoutDirection::RightToLeft</enum>
              </property>
              <property name="text">
-              <string>ibutton (disabled)</string>
-             </property>
-             <property name="icon">
-              <iconset>
-               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QPushButton" name="h_text_icon_button_disabled_checked">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-             <property name="text">
-              <string>ibutton (Checked Disabled)</string>
+              <string>outlined</string>
              </property>
              <property name="icon">
               <iconset>
                <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
              </property>
              <property name="checkable">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
              <property name="checked">
-              <bool>true</bool>
+              <bool>false</bool>
              </property>
             </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="h_outlined_button_disabled">
+             <property name="enabled">
+              <bool>false</bool>
+             </property>
+             <property name="text">
+              <string>outlined (disabled)</string>
+             </property>
+             <property name="icon">
+              <iconset>
+               <normaloff>../../../hwidgets/icons/gpu.png</normaloff>../../../hwidgets/icons/gpu.png</iconset>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <spacer name="horizontalSpacer_3">
+             <property name="orientation">
+              <enum>Qt::Orientation::Horizontal</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>40</width>
+               <height>20</height>
+              </size>
+             </property>
+            </spacer>
            </item>
           </layout>
          </item>

@@ -27,5 +27,5 @@ else
 fi
 
 export QT_QPA_PLATFORM=xcb
-python test_widgets.py
+python test_qwidgets.py
 

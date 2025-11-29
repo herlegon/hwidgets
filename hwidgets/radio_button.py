@@ -24,6 +24,8 @@ from PySide6.QtGui import (
     QPainter,
     QPen,
     QPaintEvent,
+    QFont,
+    QFontMetrics,
 )
 from PySide6.QtWidgets import (
     QWidget,
@@ -103,7 +105,10 @@ class HRadioButton(QRadioButton):
         text = self.text()
         self.text_rect = QRect()
         if text:
-            text_width = self.fontMetrics().horizontalAdvance(text)
+            font = QFont(rb_style.font.family, rb_style.font.size)
+            font.setWeight(QFont.Weight(rb_style.font.weight))
+            font_metrics = QFontMetrics(font)
+            text_width = font_metrics.horizontalAdvance(text)
             text_spacing = self._spacing + text_width
             content_width += text_spacing
 

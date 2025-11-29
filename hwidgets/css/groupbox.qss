@@ -1,6 +1,7 @@
 /* top, right, bottom, left */
 QGroupBox {
     background-color: $widget_bgd;
+    padding: 0px $padding 0 $padding;
     border: 1px solid $border_color;
     border-radius: $radius;
     margin-top: 12px;
@@ -15,26 +16,7 @@ QGroupBox {
 QGroupBox:disabled {
     border: 1px solid $font_color_disabled;
 }
-/*
-Linux, no need for that, other platforms?
-QGroupBox::title {
-    background-color: $widget_bgd;
-    border-radius: 0px;
 
-    color: $font_color;
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
-
-    subcontrol-origin: margin;
-    subcontrol-position: top left;
-
-    left: $padding;
-    top: $radius;
-
-    margin: 0px;
-    padding-top: 0px $title_margins 1px $title_margins;
-}
-*/
 
 QGroupBox:disabled {
     background-color: $widget_disabled;

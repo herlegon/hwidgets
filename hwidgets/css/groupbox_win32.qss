@@ -16,11 +16,10 @@ QGroupBox::title {
     margin: 0px;
     padding-top: 0px $title_margins 1px $title_margins;
 
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
+    font-family: $font_family;
+    font-size: $font_size;
     font-weight: $font_weight;
     color: $font_color;
-
 }
 
 

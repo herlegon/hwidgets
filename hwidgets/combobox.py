@@ -216,7 +216,7 @@ class HComboBox(QComboBox):
         self.variant = ""
 
         radius = theme.default.radius
-        padding_left, padding_right = radius, radius
+        padding_left = padding_right = radius
 
         template_subst: dict = dict(
             window_bgd="red",

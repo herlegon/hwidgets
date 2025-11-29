@@ -5,6 +5,7 @@ from typing import NamedTuple
 BORDER_RADIUS: int = 6
 DEFAULT_HEIGHT: int = 24
 PROGRESS_TRACK_THICKNESS: int = 12
+BUTTON_SIDE_PADDING: int = BORDER_RADIUS + 12
 
 
 class FontConfig(NamedTuple):
@@ -177,6 +178,7 @@ class SpinBoxStyle(LineEditStyle):
 @dataclass
 class StrongButtonStyle:
     height: int = 32
+    padding: int = BUTTON_SIDE_PADDING
 
     bgd: str = ""
     hover: str = ""
@@ -191,6 +193,24 @@ class StrongButtonStyle:
 @dataclass
 class StrongGreyButtonStyle(StrongButtonStyle):
     ...
+
+
+@dataclass
+class OutlinedButtonStyle:
+    height: int = DEFAULT_HEIGHT
+    padding: int = BUTTON_SIDE_PADDING
+
+    bgd: str = ""
+    hover: str = ""
+    pressed: str = ""
+    disabled: str = ""
+
+    border: str = ""
+    border_disabled: str = ""
+
+    font: FontConfig = FontConfig(weight=600, size=16)
+    font_color: str = ""
+    font_color_disabled: str = ""
 
 
 @dataclass
@@ -227,6 +247,7 @@ class FramelessButtonStyle:
 @dataclass
 class ButtonGroupStyle:
     height: int = DEFAULT_HEIGHT
+    padding: int = BUTTON_SIDE_PADDING // 2
 
     bgd: str = ""
     hover: str = ""
@@ -261,40 +282,7 @@ class IndetProgressBarStyle(ProgressBarStyle):
 
 
 
-
-
-
-
-
 ################################
-
-
-
-
-
-@dataclass
-class ButtonStyle:
-    height: int = DEFAULT_HEIGHT
-
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    checked: str = ""
-    disabled: str = ""
-
-    font: FontConfig = FontConfig(weight=500)
-    font_color: str = ""
-    font_color_checked: str = ""
-    font_color_disabled: str = ""
-
-
-@dataclass
-class FlatButtonStyle:
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    checked: str = ""
-    disabled: str = ""
 
 
 @dataclass
@@ -309,39 +297,6 @@ class GroupBoxStyle:
     pressed: str = ""
     disabled_bgd: str = ""
     border: str = ""
-
-
-
-
-
-@dataclass
-class IconButtonStyle:
-    height: int = DEFAULT_HEIGHT
-
-    normal: str = ""
-    hover: str = ""
-    pressed: str = ""
-    disabled: str = ""
-
-    border: str = ""
-
-
-
-
-
-
-
-
-
-
-# @dataclass
-# class IndetProgressBarStyle(ProgressStyle):
-#     ...
-
-
-# @dataclass
-# class RadialProgressStyle(ProgressStyle):
-#     ...
 
 
 
@@ -377,6 +332,7 @@ class Theme:
 
     strong_button: StrongButtonStyle = field(default_factory=StrongButtonStyle)
     strong_grey_button: StrongGreyButtonStyle = field(default_factory=StrongGreyButtonStyle)
+    outlined_button: OutlinedButtonStyle = field(default_factory=OutlinedButtonStyle)
 
     toggle_button: ToggleButtonStyle = field(default_factory=ToggleButtonStyle)
     toggle_grey_button: ToggleGreyButtonStyle = field(default_factory=ToggleGreyButtonStyle)
@@ -386,15 +342,8 @@ class Theme:
     button_group: ButtonGroupStyle = field(default_factory=ButtonGroupStyle)
     grey_button_group: GreyButtonGroupStyle = field(default_factory=GreyButtonGroupStyle)
 
-
-    button: ButtonStyle = field(default_factory=ButtonStyle)
-    flat_button: FlatButtonStyle = field(default_factory=FlatButtonStyle)
-    icon_button: IconButtonStyle = field(default_factory=IconButtonStyle)
-
     progress_bar: ProgressBarStyle = field(default_factory=ProgressBarStyle)
     indet_progress_bar: IndetProgressBarStyle = field(default_factory=IndetProgressBarStyle)
 
     # radial_progress: RadialProgressStyle = field(default_factory=RadialProgressStyle)
-
-
 

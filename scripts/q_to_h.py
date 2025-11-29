@@ -26,7 +26,7 @@ if __name__ == "__main__":
         "QRadioButton": "HRadioButton",
         "QCheckBox": "HCheckBox",
         "QLabel": "HLabel",
-        "QPushButton": "HButton",
+        "QPushButton": "HOutlinedButton",
         "QGroupBox": "HGroupBox",
         "QLineEdit": "HLineEdit",
         "QPlainTextEdit": "HPlainTextEdit",
@@ -58,6 +58,8 @@ if __name__ == "__main__":
         "h_radial_progress": "HRadialProgress",
 
         "h_strong_button": "HStrongButton",
+        "h_strong_grey_button": "HStrongGreyButton",
+        "h_outlined_button": "HOutlinedButton",
         "h_strong_grey_button": "HStrongGreyButton",
 
         "h_toggle_button": "HToggleButton",

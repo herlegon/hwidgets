@@ -23,6 +23,8 @@ from PySide6.QtGui import (
     QPainter,
     QPaintEvent,
     QPen,
+    QFont,
+    QFontMetrics,
 )
 from PySide6.QtWidgets import (
     QWidget,
@@ -98,18 +100,16 @@ class HCheckBox(QCheckBox):
             cb_style.box_size
         )
 
-        # self.inner_box_rect: QRectF = QRectF(
-        #     thickness - 1,
-        #     top_margin + thickness - 1,
-        #     cb_style.size - 2 * thickness,
-        #     cb_style.size - 2 * thickness,
-        # )
-
         content_width = cb_style.box_size + thickness
         text = self.text()
         self.text_rect = QRect()
         if text:
-            text_width = self.fontMetrics().horizontalAdvance(text)
+            font = QFont(cb_style.font.family, cb_style.font.size)
+            font.setWeight(QFont.Weight(cb_style.font.weight))
+            font_metrics = QFontMetrics(font)
+            text_width = font_metrics.horizontalAdvance(text)
+
+            # text_width = self.fontMetrics().horizontalAdvance(text)
             text_spacing = self._spacing + text_width
             content_width += text_spacing
 

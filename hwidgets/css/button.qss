@@ -2,9 +2,7 @@ QPushButton {
     background-color: $widget_bgd;
     border: none;
     border-radius: $radius;
-    padding-left: 8px;
-    padding-right: 8px;
-    padding-bottom: 0px;
+    padding: 0px $padding 0px $padding;
     margin: 0px;
 
     font-family: $font_family;

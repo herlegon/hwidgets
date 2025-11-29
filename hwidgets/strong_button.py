@@ -2,8 +2,6 @@ from pprint import pprint
 from string import Template
 from typing import Type
 
-from .button_deprecated import HButton
-
 from .styles import Theme
 from .hstyle import (
     DEBUG_GEOMETRY,
@@ -16,7 +14,6 @@ from .utils import (
 from PySide6.QtCore import (
     Qt,
     QSize,
-    QEvent,
     QRect,
 )
 from PySide6.QtGui import (
@@ -24,7 +21,6 @@ from PySide6.QtGui import (
     QPixmap,
     QPainter,
     QColor,
-    QMouseEvent,
     QFontMetrics,
     QFont,
     QPaintEvent,
@@ -99,7 +95,10 @@ class HStrongButton(QPushButton):
         height: int = self.btn_style.height
 
         if self.text():
-            text_width = self.fontMetrics().horizontalAdvance(self.text())
+            font = QFont(self.btn_style.font.family, self.btn_style.font.size)
+            font.setWeight(QFont.Weight(self.btn_style.font.weight))
+            font_metrics = QFontMetrics(font)
+            text_width = font_metrics.horizontalAdvance(self.text())
 
             if self._icon:
                 icon_width = height
@@ -190,6 +189,7 @@ class HStrongButton(QPushButton):
         qss = qss_template.substitute(
             radius=f"{radius}px",
             margin_left=f"{radius + default_style.height + 6}px",
+            padding=f"{btn_style.padding}px",
 
             widget_bgd=f"{btn_style.bgd}",
 

@@ -11,7 +11,6 @@ from .divider import (
     HHorizontalDivider,
     HVerticalDivider,
 )
-from .button_deprecated import HButton
 from .button_group import HButtonGroup, HGreyButtonGroup
 from .frame import HFrame
 from .groupbox import HGroupBox
@@ -31,6 +30,7 @@ from .titles import HTitle
 from .utils import load_png_image
 from .style_manager import StyleManager, Theme
 from .strong_button import HStrongButton, HStrongGreyButton
+from .outlined_button import HOutlinedButton
 from .toggle_button import HToggleButton, HToggleGreyButton
 
 from .progress_bar import HProgressBar, HProgressBarM3
@@ -55,6 +55,7 @@ __all__ = [
     "HDivider",
     "HHorizontalDivider",
     "HVerticalDivider",
+    "HScrollBar",
 
     "HTitle",
     "HSubtitle",
@@ -74,6 +75,7 @@ __all__ = [
 
     "HStrongButton",
     "HStrongGreyButton",
+    "HOutlinedButton",
 
     "HToggleButton",
     "HToggleGreyButton",
@@ -89,9 +91,7 @@ __all__ = [
     "HIndetProgressBarR",
     "HIndetProgressBarM2",
 
-    "HButton",
     "HRadialProgress",
-    "HScrollBar",
 
     "load_png_image",
 ]

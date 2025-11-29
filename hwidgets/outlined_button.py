@@ -24,6 +24,7 @@ from PySide6.QtGui import (
     QFontMetrics,
     QFont,
     QPaintEvent,
+    QPen,
 )
 from PySide6.QtWidgets import (
     QPushButton,
@@ -35,7 +36,7 @@ from PySide6.QtWidgets import (
 
 
 
-class HToggleButton(QPushButton):
+class HOutlinedButton(QPushButton):
 
     def __init__(
         self,
@@ -56,10 +57,7 @@ class HToggleButton(QPushButton):
 
         self.theme = theme
         self.default_style = theme.default
-        self._is_grayscale: bool = False
-        self.useGreyscale(False)
-
-        self.setCheckable(True)
+        self.btn_style = theme.outlined_button
 
         self._icon = None
         self.text_width = 0
@@ -83,40 +81,6 @@ class HToggleButton(QPushButton):
 
     def setSpacing(self, spacing: int) -> None:
         self._spacing = spacing
-
-
-    def isGrayscale(self) -> bool:
-        return self._is_grayscale
-
-
-    def setCheckable(self, b: bool):
-        super().setCheckable(b)
-        if b:
-            self.btn_style = (
-                self.theme.toggle_grey_button
-                if self.isGrayscale()
-                else self.theme.toggle_button
-            )
-
-        else:
-            self.btn_style = (
-                self.theme.strong_grey_button
-                if self.isGrayscale()
-                else self.theme.strong_button
-            )
-
-
-    def useGreyscale(self, b: bool) -> None:
-        self._is_grayscale = b
-        if self.isCheckable():
-            self.btn_style = (
-                self.theme.toggle_grey_button if b else self.theme.toggle_button
-            )
-
-        else:
-            self.btn_style = (
-                self.theme.strong_grey_button if b else self.theme.strong_button
-            )
 
 
     def _recalculate_size(self) -> None:
@@ -180,6 +144,7 @@ class HToggleButton(QPushButton):
             self.pixmap_size = QSize(COMBOBOX_HEIGHT, COMBOBOX_HEIGHT)
         pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
 
+
         normal = QColor(self.btn_style.font_color)
         pressed = QColor(self.btn_style.font_color)
         disabled = QColor(self.btn_style.font_color_disabled)
@@ -224,7 +189,7 @@ class HToggleButton(QPushButton):
 
             hover=f"{btn_style.hover}",
             pressed=f"{btn_style.pressed}",
-            checked=f"{btn_style.checked}",
+            checked=f"{btn_style.pressed}",
             disabled=f"{btn_style.disabled}",
 
             font_family=f"\"{btn_style.font.family}\"",
@@ -236,6 +201,8 @@ class HToggleButton(QPushButton):
         )
         self.setStyleSheet(qss)
 
+        self.border_color = QColor(btn_style.border)
+        self.border_disabled_color = QColor(btn_style.border_disabled)
         # Create the font based on FontConfig
         # Calculate text width using QFontMetrics
         font = QFont(
@@ -245,8 +212,8 @@ class HToggleButton(QPushButton):
         )
         font_metrics = QFontMetrics(font)
         self.text_width = font_metrics.horizontalAdvance(self.text())
-        self.font_color = btn_style.font_color
-        self.font_color_disabled = btn_style.font_color_disabled
+        self.font_color = QColor(btn_style.font_color)
+        self.font_color_disabled = QColor(btn_style.font_color_disabled)
 
 
     def paintEvent(self, event: QPaintEvent) -> None:
@@ -261,6 +228,21 @@ class HToggleButton(QPushButton):
         self.style().drawControl(QStyle.ControlElement.CE_PushButtonBevel, option, painter, self)
         radius = self.theme.default.radius
         state = option.state
+
+        # Border color
+        radius: int = self.theme.default.radius
+        border_width = 1.0
+        pen = QPen(
+            (
+                self.border_color
+                if state & QStyle.StateFlag.State_Enabled
+                else self.border_disabled_color
+            ),
+            border_width
+        )
+        painter.setPen(pen)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+        painter.drawRoundedRect(self.rect(), radius, radius)
 
         if self._icon is not None:
             # This button has an icon
@@ -297,11 +279,13 @@ class HToggleButton(QPushButton):
 
         # Draw text, better
         if self.text():
+            width: int = self.width() - 2 * self.btn_style.padding
             if self._icon:
                 if self.layoutDirection() == Qt.LayoutDirection.RightToLeft:
                     alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
                     left = radius + (self.width() - self.text_width - self._spacing - pixmap.width()) // 2
                     right = left + self.text_width
+                    width = right - left
 
                 else:
                     left = radius + pixmap.width() + self._spacing
@@ -309,51 +293,17 @@ class HToggleButton(QPushButton):
                     alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
 
             else:
-                left = 0
-                right = self.width()
+                left = self.btn_style.padding
                 alignment = Qt.AlignmentFlag.AlignCenter
 
-            height = (
-                self.height() - 2
-                if isinstance(self, HToggleButton | HToggleGreyButton)
-                else self.height()
-            )
-            text_rect = QRect(left, 0, right - left, height)
-            painter.setPen(QColor(
+            text_rect = QRect(left, 0, width, self.height())
+            painter.setPen(
                 self.font_color
                 if state & QStyle.StateFlag.State_Enabled
                 else self.font_color_disabled
-            ))
+            )
             painter.drawText(text_rect, alignment, self.text())
 
         painter.end()
 
 
-
-
-class HToggleGreyButton(HToggleButton):
-
-    def __init__(
-        self,
-        /,
-        parent: QWidget | None = ...,
-        *,
-        icon: QIcon | QPixmap | None = None,
-        text: str | None = None,
-        theme: Type[Theme],
-        autoDefault: bool | None = None,
-        default: bool | None = None,
-        flat: bool | None = True,
-
-    ) -> None:
-        super().__init__(
-            parent,
-            icon=icon,
-            text=text,
-            theme=theme,
-            autoDefault=autoDefault,
-            default=default,
-            flat=flat
-        )
-
-        self.useGreyscale(True)

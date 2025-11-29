@@ -24,7 +24,6 @@ from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCh
 
 from typing import Type
 from hwidgets import (
-    HButton,
     HCheckBox,
     HComboBox,
     HDoubleSpinBox,
@@ -32,6 +31,7 @@ from hwidgets import (
     HGroupBox,
     HLabel,
     HLineEdit,
+    HOutlinedButton,
     HPlainTextEdit,
     HRadioButton,
     HScrollBar,
@@ -47,6 +47,7 @@ from hwidgets import (
     HIndetProgressBarM2,
     HIndetProgressBarR,
     HIndeterminateCircularProgress,
+    HOutlinedButton,
     HProgressBar,
     HProgressBarM3,
     HRadialProgress,
@@ -434,6 +435,10 @@ class Ui_MainWindow(object):
 
         self.toggle_buttons_layout.addWidget(self.h_toggle_button_disabled_checked)
 
+        self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.toggle_buttons_layout.addItem(self.horizontalSpacer_10)
+
 
         self.main_layout.addLayout(self.toggle_buttons_layout)
 
@@ -466,42 +471,50 @@ class Ui_MainWindow(object):
 
         self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button_disabled_checked_2)
 
+        self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
+
+        self.toggle_grey_buttons_layout.addItem(self.horizontalSpacer_9)
+
 
         self.main_layout.addLayout(self.toggle_grey_buttons_layout)
 
         self.horizontalLayout_18 = QHBoxLayout()
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
-        self.h_text_icon_button = HButton(self.h_frame, theme=theme)
-        self.h_text_icon_button.setObjectName(u"h_text_icon_button")
+        self.h_outlined_button = HOutlinedButton(self.h_frame, theme=theme)
+        self.h_outlined_button.setObjectName(u"h_outlined_button")
+        self.h_outlined_button.setFlat(True)
+
+        self.horizontalLayout_18.addWidget(self.h_outlined_button)
+
+        self.h_outlined_button_icon = HOutlinedButton(self.h_frame, theme=theme)
+        self.h_outlined_button_icon.setObjectName(u"h_outlined_button_icon")
         icon2 = QIcon()
         icon2.addFile(u"../../hwidgets/icons/gpu.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.h_text_icon_button.setIcon(icon2)
+        self.h_outlined_button_icon.setIcon(icon2)
+        self.h_outlined_button_icon.setCheckable(False)
+        self.h_outlined_button_icon.setChecked(False)
 
-        self.horizontalLayout_18.addWidget(self.h_text_icon_button)
+        self.horizontalLayout_18.addWidget(self.h_outlined_button_icon)
 
-        self.h_text_icon_button_checked = HButton(self.h_frame, theme=theme)
-        self.h_text_icon_button_checked.setObjectName(u"h_text_icon_button_checked")
-        self.h_text_icon_button_checked.setIcon(icon2)
-        self.h_text_icon_button_checked.setCheckable(True)
-        self.h_text_icon_button_checked.setChecked(True)
+        self.h_outlined_button_icon_r = HOutlinedButton(self.h_frame, theme=theme)
+        self.h_outlined_button_icon_r.setObjectName(u"h_outlined_button_icon_r")
+        self.h_outlined_button_icon_r.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.h_outlined_button_icon_r.setIcon(icon2)
+        self.h_outlined_button_icon_r.setCheckable(False)
+        self.h_outlined_button_icon_r.setChecked(False)
 
-        self.horizontalLayout_18.addWidget(self.h_text_icon_button_checked)
+        self.horizontalLayout_18.addWidget(self.h_outlined_button_icon_r)
 
-        self.h_text_icon_button_disabled = HButton(self.h_frame, theme=theme)
-        self.h_text_icon_button_disabled.setObjectName(u"h_text_icon_button_disabled")
-        self.h_text_icon_button_disabled.setEnabled(False)
-        self.h_text_icon_button_disabled.setIcon(icon2)
+        self.h_outlined_button_disabled = HOutlinedButton(self.h_frame, theme=theme)
+        self.h_outlined_button_disabled.setObjectName(u"h_outlined_button_disabled")
+        self.h_outlined_button_disabled.setEnabled(False)
+        self.h_outlined_button_disabled.setIcon(icon2)
 
-        self.horizontalLayout_18.addWidget(self.h_text_icon_button_disabled)
+        self.horizontalLayout_18.addWidget(self.h_outlined_button_disabled)
 
-        self.h_text_icon_button_disabled_checked = HButton(self.h_frame, theme=theme)
-        self.h_text_icon_button_disabled_checked.setObjectName(u"h_text_icon_button_disabled_checked")
-        self.h_text_icon_button_disabled_checked.setEnabled(False)
-        self.h_text_icon_button_disabled_checked.setIcon(icon2)
-        self.h_text_icon_button_disabled_checked.setCheckable(True)
-        self.h_text_icon_button_disabled_checked.setChecked(True)
+        self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.horizontalLayout_18.addWidget(self.h_text_icon_button_disabled_checked)
+        self.horizontalLayout_18.addItem(self.horizontalSpacer_3)
 
 
         self.main_layout.addLayout(self.horizontalLayout_18)
@@ -594,7 +607,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout.addWidget(self.h_label_3)
 
-        self.h_button_checked_2 = HButton(self.h_frame, theme=theme)
+        self.h_button_checked_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_checked_2.setObjectName(u"h_button_checked_2")
         self.h_button_checked_2.setMaximumSize(QSize(24, 24))
         self.h_button_checked_2.setIcon(icon3)
@@ -605,7 +618,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout.addWidget(self.h_button_checked_2)
 
-        self.h_button_disabled_2 = HButton(self.h_frame, theme=theme)
+        self.h_button_disabled_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_disabled_2.setObjectName(u"h_button_disabled_2")
         self.h_button_disabled_2.setEnabled(False)
         self.h_button_disabled_2.setMaximumSize(QSize(24, 24))
@@ -615,7 +628,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout.addWidget(self.h_button_disabled_2)
 
-        self.h_button_2 = HButton(self.h_frame, theme=theme)
+        self.h_button_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_2.setObjectName(u"h_button_2")
         sizePolicy.setHeightForWidth(self.h_button_2.sizePolicy().hasHeightForWidth())
         self.h_button_2.setSizePolicy(sizePolicy)
@@ -626,7 +639,7 @@ class Ui_MainWindow(object):
 
         self.h_button_layout.addWidget(self.h_button_2)
 
-        self.h_button_disabled_checked_2 = HButton(self.h_frame, theme=theme)
+        self.h_button_disabled_checked_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_disabled_checked_2.setObjectName(u"h_button_disabled_checked_2")
         self.h_button_disabled_checked_2.setEnabled(False)
         self.h_button_disabled_checked_2.setMaximumSize(QSize(24, 24))
@@ -1227,7 +1240,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
         self.h_title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon", None))
-        self.h_title_icon.setText("")
+        self.h_title_icon.setText(QCoreApplication.translate("MainWindow", u"With an icon", None))
         self.h_subtitles.setText(QCoreApplication.translate("MainWindow", u"Subtitle", None))
         self.h_description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", None))
         self.h_description.setText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
@@ -1267,14 +1280,14 @@ class Ui_MainWindow(object):
         self.h_toggle_button_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (checked)", None))
         self.h_toggle_button_disabled.setText(QCoreApplication.translate("MainWindow", u"toggle (disabled)", None))
         self.h_toggle_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (Checked Disabled)", None))
-        self.h_toggle_grey_button.setText(QCoreApplication.translate("MainWindow", u"toggle", None))
-        self.h_toggle_grey_button_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle (checked)", None))
-        self.h_toggle_grey_button_disabled_2.setText(QCoreApplication.translate("MainWindow", u"toggle (disabled)", None))
-        self.h_toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle (Checked Disabled)", None))
-        self.h_text_icon_button.setText(QCoreApplication.translate("MainWindow", u"ibutton", None))
-        self.h_text_icon_button_checked.setText(QCoreApplication.translate("MainWindow", u"ibutton (checked)", None))
-        self.h_text_icon_button_disabled.setText(QCoreApplication.translate("MainWindow", u"ibutton (disabled)", None))
-        self.h_text_icon_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"ibutton (Checked Disabled)", None))
+        self.h_toggle_grey_button.setText(QCoreApplication.translate("MainWindow", u"toggle grey", None))
+        self.h_toggle_grey_button_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (checked)", None))
+        self.h_toggle_grey_button_disabled_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (disabled)", None))
+        self.h_toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (Checked Disabled)", None))
+        self.h_outlined_button.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
+        self.h_outlined_button_icon.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
+        self.h_outlined_button_icon_r.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
+        self.h_outlined_button_disabled.setText(QCoreApplication.translate("MainWindow", u"outlined (disabled)", None))
         self.h_frameless_button.setText("")
         self.h_frameless_button_checked.setText("")
         self.h_frameless_button_disabled.setText("")
