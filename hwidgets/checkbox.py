@@ -76,6 +76,8 @@ class HCheckBox(QCheckBox):
             Qt.PenCapStyle.RoundCap,
             Qt.PenJoinStyle.RoundJoin
         )
+
+        self.setFont(self.cb_style.font.make_font())
         self.setMinimumSize(self.sizeHint())
 
 
@@ -104,12 +106,7 @@ class HCheckBox(QCheckBox):
         text = self.text()
         self.text_rect = QRect()
         if text:
-            font = QFont(cb_style.font.family, cb_style.font.size)
-            font.setWeight(QFont.Weight(cb_style.font.weight))
-            font_metrics = QFontMetrics(font)
-            text_width = font_metrics.horizontalAdvance(text)
-
-            # text_width = self.fontMetrics().horizontalAdvance(text)
+            text_width = self.fontMetrics().horizontalAdvance(text)
             text_spacing = self._spacing + text_width
             content_width += text_spacing
 

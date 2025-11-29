@@ -1,14 +1,9 @@
 /* top, right, bottom, left */
 QFrame {
-    /* background-color: $window_bgd;
-    background: $window_bgd; */
     background-color: transparent;
     background: transparent;
 
     color: $font_color;
-    font-family: $font_family;
-    font-size: $font_size;
-    font-weight: $font_weight;
 }
 
 QComboBox {
@@ -17,11 +12,7 @@ QComboBox {
     border-radius: $radius;
     padding-left: $padding_left;
 
-    font-family: $font_family;
-    font-size: $font_size;
-    font-weight: $font_weight;
     color: $font_color;
-
     selection-background-color: $selection;
     selection-color: $font_color;
 }

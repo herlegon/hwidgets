@@ -1,6 +1,7 @@
+from copy import deepcopy
 from string import Template
 from typing import Type
-from .style_manager import Theme
+from .styles import Theme, FontConfig, weight_from_css
 from .utils import load_qss
 
 from PySide6.QtCore import (
@@ -8,6 +9,7 @@ from PySide6.QtCore import (
 )
 from PySide6.QtGui import (
     QPixmap,
+    QFont,
 )
 from PySide6.QtWidgets import (
     QLabel,
@@ -45,10 +47,7 @@ class HLabel(QLabel):
             self.setText(text)
 
         self.theme = theme
-        self._font_size = theme.label.font.size
-        self._weight = theme.label.font.weight
-        self._italic = False
-
+        self.font_config: FontConfig = deepcopy(theme.label.font)
         self._update_stylesheet()
 
 
@@ -74,26 +73,20 @@ class HLabel(QLabel):
         self.setMinimumWidth(self.sizeHint().width())
 
 
-    def setItalic(self, italic: bool) -> None:
-        # Not in the FontConfig
-        if self._italic == italic:
-            return
-        self._italic = italic
+    def setItalic(self, b: bool) -> None:
+        self.font_config.style = QFont.Style.StyleItalic if b else QFont.Style.StyleNormal
         self._update_stylesheet()
 
 
-    def setWeight(self, weight: int) -> None:
-        # override FontConfig
-        if self._weight == weight:
-            return
-        self._weight = weight
+    def setWeight(self, weight: int | QFont.Weight) -> None:
+        if isinstance(weight, int):
+            weight = weight_from_css(weight)
+        self.font_config.weight = weight
         self._update_stylesheet()
 
 
     def setFontSize(self, size: int) -> None:
-        if self._font_size == size:
-            return
-        self._font_size = size
+        self.font_config.size = size
         self._update_stylesheet()
 
 
@@ -114,14 +107,9 @@ class HLabel(QLabel):
 
             font_color_disabled=f"{self.theme.default.font_color_disabled}",
             font_color=f"{style.font_color}",
-
-            font_family=f"\"{style.font.family}\"",
-            font_size=f"{self._font_size}pt",
-            font_weight=f"{self._weight}",
-            font_style="italic" if self._italic else "normal",
         )
         self.setStyleSheet(qss)
-
+        self.setFont(self.font_config.make_font())
 
 
 
@@ -130,8 +118,8 @@ class HDescription(HLabel):
         super().__init__(parent, f, theme=theme, text=text, textFormat=textFormat, pixmap=pixmap, scaledContents=scaledContents, alignment=alignment, wordWrap=wordWrap, margin=margin, indent=indent, openExternalLinks=openExternalLinks, textInteractionFlags=textInteractionFlags, hasSelectedText=hasSelectedText, selectedText=selectedText)
 
         # Override defaults from theme
-        self._font_size = theme.description.font.size
-        self._weight = theme.description.font.weight
+        self.font_config.size = theme.description.font.size
+        self.font_config.weight = theme.description.font.weight
         self._update_stylesheet()
 
 
@@ -178,11 +166,10 @@ class HComment(HLabel):
         )
 
         # Override defaults from theme
-        self._font_size = theme.comment.font.size
-        self._weight = theme.comment.font.weight
-        self._italic = italic
+        self.font_config.size = theme.comment.font.size
+        self.font_config.weight = theme.comment.font.weight
+        self.setItalic(italic)
         self._update_stylesheet()
-
 
 
 
@@ -191,6 +178,6 @@ class HSubtitle(HLabel):
         super().__init__(parent, f, theme=theme, text=text, textFormat=textFormat, pixmap=pixmap, scaledContents=scaledContents, alignment=alignment, wordWrap=wordWrap, margin=margin, indent=indent, openExternalLinks=openExternalLinks, textInteractionFlags=textInteractionFlags, hasSelectedText=hasSelectedText, selectedText=selectedText)
 
         # Override defaults from theme
-        self._font_size = theme.subtitle.font.size
-        self._weight = theme.subtitle.font.weight
+        self.font_config.size = theme.subtitle.font.size
+        self.font_config.weight = theme.subtitle.font.weight
         self._update_stylesheet()

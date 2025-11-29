@@ -105,13 +105,11 @@ class HButtonGroup(QWidget):
 
             border_color=f"{btn_style.border}",
 
-            font_family=f"{btn_style.font.family}",
-            font_size=f"{btn_style.font.size}pt",
-            font_weight=f"{btn_style.font.weight}",
             font_color=f"{btn_style.font_color}",
             font_color_disabled=f"{btn_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
+        self.setFont(btn_style.font.make_font())
 
 
     def _normalize_button_widths(self) -> int:

@@ -1,14 +1,12 @@
 /* top, right, bottom, left */
 QGroupBox {
     background-color: $widget_bgd;
+
     padding: 0px $padding 0 $padding;
     border: 1px solid $border_color;
     border-radius: $radius;
     margin-top: 12px;
 
-    font-family: "Segoe UI", "Sans Serif";
-    font-size: 10pt;
-    font-weight: $font_weight;
     color: $font_color;
 }
 

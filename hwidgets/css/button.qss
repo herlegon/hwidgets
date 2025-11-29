@@ -5,9 +5,6 @@ QPushButton {
     padding: 0px $padding 0px $padding;
     margin: 0px;
 
-    font-family: $font_family;
-    font-size: $font_size;
-    font-weight: $font_weight;
     color: $font_color;
 }
 

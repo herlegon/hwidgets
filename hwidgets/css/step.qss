@@ -1,0 +1,19 @@
+HStep {
+    background-color: transparent;
+    margin: 0px;
+    padding: 0px;
+
+    color: $font_current_color;
+}
+
+HStep[state="completed"] {
+    color: $font_completed_color;
+}
+
+HStep[state="current"] {
+    color: $font_current_color;
+}
+
+HStep[state="upcoming"] {
+    color: $font_upcoming_color;
+}

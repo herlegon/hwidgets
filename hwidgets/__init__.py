@@ -37,13 +37,14 @@ from .outlined_button import HOutlinedButton
 from .button_group import HButtonGroup, HGreyButtonGroup
 
 from .progress_bar import HProgressBar, HProgressBarM3
+from .step_indicator import HStepIndicator
+from .radial_progress_bar import HRadialProgress
+
 from .indet_progress_bar import (
     HIndetProgressBar,
     HIndetProgressBarR,
 )
-
 from .indet_progress_bar_m2 import HIndetProgressBarM2
-from .radial_progress_bar import HRadialProgress
 
 # from .indeterminate_circular_progress import HIndeterminateCircularProgress
 # from .groupbox import HGroupBox
@@ -93,11 +94,12 @@ __all__ = [
 
     "HProgressBar",
     "HProgressBarM3",
+    "HStepIndicator",
+    "HRadialProgress",
+
     "HIndetProgressBar",
     "HIndetProgressBarR",
     "HIndetProgressBarM2",
-
-    "HRadialProgress",
 
     "load_png_image",
 

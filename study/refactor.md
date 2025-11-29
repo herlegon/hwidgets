@@ -23,6 +23,7 @@
     ✅ ComboBox
     ✅ SpinBox
     ✅ DoubleSpinBox
+    - Slider
 
     ✅ StrongButton
     ✅ StrongGreyButton
@@ -37,11 +38,11 @@
     ✅ GreyButtonGroup
 
     ✅ ProgressBar
-    ✅ IndeterminateProgress M2
     ✅ RadialProgress
+    ✅ StepIndicator
 
-    - TextProgressIndicator
-    - Slider
+    ✅ IndeterminateProgress M2
+
 
 
 # todo

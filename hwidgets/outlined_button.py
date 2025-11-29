@@ -65,6 +65,8 @@ class HOutlinedButton(QPushButton):
         self._spacing: int = 12
         self._cached_size: QSize = None
 
+        self.setFont(self.btn_style.font.make_font())
+
         if text is not None:
             self.setText(text)
         if icon is not None:
@@ -89,10 +91,7 @@ class HOutlinedButton(QPushButton):
         height: int = self.btn_style.height
 
         if self.text():
-            font = QFont(self.btn_style.font.family, self.btn_style.font.size)
-            font.setWeight(QFont.Weight(self.btn_style.font.weight))
-            font_metrics = QFontMetrics(font)
-            text_width = font_metrics.horizontalAdvance(self.text())
+            text_width = self.fontMetrics().horizontalAdvance(self.text())
 
             if self._icon:
                 icon_width = height
@@ -192,26 +191,16 @@ class HOutlinedButton(QPushButton):
             checked=f"{btn_style.pressed}",
             disabled=f"{btn_style.disabled}",
 
-            font_family=f"\"{btn_style.font.family}\"",
-            font_size=f"{btn_style.font.size}pt",
-            font_weight=f"{btn_style.font.weight}",
-
             font_color=f"{btn_style.font_color}",
             font_color_disabled=f"{btn_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
+        self.setFont(self.btn_style.font.make_font())
+        self.text_width = self.fontMetrics().horizontalAdvance(self.text())
 
         self.border_color = QColor(btn_style.border)
         self.border_disabled_color = QColor(btn_style.border_disabled)
-        # Create the font based on FontConfig
-        # Calculate text width using QFontMetrics
-        font = QFont(
-            btn_style.font.family,
-            btn_style.font.size,
-            btn_style.font.weight
-        )
-        font_metrics = QFontMetrics(font)
-        self.text_width = font_metrics.horizontalAdvance(self.text())
+
         self.font_color = QColor(btn_style.font_color)
         self.font_color_disabled = QColor(btn_style.font_color_disabled)
 

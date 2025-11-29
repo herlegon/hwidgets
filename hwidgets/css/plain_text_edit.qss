@@ -8,11 +8,7 @@ QPlainTextEdit {
 
     padding: 2px $padding_right 2px $padding_left;
 
-    font-family: $font_family;
-    font-size: $font_size;
-    font-weight: $font_weight;
     color: $font_color;
-
     selection-background-color: $selection;
 }
 

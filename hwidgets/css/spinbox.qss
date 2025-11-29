@@ -9,11 +9,7 @@ QDoubleSpinBox {
     margin: 0px;
     padding: 0px $padding_right 2px 0px;
 
-    font-family: $font_family;
-    font-size: $font_size;
-    font-weight: $font_weight;
     color: $font_color;
-
     selection-background-color: $selection;
 }
 

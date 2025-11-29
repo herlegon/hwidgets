@@ -1,72 +1,38 @@
-
 import sys
-from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout
-from PySide6.QtCore import QTimer
-from hwidgets.plain_text_edit import HPlainTextEdit
-from hwidgets.style_manager import StyleManager
+import os
 
-def test_issue():
-    app = QApplication(sys.argv)
-    theme = StyleManager.get_theme()
+# Add the current directory to sys.path to ensure hwidgets can be imported
+sys.path.append(os.getcwd())
 
-    widget = QWidget()
-    layout = QVBoxLayout(widget)
-
-    # Case 1: Initialization with long text
-    long_text = "line\n" * 100
-    pte = HPlainTextEdit(long_text, theme=theme)
-    layout.addWidget(pte)
-
-    widget.resize(400, 300)
-    widget.show()
-
-    def check_initialization():
-        scrollbar_visible = pte.overlay_vbar.isVisible()
-        button_pos = pte.clear_button.pos()
-        print(f"Init - Scrollbar visible: {scrollbar_visible}")
-        print(f"Init - Button pos: {button_pos}")
-
-        scrollbar_width = pte.overlay_vbar.width() + 4 if scrollbar_visible else 4
-        expected_x = pte.width() - pte.clear_button.width() - scrollbar_width
-
-        print(f"Init - Expected x: {expected_x}, Actual x: {button_pos.x()}")
-
-        if abs(expected_x - button_pos.x()) > 2:
-            print("FAIL: Button position incorrect after initialization")
-        else:
-            print("PASS: Button position correct after initialization")
-
-        # Case 2: Paste long text into empty
-        pte.clear()
-        QTimer.singleShot(100, check_paste)
-
-    def check_paste():
-        print("\nClearing text and simulating paste...")
-        pte.setPlainText(long_text)
-
-        # Give time for timer to fire
-        QTimer.singleShot(100, verify_paste)
-
-    def verify_paste():
-        scrollbar_visible = pte.overlay_vbar.isVisible()
-        button_pos = pte.clear_button.pos()
-        print(f"Paste - Scrollbar visible: {scrollbar_visible}")
-        print(f"Paste - Button pos: {button_pos}")
-
-        scrollbar_width = pte.overlay_vbar.width() + 4 if scrollbar_visible else 4
-        expected_x = pte.width() - pte.clear_button.width() - scrollbar_width
-
-        print(f"Paste - Expected x: {expected_x}, Actual x: {button_pos.x()}")
-
-        if abs(expected_x - button_pos.x()) > 2:
-            print("FAIL: Button position incorrect after paste")
-        else:
-            print("PASS: Button position correct after paste")
-
-        app.quit()
-
-    QTimer.singleShot(500, check_initialization)
-    app.exec()
+from PySide6.QtWidgets import QApplication, QWidget, QVBoxLayout, QSizePolicy
+from hwidgets.step_indicator import HStepIndicator
+from hwidgets.styles import Theme
 
 if __name__ == "__main__":
-    test_issue()
+    app = QApplication(sys.argv)
+    window = QWidget()
+    layout = QVBoxLayout(window)
+
+    theme = Theme()
+    step_indicator = HStepIndicator(window, theme)
+    step_indicator.setSteps(["Step 1", "Step 2: Long Label", "Step 3: Very Long Label That Should Not Shrink"])
+    step_indicator.setCurrentStep(1)
+
+    layout.addWidget(step_indicator)
+
+    # Set a small width to force shrinking if it happens
+    window.resize(300, 100)
+
+    print(f"StepIndicator SizeHint: {step_indicator.sizeHint()}")
+    print(f"StepIndicator MinimumSizeHint: {step_indicator.minimumSizeHint()}")
+    print(f"StepIndicator Horizontal Policy: {step_indicator.sizePolicy().horizontalPolicy()}")
+
+    # Check font weight of the current step (index 1)
+    current_step_widget = step_indicator._steps[1]
+    print(f"Current Step Font Weight: {current_step_widget.font().weight()}")
+    print(f"Current Step Style Sheet: {current_step_widget.styleSheet()}")
+
+    window.show()
+
+    print("Running reproduction script. Close the window to finish.")
+    sys.exit(app.exec())

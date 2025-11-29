@@ -68,6 +68,7 @@ class HRadioButton(QRadioButton):
         self.font_pressed = self.pressed
         self.font_disabled = QColor(self.rb_style.font_color_disabled)
 
+        self.setFont(self.rb_style.font.make_font())
         self.setMinimumSize(self.sizeHint())
 
 
@@ -105,10 +106,7 @@ class HRadioButton(QRadioButton):
         text = self.text()
         self.text_rect = QRect()
         if text:
-            font = QFont(rb_style.font.family, rb_style.font.size)
-            font.setWeight(QFont.Weight(rb_style.font.weight))
-            font_metrics = QFontMetrics(font)
-            text_width = font_metrics.horizontalAdvance(text)
+            text_width = self.fontMetrics().horizontalAdvance(text)
             text_spacing = self._spacing + text_width
             content_width += text_spacing
 

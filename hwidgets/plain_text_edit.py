@@ -15,6 +15,7 @@ from PySide6.QtGui import (
     QColor,
     QBrush,
     QPaintEvent,
+    QTextCursor,
 )
 from PySide6.QtWidgets import (
     QWidget,
@@ -318,7 +319,7 @@ class HPlainTextEdit(QPlainTextEdit):
         self.update_clear_button_position()
 
 
-    def setPlainText(self, text):
+    def setPlainText(self, text) -> None:
         super().setPlainText(text)
         self.update_clear_button_position()
 
@@ -361,13 +362,12 @@ class HPlainTextEdit(QPlainTextEdit):
 
             selection=f"{pte_style.selection}",
 
-            font_family=f"{pte_style.font.family}",
-            font_size=f"{pte_style.font.size}pt",
-            font_weight=f"{pte_style.font.weight}",
             font_color=f"{pte_style.font_color}",
             font_color_disabled=f"{pte_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
+        self.document().setDefaultFont(pte_style.font.make_font())
+        self.setFont(pte_style.font.make_font())
 
 
     @Slot(int, int)
@@ -427,7 +427,11 @@ class HPlainTextEdit(QPlainTextEdit):
 
 
     def clear_button_clicked(self):
-        self.clear()
+        cursor = self.textCursor()
+        cursor.beginEditBlock()
+        cursor.select(QTextCursor.SelectionType.Document)
+        cursor.removeSelectedText()
+        cursor.endEditBlock()
         self.clear_button.hide()
 
 

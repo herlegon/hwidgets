@@ -3,10 +3,6 @@ QLabel {
     margin: 0px;
     padding: 0px;
 
-    font-family: $font_family;
-    font-size: $font_size;
-    font-weight: $font_weight;
-    font-style: $font_style;
     color: $font_color;
 }
 

@@ -51,6 +51,7 @@ from hwidgets import (
     HProgressBar,
     HProgressBarM3,
     HRadialProgress,
+    HStepIndicator,
     HStrongButton,
     HStrongGreyButton,
     HSubtitle,
@@ -918,6 +919,11 @@ class Ui_MainWindow(object):
         self.h_frame_styled_raised.setFrameShadow(QFrame.Shadow.Plain)
         self.verticalLayout_9 = QVBoxLayout(self.h_frame_styled_raised)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
+        self.h_step_indicator = HStepIndicator(self.h_frame_styled_raised, theme=theme)
+        self.h_step_indicator.setObjectName(u"h_step_indicator")
+
+        self.verticalLayout_9.addWidget(self.h_step_indicator)
+
         self.h_comment_bold_2 = HComment(self.h_frame_styled_raised, theme=theme)
         self.h_comment_bold_2.setObjectName(u"h_comment_bold_2")
         self.h_comment_bold_2.setWordWrap(True)
@@ -1321,6 +1327,11 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.h_log_viewer)
 
+        self.label_5 = HLabel(self.h_frame, theme=theme)
+        self.label_5.setObjectName(u"label_5")
+
+        self.verticalLayout_3.addWidget(self.label_5)
+
         self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_3)
@@ -1340,7 +1351,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.h_title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon", None))
+        self.h_title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon ABCDEFGHIJKLMNOPQRSTUVWXYZ", None))
         self.h_title_icon.setText("")
         self.h_subtitles.setText(QCoreApplication.translate("MainWindow", u"Subtitle", None))
         self.h_description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", None))
@@ -1463,8 +1474,9 @@ class Ui_MainWindow(object):
 "", None))
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
-        self.h_log_viewer.setDocumentTitle(QCoreApplication.translate("MainWindow", u"essai", None))
+        self.h_log_viewer.setDocumentTitle("")
         self.h_log_viewer.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
+        self.label_5.setText(QCoreApplication.translate("MainWindow", u"FFmpeg Notice & Selection ", None))
     # retranslateUi
 

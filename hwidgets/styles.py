@@ -1,5 +1,6 @@
 from dataclasses import dataclass, field
 from typing import NamedTuple
+from PySide6.QtGui import QFont
 
 
 BORDER_RADIUS: int = 6
@@ -8,10 +9,38 @@ PROGRESS_TRACK_THICKNESS: int = 12
 BUTTON_SIDE_PADDING: int = BORDER_RADIUS + 12
 
 
-class FontConfig(NamedTuple):
+@dataclass
+class FontConfig:
     family: str = "Inter"
-    size: int = 10
-    weight: int = 400
+    size: int = 12
+    weight: QFont.Weight = QFont.Weight.Normal
+    style: QFont.Style = QFont.Style.StyleNormal
+
+    def make_font(self) -> QFont:
+        """
+        Create a QFont from this FontConfig.
+        Anti-aliasing and hinting are applied.
+        """
+        font = QFont(self.family, self.size)
+        font.setWeight(self.weight)
+        font.setStyleStrategy(QFont.StyleStrategy.PreferQuality)
+        font.setHintingPreference(QFont.HintingPreference.PreferNoHinting)
+        font.setStyle(self.style)
+        return font
+
+
+def weight_from_css(css_weight: int) -> QFont.Weight:
+    return {
+        100: QFont.Weight.Thin,
+        200: QFont.Weight.ExtraLight,
+        300: QFont.Weight.Light,
+        400: QFont.Weight.Normal,
+        500: QFont.Weight.Medium,
+        600: QFont.Weight.DemiBold,
+        700: QFont.Weight.Bold,
+        800: QFont.Weight.ExtraBold,
+        900: QFont.Weight.Black,
+    }.get(css_weight, QFont.Weight.Normal)
 
 
 
@@ -31,7 +60,7 @@ class DefaultStyle:
     border_selected: str = ""
 
     # Text colors
-    font: FontConfig = FontConfig(size=14, weight=600)
+    font: FontConfig = field(default_factory=FontConfig)
     font_color: str = ""
     font_color_checked: str = ""
     font_color_disabled: str = ""
@@ -71,30 +100,38 @@ class ScrollBarStyle:
 class LabelStyle:
     padding = 0
 
-    font: FontConfig = FontConfig()
+    font: FontConfig = field(default_factory=FontConfig)
     font_color: str = ""
     font_color_disabled: str = ""
 
 
 @dataclass
 class TitleStyle(LabelStyle):
-    height: int = DEFAULT_HEIGHT + BORDER_RADIUS
-    font: FontConfig = FontConfig(size=16, weight=800)
+    height: int = DEFAULT_HEIGHT + 2 * BORDER_RADIUS
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=16, weight=QFont.Weight.Bold)
+    )
 
 
 @dataclass
 class SubtitleStyle(LabelStyle):
-    font: FontConfig = FontConfig(size=12, weight=400)
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=12)
+    )
 
 
 @dataclass
 class DescriptionStyle(LabelStyle):
-    font: FontConfig = FontConfig(size=12, weight=400)
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=12)
+    )
 
 
 @dataclass
 class CommentStyle(LabelStyle):
-    font: FontConfig = FontConfig(size=10, weight=400)
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=10)
+    )
 
 
 @dataclass
@@ -190,7 +227,9 @@ class StrongButtonStyle:
     pressed: str = ""
     disabled: str = ""
 
-    font: FontConfig = FontConfig(weight=600, size=16)
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=16, weight=QFont.Weight.Bold)
+    )
     font_color: str = ""
     font_color_disabled: str = ""
 
@@ -213,7 +252,9 @@ class OutlinedButtonStyle:
     border: str = ""
     border_disabled: str = ""
 
-    font: FontConfig = FontConfig(weight=600, size=16)
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=16, weight=QFont.Weight.Bold)
+    )
     font_color: str = ""
     font_color_disabled: str = ""
 
@@ -226,7 +267,7 @@ class ToggleButtonStyle(StrongButtonStyle):
 
     border: str = ""
 
-    font: FontConfig = FontConfig(weight=400, size=12)
+    font: FontConfig = field(default_factory=FontConfig)
     font_color_checked: str = ""
 
 
@@ -246,7 +287,7 @@ class FramelessButtonStyle:
     checked: str = ""
     disabled: str = ""
 
-    font: FontConfig = FontConfig(weight=400, size=11)
+    font: FontConfig = field(default_factory=FontConfig)
 
 
 @dataclass
@@ -263,7 +304,9 @@ class ButtonGroupStyle:
 
     border: str = ""
 
-    font: FontConfig = FontConfig(weight=500)
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=14, weight=QFont.Weight.DemiBold)
+    )
     font_color: str = ""
     # font_color_checked: str = ""
     font_color_disabled: str = ""
@@ -282,8 +325,30 @@ class ProgressBarStyle:
 
 
 @dataclass
+class StepIndicatorStyle(LabelStyle):
+    height: int = 64
+    spacing: int = BORDER_RADIUS * 2
+
+    font_completed: FontConfig = field(
+        default_factory=lambda: FontConfig(size=11, weight=QFont.Weight.Normal)
+    )
+    font_completed_color: str = ""
+
+    font_current: FontConfig = field(
+        default_factory=lambda: FontConfig(size=13, weight=QFont.Weight.ExtraBold)
+    )
+    font_current_color: str = ""
+
+    font_upcoming: FontConfig = field(
+        default_factory=lambda: FontConfig(size=11, weight=QFont.Weight.Normal)
+    )
+    font_upcoming_color: str = ""
+
+
+@dataclass
 class IndetProgressBarStyle(ProgressBarStyle):
     ...
+
 
 
 ################################
@@ -347,6 +412,8 @@ class Theme:
     grey_button_group: GreyButtonGroupStyle = field(default_factory=GreyButtonGroupStyle)
 
     progress_bar: ProgressBarStyle = field(default_factory=ProgressBarStyle)
+    step_indicator: StepIndicatorStyle = field(default_factory=StepIndicatorStyle)
+
     indet_progress_bar: IndetProgressBarStyle = field(default_factory=IndetProgressBarStyle)
 
     # radial_progress: RadialProgressStyle = field(default_factory=RadialProgressStyle)

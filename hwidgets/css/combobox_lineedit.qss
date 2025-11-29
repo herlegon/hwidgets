@@ -1,29 +1,4 @@
 /* top, right, bottom, left */
-
 QComboBox QLineEdit {
-    /* background: $widget_bgd; */
     border-radius: $radius;
-    /* margin-bottom: 8px;
-    padding-bottom: 8px; */
-    /* margin: 0px $padding_right 1px 0px; */
 }
-
-/* for debug, not working in prod */
-/*
-QComboBox QLineEdit:hover {
-    border: 2px solid red;
-}
-
-QComboBox  QLineEdit:read-only {
-    border: 2px solid transparent;
-    background-color: green;
-}
-
-QLineEdit:focus {
-    border: 2px solid red;
-}
-
-QComboBox QLineEdit[editing="true"] {
-    border: 2px solid red;
-}
-*/

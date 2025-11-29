@@ -67,11 +67,12 @@ if __name__ == "__main__":
 
         "h_progress_bar_m3": "HProgressBarM3",
         "h_progress_bar": "HProgressBar",
+        "h_radial_progress": "HRadialProgress",
+        "h_step_indicator": "HStepIndicator",
 
         "h_indet_progress_bar": "HIndetProgressBar",
         "h_indet_progress_bar_m2": "HIndetProgressBarM2",
         "h_indet_progress_bar_r": "HIndetProgressBarR",
-        "h_radial_progress": "HRadialProgress",
 
         # "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
     }

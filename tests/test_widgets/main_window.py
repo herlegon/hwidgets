@@ -105,7 +105,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.move(QPoint(400,200))
 
 
-
         # make it italic
         self.h_comment_italic.setItalic(True)
         self.h_comment_bold.setWeight(800)
@@ -148,21 +147,18 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
         self.h_divider_2.setMinimumHeight(rp.height())
 
+        self.h_step_indicator.setSteps(
+            [
+                "Welcome",
+                "FFmpeg Notice & Selection",
+                "Third parties",
+                "Processing Server",
+                "AI Computational Resource",
+            ]
+        )
+        self.h_step_indicator.setCurrentStep(2)
+
         self.h_log_viewer.setPlainText("Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
-        self.h_log_viewer.appendPlainText("[WebSocket] Connecting to ws://localhost:8765...")
-        self.h_log_viewer.appendPlainText("[WebSocket] Connection established")
-        self.h_log_viewer.appendPlainText("[System] Starting package installation...")
-        self.h_log_viewer.appendPlainText("")
-        self.h_log_viewer.appendPlainText("[pip] Installing torch...")
-        self.h_log_viewer.appendPlainText("[pip] ✓ Successfully installed torch")
-        self.h_log_viewer.appendPlainText("[pip] Installing transformers...")
-        self.h_log_viewer.appendPlainText("[pip] ✓ Successfully installed transformers")
-        self.h_log_viewer.appendPlainText("[pip] Installing scipy...")
-        self.h_log_viewer.appendPlainText("[pip] ✓ Successfully installed scipy")
-        self.h_log_viewer.appendPlainText("[pip] Installing matplotlib...")
-        self.h_log_viewer.appendPlainText("[pip] ✓ Successfully installed matplotlib")
-        self.h_log_viewer.appendPlainText("[pip] Installing scikit-learn...")
-        self.h_log_viewer.appendPlainText("[pip] ✓ Successfully installed scikit-learn")
 
         # Timer to append text
         self.timer = QTimer(self)
@@ -176,6 +172,20 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             "[Network] Ping 24ms",
             "[App] Memory usage: 45MB",
             "[User] Activity detected",
-            "[Log] Background process running"
+            "[Log] Background process running",
+            "[WebSocket] Connecting to ws://localhost:8765...",
+            "[WebSocket] Connection established",
+            "[System] Starting package installation...",
+            "",
+            "[pip] Installing torch...",
+            "[pip] ✓ Successfully installed torch",
+            "[pip] Installing transformers...",
+            "[pip] ✓ Successfully installed transformers",
+            "[pip] Installing scipy...",
+            "[pip] ✓ Successfully installed scipy",
+            "[pip] Installing matplotlib...",
+            "[pip] ✓ Successfully installed matplotlib",
+            "[pip] Installing scikit-learn...",
+            "[pip] ✓ Successfully installed scikit-learn",
         ]
         self.h_log_viewer.appendPlainText(random.choice(messages))

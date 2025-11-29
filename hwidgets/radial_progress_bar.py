@@ -114,13 +114,13 @@ class HRadialProgress(QProgressBar):
         self.setTriggerStyle(trigger_style)
 
         self.legend: RpText = RpText()
-        self.legend.font = QFont("Roboto-Bold", pointSize=10)
+        self.legend.font = QFont("Inter", pointSize=10)
         self.legend.font.setBold(False)
         self.legend.text = ""
         self.legend_fh = QFontMetrics(self.legend.font).boundingRect('[g|$§').height()
 
         self.label: RpText = RpText()
-        self.label.font = QFont("Roboto-Bold", pointSize=10)
+        self.label.font = QFont("Inter", pointSize=10)
         self.label.font.setBold(False)
         self.label.text = ""
         self._display_value: bool = False
@@ -165,8 +165,6 @@ class HRadialProgress(QProgressBar):
         super().setFixedSize(QSize(h, h))
         self.bar_width = h
         self._update_geometry()
-
-
 
 
     def useColoredTriggers(self) -> None:

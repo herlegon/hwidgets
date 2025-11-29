@@ -58,7 +58,7 @@
            <item>
             <widget class="QLabel" name="h_title">
              <property name="text">
-              <string>This is a HTitle widget without icon</string>
+              <string>This is a HTitle widget without icon ABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
              </property>
             </widget>
            </item>
@@ -1539,6 +1539,9 @@
            </property>
            <layout class="QVBoxLayout" name="verticalLayout_9">
             <item>
+             <widget class="QWidget" name="h_step_indicator" native="true"/>
+            </item>
+            <item>
              <widget class="QLabel" name="h_comment_bold_2">
               <property name="text">
                <string>Bold comment</string>
@@ -2257,7 +2260,7 @@ of vertical text
             <bool>true</bool>
            </property>
            <property name="documentTitle">
-            <string>essai</string>
+            <string/>
            </property>
            <property name="readOnly">
             <bool>true</bool>
@@ -2268,6 +2271,13 @@ of vertical text
            </property>
            <property name="placeholderText">
             <string notr="true"/>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="text">
+            <string>FFmpeg Notice &amp; Selection </string>
            </property>
           </widget>
          </item>
@@ -2295,7 +2305,7 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="radioButtonGroup"/>
   <buttongroup name="radioButtonGroup_disabled"/>
+  <buttongroup name="radioButtonGroup"/>
  </buttongroups>
 </ui>

@@ -73,6 +73,7 @@ class RoundedListView(QListView):
 
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground, True)
         self.setStyleSheet(stylesheet)
+        self.setFont(cb_style.font.make_font())
 
         self.setSpacing(0)
         self.setUniformItemSizes(True)
@@ -234,9 +235,6 @@ class HComboBox(QComboBox):
 
             selection=f"{cb_style.selection}",
 
-            font_family=f"{cb_style.font.family}",
-            font_size=f"{cb_style.font.size}pt",
-            font_weight=f"{cb_style.font.weight}pt",
             font_color=f"{cb_style.font_color}",
             font_color_disabled=f"{cb_style.font_color_disabled}",
 
@@ -249,11 +247,13 @@ class HComboBox(QComboBox):
         qss = qss_template.substitute(**template_subst)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setStyleSheet(qss)
+        self.setFont(cb_style.font.make_font())
 
         qss_template = Template(load_qss("combobox_lineedit.qss", variant=self.variant))
         qss = qss_template.substitute(**template_subst)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.lineEdit().setStyleSheet(qss)
+        self.lineEdit().setFont(cb_style.font.make_font())
 
         qss_template = Template(load_qss("combobox_abstractitemview.qss", variant=self.variant))
         self.popup_qss = qss_template.substitute(**template_subst)
@@ -268,6 +268,7 @@ class HComboBox(QComboBox):
             self.view().setWindowFlags(Qt.WindowType.Widget)
         else:
             self.view().setStyleSheet(self.popup_qss)
+            self.view().setFont(cb_style.font.make_font())
 
 
     def _pixmap_rect(self) -> QRect:

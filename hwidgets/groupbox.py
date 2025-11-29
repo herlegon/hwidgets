@@ -50,6 +50,7 @@ class HGroupBox(QGroupBox):
             title_margins=f"{title_left_adjust}",
         )
         self.setStyleSheet(qss)
+        self.setFont(theme.default.font.make_font())
 
         self.setAlignment(
             Qt.AlignmentFlag.AlignLeading

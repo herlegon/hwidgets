@@ -1,10 +1,11 @@
 from dataclasses import replace, fields
 from pathlib import Path
 import tomllib
-
+from PySide6.QtGui import QFont
 from .styles import (
     Theme,
     FontConfig,
+    weight_from_css,
     DefaultStyle,
 
     FrameStyle,
@@ -30,6 +31,7 @@ from .styles import (
 
     StrongButtonStyle,
     StrongGreyButtonStyle,
+    OutlinedButtonStyle,
     FramelessButtonStyle,
     ToggleButtonStyle,
     ToggleGreyButtonStyle,
@@ -37,8 +39,9 @@ from .styles import (
     GreyButtonGroupStyle,
 
     ProgressBarStyle,
+    StepIndicatorStyle,
+
     IndetProgressBarStyle,
-    OutlinedButtonStyle,
 
     GroupBoxStyle,
 )
@@ -73,8 +76,6 @@ def hex_to_rgba(hex_str: str, alpha: float = 1.0) -> str:
     return f"rgba({r},{g},{b},{alpha})"
 
 
-
-
 class StyleManager:
     SCHEMES_DIR = Path(__file__).parent / "schemes"
 
@@ -106,11 +107,15 @@ class StyleManager:
 
             # Font parsing
             font = theme.default.font
-            if "font_family" in common_cfg or "font_size" in common_cfg or "font_weight" in common_cfg:
+            if (
+                "font_family" in common_cfg
+                or "font_size" in common_cfg
+                or "font_weight" in common_cfg
+            ):
                 font = FontConfig(
                     family=common_cfg.get("font_family", font.family),
                     size=common_cfg.get("font_size", font.size),
-                    weight=common_cfg.get("font_weight", font.weight),
+                    weight=weight_from_css(common_cfg.get("font_weight", font.weight)),
                 )
 
             theme.default = replace(theme.default, **{
@@ -152,6 +157,8 @@ class StyleManager:
 
             "toggle_button": "strong_button",
             "toggle_grey_button": "toggle_button",
+
+            "step_indicator": "label",
         }
 
         # ------------------------------
@@ -194,6 +201,7 @@ class StyleManager:
             "grey_button_group": ("grey_button_group", GreyButtonGroupStyle),
 
             "progress_bar": ("progress_bar", ProgressBarStyle),
+            "step_indicator": ("step_indicator", StepIndicatorStyle),
             "indet_progress_bar": ("indet_progress_bar", IndetProgressBarStyle),
 
             "group_box": ("groupbox", GroupBoxStyle),
@@ -219,12 +227,16 @@ class StyleManager:
             # Font override
             font_args = {}
             if hasattr(widget, "font"):
-                if "font_family" in widget_cfg or "font_size" in widget_cfg or "font_weight" in widget_cfg:
+                if (
+                    "font_family" in widget_cfg
+                    or "font_size" in widget_cfg
+                    or "font_weight" in widget_cfg
+                ):
                     font = widget.font
                     font = FontConfig(
                         family = widget_cfg.pop("font_family", font.family),
                         size   = widget_cfg.pop("font_size",  font.size),
-                        weight = widget_cfg.pop("font_weight", font.weight),
+                        weight = weight_from_css(widget_cfg.pop("font_weight", font.weight)),
                     )
                     font_args = {"font": font}
                 else:

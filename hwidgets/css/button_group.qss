@@ -1,7 +1,4 @@
 QWidget {
-    font-family: $font_family;
-    font-size: $font_size;
-    font-weight: $font_weight;
     color: $font_color;
 }
 
@@ -38,7 +35,6 @@ QToolButton:disabled:checked {
     background-color: $disabled_checked;
     color: $font_color_disabled;
 }
-
 
 
 QToolButton#segment-left {

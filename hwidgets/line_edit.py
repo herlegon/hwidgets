@@ -218,13 +218,11 @@ class HLineEdit(QLineEdit):
 
             selection=f"{le_style.selection}",
 
-            font_family=f"{le_style.font.family}",
-            font_size=f"{le_style.font.size}pt",
-            font_weight=f"{le_style.font.weight}",
             font_color=f"{le_style.font_color}",
             font_color_disabled=f"{le_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
+        self.setFont(le_style.font.make_font())
 
 
     def clear_button_clicked(self):

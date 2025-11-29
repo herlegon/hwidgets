@@ -128,67 +128,6 @@ class HTitle(QWidget):
         theme: Type[Theme],
         text: str = "",
         icon: str | Path | None = None,
-
-        modal: bool | None = None,
-        windowModality: Qt.WindowModality | None = None,
-        enabled: bool | None = None,
-        geometry: QRect | None = None,
-        frameGeometry: QRect | None = None,
-        normalGeometry: QRect | None = None,
-        x: int | None = None,
-        y: int | None = None,
-        pos: QPoint | None = None,
-        frameSize: QSize | None = None,
-        size: QSize | None = None,
-        width: int | None = None,
-        height: int | None = None,
-        rect: QRect | None = None,
-        childrenRect: QRect | None = None,
-        childrenRegion: QRegion | None = None,
-        sizePolicy: QSizePolicy | None = None,
-        minimumSize: QSize | None = None,
-        maximumSize: QSize | None = None,
-        minimumWidth: int | None = None,
-        minimumHeight: int | None = None,
-        maximumWidth: int | None = None,
-        maximumHeight: int | None = None,
-        sizeIncrement: QSize | None = None,
-        baseSize: QSize | None = None,
-        palette: QPalette | None = None,
-        font: QFont | None = None,
-        cursor: QCursor | None = None,
-        mouseTracking: bool | None = None,
-        tabletTracking: bool | None = None,
-        isActiveWindow: bool | None = None,
-        focusPolicy: Qt.FocusPolicy | None = None,
-        focus: bool | None = None,
-        contextMenuPolicy: Qt.ContextMenuPolicy | None = None,
-        updatesEnabled: bool | None = None,
-        visible: bool | None = None,
-        minimized: bool | None = None,
-        maximized: bool | None = None,
-        fullScreen: bool | None = None,
-        sizeHint: QSize | None = None,
-        minimumSizeHint: QSize | None = None,
-        acceptDrops: bool | None = None,
-        windowTitle: str | None = None,
-        windowIcon: QIcon | None = None,
-        windowIconText: str | None = None,
-        windowOpacity: float | None = None,
-        windowModified: bool | None = None,
-        toolTip: str | None = None,
-        toolTipDuration: int | None = None,
-        statusTip: str | None = None,
-        whatsThis: str | None = None,
-        accessibleName: str | None = None,
-        accessibleDescription: str | None = None,
-        accessibleIdentifier: str | None = None,
-        layoutDirection: Qt.LayoutDirection | None = None,
-        autoFillBackground: bool | None = None,
-        styleSheet: str | None = None,
-        locale: QLocale | None = None,
-        windowFilePath: str | None = None,
-        inputMethodHints: Qt.InputMethodHint | None = None
     ) -> None:
         super().__init__(parent)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
@@ -220,25 +159,16 @@ class HTitle(QWidget):
             self._title, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
         )
 
-        # font = QFont()
-        # font.setBold(True)
-        # font.setUnderline(False)
-        # font.setItalic(False)
-        # if font is not None:
-        #     self._title.setFont(font)
+
         self.title_style = self.theme.title
         qss_template = Template(load_qss("label.css"))
         qss = qss_template.substitute(
             font_color=f"{self.title_style.font_color}",
-            font_family=f"\"{self.title_style.font.family}\"",
-            font_size=f"{self.title_style.font.size}pt",
-            font_weight=f"{self.title_style.font.weight}",
-            font_style="normal",
-            font_color_disabled=f"{self.theme.default.font_color_disabled}",
+            font_color_disabled=f"{self.title_style.font_color_disabled}",
         )
         qss += " padding-bottom: 10px;"
         self.setStyleSheet(qss)
-
+        self.setFont(self.title_style.font.make_font())
 
         self._title.setSizePolicy(
             QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)

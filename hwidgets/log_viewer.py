@@ -1,4 +1,5 @@
 import logging
+from pprint import pprint
 import re
 from string import Template
 from typing import Type
@@ -12,6 +13,7 @@ from PySide6.QtGui import (
     QColor,
     QTextCursor,
     QTextCharFormat,
+    QFont,
 )
 from PySide6.QtWidgets import (
     QWidget,
@@ -160,13 +162,22 @@ class HLogViewer(HPlainTextEdit):
 
             selection=f"{log_style.selection}",
 
-            font_family=f"{log_style.font.family}",
-            font_size=f"{log_style.font.size}pt",
-            font_weight=f"{log_style.font.weight}",
             font_color=f"{log_style.font_color}",
             font_color_disabled=f"{log_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
+        self.viewer_font = self.log_style.font.make_font()
+        self.document().setDefaultFont(self.viewer_font)
+        self.setFont(self.viewer_font)
+
+
+    def setPlainText(self, text: str) -> None:
+        super().setPlainText("")
+        cursor = self.textCursor()
+        cursor.movePosition(QTextCursor.MoveOperation.Start)
+        fmt = QTextCharFormat()
+        fmt.setFont(self.viewer_font)
+        cursor.insertText(text, fmt)
 
 
     def appendPlainText(self, message: str = ""):
@@ -187,12 +198,14 @@ class HLogViewer(HPlainTextEdit):
         default_color = self._COLOR_MAP.get(levelno, QColor(self.log_style.font_color))
 
         fmt = QTextCharFormat()
+        fmt.setFont(self.viewer_font)
         fmt.setForeground(default_color)
 
         prefix = self._LEVEL_PREFIX.get(levelno, "[?]") + " "
 
         # Insert the prefix
         prefix_fmt = QTextCharFormat()
+        prefix_fmt.setFont(self.viewer_font)
         prefix_fmt.setForeground(default_color)
         cursor.insertText(prefix, prefix_fmt)
 

@@ -176,15 +176,8 @@ class HFramelessButton(QPushButton):
         btn_style = self.btn_style
         self.setFixedHeight(btn_style.height)
 
-        # Create the font based on FontConfig
-        # Calculate text width using QFontMetrics
-        font = QFont(
-            btn_style.font.family,
-            btn_style.font.size,
-            btn_style.font.weight
-        )
-        font_metrics = QFontMetrics(font)
-        self.text_width = font_metrics.horizontalAdvance(self.text())
+        self.text_width = self.fontMetrics().horizontalAdvance(self.text())
+        self.setFont(btn_style.font.make_font())
 
 
     def paintEvent(self, event: QPaintEvent) -> None:
