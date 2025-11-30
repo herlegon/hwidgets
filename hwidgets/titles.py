@@ -29,7 +29,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 from .style_manager import Theme
-from .hstyle import (
+from .debug import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )

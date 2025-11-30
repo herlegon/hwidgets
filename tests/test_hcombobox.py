@@ -16,7 +16,7 @@ from hytils import (
 )
 
 from hwidgets.combobox import HComboBox
-from hwidgets.hstyle import *
+from hwidgets.debug import *
 from hwidgets.logger import hlogger
 
 

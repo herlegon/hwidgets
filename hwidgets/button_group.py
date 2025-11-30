@@ -4,7 +4,7 @@ from typing import overload
 from warnings import warn
 
 from hytils import yellow
-from .hstyle import (
+from .debug import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )

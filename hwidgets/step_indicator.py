@@ -25,7 +25,7 @@ from PySide6.QtWidgets import (
     QLabel,
     QSizePolicy,
 )
-from .hstyle import (
+from .debug import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )

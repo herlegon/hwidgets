@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (
 )
 
 from .styles import Theme, SliderStyle
-from .hstyle import (
+from .debug import (
     DEBUG_GEOMETRY,
     draw_widget_rect
 )

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 import math
 from typing import overload, Type
 
-from .hstyle import (
+from .debug import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )

@@ -7,7 +7,7 @@ from .toggle_button import (
 )
 
 from .styles import Theme
-from .hstyle import (
+from .debug import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )

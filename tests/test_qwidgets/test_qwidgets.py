@@ -154,7 +154,7 @@ from string import Template
 from hytils import blue, lightcyan, lightgreen, lightgrey, orange, parent_directory, purple, yellow
 
 from hwidgets.combobox import HComboBox
-from hwidgets.hstyle import *
+from hwidgets.debug import *
 from hwidgets.logger import hlogger
 
 

@@ -1,7 +1,7 @@
 
 import sys
 from PySide6.QtWidgets import QApplication, QVBoxLayout, QWidget, QLabel
-from hwidgets.hstyle import Theme
+from hwidgets.debug import Theme
 from hwidgets.button import HButton
 from hwidgets.line_edit import HLineEdit
 from hwidgets.combobox import HComboBox

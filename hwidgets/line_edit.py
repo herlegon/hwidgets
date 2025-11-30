@@ -21,7 +21,7 @@ from PySide6.QtWidgets import (
     QLineEdit,
 )
 
-from .hstyle import DEBUG_GEOMETRY, draw_widget_rect
+from .debug import DEBUG_GEOMETRY, draw_widget_rect
 from hytils import red, yellow
 
 from .style_manager import (
