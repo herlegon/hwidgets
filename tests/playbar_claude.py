@@ -110,31 +110,38 @@ class VideoRangeSelector(QWidget):
         painter.setBrush(QColor("red"))
         painter.drawPolygon(playhead_triangle)
 
+
+
+
     def mousePressEvent(self, event: QMouseEvent):
         timeline_rect = self.get_timeline_rect()
         x = event.position().x()
         y = event.position().y()
 
-        # Check playhead
-        playhead_x = timeline_rect.x() + (self.current_time / self.duration) * timeline_rect.width()
-        if abs(x - playhead_x) < 10 and timeline_rect.top() - 15 < y < timeline_rect.top() + 5:
-            self.is_dragging = 'playhead'
-            return
+        handle_margin = 15  # Margin around handles to prevent accidental playhead moves
 
-        # Check start handle
+        # Check start handle first
         start_x = timeline_rect.x() + (self.range_start / self.duration) * timeline_rect.width()
-        if abs(x - start_x) < 15 and timeline_rect.bottom() < y < timeline_rect.bottom() + 20:
+        if abs(x - start_x) < handle_margin and timeline_rect.bottom() < y < timeline_rect.bottom() + 20:
             self.is_dragging = 'start'
             return
 
         # Check end handle
         end_x = timeline_rect.x() + (self.range_end / self.duration) * timeline_rect.width()
-        if abs(x - end_x) < 15 and timeline_rect.bottom() < y < timeline_rect.bottom() + 20:
+        if abs(x - end_x) < handle_margin and timeline_rect.bottom() < y < timeline_rect.bottom() + 20:
             self.is_dragging = 'end'
             return
 
-        # Click on timeline
-        if timeline_rect.contains(event.position()):
+        # Check playhead (for dragging)
+        playhead_x = timeline_rect.x() + (self.current_time / self.duration) * timeline_rect.width()
+        if abs(x - playhead_x) < 10 and timeline_rect.top() - 15 < y < timeline_rect.top() + 5:
+            self.is_dragging = 'playhead'
+            return
+
+        # Click anywhere else within reasonable bounds moves playhead
+        # Allow clicks in a larger vertical area around the timeline
+        if (timeline_rect.left() <= x <= timeline_rect.right() and
+            timeline_rect.top() - 30 <= y <= timeline_rect.bottom() + 30):
             self.current_time = self.get_time_from_position(x, timeline_rect)
             self.update()
 
@@ -156,7 +163,6 @@ class VideoRangeSelector(QWidget):
 
     def mouseReleaseEvent(self, event: QMouseEvent):
         self.is_dragging = None
-
 
 if __name__ == "__main__":
     signal.signal(signal.SIGINT, signal.SIG_DFL)
