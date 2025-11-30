@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from hwidgets import HButtonGroup
-from buttongroup_taskmenu import HButtonGroupTaskMenuFactory
+from .buttongroup_taskmenu import HButtonGroupTaskMenuFactory
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon

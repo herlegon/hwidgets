@@ -1,19 +1,19 @@
 from __future__ import annotations
 
-from hwidgets import HVerticalDivider
+from hwidgets import HIndetProgressBar
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HVerticalDivider' name='h_vertical_divider'>
+    <widget class='HIndeterminateProgress' name='h_indeterminate_progress'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>24</width>
-                <height>100</height>
+                <width>200</width>
+                <height>24</height>
             </rect>
         </property>
     </widget>
@@ -21,14 +21,14 @@ DOM_XML = """
 """
 
 
-class HVerticalDividerPlugin(QDesignerCustomWidgetInterface):
+class HIndetProgressPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
         from hwidgets import Theme
-        t = HVerticalDivider(parent, hstyle=Theme())
+        t = HIndetProgressBar(parent, Theme=Theme())
         return t
 
     def domXml(self):
@@ -53,10 +53,10 @@ class HVerticalDividerPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HVerticalDivider'
+        return 'HIndeterminateProgress'
 
     def toolTip(self):
-        return 'HVerticalDivider widget'
+        return 'HIndeterminateProgress widget'
 
     def whatsThis(self):
         return self.toolTip()

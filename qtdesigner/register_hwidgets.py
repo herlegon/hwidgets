@@ -1,66 +1,88 @@
 from __future__ import annotations
+import sys
+import os
 
-from hwidgets import HButtonGroup  # noqa: F401
-from buttongroup_plugin import HButtonGroupPlugin
-
+plugins_path = os.path.join(os.path.dirname(__file__))
+sys.path.append(plugins_path)
+sys.path.append(r"A:\hwidgets")
+sys.path.append(r"A:\hwidgets\qtdesigner")
+os.environ["PYSIDE_DESIGNER_PLUGINS"] = plugins_path
 from PySide6.QtDesigner import QPyDesignerCustomWidgetCollection
 
-# Set PYSIDE_DESIGNER_PLUGINS to point to this directory and load the plugin
+# print(f"Plugin path: {plugins_path}")
+
+# from .hlineedit_plugin import HLineEditPlugin
+from hlabel_plugin import HLabelPlugin
 
 
-if __name__ == '__main__':
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HButtonGroupPlugin())
+QPyDesignerCustomWidgetCollection.addCustomWidget(HLabelPlugin())
 
-    from button_plugin import HButtonPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HButtonPlugin())
+# python -m venv venv
+#.\venv\Scripts\activate
+# $env:PYSIDE_DESIGNER_PLUGINS = "A:\hwidgets\qtdesigner"
+# if __name__ == '__main__':
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HLineEditPlugin())
+    # try:
+    #     # Register the plugin class
+    #     plugin_instance = HLineEditPlugin()  # Instantiate the plugin
+    #     QPyDesignerCustomWidgetCollection.addCustomWidget(plugin_instance)
+    #     # print("Custom widget registered successfully.")
+    # except Exception as e:
+    #     print(f"Failed to register custom widget: {e}")
 
-    from checkbox_plugin import HCheckBoxPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HCheckBoxPlugin())
+# Create an instance of QPyDesignerCustomWidgetCollection to list custom widgets
+# collection = QPyDesignerCustomWidgetCollection()
 
-    from divider_plugin import HDividerPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HDividerPlugin())
+# # List all registered custom widgets (this is for debugging)
+# print("Registered custom widgets:")
+# for widget in collection.customWidgets():
+#     print(f" - {widget.name()}")
 
-    from doublespinbox_plugin import HDoubleSpinBoxPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HDoubleSpinBoxPlugin())
 
-    from groupbox_plugin import HGroupBoxPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HGroupBoxPlugin())
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HButtonGroupPlugin())
 
-    from horizontal_divider_plugin import HHorizontalDividerPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HHorizontalDividerPlugin())
+# from checkbox_plugin import HCheckBoxPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HCheckBoxPlugin())
 
-    from vertical_divider_plugin import HVerticalDividerPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HVerticalDividerPlugin())
+# from divider_plugin import HDividerPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HDividerPlugin())
 
-    from indeterminate_progress_plugin import HIndeterminateProgressPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HIndeterminateProgressPlugin())
+# from double_spinbox_plugin import HDoubleSpinBoxPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HDoubleSpinBoxPlugin())
 
-    from label_plugin import HLabelPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HLabelPlugin())
+# from horizontal_divider_plugin import HHorizontalDividerPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HHorizontalDividerPlugin())
 
-    from lineedit_plugin import HLineEditPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HLineEditPlugin())
+# from vertical_divider_plugin import HVerticalDividerPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HVerticalDividerPlugin())
 
-    from plaintextedit_plugin import HPlainTextEditPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HPlainTextEditPlugin())
+# from indet_progress_plugin import HIndetProgressPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HIndetProgressPlugin())
 
-    from progress_plugin import HProgressPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HProgressPlugin())
+# from label_plugin import HLabelPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HLabelPlugin())
 
-    from radial_progress_plugin import HRadialProgressPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HRadialProgressPlugin())
 
-    from radiobutton_plugin import HRadioButtonPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HRadioButtonPlugin())
+# from plain_text_edit_plugin import HPlainTextEditPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HPlainTextEditPlugin())
 
-    from scrollbar_plugin import HScrollBarPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HScrollBarPlugin())
+# from progress_plugin import HProgressPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HProgressPlugin())
 
-    from spinbox_plugin import HSpinBoxPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HSpinBoxPlugin())
+# from radial_progress_plugin import HRadialProgressPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HRadialProgressPlugin())
 
-    from switch_plugin import HSwitchPlugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HSwitchPlugin())
+# from radio_button_plugin import HRadioButtonPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HRadioButtonPlugin())
 
-    from title1_plugin import HTitle1Plugin
-    QPyDesignerCustomWidgetCollection.addCustomWidget(HTitle1Plugin())
+# from scrollbar_plugin import HScrollBarPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HScrollBarPlugin())
+
+# from spinbox_plugin import HSpinBoxPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HSpinBoxPlugin())
+
+# from switch_plugin import HSwitchPlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HSwitchPlugin())
+
+# from title_plugin import HTitlePlugin
+# QPyDesignerCustomWidgetCollection.addCustomWidget(HTitlePlugin())
