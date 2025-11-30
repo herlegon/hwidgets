@@ -21,14 +21,16 @@ from .label import (
 )
 
 from .checkbox import HCheckBox
-from .spinbox import HDoubleSpinBox, HSpinBox
 from .radio_button import HRadioButton
 from .switch import HSwitch
 
 from .line_edit import HLineEdit
 from .plain_text_edit import HPlainTextEdit
 from .log_viewer import HLogViewer
+
 from .combobox import HComboBox
+from .spinbox import HDoubleSpinBox, HSpinBox
+from .slider import HSlider
 
 from .strong_button import HStrongButton, HStrongGreyButton
 from .frameless_button import HFramelessButton
@@ -79,6 +81,7 @@ __all__ = [
     "HComboBox",
     "HSpinBox",
     "HDoubleSpinBox",
+    "HSlider",
 
     "HStrongButton",
     "HStrongGreyButton",

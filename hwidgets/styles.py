@@ -218,6 +218,23 @@ class SpinBoxStyle(LineEditStyle):
 
 
 @dataclass
+class SliderStyle:
+    track_thickness: int = 4
+    track: str = ""
+    track_disabled: str = ""
+
+    handle_radius: int = 12
+    handle: str = ""
+    handle_hover: str = ""
+    handle_pressed: str = ""
+    handle_disabled: str = ""
+
+    ticks_thickness: int = 1
+    ticks_length: int = 16
+    ticks: str = ""
+
+
+@dataclass
 class StrongButtonStyle:
     height: int = 32
     padding: int = BUTTON_SIDE_PADDING
@@ -398,6 +415,7 @@ class Theme:
 
     combobox: ComboBoxStyle = field(default_factory=ComboBoxStyle)
     spinbox: SpinBoxStyle = field(default_factory=SpinBoxStyle)
+    slider: SliderStyle = field(default_factory=SliderStyle)
 
     strong_button: StrongButtonStyle = field(default_factory=StrongButtonStyle)
     strong_grey_button: StrongGreyButtonStyle = field(default_factory=StrongGreyButtonStyle)

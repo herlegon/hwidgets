@@ -28,6 +28,7 @@ if __name__ == "__main__":
         "QLabel": "HLabel",
         "QPushButton": "HOutlinedButton",
         # "QGroupBox": "HGroupBox",
+        "QSlider": "HSlider",
         "QLineEdit": "HLineEdit",
         "QPlainTextEdit": "HPlainTextEdit",
         "QDoubleSpinBox": "HDoubleSpinBox",

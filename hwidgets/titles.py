@@ -48,6 +48,9 @@ def transform_black_to_blue(pixmap: QPixmap, target_color: QColor = QColor(0, 10
     Returns:
         New QPixmap with transformed colors
     """
+    if pixmap.isNull():
+        return pixmap
+
     img = pixmap.toImage()
     img = img.convertToFormat(QImage.Format.Format_ARGB32)
     width, height = img.width(), img.height()

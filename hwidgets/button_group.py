@@ -64,10 +64,11 @@ class HButtonGroup(QWidget):
         self.hstyle = theme
         self._buttons: list[QToolButton] = []
         self._button_keys: list[str] = []
+        self._current_index = -1
+
         if buttons is not None and buttons:
             self.set_buttons(buttons)
 
-        self._current_index = -1
         self.set_current_button(0)
         self.group.buttonClicked.connect(self.on_button_clicked)
 
@@ -80,7 +81,11 @@ class HButtonGroup(QWidget):
 
 
     def sizeHint(self) -> QSize:
-        width = self._buttons[0].sizeHint().width() * len(self._buttons)
+        if not self._buttons:
+            return QSize(0, self.theme.button_group.height)
+
+        max_width = max(b.sizeHint().width() for b in self._buttons) + self.btn_group_style.padding
+        width = max_width * len(self._buttons) + (len(self._buttons) - 1) * self._layout.spacing()
         return QSize(width, self.theme.button_group.height)
 
 
@@ -118,7 +123,7 @@ class HButtonGroup(QWidget):
     def _normalize_button_widths(self) -> int:
         if not self._buttons:
             return 0
-        max_width = max(b.sizeHint().width() for b in self._buttons)
+        max_width = max(b.sizeHint().width() for b in self._buttons) + self.btn_group_style.padding
         for b in self._buttons:
             b.setFixedWidth(max_width)
         count = len(self._buttons)

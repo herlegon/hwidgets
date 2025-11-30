@@ -19,7 +19,7 @@ from PySide6.QtWidgets import (
 )
 
 
-DEBUG_GEOMETRY: bool = False
+DEBUG_GEOMETRY: bool = True
 
 def draw_widget_rect(w: Type[QWidget], painter: QPainter):
     """Draw around a widget without clipping

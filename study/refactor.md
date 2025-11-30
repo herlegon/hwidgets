@@ -23,7 +23,7 @@
     ✅ ComboBox
     ✅ SpinBox
     ✅ DoubleSpinBox
-    - Slider
+    ✅ Slider
 
     ✅ StrongButton
     ✅ StrongGreyButton
@@ -46,8 +46,8 @@
 
 
 # todo
-    !!! BUG: button group
-    (?) missing border for checkable buttons
+    - Slider: improve: set the cursor on mouse click
+    - ToggleButton: missing border (?)
 
     remove GroupBox ?
     rework: button base

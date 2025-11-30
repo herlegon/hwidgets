@@ -114,6 +114,7 @@ class RoundedListView(QListView):
         pen.setColor(self.border_color)
         painter.setPen(pen)
         painter.drawPath(path)
+        painter.end()
 
         super().paintEvent(event)
 

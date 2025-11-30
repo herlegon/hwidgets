@@ -28,6 +28,12 @@ border = "#3a3a3a"
 [divider]
 normal = "#3a3a3a"
 
+[scrollbar]
+thickness = 8
+normal = "#4a4a4a"
+hover = "#4a4a4a"
+pressed = "#5e5e5e"
+
 
 [label]
 font_family = "Inter"
@@ -124,13 +130,6 @@ font_color = "#6a6a6a"
 font_color_read_only = "#6a6a6a"
 
 
-[scrollbar]
-thickness = 8
-normal = "#4a4a4a"
-hover = "#4a4a4a"
-pressed = "#5e5e5e"
-
-
 [combobox]
 # Use line_edit style
 
@@ -139,6 +138,22 @@ pressed = "#5e5e5e"
 button_hover = "#3a3a3a"
 button_pressed = "#5e5e5e"
 button_disabled = "#2a2a2a"
+
+
+[slider]
+track_thickness = 4
+handle_radius = 12
+track = "#4a4a4a"
+track_disabled = "2a2a2a"
+
+handle = "#5e7ce0"
+handle_hover = "#5e7ce0"
+handle_pressed = "#8a9eff"
+handle_disabled = "3a3a3a"
+
+ticks = ""
+ticks_thickness = 1
+ticks_length = 20
 
 
 [strong_button]
@@ -185,6 +200,7 @@ font_size = 9
 font_weight = 400
 font_color = "#d4d4d4"
 font_color_disabled = "#666667"
+
 
 [toggle_grey_button]
 pressed = "#5e5e5e"
@@ -238,20 +254,4 @@ bar = "#5e7ce0"
 font_completed_color = "#c2c2c7"
 font_current_color = "#5e7ce0"
 font_upcoming_color = "#6a6a6a"
-
-
-
-###################################################
-# to be modified
-
-
-
-[slider]
-track = "#4a4a4a"
-handle = "#5e7ce0"
-handle_hover = "#5e7ce0"
-handle_pressed = "#8a9eff"
-track_height = 4
-handle_width = 12
-handle_height = 12
 

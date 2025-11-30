@@ -19,8 +19,8 @@ from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCh
     QComboBox, QDoubleSpinBox, QFrame, QGroupBox,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
     QPlainTextEdit, QProgressBar, QPushButton, QRadioButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
-    QWidget)
+    QSizePolicy, QSlider, QSpacerItem, QSpinBox,
+    QVBoxLayout, QWidget)
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -558,6 +558,27 @@ class Ui_MainWindow(object):
 
 
         self.q_widgets_sub_layout.addLayout(self.horizontalLayout_11)
+
+        self.horizontalSlider = QSlider(self.q_frame)
+        self.horizontalSlider.setObjectName(u"horizontalSlider")
+        self.horizontalSlider.setMaximum(10)
+        self.horizontalSlider.setValue(3)
+        self.horizontalSlider.setOrientation(Qt.Orientation.Horizontal)
+        self.horizontalSlider.setInvertedAppearance(False)
+        self.horizontalSlider.setTickPosition(QSlider.TickPosition.TicksAbove)
+
+        self.q_widgets_sub_layout.addWidget(self.horizontalSlider)
+
+        self.horizontalSlider_2 = QSlider(self.q_frame)
+        self.horizontalSlider_2.setObjectName(u"horizontalSlider_2")
+        self.horizontalSlider_2.setMaximum(100)
+        self.horizontalSlider_2.setSingleStep(10)
+        self.horizontalSlider_2.setValue(60)
+        self.horizontalSlider_2.setTracking(True)
+        self.horizontalSlider_2.setOrientation(Qt.Orientation.Horizontal)
+        self.horizontalSlider_2.setTickPosition(QSlider.TickPosition.TicksAbove)
+
+        self.q_widgets_sub_layout.addWidget(self.horizontalSlider_2)
 
         self.verticalSpacer = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 

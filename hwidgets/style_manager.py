@@ -28,6 +28,7 @@ from .styles import (
     LogViewerStyle,
     ComboBoxStyle,
     SpinBoxStyle,
+    SliderStyle,
 
     StrongButtonStyle,
     StrongGreyButtonStyle,
@@ -187,6 +188,7 @@ class StyleManager:
             "combobox": ("combobox", ComboBoxStyle),
             "spinbox": ("spinbox", SpinBoxStyle),
             # "double_spinbox": ("double_spinbox", DoubleSpinBoxStyle),
+            "slider": ("slider", SliderStyle),
 
             "strong_button": ("strong_button", StrongButtonStyle),
             "strong_grey_button": ("strong_grey_button", StrongGreyButtonStyle),

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1441</width>
-    <height>904</height>
+    <height>910</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -1510,6 +1510,31 @@
           </layout>
          </item>
          <item>
+          <widget class="QSlider" name="slider">
+           <property name="maximum">
+            <number>100</number>
+           </property>
+           <property name="singleStep">
+            <number>1</number>
+           </property>
+           <property name="value">
+            <number>3</number>
+           </property>
+           <property name="orientation">
+            <enum>Qt::Orientation::Horizontal</enum>
+           </property>
+           <property name="invertedControls">
+            <bool>false</bool>
+           </property>
+           <property name="tickPosition">
+            <enum>QSlider::TickPosition::TicksBothSides</enum>
+           </property>
+           <property name="tickInterval">
+            <number>10</number>
+           </property>
+          </widget>
+         </item>
+         <item>
           <spacer name="verticalSpacer_2">
            <property name="orientation">
             <enum>Qt::Orientation::Vertical</enum>
@@ -1526,9 +1551,6 @@
        </item>
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_3">
-         <property name="rightMargin">
-          <number>60</number>
-         </property>
          <item>
           <widget class="QFrame" name="h_frame_styled_raised">
            <property name="frameShape">
@@ -2298,7 +2320,7 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="radioButtonGroup_disabled"/>
   <buttongroup name="radioButtonGroup"/>
+  <buttongroup name="radioButtonGroup_disabled"/>
  </buttongroups>
 </ui>

@@ -19,8 +19,8 @@ from PySide6.QtWidgets import (QAbstractSpinBox, QApplication, QButtonGroup, QCh
     QComboBox, QDoubleSpinBox, QFrame, QGridLayout,
     QHBoxLayout, QLabel, QLineEdit, QMainWindow,
     QPlainTextEdit, QProgressBar, QPushButton, QRadioButton,
-    QSizePolicy, QSpacerItem, QSpinBox, QVBoxLayout,
-    QWidget)
+    QSizePolicy, QSlider, QSpacerItem, QSpinBox,
+    QVBoxLayout, QWidget)
 
 from typing import Type
 from hwidgets import (
@@ -34,6 +34,7 @@ from hwidgets import (
     HPlainTextEdit,
     HRadioButton,
     HScrollBar,
+    HSlider,
     HSpinBox,
     HButtonGroup,
     HCard,
@@ -67,7 +68,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1441, 904)
+        MainWindow.resize(1441, 910)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -903,6 +904,18 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.radial_progress_layout)
 
+        self.slider = HSlider(self.h_frame, theme=theme)
+        self.slider.setObjectName(u"slider")
+        self.slider.setMaximum(100)
+        self.slider.setSingleStep(1)
+        self.slider.setValue(3)
+        self.slider.setOrientation(Qt.Orientation.Horizontal)
+        self.slider.setInvertedControls(False)
+        self.slider.setTickPosition(QSlider.TickPosition.TicksBothSides)
+        self.slider.setTickInterval(10)
+
+        self.main_layout.addWidget(self.slider)
+
         self.verticalSpacer_2 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.main_layout.addItem(self.verticalSpacer_2)
@@ -912,7 +925,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3 = QVBoxLayout()
         self.verticalLayout_3.setObjectName(u"verticalLayout_3")
-        self.verticalLayout_3.setContentsMargins(-1, -1, 60, -1)
         self.h_frame_styled_raised = HFrame(self.h_frame, theme=theme)
         self.h_frame_styled_raised.setObjectName(u"h_frame_styled_raised")
         self.h_frame_styled_raised.setFrameShape(QFrame.Shape.StyledPanel)
