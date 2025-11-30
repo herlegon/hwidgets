@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1444</width>
-    <height>986</height>
+    <width>1441</width>
+    <height>904</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -2271,13 +2271,6 @@ of vertical text
            </property>
            <property name="placeholderText">
             <string notr="true"/>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QLabel" name="label_5">
-           <property name="text">
-            <string>FFmpeg Notice &amp; Selection </string>
            </property>
           </widget>
          </item>

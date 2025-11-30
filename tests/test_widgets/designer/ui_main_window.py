@@ -67,7 +67,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1444, 986)
+        MainWindow.resize(1441, 904)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -1327,11 +1327,6 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.h_log_viewer)
 
-        self.label_5 = HLabel(self.h_frame, theme=theme)
-        self.label_5.setObjectName(u"label_5")
-
-        self.verticalLayout_3.addWidget(self.label_5)
-
         self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
         self.verticalLayout_3.addItem(self.verticalSpacer_3)
@@ -1477,6 +1472,5 @@ class Ui_MainWindow(object):
         self.h_log_viewer.setDocumentTitle("")
         self.h_log_viewer.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
-        self.label_5.setText(QCoreApplication.translate("MainWindow", u"FFmpeg Notice & Selection ", None))
     # retranslateUi
 

@@ -53,7 +53,7 @@
     rework: button base
     rework: strong button: clean recalculate_size/paint event to not calculate anything in the paintEvent method
 ~~  add a thin border to teh strong buttons (?) ~~
-    (low) missing font_style in css for italic
+
 
 
 

@@ -1,6 +1,9 @@
+from pprint import pprint
 from string import Template
 from typing import overload
 from warnings import warn
+
+from hytils import yellow
 from .hstyle import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
@@ -33,7 +36,7 @@ class HButtonGroup(QWidget):
     def __init__(
         self,
         /,
-        parent: QWidget | None = ...,
+        parent: QWidget | None = None,
         *,
         buttons: list[str] | tuple[str] | None = None,
         theme: Theme = None,
@@ -77,14 +80,14 @@ class HButtonGroup(QWidget):
 
 
     def sizeHint(self) -> QSize:
-        # width = self._buttons[0].width() * len(self._buttons)
-        return QSize(self.width(), self.theme.button_group.height)
+        width = self._buttons[0].sizeHint().width() * len(self._buttons)
+        return QSize(width, self.theme.button_group.height)
 
 
-    def minimumSizeHint(self):
-        if self._buttons:
-            return QSize(self._normalize_button_widths(), self.theme.button.height)
-        return super().minimumSizeHint()
+    # def minimumSizeHint(self):
+    #     if self._buttons:
+    #         return QSize(self._normalize_button_widths(), self.theme.button.height)
+    #     return super().minimumSizeHint()
 
 
     def _update_stylesheet(self) -> None:
@@ -113,6 +116,8 @@ class HButtonGroup(QWidget):
 
 
     def _normalize_button_widths(self) -> int:
+        if not self._buttons:
+            return 0
         max_width = max(b.sizeHint().width() for b in self._buttons)
         for b in self._buttons:
             b.setFixedWidth(max_width)
@@ -131,10 +136,12 @@ class HButtonGroup(QWidget):
         """when buttons is dict[str, tuple[str, str]],
                 key: (text, tooltip)
         """
-
+        self.blockSignals(True)
         # Get current selected
+        current_index = -1
         for i, b in enumerate(self._buttons):
             if b.isChecked():
+                current_index = i
                 break
 
         # Remove old buttons from layout and button group
@@ -143,16 +150,17 @@ class HButtonGroup(QWidget):
             self._layout.removeWidget(b)
             b.deleteLater()
 
-        self._buttons.clear()
+        self._buttons = []
+        self._button_keys = []
 
         is_dict: bool = bool(isinstance(buttons, dict))
         if is_dict:
             self._button_keys = list(buttons.keys())
         else:
-            self._button_keys = buttons.copy()
+            self._button_keys = list(buttons)
 
         for i, k in enumerate(self._button_keys):
-            button = QToolButton()
+            button = QToolButton(self)
             if is_dict:
                 text, tooltip = buttons[k]
                 button.setText(text)
@@ -161,12 +169,11 @@ class HButtonGroup(QWidget):
                 button.setText(k)
             button.key = k
             button.setCheckable(True)
-            # button.setSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
             button.setFixedHeight(self.height())
 
             if i == 0:
                 button.setObjectName("segment-left")
-            elif i == len(buttons) - 1:
+            elif i == len(self._button_keys) - 1:
                 button.setObjectName("segment-right")
             else:
                 button.setObjectName("segment-center")
@@ -188,6 +195,7 @@ class HButtonGroup(QWidget):
                 self.set_current_button(0)
         else:
             self.set_current_button(-1)
+        self.blockSignals(False)
 
         self._update_stylesheet()
 
@@ -314,7 +322,7 @@ class HGreyButtonGroup(HButtonGroup):
     def __init__(
         self,
         /,
-        parent: QWidget | None = ...,
+        parent: QWidget | None = None,
         *,
         buttons: list[str] | tuple[str] | None = None,
         theme: Theme = None,
