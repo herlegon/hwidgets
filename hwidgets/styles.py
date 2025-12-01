@@ -11,7 +11,7 @@ BUTTON_SIDE_PADDING: int = BORDER_RADIUS + 12
 
 @dataclass
 class FontConfig:
-    family: str = "Inter"
+    family: str = "Roboto"
     size: int = 12
     weight: QFont.Weight = QFont.Weight.Normal
     style: QFont.Style = QFont.Style.StyleNormal
@@ -24,7 +24,7 @@ class FontConfig:
         font = QFont(self.family, self.size)
         font.setWeight(self.weight)
         font.setStyleStrategy(QFont.StyleStrategy.PreferQuality)
-        # font.setHintingPreference(QFont.HintingPreference.PreferNoHinting)
+        font.setHintingPreference(QFont.HintingPreference.PreferNoHinting)
         font.setStyle(self.style)
         return font
 

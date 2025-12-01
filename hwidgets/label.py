@@ -58,7 +58,7 @@ class HLabel(QLabel):
 
     def setText(self, text: str) -> None:
         super().setText(text)
-        if isinstance(self, HDescription | HComment):
+        if isinstance(self, HDescription):
             self.setWordWrap(True)
             self.setSizePolicy(
                 QSizePolicy(

@@ -11,7 +11,7 @@ border = "#4a4a4a"
 border_radius = 8
 height = 40
 
-font_family = "Inter"
+font_family = "Roboto Regular"
 font_size = 10
 font_weight = 400
 font_color = "#d4d4d4"

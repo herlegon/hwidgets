@@ -36,6 +36,7 @@ from hwidgets import (
     HScrollBar,
     HSlider,
     HSpinBox,
+    HAppTitle,
     HButtonGroup,
     HCard,
     HComment,
@@ -59,6 +60,7 @@ from hwidgets import (
     HSwitch,
     HTitle,
     HToggleButton,
+    HToggleButton,
     HToggleGreyButton,
     HVerticalDivider,
     Theme,
@@ -68,7 +70,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1441, 910)
+        MainWindow.resize(1441, 937)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -84,42 +86,42 @@ class Ui_MainWindow(object):
         self.horizontalLayout_10.setContentsMargins(18, 18, 18, 18)
         self.main_layout = QVBoxLayout()
         self.main_layout.setObjectName(u"main_layout")
-        self.titles_layout = QVBoxLayout()
-        self.titles_layout.setObjectName(u"titles_layout")
-        self.h_title = HTitle(self.h_frame, theme=theme)
-        self.h_title.setObjectName(u"h_title")
+        self.htitles_layout = QVBoxLayout()
+        self.htitles_layout.setObjectName(u"htitles_layout")
+        self.title = HTitle(self.h_frame, theme=theme)
+        self.title.setObjectName(u"title")
 
-        self.titles_layout.addWidget(self.h_title)
+        self.htitles_layout.addWidget(self.title)
 
-        self.h_title_icon = HTitle(self.h_frame, theme=theme)
-        self.h_title_icon.setObjectName(u"h_title_icon")
-        self.h_title_icon.setPixmap(QPixmap(u"../../hwidgets/icons/gpu.png"))
+        self.title_icon = HTitle(self.h_frame, theme=theme)
+        self.title_icon.setObjectName(u"title_icon")
+        self.title_icon.setPixmap(QPixmap(u"../../hwidgets/icons/gpu.png"))
 
-        self.titles_layout.addWidget(self.h_title_icon)
+        self.htitles_layout.addWidget(self.title_icon)
 
 
-        self.main_layout.addLayout(self.titles_layout)
+        self.main_layout.addLayout(self.htitles_layout)
 
         self.text_layout = QVBoxLayout()
         self.text_layout.setObjectName(u"text_layout")
-        self.h_subtitles = HSubtitle(self.h_frame, theme=theme)
-        self.h_subtitles.setObjectName(u"h_subtitles")
+        self.subtitles = HSubtitle(self.h_frame, theme=theme)
+        self.subtitles.setObjectName(u"subtitles")
 
-        self.text_layout.addWidget(self.h_subtitles)
+        self.text_layout.addWidget(self.subtitles)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
-        self.h_description_3 = HDescription(self.h_frame, theme=theme)
-        self.h_description_3.setObjectName(u"h_description_3")
-        self.h_description_3.setWordWrap(True)
+        self.description_3 = HDescription(self.h_frame, theme=theme)
+        self.description_3.setObjectName(u"description_3")
+        self.description_3.setWordWrap(True)
 
-        self.horizontalLayout_3.addWidget(self.h_description_3)
+        self.horizontalLayout_3.addWidget(self.description_3)
 
-        self.h_description = HDescription(self.h_frame, theme=theme)
-        self.h_description.setObjectName(u"h_description")
-        self.h_description.setWordWrap(True)
+        self.description = HDescription(self.h_frame, theme=theme)
+        self.description.setObjectName(u"description")
+        self.description.setWordWrap(True)
 
-        self.horizontalLayout_3.addWidget(self.h_description)
+        self.horizontalLayout_3.addWidget(self.description)
 
 
         self.text_layout.addLayout(self.horizontalLayout_3)
@@ -127,23 +129,23 @@ class Ui_MainWindow(object):
         self.horizontalLayout_2 = QHBoxLayout()
         self.horizontalLayout_2.setSpacing(32)
         self.horizontalLayout_2.setObjectName(u"horizontalLayout_2")
-        self.h_comment_small_italic = HComment(self.h_frame, theme=theme)
-        self.h_comment_small_italic.setObjectName(u"h_comment_small_italic")
-        self.h_comment_small_italic.setWordWrap(True)
+        self.comment_small_italic = HComment(self.h_frame, theme=theme)
+        self.comment_small_italic.setObjectName(u"comment_small_italic")
+        self.comment_small_italic.setWordWrap(True)
 
-        self.horizontalLayout_2.addWidget(self.h_comment_small_italic, 0, Qt.AlignmentFlag.AlignLeft)
+        self.horizontalLayout_2.addWidget(self.comment_small_italic, 0, Qt.AlignmentFlag.AlignLeft)
 
-        self.h_comment_bold = HComment(self.h_frame, theme=theme)
-        self.h_comment_bold.setObjectName(u"h_comment_bold")
-        self.h_comment_bold.setWordWrap(True)
+        self.comment_bold = HComment(self.h_frame, theme=theme)
+        self.comment_bold.setObjectName(u"comment_bold")
+        self.comment_bold.setWordWrap(True)
 
-        self.horizontalLayout_2.addWidget(self.h_comment_bold)
+        self.horizontalLayout_2.addWidget(self.comment_bold)
 
-        self.h_comment_italic = HComment(self.h_frame, theme=theme)
-        self.h_comment_italic.setObjectName(u"h_comment_italic")
-        self.h_comment_italic.setWordWrap(True)
+        self.comment_italic = HComment(self.h_frame, theme=theme)
+        self.comment_italic.setObjectName(u"comment_italic")
+        self.comment_italic.setWordWrap(True)
 
-        self.horizontalLayout_2.addWidget(self.h_comment_italic, 0, Qt.AlignmentFlag.AlignLeft)
+        self.horizontalLayout_2.addWidget(self.comment_italic, 0, Qt.AlignmentFlag.AlignLeft)
 
 
         self.text_layout.addLayout(self.horizontalLayout_2)
@@ -167,7 +169,7 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.labels_layout)
 
-        self.h_divider = HDivider(self.h_frame, theme=theme)
+        self.h_divider = HFrame(self.h_frame, theme=theme)
         self.h_divider.setObjectName(u"h_divider")
         self.h_divider.setFrameShape(QFrame.Shape.HLine)
         self.h_divider.setFrameShadow(QFrame.Shadow.Sunken)
@@ -186,7 +188,7 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.h_checkbox_disabled_3, 2, 1, 1, 1, Qt.AlignmentFlag.AlignRight)
 
-        self.h_switch_disabled_checked = HSwitch(self.h_frame, theme=theme)
+        self.h_switch_disabled_checked = HCheckBox(self.h_frame, theme=theme)
         self.h_switch_disabled_checked.setObjectName(u"h_switch_disabled_checked")
         self.h_switch_disabled_checked.setEnabled(False)
         self.h_switch_disabled_checked.setChecked(True)
@@ -243,20 +245,20 @@ class Ui_MainWindow(object):
 
         self.gridLayout.addWidget(self.label_2, 1, 2, 1, 1)
 
-        self.h_switch_disabled = HSwitch(self.h_frame, theme=theme)
+        self.h_switch_disabled = HCheckBox(self.h_frame, theme=theme)
         self.h_switch_disabled.setObjectName(u"h_switch_disabled")
         self.h_switch_disabled.setEnabled(False)
         self.h_switch_disabled.setCheckable(True)
 
         self.gridLayout.addWidget(self.h_switch_disabled, 2, 3, 1, 1)
 
-        self.h_switch_checked = HSwitch(self.h_frame, theme=theme)
+        self.h_switch_checked = HCheckBox(self.h_frame, theme=theme)
         self.h_switch_checked.setObjectName(u"h_switch_checked")
         self.h_switch_checked.setChecked(True)
 
         self.gridLayout.addWidget(self.h_switch_checked, 1, 3, 1, 1)
 
-        self.h_switch_off = HSwitch(self.h_frame, theme=theme)
+        self.h_switch_off = HCheckBox(self.h_frame, theme=theme)
         self.h_switch_off.setObjectName(u"h_switch_off")
         self.h_switch_off.setEnabled(True)
         self.h_switch_off.setCheckable(True)
@@ -287,28 +289,28 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.checkbox_layout)
 
-        self.radio_buttons_layout = QHBoxLayout()
-        self.radio_buttons_layout.setObjectName(u"radio_buttons_layout")
+        self.radiobuttons_layout = QHBoxLayout()
+        self.radiobuttons_layout.setObjectName(u"radiobuttons_layout")
         self.verticalLayout = QVBoxLayout()
         self.verticalLayout.setObjectName(u"verticalLayout")
-        self.h_radiobutton_enabled_off = HRadioButton(self.h_frame, theme=theme)
+        self.radiobutton_enabled_off = HRadioButton(self.h_frame, theme=theme)
         self.radioButtonGroup = QButtonGroup(MainWindow)
         self.radioButtonGroup.setObjectName(u"radioButtonGroup")
-        self.radioButtonGroup.addButton(self.h_radiobutton_enabled_off)
-        self.h_radiobutton_enabled_off.setObjectName(u"h_radiobutton_enabled_off")
-        self.h_radiobutton_enabled_off.setChecked(False)
+        self.radioButtonGroup.addButton(self.radiobutton_enabled_off)
+        self.radiobutton_enabled_off.setObjectName(u"radiobutton_enabled_off")
+        self.radiobutton_enabled_off.setChecked(False)
 
-        self.verticalLayout.addWidget(self.h_radiobutton_enabled_off)
+        self.verticalLayout.addWidget(self.radiobutton_enabled_off)
 
-        self.h_radiobutton_enabled_on = HRadioButton(self.h_frame, theme=theme)
-        self.radioButtonGroup.addButton(self.h_radiobutton_enabled_on)
-        self.h_radiobutton_enabled_on.setObjectName(u"h_radiobutton_enabled_on")
-        self.h_radiobutton_enabled_on.setChecked(True)
+        self.radiobutton_enabled_on = HRadioButton(self.h_frame, theme=theme)
+        self.radioButtonGroup.addButton(self.radiobutton_enabled_on)
+        self.radiobutton_enabled_on.setObjectName(u"radiobutton_enabled_on")
+        self.radiobutton_enabled_on.setChecked(True)
 
-        self.verticalLayout.addWidget(self.h_radiobutton_enabled_on)
+        self.verticalLayout.addWidget(self.radiobutton_enabled_on)
 
 
-        self.radio_buttons_layout.addLayout(self.verticalLayout)
+        self.radiobuttons_layout.addLayout(self.verticalLayout)
 
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
@@ -331,153 +333,153 @@ class Ui_MainWindow(object):
         self.verticalLayout_2.addWidget(self.h_radiobutton_disabled_off)
 
 
-        self.radio_buttons_layout.addLayout(self.verticalLayout_2)
+        self.radiobuttons_layout.addLayout(self.verticalLayout_2)
 
 
-        self.main_layout.addLayout(self.radio_buttons_layout)
+        self.main_layout.addLayout(self.radiobuttons_layout)
 
         self.radio_layout = QHBoxLayout()
         self.radio_layout.setObjectName(u"radio_layout")
 
         self.main_layout.addLayout(self.radio_layout)
 
-        self.strong_buttons_layout = QHBoxLayout()
-        self.strong_buttons_layout.setObjectName(u"strong_buttons_layout")
-        self.h_strong_button_text = HStrongButton(self.h_frame, theme=theme)
-        self.h_strong_button_text.setObjectName(u"h_strong_button_text")
-        self.h_strong_button_text.setFlat(True)
+        self.hstrong_buttons_layout = QHBoxLayout()
+        self.hstrong_buttons_layout.setObjectName(u"hstrong_buttons_layout")
+        self.strong_button_text = HStrongButton(self.h_frame, theme=theme)
+        self.strong_button_text.setObjectName(u"strong_button_text")
+        self.strong_button_text.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_button_text)
+        self.hstrong_buttons_layout.addWidget(self.strong_button_text)
 
-        self.h_strong_button_text_icon = HStrongButton(self.h_frame, theme=theme)
-        self.h_strong_button_text_icon.setObjectName(u"h_strong_button_text_icon")
-        self.h_strong_button_text_icon.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.strong_button_text_icon = HStrongButton(self.h_frame, theme=theme)
+        self.strong_button_text_icon.setObjectName(u"strong_button_text_icon")
+        self.strong_button_text_icon.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         icon = QIcon()
         icon.addFile(u"../../hwidgets/icons/linux.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.h_strong_button_text_icon.setIcon(icon)
-        self.h_strong_button_text_icon.setFlat(True)
+        self.strong_button_text_icon.setIcon(icon)
+        self.strong_button_text_icon.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon)
+        self.hstrong_buttons_layout.addWidget(self.strong_button_text_icon)
 
-        self.h_strong_button_icon = HStrongButton(self.h_frame, theme=theme)
-        self.h_strong_button_icon.setObjectName(u"h_strong_button_icon")
-        self.h_strong_button_icon.setIcon(icon)
-        self.h_strong_button_icon.setFlat(True)
+        self.strong_button_icon = HStrongButton(self.h_frame, theme=theme)
+        self.strong_button_icon.setObjectName(u"strong_button_icon")
+        self.strong_button_icon.setIcon(icon)
+        self.strong_button_icon.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_button_icon)
+        self.hstrong_buttons_layout.addWidget(self.strong_button_icon)
 
-        self.h_strong_button_text_icon_2 = HStrongButton(self.h_frame, theme=theme)
-        self.h_strong_button_text_icon_2.setObjectName(u"h_strong_button_text_icon_2")
-        self.h_strong_button_text_icon_2.setEnabled(False)
-        self.h_strong_button_text_icon_2.setIcon(icon)
-        self.h_strong_button_text_icon_2.setFlat(True)
+        self.strong_button_text_icon_2 = HStrongButton(self.h_frame, theme=theme)
+        self.strong_button_text_icon_2.setObjectName(u"strong_button_text_icon_2")
+        self.strong_button_text_icon_2.setEnabled(False)
+        self.strong_button_text_icon_2.setIcon(icon)
+        self.strong_button_text_icon_2.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_2)
+        self.hstrong_buttons_layout.addWidget(self.strong_button_text_icon_2)
 
-        self.h_strong_button_text_icon_4 = HStrongButton(self.h_frame, theme=theme)
-        self.h_strong_button_text_icon_4.setObjectName(u"h_strong_button_text_icon_4")
-        self.h_strong_button_text_icon_4.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.strong_button_text_icon_4 = HStrongButton(self.h_frame, theme=theme)
+        self.strong_button_text_icon_4.setObjectName(u"strong_button_text_icon_4")
+        self.strong_button_text_icon_4.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
         icon1 = QIcon()
         icon1.addFile(u"../../hwidgets/icons/arrow_right_alt_22dp_000000_FILL0_wght400_GRAD0_opsz24.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.h_strong_button_text_icon_4.setIcon(icon1)
-        self.h_strong_button_text_icon_4.setFlat(True)
+        self.strong_button_text_icon_4.setIcon(icon1)
+        self.strong_button_text_icon_4.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_4)
+        self.hstrong_buttons_layout.addWidget(self.strong_button_text_icon_4)
 
-        self.h_strong_button_text_icon_5 = HStrongButton(self.h_frame, theme=theme)
-        self.h_strong_button_text_icon_5.setObjectName(u"h_strong_button_text_icon_5")
-        self.h_strong_button_text_icon_5.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.h_strong_button_text_icon_5.setIcon(icon1)
-        self.h_strong_button_text_icon_5.setFlat(True)
+        self.strong_button_text_icon_5 = HStrongButton(self.h_frame, theme=theme)
+        self.strong_button_text_icon_5.setObjectName(u"strong_button_text_icon_5")
+        self.strong_button_text_icon_5.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.strong_button_text_icon_5.setIcon(icon1)
+        self.strong_button_text_icon_5.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_button_text_icon_5)
+        self.hstrong_buttons_layout.addWidget(self.strong_button_text_icon_5)
 
-        self.h_strong_grey_button_text_icon = HStrongGreyButton(self.h_frame, theme=theme)
-        self.h_strong_grey_button_text_icon.setObjectName(u"h_strong_grey_button_text_icon")
-        self.h_strong_grey_button_text_icon.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
-        self.h_strong_grey_button_text_icon.setIcon(icon1)
-        self.h_strong_grey_button_text_icon.setFlat(True)
+        self.strong_grey_button_text_icon = HStrongGreyButton(self.h_frame, theme=theme)
+        self.strong_grey_button_text_icon.setObjectName(u"strong_grey_button_text_icon")
+        self.strong_grey_button_text_icon.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.strong_grey_button_text_icon.setIcon(icon1)
+        self.strong_grey_button_text_icon.setFlat(True)
 
-        self.strong_buttons_layout.addWidget(self.h_strong_grey_button_text_icon)
+        self.hstrong_buttons_layout.addWidget(self.strong_grey_button_text_icon)
 
         self.horizontalSpacer_7 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.strong_buttons_layout.addItem(self.horizontalSpacer_7)
+        self.hstrong_buttons_layout.addItem(self.horizontalSpacer_7)
 
 
-        self.main_layout.addLayout(self.strong_buttons_layout)
+        self.main_layout.addLayout(self.hstrong_buttons_layout)
 
-        self.toggle_buttons_layout = QHBoxLayout()
-        self.toggle_buttons_layout.setObjectName(u"toggle_buttons_layout")
-        self.h_toggle_button = HToggleButton(self.h_frame, theme=theme)
-        self.h_toggle_button.setObjectName(u"h_toggle_button")
-        self.h_toggle_button.setCheckable(True)
+        self.layout_toggle_buttons = QHBoxLayout()
+        self.layout_toggle_buttons.setObjectName(u"layout_toggle_buttons")
+        self.toggle_button = HToggleButton(self.h_frame, theme=theme)
+        self.toggle_button.setObjectName(u"toggle_button")
+        self.toggle_button.setCheckable(True)
 
-        self.toggle_buttons_layout.addWidget(self.h_toggle_button)
+        self.layout_toggle_buttons.addWidget(self.toggle_button)
 
-        self.h_toggle_button_checked = HToggleButton(self.h_frame, theme=theme)
-        self.h_toggle_button_checked.setObjectName(u"h_toggle_button_checked")
-        self.h_toggle_button_checked.setCheckable(True)
-        self.h_toggle_button_checked.setChecked(True)
+        self.toggle_button_checked = HToggleButton(self.h_frame, theme=theme)
+        self.toggle_button_checked.setObjectName(u"toggle_button_checked")
+        self.toggle_button_checked.setCheckable(True)
+        self.toggle_button_checked.setChecked(True)
 
-        self.toggle_buttons_layout.addWidget(self.h_toggle_button_checked)
+        self.layout_toggle_buttons.addWidget(self.toggle_button_checked)
 
-        self.h_toggle_button_disabled = HToggleButton(self.h_frame, theme=theme)
-        self.h_toggle_button_disabled.setObjectName(u"h_toggle_button_disabled")
-        self.h_toggle_button_disabled.setEnabled(False)
+        self.toggle_button_disabled = HToggleButton(self.h_frame, theme=theme)
+        self.toggle_button_disabled.setObjectName(u"toggle_button_disabled")
+        self.toggle_button_disabled.setEnabled(False)
 
-        self.toggle_buttons_layout.addWidget(self.h_toggle_button_disabled)
+        self.layout_toggle_buttons.addWidget(self.toggle_button_disabled)
 
-        self.h_toggle_button_disabled_checked = HToggleButton(self.h_frame, theme=theme)
-        self.h_toggle_button_disabled_checked.setObjectName(u"h_toggle_button_disabled_checked")
-        self.h_toggle_button_disabled_checked.setEnabled(False)
-        self.h_toggle_button_disabled_checked.setCheckable(True)
-        self.h_toggle_button_disabled_checked.setChecked(True)
+        self.toggle_button_disabled_checked = HToggleButton(self.h_frame, theme=theme)
+        self.toggle_button_disabled_checked.setObjectName(u"toggle_button_disabled_checked")
+        self.toggle_button_disabled_checked.setEnabled(False)
+        self.toggle_button_disabled_checked.setCheckable(True)
+        self.toggle_button_disabled_checked.setChecked(True)
 
-        self.toggle_buttons_layout.addWidget(self.h_toggle_button_disabled_checked)
+        self.layout_toggle_buttons.addWidget(self.toggle_button_disabled_checked)
 
         self.horizontalSpacer_10 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.toggle_buttons_layout.addItem(self.horizontalSpacer_10)
+        self.layout_toggle_buttons.addItem(self.horizontalSpacer_10)
 
 
-        self.main_layout.addLayout(self.toggle_buttons_layout)
+        self.main_layout.addLayout(self.layout_toggle_buttons)
 
-        self.toggle_grey_buttons_layout = QHBoxLayout()
-        self.toggle_grey_buttons_layout.setObjectName(u"toggle_grey_buttons_layout")
-        self.h_toggle_grey_button = HToggleGreyButton(self.h_frame, theme=theme)
-        self.h_toggle_grey_button.setObjectName(u"h_toggle_grey_button")
-        self.h_toggle_grey_button.setCheckable(True)
+        self.grey_buttons_layout = QHBoxLayout()
+        self.grey_buttons_layout.setObjectName(u"grey_buttons_layout")
+        self.toggle_grey_button = HToggleGreyButton(self.h_frame, theme=theme)
+        self.toggle_grey_button.setObjectName(u"toggle_grey_button")
+        self.toggle_grey_button.setCheckable(True)
 
-        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button)
+        self.grey_buttons_layout.addWidget(self.toggle_grey_button)
 
-        self.h_toggle_grey_button_checked_2 = HToggleGreyButton(self.h_frame, theme=theme)
-        self.h_toggle_grey_button_checked_2.setObjectName(u"h_toggle_grey_button_checked_2")
-        self.h_toggle_grey_button_checked_2.setCheckable(True)
-        self.h_toggle_grey_button_checked_2.setChecked(True)
+        self.toggle_grey_button_checked_2 = HToggleGreyButton(self.h_frame, theme=theme)
+        self.toggle_grey_button_checked_2.setObjectName(u"toggle_grey_button_checked_2")
+        self.toggle_grey_button_checked_2.setCheckable(True)
+        self.toggle_grey_button_checked_2.setChecked(True)
 
-        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button_checked_2)
+        self.grey_buttons_layout.addWidget(self.toggle_grey_button_checked_2)
 
-        self.h_toggle_grey_button_disabled_2 = HToggleGreyButton(self.h_frame, theme=theme)
-        self.h_toggle_grey_button_disabled_2.setObjectName(u"h_toggle_grey_button_disabled_2")
-        self.h_toggle_grey_button_disabled_2.setEnabled(False)
+        self.toggle_grey_button_disabled_2 = HToggleGreyButton(self.h_frame, theme=theme)
+        self.toggle_grey_button_disabled_2.setObjectName(u"toggle_grey_button_disabled_2")
+        self.toggle_grey_button_disabled_2.setEnabled(False)
 
-        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button_disabled_2)
+        self.grey_buttons_layout.addWidget(self.toggle_grey_button_disabled_2)
 
-        self.h_toggle_grey_button_disabled_checked_2 = HToggleGreyButton(self.h_frame, theme=theme)
-        self.h_toggle_grey_button_disabled_checked_2.setObjectName(u"h_toggle_grey_button_disabled_checked_2")
-        self.h_toggle_grey_button_disabled_checked_2.setEnabled(False)
-        self.h_toggle_grey_button_disabled_checked_2.setCheckable(True)
-        self.h_toggle_grey_button_disabled_checked_2.setChecked(True)
+        self.toggle_grey_button_disabled_checked_2 = HToggleGreyButton(self.h_frame, theme=theme)
+        self.toggle_grey_button_disabled_checked_2.setObjectName(u"toggle_grey_button_disabled_checked_2")
+        self.toggle_grey_button_disabled_checked_2.setEnabled(False)
+        self.toggle_grey_button_disabled_checked_2.setCheckable(True)
+        self.toggle_grey_button_disabled_checked_2.setChecked(True)
 
-        self.toggle_grey_buttons_layout.addWidget(self.h_toggle_grey_button_disabled_checked_2)
+        self.grey_buttons_layout.addWidget(self.toggle_grey_button_disabled_checked_2)
 
         self.horizontalSpacer_9 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.toggle_grey_buttons_layout.addItem(self.horizontalSpacer_9)
+        self.grey_buttons_layout.addItem(self.horizontalSpacer_9)
 
 
-        self.main_layout.addLayout(self.toggle_grey_buttons_layout)
+        self.main_layout.addLayout(self.grey_buttons_layout)
 
         self.horizontalLayout_18 = QHBoxLayout()
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
@@ -520,9 +522,9 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.horizontalLayout_18)
 
-        self.h_button_layout = QHBoxLayout()
-        self.h_button_layout.setObjectName(u"h_button_layout")
-        self.h_frameless_button = HFramelessButton(self.h_frame, theme=theme)
+        self.button_layout = QHBoxLayout()
+        self.button_layout.setObjectName(u"button_layout")
+        self.h_frameless_button = HOutlinedButton(self.h_frame, theme=theme)
         self.h_frameless_button.setObjectName(u"h_frameless_button")
         sizePolicy = QSizePolicy(QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Fixed)
         sizePolicy.setHorizontalStretch(0)
@@ -537,76 +539,76 @@ class Ui_MainWindow(object):
         self.h_frameless_button.setCheckable(True)
         self.h_frameless_button.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_frameless_button)
+        self.button_layout.addWidget(self.h_frameless_button)
 
-        self.h_frameless_button_checked = HFramelessButton(self.h_frame, theme=theme)
-        self.h_frameless_button_checked.setObjectName(u"h_frameless_button_checked")
-        self.h_frameless_button_checked.setMaximumSize(QSize(24, 24))
-        self.h_frameless_button_checked.setIcon(icon3)
-        self.h_frameless_button_checked.setIconSize(QSize(24, 24))
-        self.h_frameless_button_checked.setCheckable(True)
-        self.h_frameless_button_checked.setChecked(True)
-        self.h_frameless_button_checked.setFlat(True)
+        self.frameless_button_checked = HFramelessButton(self.h_frame, theme=theme)
+        self.frameless_button_checked.setObjectName(u"frameless_button_checked")
+        self.frameless_button_checked.setMaximumSize(QSize(24, 24))
+        self.frameless_button_checked.setIcon(icon3)
+        self.frameless_button_checked.setIconSize(QSize(24, 24))
+        self.frameless_button_checked.setCheckable(True)
+        self.frameless_button_checked.setChecked(True)
+        self.frameless_button_checked.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_frameless_button_checked)
+        self.button_layout.addWidget(self.frameless_button_checked)
 
-        self.h_frameless_button_disabled = HFramelessButton(self.h_frame, theme=theme)
-        self.h_frameless_button_disabled.setObjectName(u"h_frameless_button_disabled")
-        self.h_frameless_button_disabled.setEnabled(False)
-        self.h_frameless_button_disabled.setMaximumSize(QSize(24, 24))
-        self.h_frameless_button_disabled.setIcon(icon3)
-        self.h_frameless_button_disabled.setIconSize(QSize(24, 24))
-        self.h_frameless_button_disabled.setCheckable(True)
-        self.h_frameless_button_disabled.setFlat(True)
+        self.frameless_button_disabled = HFramelessButton(self.h_frame, theme=theme)
+        self.frameless_button_disabled.setObjectName(u"frameless_button_disabled")
+        self.frameless_button_disabled.setEnabled(False)
+        self.frameless_button_disabled.setMaximumSize(QSize(24, 24))
+        self.frameless_button_disabled.setIcon(icon3)
+        self.frameless_button_disabled.setIconSize(QSize(24, 24))
+        self.frameless_button_disabled.setCheckable(True)
+        self.frameless_button_disabled.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_frameless_button_disabled)
+        self.button_layout.addWidget(self.frameless_button_disabled)
 
-        self.h_frameless_button_disabled_checked = HFramelessButton(self.h_frame, theme=theme)
-        self.h_frameless_button_disabled_checked.setObjectName(u"h_frameless_button_disabled_checked")
-        self.h_frameless_button_disabled_checked.setEnabled(False)
-        self.h_frameless_button_disabled_checked.setMaximumSize(QSize(24, 24))
-        self.h_frameless_button_disabled_checked.setIcon(icon3)
-        self.h_frameless_button_disabled_checked.setIconSize(QSize(24, 24))
-        self.h_frameless_button_disabled_checked.setCheckable(True)
-        self.h_frameless_button_disabled_checked.setChecked(True)
-        self.h_frameless_button_disabled_checked.setFlat(True)
+        self.frameless_button_disabled_checked = HFramelessButton(self.h_frame, theme=theme)
+        self.frameless_button_disabled_checked.setObjectName(u"frameless_button_disabled_checked")
+        self.frameless_button_disabled_checked.setEnabled(False)
+        self.frameless_button_disabled_checked.setMaximumSize(QSize(24, 24))
+        self.frameless_button_disabled_checked.setIcon(icon3)
+        self.frameless_button_disabled_checked.setIconSize(QSize(24, 24))
+        self.frameless_button_disabled_checked.setCheckable(True)
+        self.frameless_button_disabled_checked.setChecked(True)
+        self.frameless_button_disabled_checked.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_frameless_button_disabled_checked)
+        self.button_layout.addWidget(self.frameless_button_disabled_checked)
 
         self.horizontalSpacer = QSpacerItem(30, 20, QSizePolicy.Policy.Fixed, QSizePolicy.Policy.Minimum)
 
-        self.h_button_layout.addItem(self.horizontalSpacer)
+        self.button_layout.addItem(self.horizontalSpacer)
 
-        self.h_frameless_button_log = HFramelessButton(self.h_frame, theme=theme)
-        self.h_frameless_button_log.setObjectName(u"h_frameless_button_log")
-        self.h_frameless_button_log.setMaximumSize(QSize(16777215, 24))
-        self.h_frameless_button_log.setIcon(icon3)
-        self.h_frameless_button_log.setIconSize(QSize(24, 24))
-        self.h_frameless_button_log.setCheckable(True)
-        self.h_frameless_button_log.setFlat(True)
+        self.frameless_button_log = HFramelessButton(self.h_frame, theme=theme)
+        self.frameless_button_log.setObjectName(u"frameless_button_log")
+        self.frameless_button_log.setMaximumSize(QSize(16777215, 24))
+        self.frameless_button_log.setIcon(icon3)
+        self.frameless_button_log.setIconSize(QSize(24, 24))
+        self.frameless_button_log.setCheckable(True)
+        self.frameless_button_log.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_frameless_button_log)
+        self.button_layout.addWidget(self.frameless_button_log)
 
-        self.h_frameless_button_non_checkable = HFramelessButton(self.h_frame, theme=theme)
-        self.h_frameless_button_non_checkable.setObjectName(u"h_frameless_button_non_checkable")
-        sizePolicy.setHeightForWidth(self.h_frameless_button_non_checkable.sizePolicy().hasHeightForWidth())
-        self.h_frameless_button_non_checkable.setSizePolicy(sizePolicy)
-        self.h_frameless_button_non_checkable.setMaximumSize(QSize(24, 24))
-        self.h_frameless_button_non_checkable.setIcon(icon3)
-        self.h_frameless_button_non_checkable.setIconSize(QSize(24, 24))
-        self.h_frameless_button_non_checkable.setCheckable(False)
-        self.h_frameless_button_non_checkable.setFlat(True)
+        self.frameless_button_non_checkable = HFramelessButton(self.h_frame, theme=theme)
+        self.frameless_button_non_checkable.setObjectName(u"frameless_button_non_checkable")
+        sizePolicy.setHeightForWidth(self.frameless_button_non_checkable.sizePolicy().hasHeightForWidth())
+        self.frameless_button_non_checkable.setSizePolicy(sizePolicy)
+        self.frameless_button_non_checkable.setMaximumSize(QSize(24, 24))
+        self.frameless_button_non_checkable.setIcon(icon3)
+        self.frameless_button_non_checkable.setIconSize(QSize(24, 24))
+        self.frameless_button_non_checkable.setCheckable(False)
+        self.frameless_button_non_checkable.setFlat(True)
 
-        self.h_button_layout.addWidget(self.h_frameless_button_non_checkable)
+        self.button_layout.addWidget(self.frameless_button_non_checkable)
 
         self.h_button_spacer = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.h_button_layout.addItem(self.h_button_spacer)
+        self.button_layout.addItem(self.h_button_spacer)
 
         self.h_label_3 = HLabel(self.h_frame, theme=theme)
         self.h_label_3.setObjectName(u"h_label_3")
 
-        self.h_button_layout.addWidget(self.h_label_3)
+        self.button_layout.addWidget(self.h_label_3)
 
         self.h_button_checked_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_checked_2.setObjectName(u"h_button_checked_2")
@@ -617,7 +619,7 @@ class Ui_MainWindow(object):
         self.h_button_checked_2.setChecked(True)
         self.h_button_checked_2.setFlat(False)
 
-        self.h_button_layout.addWidget(self.h_button_checked_2)
+        self.button_layout.addWidget(self.h_button_checked_2)
 
         self.h_button_disabled_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_disabled_2.setObjectName(u"h_button_disabled_2")
@@ -627,7 +629,7 @@ class Ui_MainWindow(object):
         self.h_button_disabled_2.setIconSize(QSize(24, 24))
         self.h_button_disabled_2.setFlat(False)
 
-        self.h_button_layout.addWidget(self.h_button_disabled_2)
+        self.button_layout.addWidget(self.h_button_disabled_2)
 
         self.h_button_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_2.setObjectName(u"h_button_2")
@@ -638,7 +640,7 @@ class Ui_MainWindow(object):
         self.h_button_2.setIconSize(QSize(24, 24))
         self.h_button_2.setFlat(False)
 
-        self.h_button_layout.addWidget(self.h_button_2)
+        self.button_layout.addWidget(self.h_button_2)
 
         self.h_button_disabled_checked_2 = HOutlinedButton(self.h_frame, theme=theme)
         self.h_button_disabled_checked_2.setObjectName(u"h_button_disabled_checked_2")
@@ -650,10 +652,10 @@ class Ui_MainWindow(object):
         self.h_button_disabled_checked_2.setChecked(True)
         self.h_button_disabled_checked_2.setFlat(False)
 
-        self.h_button_layout.addWidget(self.h_button_disabled_checked_2)
+        self.button_layout.addWidget(self.h_button_disabled_checked_2)
 
 
-        self.main_layout.addLayout(self.h_button_layout)
+        self.main_layout.addLayout(self.button_layout)
 
         self.lineedit_layout = QHBoxLayout()
         self.lineedit_layout.setObjectName(u"lineedit_layout")
@@ -784,125 +786,125 @@ class Ui_MainWindow(object):
 
         self.main_layout.addLayout(self.h_spinbox_layout)
 
-        self.button_group_layout = QHBoxLayout()
-        self.button_group_layout.setObjectName(u"button_group_layout")
-        self.h_button_group = HButtonGroup(self.h_frame, theme=theme)
-        self.h_button_group.setObjectName(u"h_button_group")
+        self.buttongroup_layout = QHBoxLayout()
+        self.buttongroup_layout.setObjectName(u"buttongroup_layout")
+        self.button_group = HButtonGroup(self.h_frame, theme=theme)
+        self.button_group.setObjectName(u"button_group")
 
-        self.button_group_layout.addWidget(self.h_button_group)
+        self.buttongroup_layout.addWidget(self.button_group)
 
-        self.h_button_group_disabled = HButtonGroup(self.h_frame, theme=theme)
-        self.h_button_group_disabled.setObjectName(u"h_button_group_disabled")
-        self.h_button_group_disabled.setEnabled(False)
+        self.button_group_disabled = HButtonGroup(self.h_frame, theme=theme)
+        self.button_group_disabled.setObjectName(u"button_group_disabled")
+        self.button_group_disabled.setEnabled(False)
 
-        self.button_group_layout.addWidget(self.h_button_group_disabled)
+        self.buttongroup_layout.addWidget(self.button_group_disabled)
 
         self.horizontalSpacer_5 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.button_group_layout.addItem(self.horizontalSpacer_5)
+        self.buttongroup_layout.addItem(self.horizontalSpacer_5)
 
 
-        self.main_layout.addLayout(self.button_group_layout)
+        self.main_layout.addLayout(self.buttongroup_layout)
 
-        self.grey_button_group = QHBoxLayout()
-        self.grey_button_group.setObjectName(u"grey_button_group")
-        self.h_grey_button_group = HGreyButtonGroup(self.h_frame, theme=theme)
-        self.h_grey_button_group.setObjectName(u"h_grey_button_group")
+        self.greybutton_group = QHBoxLayout()
+        self.greybutton_group.setObjectName(u"greybutton_group")
+        self.grey_button_group_2 = HGreyButtonGroup(self.h_frame, theme=theme)
+        self.grey_button_group_2.setObjectName(u"grey_button_group_2")
 
-        self.grey_button_group.addWidget(self.h_grey_button_group)
+        self.greybutton_group.addWidget(self.grey_button_group_2)
 
-        self.h_grey_button_group_disabled = HGreyButtonGroup(self.h_frame, theme=theme)
-        self.h_grey_button_group_disabled.setObjectName(u"h_grey_button_group_disabled")
-        self.h_grey_button_group_disabled.setEnabled(False)
+        self.grey_button_group_disabled = HGreyButtonGroup(self.h_frame, theme=theme)
+        self.grey_button_group_disabled.setObjectName(u"grey_button_group_disabled")
+        self.grey_button_group_disabled.setEnabled(False)
 
-        self.grey_button_group.addWidget(self.h_grey_button_group_disabled)
+        self.greybutton_group.addWidget(self.grey_button_group_disabled)
 
         self.horizontalSpacer_8 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.grey_button_group.addItem(self.horizontalSpacer_8)
+        self.greybutton_group.addItem(self.horizontalSpacer_8)
 
 
-        self.main_layout.addLayout(self.grey_button_group)
+        self.main_layout.addLayout(self.greybutton_group)
 
         self.progress_layout = QVBoxLayout()
         self.progress_layout.setSpacing(3)
         self.progress_layout.setObjectName(u"progress_layout")
-        self.h_progress_bar_0 = HProgressBar(self.h_frame, theme=theme)
-        self.h_progress_bar_0.setObjectName(u"h_progress_bar_0")
-        self.h_progress_bar_0.setValue(0)
+        self.progress_bar_0 = HProgressBar(self.h_frame, theme=theme)
+        self.progress_bar_0.setObjectName(u"progress_bar_0")
+        self.progress_bar_0.setValue(0)
 
-        self.progress_layout.addWidget(self.h_progress_bar_0)
+        self.progress_layout.addWidget(self.progress_bar_0)
 
-        self.h_progress_bar_25 = HProgressBar(self.h_frame, theme=theme)
-        self.h_progress_bar_25.setObjectName(u"h_progress_bar_25")
-        self.h_progress_bar_25.setValue(25)
+        self.progress_bar_25 = HProgressBar(self.h_frame, theme=theme)
+        self.progress_bar_25.setObjectName(u"progress_bar_25")
+        self.progress_bar_25.setValue(25)
 
-        self.progress_layout.addWidget(self.h_progress_bar_25)
+        self.progress_layout.addWidget(self.progress_bar_25)
 
-        self.h_progress_bar_100 = HProgressBar(self.h_frame, theme=theme)
-        self.h_progress_bar_100.setObjectName(u"h_progress_bar_100")
-        self.h_progress_bar_100.setValue(100)
+        self.progress_bar_100 = HProgressBar(self.h_frame, theme=theme)
+        self.progress_bar_100.setObjectName(u"progress_bar_100")
+        self.progress_bar_100.setValue(100)
 
-        self.progress_layout.addWidget(self.h_progress_bar_100)
+        self.progress_layout.addWidget(self.progress_bar_100)
 
 
         self.main_layout.addLayout(self.progress_layout)
 
-        self.h_indet_progress_bar = HIndetProgressBar(self.h_frame, theme=theme)
-        self.h_indet_progress_bar.setObjectName(u"h_indet_progress_bar")
-        self.h_indet_progress_bar.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_indet_progress_bar.setValue(24)
+        self.indet_progress_bar = HIndetProgressBar(self.h_frame, theme=theme)
+        self.indet_progress_bar.setObjectName(u"indet_progress_bar")
+        self.indet_progress_bar.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.indet_progress_bar.setValue(24)
 
-        self.main_layout.addWidget(self.h_indet_progress_bar)
+        self.main_layout.addWidget(self.indet_progress_bar)
 
-        self.h_indet_progress_bar_m2 = HIndetProgressBarM2(self.h_frame, theme=theme)
-        self.h_indet_progress_bar_m2.setObjectName(u"h_indet_progress_bar_m2")
-        self.h_indet_progress_bar_m2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.indet_progress_bar_m2 = HIndetProgressBarM2(self.h_frame, theme=theme)
+        self.indet_progress_bar_m2.setObjectName(u"indet_progress_bar_m2")
+        self.indet_progress_bar_m2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
 
-        self.main_layout.addWidget(self.h_indet_progress_bar_m2)
+        self.main_layout.addWidget(self.indet_progress_bar_m2)
 
-        self.h_indet_progress_bar_r = HIndetProgressBarR(self.h_frame, theme=theme)
-        self.h_indet_progress_bar_r.setObjectName(u"h_indet_progress_bar_r")
-        self.h_indet_progress_bar_r.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.indet_progress_bar_r = HIndetProgressBarR(self.h_frame, theme=theme)
+        self.indet_progress_bar_r.setObjectName(u"indet_progress_bar_r")
+        self.indet_progress_bar_r.setStyleSheet(u"background-color: rgb(231, 253, 255);")
 
-        self.main_layout.addWidget(self.h_indet_progress_bar_r)
+        self.main_layout.addWidget(self.indet_progress_bar_r)
 
-        self.radial_progress_layout = QHBoxLayout()
-        self.radial_progress_layout.setObjectName(u"radial_progress_layout")
-        self.h_radial_progress_1 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_1.setObjectName(u"h_radial_progress_1")
-        self.h_radial_progress_1.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_1.setValue(24)
+        self.radia_progress_layout = QHBoxLayout()
+        self.radia_progress_layout.setObjectName(u"radia_progress_layout")
+        self.radial_progress_1 = HRadialProgress(self.h_frame, theme=theme)
+        self.radial_progress_1.setObjectName(u"radial_progress_1")
+        self.radial_progress_1.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_1.setValue(24)
 
-        self.radial_progress_layout.addWidget(self.h_radial_progress_1)
+        self.radia_progress_layout.addWidget(self.radial_progress_1)
 
-        self.h_radial_progress_2 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_2.setObjectName(u"h_radial_progress_2")
-        self.h_radial_progress_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_2.setValue(51)
+        self.radial_progress_2 = HRadialProgress(self.h_frame, theme=theme)
+        self.radial_progress_2.setObjectName(u"radial_progress_2")
+        self.radial_progress_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_2.setValue(51)
 
-        self.radial_progress_layout.addWidget(self.h_radial_progress_2)
+        self.radia_progress_layout.addWidget(self.radial_progress_2)
 
-        self.h_radial_progress_3 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_3.setObjectName(u"h_radial_progress_3")
-        self.h_radial_progress_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_3.setValue(76)
+        self.radial_progress_3 = HRadialProgress(self.h_frame, theme=theme)
+        self.radial_progress_3.setObjectName(u"radial_progress_3")
+        self.radial_progress_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_3.setValue(76)
 
-        self.radial_progress_layout.addWidget(self.h_radial_progress_3)
+        self.radia_progress_layout.addWidget(self.radial_progress_3)
 
-        self.h_radial_progress_4 = HRadialProgress(self.h_frame, theme=theme)
-        self.h_radial_progress_4.setObjectName(u"h_radial_progress_4")
-        self.h_radial_progress_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_4.setValue(100)
+        self.radial_progress_4 = HRadialProgress(self.h_frame, theme=theme)
+        self.radial_progress_4.setObjectName(u"radial_progress_4")
+        self.radial_progress_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_4.setValue(100)
 
-        self.radial_progress_layout.addWidget(self.h_radial_progress_4)
+        self.radia_progress_layout.addWidget(self.radial_progress_4)
 
         self.horizontalSpacer_11 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
-        self.radial_progress_layout.addItem(self.horizontalSpacer_11)
+        self.radia_progress_layout.addItem(self.horizontalSpacer_11)
 
 
-        self.main_layout.addLayout(self.radial_progress_layout)
+        self.main_layout.addLayout(self.radia_progress_layout)
 
         self.slider = HSlider(self.h_frame, theme=theme)
         self.slider.setObjectName(u"slider")
@@ -931,28 +933,28 @@ class Ui_MainWindow(object):
         self.h_frame_styled_raised.setFrameShadow(QFrame.Shadow.Plain)
         self.verticalLayout_9 = QVBoxLayout(self.h_frame_styled_raised)
         self.verticalLayout_9.setObjectName(u"verticalLayout_9")
-        self.h_step_indicator = HStepIndicator(self.h_frame_styled_raised, theme=theme)
-        self.h_step_indicator.setObjectName(u"h_step_indicator")
+        self.step_indicator = HStepIndicator(self.h_frame_styled_raised, theme=theme)
+        self.step_indicator.setObjectName(u"step_indicator")
 
-        self.verticalLayout_9.addWidget(self.h_step_indicator)
+        self.verticalLayout_9.addWidget(self.step_indicator)
 
-        self.h_comment_bold_2 = HComment(self.h_frame_styled_raised, theme=theme)
-        self.h_comment_bold_2.setObjectName(u"h_comment_bold_2")
-        self.h_comment_bold_2.setWordWrap(True)
+        self.comment_bold_2 = HComment(self.h_frame_styled_raised, theme=theme)
+        self.comment_bold_2.setObjectName(u"comment_bold_2")
+        self.comment_bold_2.setWordWrap(True)
 
-        self.verticalLayout_9.addWidget(self.h_comment_bold_2)
+        self.verticalLayout_9.addWidget(self.comment_bold_2)
 
-        self.h_comment_italic_2 = HComment(self.h_frame_styled_raised, theme=theme)
-        self.h_comment_italic_2.setObjectName(u"h_comment_italic_2")
-        self.h_comment_italic_2.setWordWrap(True)
+        self.comment_italic_2 = HComment(self.h_frame_styled_raised, theme=theme)
+        self.comment_italic_2.setObjectName(u"comment_italic_2")
+        self.comment_italic_2.setWordWrap(True)
 
-        self.verticalLayout_9.addWidget(self.h_comment_italic_2)
+        self.verticalLayout_9.addWidget(self.comment_italic_2)
 
-        self.h_description_2 = HDescription(self.h_frame_styled_raised, theme=theme)
-        self.h_description_2.setObjectName(u"h_description_2")
-        self.h_description_2.setWordWrap(True)
+        self.description_2 = HDescription(self.h_frame_styled_raised, theme=theme)
+        self.description_2.setObjectName(u"description_2")
+        self.description_2.setWordWrap(True)
 
-        self.verticalLayout_9.addWidget(self.h_description_2)
+        self.verticalLayout_9.addWidget(self.description_2)
 
         self.labels_layout_2 = QHBoxLayout()
         self.labels_layout_2.setObjectName(u"labels_layout_2")
@@ -1000,25 +1002,25 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_5.addItem(self.horizontalSpacer_4)
 
-        self.h_switch_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
         self.h_switch_2.setObjectName(u"h_switch_2")
 
         self.horizontalLayout_5.addWidget(self.h_switch_2)
 
-        self.h_switch_checked_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_checked_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
         self.h_switch_checked_2.setObjectName(u"h_switch_checked_2")
         self.h_switch_checked_2.setChecked(True)
 
         self.horizontalLayout_5.addWidget(self.h_switch_checked_2)
 
-        self.h_switch_disabled_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_disabled_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
         self.h_switch_disabled_2.setObjectName(u"h_switch_disabled_2")
         self.h_switch_disabled_2.setEnabled(False)
         self.h_switch_disabled_2.setCheckable(True)
 
         self.horizontalLayout_5.addWidget(self.h_switch_disabled_2)
 
-        self.h_switch_disabled_checked_2 = HSwitch(self.h_frame_styled_raised, theme=theme)
+        self.h_switch_disabled_checked_2 = HCheckBox(self.h_frame_styled_raised, theme=theme)
         self.h_switch_disabled_checked_2.setObjectName(u"h_switch_disabled_checked_2")
         self.h_switch_disabled_checked_2.setEnabled(False)
         self.h_switch_disabled_checked_2.setChecked(True)
@@ -1274,41 +1276,41 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addLayout(self.plaintextedit_layout)
 
-        self.h_card_consumption = HCard(self.h_frame, theme=theme)
-        self.h_card_consumption.setObjectName(u"h_card_consumption")
-        self.h_card_consumption.setFrameShape(QFrame.Shape.StyledPanel)
-        self.h_card_consumption.setFrameShadow(QFrame.Shadow.Plain)
-        self.horizontalLayout_4 = QHBoxLayout(self.h_card_consumption)
+        self.card_consumption = HCard(self.h_frame, theme=theme)
+        self.card_consumption.setObjectName(u"card_consumption")
+        self.card_consumption.setFrameShape(QFrame.Shape.StyledPanel)
+        self.card_consumption.setFrameShadow(QFrame.Shadow.Plain)
+        self.horizontalLayout_4 = QHBoxLayout(self.card_consumption)
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
-        self.h_radial_progress_vram = HRadialProgress(self.h_card_consumption, theme=theme)
-        self.h_radial_progress_vram.setObjectName(u"h_radial_progress_vram")
-        self.h_radial_progress_vram.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_vram.setValue(24)
+        self.radial_progress_vram = HRadialProgress(self.card_consumption, theme=theme)
+        self.radial_progress_vram.setObjectName(u"radial_progress_vram")
+        self.radial_progress_vram.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_vram.setValue(24)
 
-        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram)
+        self.horizontalLayout_4.addWidget(self.radial_progress_vram)
 
-        self.h_radial_progress_vram_4 = HRadialProgress(self.h_card_consumption, theme=theme)
-        self.h_radial_progress_vram_4.setObjectName(u"h_radial_progress_vram_4")
-        self.h_radial_progress_vram_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_vram_4.setValue(51)
+        self.radial_progress_vram_4 = HRadialProgress(self.card_consumption, theme=theme)
+        self.radial_progress_vram_4.setObjectName(u"radial_progress_vram_4")
+        self.radial_progress_vram_4.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_vram_4.setValue(51)
 
-        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram_4)
+        self.horizontalLayout_4.addWidget(self.radial_progress_vram_4)
 
-        self.h_radial_progress_vram_3 = HRadialProgress(self.h_card_consumption, theme=theme)
-        self.h_radial_progress_vram_3.setObjectName(u"h_radial_progress_vram_3")
-        self.h_radial_progress_vram_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_vram_3.setValue(76)
+        self.radial_progress_vram_3 = HRadialProgress(self.card_consumption, theme=theme)
+        self.radial_progress_vram_3.setObjectName(u"radial_progress_vram_3")
+        self.radial_progress_vram_3.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_vram_3.setValue(76)
 
-        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram_3)
+        self.horizontalLayout_4.addWidget(self.radial_progress_vram_3)
 
-        self.h_radial_progress_vram_2 = HRadialProgress(self.h_card_consumption, theme=theme)
-        self.h_radial_progress_vram_2.setObjectName(u"h_radial_progress_vram_2")
-        self.h_radial_progress_vram_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_vram_2.setValue(100)
+        self.radial_progress_vram_2 = HRadialProgress(self.card_consumption, theme=theme)
+        self.radial_progress_vram_2.setObjectName(u"radial_progress_vram_2")
+        self.radial_progress_vram_2.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_vram_2.setValue(100)
 
-        self.horizontalLayout_4.addWidget(self.h_radial_progress_vram_2)
+        self.horizontalLayout_4.addWidget(self.radial_progress_vram_2)
 
-        self.h_divider_2 = HDivider(self.h_card_consumption, theme=theme)
+        self.h_divider_2 = HFrame(self.card_consumption, theme=theme)
         self.h_divider_2.setObjectName(u"h_divider_2")
         self.h_divider_2.setMinimumSize(QSize(50, 10))
         self.h_divider_2.setFrameShape(QFrame.Shape.VLine)
@@ -1316,21 +1318,21 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_4.addWidget(self.h_divider_2, 0, Qt.AlignmentFlag.AlignVCenter)
 
-        self.h_radial_progress_ram = HRadialProgress(self.h_card_consumption, theme=theme)
-        self.h_radial_progress_ram.setObjectName(u"h_radial_progress_ram")
-        self.h_radial_progress_ram.setStyleSheet(u"background-color: rgb(231, 253, 255);")
-        self.h_radial_progress_ram.setValue(65)
+        self.radial_progress_ram = HRadialProgress(self.card_consumption, theme=theme)
+        self.radial_progress_ram.setObjectName(u"radial_progress_ram")
+        self.radial_progress_ram.setStyleSheet(u"background-color: rgb(231, 253, 255);")
+        self.radial_progress_ram.setValue(65)
 
-        self.horizontalLayout_4.addWidget(self.h_radial_progress_ram)
+        self.horizontalLayout_4.addWidget(self.radial_progress_ram)
 
         self.horizontalSpacer_12 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
         self.horizontalLayout_4.addItem(self.horizontalSpacer_12)
 
 
-        self.verticalLayout_3.addWidget(self.h_card_consumption)
+        self.verticalLayout_3.addWidget(self.card_consumption)
 
-        self.h_log_viewer = HLogViewer(self.h_frame, theme=theme)
+        self.h_log_viewer = HPlainTextEdit(self.h_frame, theme=theme)
         self.h_log_viewer.setObjectName(u"h_log_viewer")
         self.h_log_viewer.setMaximumSize(QSize(16777215, 200))
         self.h_log_viewer.setTabChangesFocus(True)
@@ -1358,14 +1360,14 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.h_title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon ABCDEFGHIJKLMNOPQRSTUVWXYZ", None))
-        self.h_title_icon.setText("")
-        self.h_subtitles.setText(QCoreApplication.translate("MainWindow", u"Subtitle", None))
-        self.h_description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", None))
-        self.h_description.setText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
-        self.h_comment_small_italic.setText(QCoreApplication.translate("MainWindow", u"Small italic comment", None))
-        self.h_comment_bold.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
-        self.h_comment_italic.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
+        self.title.setText(QCoreApplication.translate("MainWindow", u"This is a HTitle widget without icon ABCDEFGHIJKLMNOPQRSTUVWXYZ", None))
+        self.title_icon.setText("")
+        self.subtitles.setText(QCoreApplication.translate("MainWindow", u"Subtitle", None))
+        self.description_3.setText(QCoreApplication.translate("MainWindow", u"Description (Bold): Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ", None))
+        self.description.setText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.comment_small_italic.setText(QCoreApplication.translate("MainWindow", u"Small italic comment", None))
+        self.comment_bold.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
+        self.comment_italic.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
         self.h_label.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
         self.h_label_disabled.setText(QCoreApplication.translate("MainWindow", u"A disabled Hlabel", None))
         self.h_checkbox_disabled_3.setText(QCoreApplication.translate("MainWindow", u"480p", None))
@@ -1384,35 +1386,35 @@ class Ui_MainWindow(object):
         self.label_3.setText(QCoreApplication.translate("MainWindow", u"switch disabled off", None))
         self.label_4.setText(QCoreApplication.translate("MainWindow", u"switch enabled on", None))
         self.h_checkbox_checked_2.setText(QCoreApplication.translate("MainWindow", u"480p", None))
-        self.h_radiobutton_enabled_off.setText(QCoreApplication.translate("MainWindow", u"Enabled", None))
-        self.h_radiobutton_enabled_on.setText(QCoreApplication.translate("MainWindow", u"Enabled, checked", None))
+        self.radiobutton_enabled_off.setText(QCoreApplication.translate("MainWindow", u"Enabled", None))
+        self.radiobutton_enabled_on.setText(QCoreApplication.translate("MainWindow", u"Enabled, checked", None))
         self.h_radiobutton_disabled_on.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
         self.h_radiobutton_disabled_off.setText(QCoreApplication.translate("MainWindow", u"Disabled, checked", None))
-        self.h_strong_button_text.setText(QCoreApplication.translate("MainWindow", u"Strong Button", None))
-        self.h_strong_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Strong icon", None))
-        self.h_strong_button_icon.setText("")
-        self.h_strong_button_text_icon_2.setText(QCoreApplication.translate("MainWindow", u"Strong disabled", None))
-        self.h_strong_button_text_icon_4.setText(QCoreApplication.translate("MainWindow", u"Next", None))
-        self.h_strong_button_text_icon_5.setText(QCoreApplication.translate("MainWindow", u"Next", None))
-        self.h_strong_grey_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Next", None))
-        self.h_toggle_button.setText(QCoreApplication.translate("MainWindow", u"toggle", None))
-        self.h_toggle_button_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (checked)", None))
-        self.h_toggle_button_disabled.setText(QCoreApplication.translate("MainWindow", u"toggle (disabled)", None))
-        self.h_toggle_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (Checked Disabled)", None))
-        self.h_toggle_grey_button.setText(QCoreApplication.translate("MainWindow", u"toggle grey", None))
-        self.h_toggle_grey_button_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (checked)", None))
-        self.h_toggle_grey_button_disabled_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (disabled)", None))
-        self.h_toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (Checked Disabled) Never use that!", None))
+        self.strong_button_text.setText(QCoreApplication.translate("MainWindow", u"Strong Button", None))
+        self.strong_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Strong icon", None))
+        self.strong_button_icon.setText("")
+        self.strong_button_text_icon_2.setText(QCoreApplication.translate("MainWindow", u"Strong disabled", None))
+        self.strong_button_text_icon_4.setText(QCoreApplication.translate("MainWindow", u"Next", None))
+        self.strong_button_text_icon_5.setText(QCoreApplication.translate("MainWindow", u"Next", None))
+        self.strong_grey_button_text_icon.setText(QCoreApplication.translate("MainWindow", u"Next", None))
+        self.toggle_button.setText(QCoreApplication.translate("MainWindow", u"toggle", None))
+        self.toggle_button_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (checked)", None))
+        self.toggle_button_disabled.setText(QCoreApplication.translate("MainWindow", u"toggle (disabled)", None))
+        self.toggle_button_disabled_checked.setText(QCoreApplication.translate("MainWindow", u"toggle (Checked Disabled)", None))
+        self.toggle_grey_button.setText(QCoreApplication.translate("MainWindow", u"toggle grey", None))
+        self.toggle_grey_button_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (checked)", None))
+        self.toggle_grey_button_disabled_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (disabled)", None))
+        self.toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (Checked Disabled) Never use that!", None))
         self.h_outlined_button.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
         self.h_outlined_button_icon.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
         self.h_outlined_button_icon_r.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
         self.h_outlined_button_disabled.setText(QCoreApplication.translate("MainWindow", u"outlined (disabled)", None))
         self.h_frameless_button.setText("")
-        self.h_frameless_button_checked.setText("")
-        self.h_frameless_button_disabled.setText("")
-        self.h_frameless_button_disabled_checked.setText("")
-        self.h_frameless_button_log.setText(QCoreApplication.translate("MainWindow", u"log", None))
-        self.h_frameless_button_non_checkable.setText("")
+        self.frameless_button_checked.setText("")
+        self.frameless_button_disabled.setText("")
+        self.frameless_button_disabled_checked.setText("")
+        self.frameless_button_log.setText(QCoreApplication.translate("MainWindow", u"log", None))
+        self.frameless_button_non_checkable.setText("")
         self.h_label_3.setText(QCoreApplication.translate("MainWindow", u"non flat", None))
         self.h_button_checked_2.setText("")
         self.h_button_disabled_2.setText("")
@@ -1422,9 +1424,9 @@ class Ui_MainWindow(object):
         self.h_lineedit_editable_clear_button.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
         self.h_lineedit_read_only.setText(QCoreApplication.translate("MainWindow", u"ReadOnly", None))
         self.h_lineedit_disabled.setText(QCoreApplication.translate("MainWindow", u"Disabled", None))
-        self.h_comment_bold_2.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
-        self.h_comment_italic_2.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
-        self.h_description_2.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
+        self.comment_bold_2.setText(QCoreApplication.translate("MainWindow", u"Bold comment", None))
+        self.comment_italic_2.setText(QCoreApplication.translate("MainWindow", u"Italic comment", None))
+        self.description_2.setText(QCoreApplication.translate("MainWindow", u"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
         self.h_label_2.setText(QCoreApplication.translate("MainWindow", u"A Hlabel", None))
         self.h_label_disabled_2.setText(QCoreApplication.translate("MainWindow", u"A disabled Hlabel", None))
         self.h_checkbox_2.setText("")

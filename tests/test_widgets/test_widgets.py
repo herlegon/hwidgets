@@ -5,6 +5,9 @@ import signal
 import sys
 sys.path.append(os.path.join(parent_directory(__file__), "hwidgets"))
 
+from PySide6.QtGui import (
+    QFontDatabase,
+)
 from PySide6.QtWidgets import (
     QApplication,
 )
@@ -32,6 +35,21 @@ def main():
 
     QApplication.setStyle("Fusion")
     application = QApplication(sys.argv)
+
+    # Instead of instantiating QFontDatabase, we use its static methods directly.
+    # Load the font file into the application font database
+    font_id = QFontDatabase.addApplicationFont("Roboto-Regular.ttf")
+
+    _FONT_PATH: tuple[tuple[str]] = (
+    ("Roboto/Roboto-Regular.ttf", "Roboto/Roboto-Italic.ttf"),
+    ("Roboto/Roboto-Bold.ttf", "Roboto/Roboto-BoldItalic.ttf")
+    )
+
+    # You can retrieve the font family name by querying the font ID
+    font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
+    print(font_id)
+    print(font_family)
+
     main_window = MainWindow()
     main_window.show()
     sys.exit(application.exec())

@@ -90,9 +90,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # self.h_radial_progress_1.set_thickness(8)
 
         button_list = ["btn1_size 1", "btn1_size usieghsegiuyfzd", "btn3", "btn1_sizegyud"]
-        self.h_button_group.set_buttons(button_list)
-        self.h_button_group.get_button(2).setEnabled(False)
-        self.h_button_group_disabled.set_buttons(button_list)
+        self.button_group.set_buttons(button_list)
+        self.button_group.get_button(2).setEnabled(False)
+        self.button_group_disabled.set_buttons(button_list)
 
         # self.h_grey_button_group.set_buttons(button_list)
         # self.h_grey_button_group.get_button(2).setEnabled(False)
@@ -106,31 +106,31 @@ class MainWindow(QMainWindow, Ui_MainWindow):
 
 
         # make it italic
-        self.h_comment_italic.setItalic(True)
-        self.h_comment_bold.setWeight(800)
-        self.h_comment_small_italic.setItalic(True)
-        self.h_comment_small_italic.setFontSize(8)
+        self.comment_italic.setItalic(True)
+        self.comment_bold.setWeight(800)
+        self.comment_small_italic.setItalic(True)
+        self.comment_small_italic.setFontSize(8)
 
         self.h_plaintextedit_editable.setClearButtonEnabled(False)
 
-        self.h_indet_progress_bar.hide()
-        self.h_indet_progress_bar_m2.start()
-        self.h_indet_progress_bar_r.hide()
+        self.indet_progress_bar.hide()
+        # self.indet_progress_bar_m2.start()
+        self.indet_progress_bar_r.hide()
 
         for rp in (
-            self.h_radial_progress_1,
-            self.h_radial_progress_2,
-            self.h_radial_progress_3,
-            self.h_radial_progress_4,
+            self.radial_progress_1,
+            self.radial_progress_2,
+            self.radial_progress_3,
+            self.radial_progress_4,
         ):
             rp.setThickness(4)
 
 
         for rp in (
-            self.h_radial_progress_vram,
-            self.h_radial_progress_vram_2,
-            self.h_radial_progress_vram_3,
-            self.h_radial_progress_vram_4,
+            self.radial_progress_vram,
+            self.radial_progress_vram_2,
+            self.radial_progress_vram_3,
+            self.radial_progress_vram_4,
         ):
             rp.setFixedWidth(64)
             rp.setThickness(6)
@@ -139,15 +139,15 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             rp.setLabelText("label")
             rp.displayValue(True)
 
-        self.h_radial_progress_ram.setFixedWidth(rp.bar_width)
-        self.h_radial_progress_ram.setThickness(6)
-        self.h_radial_progress_ram.useColoredTriggers()
-        self.h_radial_progress_ram.setLegendText("RAM")
-        self.h_radial_progress_ram.displayValue(True)
+        self.radial_progress_ram.setFixedWidth(rp.bar_width)
+        self.radial_progress_ram.setThickness(6)
+        self.radial_progress_ram.useColoredTriggers()
+        self.radial_progress_ram.setLegendText("RAM")
+        self.radial_progress_ram.displayValue(True)
 
         self.h_divider_2.setMinimumHeight(rp.height())
 
-        self.h_step_indicator.setSteps(
+        self.step_indicator.setSteps(
             [
                 "Welcome",
                 "FFmpeg Notice & Selection",
@@ -156,7 +156,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 "AI Computational Resource",
             ]
         )
-        self.h_step_indicator.setCurrentStep(2)
+        self.step_indicator.setCurrentStep(2)
 
         slider = self.slider
         slider.setMinimum(0)
