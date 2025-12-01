@@ -15,6 +15,7 @@ from .scrollbar import HScrollBar
 from .titles import HTitle
 from .label import (
     HLabel,
+    HAppTitle,
     HSubtitle,
     HDescription,
     HComment,
@@ -64,6 +65,7 @@ __all__ = [
     "HVerticalDivider",
     "HScrollBar",
 
+    "HAppTitle",
     "HTitle",
     "HSubtitle",
     "HDescription",

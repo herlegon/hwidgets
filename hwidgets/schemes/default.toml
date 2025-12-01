@@ -42,6 +42,13 @@ font_weight = 400
 font_color = "#d4d4d4"
 
 
+[app_title]
+font_family = "Inter"
+font_size = 11
+font_weight = 600
+font_color = "#d4d4d4"
+
+
 [title]
 font_family = "Inter"
 font_size = 16
@@ -51,18 +58,18 @@ font_color = "#5e7ce0"
 
 [subtitle]
 font_size = 11
-font_weight = 500
+font_weight = 400
 font_color = "#d4d4d8"
 
 
 [description]
-font_size = 10
+font_size = 11
 font_weight = 600
 font_color = "#d4d4d8"
 
 
 [comment]
-font_size = 8
+font_size = 9
 font_color = "#cfcfcf"
 
 
@@ -82,7 +89,8 @@ pressed = "#666667"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
 font_color_disabled = "#666667"
-
+font_size = 11
+font_weight = 600
 
 [radio_button]
 circle_size = 14
@@ -91,6 +99,8 @@ pressed = "#5e5e5e"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
 font_color_disabled = "#666667"
+font_size = 11
+font_weight = 600
 
 
 [line_edit]

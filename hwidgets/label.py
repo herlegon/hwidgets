@@ -1,6 +1,7 @@
+from __future__ import annotations
 from copy import deepcopy
 from string import Template
-from typing import Type
+from typing import Type,TYPE_CHECKING
 from .styles import Theme, FontConfig, weight_from_css
 from .utils import load_qss
 
@@ -10,12 +11,15 @@ from PySide6.QtCore import (
 from PySide6.QtGui import (
     QPixmap,
     QFont,
+    QPaintEvent,
+    QPainter,
 )
 from PySide6.QtWidgets import (
     QLabel,
     QSizePolicy,
     QWidget,
 )
+from .debug import DEBUG_GEOMETRY, draw_widget_rect
 
 
 class HLabel(QLabel):
@@ -43,10 +47,11 @@ class HLabel(QLabel):
         super().__init__(parent)
         self.setCursor(Qt.CursorShape.ArrowCursor)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
+
+        self.theme = theme
         if text is not None:
             self.setText(text)
 
-        self.theme = theme
         self.font_config: FontConfig = deepcopy(theme.label.font)
         self._update_stylesheet()
 
@@ -96,6 +101,8 @@ class HLabel(QLabel):
             style = self.theme.subtitle
         elif isinstance(self, HComment):
             style = self.theme.comment
+        elif isinstance(self, HAppTitle):
+            style = self.theme.app_title
         else:
             style = self.theme.label
 
@@ -110,6 +117,40 @@ class HLabel(QLabel):
         )
         self.setStyleSheet(qss)
         self.setFont(self.font_config.make_font())
+
+
+    def paintEvent(self, event: QPaintEvent) -> None:
+        super().paintEvent(event)
+        painter = QPainter(self)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
+        painter.end()
+
+
+
+
+
+class HAppTitle(HLabel):
+    def __init__(self, /, parent: QWidget | None = None, f: Qt.WindowType = None, *, theme, text = None, textFormat = None, pixmap = None, scaledContents = None, alignment = None, wordWrap = None, margin = None, indent = None, openExternalLinks = None, textInteractionFlags = None, hasSelectedText = None, selectedText = None):
+        super().__init__(parent, f, theme=theme, text=text, textFormat=textFormat, pixmap=pixmap, scaledContents=scaledContents, alignment=alignment, wordWrap=wordWrap, margin=margin, indent=indent, openExternalLinks=openExternalLinks, textInteractionFlags=textInteractionFlags, hasSelectedText=hasSelectedText, selectedText=selectedText)
+
+        # Override defaults from theme
+        self.font_config.size = theme.app_title.font.size
+        self.font_config.weight = theme.app_title.font.weight
+        self._update_stylesheet()
+
+
+
+
+
+class HSubtitle(HLabel):
+    def __init__(self, /, parent: QWidget | None = None, f: Qt.WindowType = None, *, theme, text = None, textFormat = None, pixmap = None, scaledContents = None, alignment = None, wordWrap = None, margin = None, indent = None, openExternalLinks = None, textInteractionFlags = None, hasSelectedText = None, selectedText = None):
+        super().__init__(parent, f, theme=theme, text=text, textFormat=textFormat, pixmap=pixmap, scaledContents=scaledContents, alignment=alignment, wordWrap=wordWrap, margin=margin, indent=indent, openExternalLinks=openExternalLinks, textInteractionFlags=textInteractionFlags, hasSelectedText=hasSelectedText, selectedText=selectedText)
+
+        # Override defaults from theme
+        self.font_config.size = theme.subtitle.font.size
+        self.font_config.weight = theme.subtitle.font.weight
+        self._update_stylesheet()
 
 
 
@@ -169,15 +210,4 @@ class HComment(HLabel):
         self.font_config.size = theme.comment.font.size
         self.font_config.weight = theme.comment.font.weight
         self.setItalic(italic)
-        self._update_stylesheet()
-
-
-
-class HSubtitle(HLabel):
-    def __init__(self, /, parent: QWidget | None = None, f: Qt.WindowType = None, *, theme, text = None, textFormat = None, pixmap = None, scaledContents = None, alignment = None, wordWrap = None, margin = None, indent = None, openExternalLinks = None, textInteractionFlags = None, hasSelectedText = None, selectedText = None):
-        super().__init__(parent, f, theme=theme, text=text, textFormat=textFormat, pixmap=pixmap, scaledContents=scaledContents, alignment=alignment, wordWrap=wordWrap, margin=margin, indent=indent, openExternalLinks=openExternalLinks, textInteractionFlags=textInteractionFlags, hasSelectedText=hasSelectedText, selectedText=selectedText)
-
-        # Override defaults from theme
-        self.font_config.size = theme.subtitle.font.size
-        self.font_config.weight = theme.subtitle.font.weight
         self._update_stylesheet()

@@ -13,6 +13,7 @@ from .styles import (
     DividerStyle,
     ScrollBarStyle,
 
+    AppTitleStyle,
     TitleStyle,
     SubtitleStyle,
     DescriptionStyle,
@@ -138,6 +139,7 @@ class StyleManager:
         inheritance = {
             "card": "frame",
 
+            "app_title": "label",
             "title": "label",
             "subtitle": "label",
             "comment": "label",
@@ -172,6 +174,7 @@ class StyleManager:
             "scrollbar": ("scrollbar", ScrollBarStyle),
 
             "label": ("label", LabelStyle),
+            "app_title": ("app_title", AppTitleStyle),
             "title": ("title", TitleStyle),
             "subtitle": ("subtitle", SubtitleStyle),
             "description": ("description", DescriptionStyle),

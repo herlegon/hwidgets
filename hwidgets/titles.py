@@ -228,10 +228,10 @@ class HTitle(QWidget):
         self._layout.setSpacing(8)
 
 
-    # def paintEvent(self, event: QPaintEvent) -> None:
-    #     super().paintEvent(event)
-    #     painter = QPainter(self)
-    #     if DEBUG_GEOMETRY:
-    #         draw_widget_rect(self, painter)
-    #     painter.end()
+    def paintEvent(self, event: QPaintEvent) -> None:
+        super().paintEvent(event)
+        painter = QPainter(self)
+        if DEBUG_GEOMETRY:
+            draw_widget_rect(self, painter)
+        painter.end()
 

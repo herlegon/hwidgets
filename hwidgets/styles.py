@@ -24,7 +24,7 @@ class FontConfig:
         font = QFont(self.family, self.size)
         font.setWeight(self.weight)
         font.setStyleStrategy(QFont.StyleStrategy.PreferQuality)
-        font.setHintingPreference(QFont.HintingPreference.PreferNoHinting)
+        # font.setHintingPreference(QFont.HintingPreference.PreferNoHinting)
         font.setStyle(self.style)
         return font
 
@@ -103,6 +103,14 @@ class LabelStyle:
     font: FontConfig = field(default_factory=FontConfig)
     font_color: str = ""
     font_color_disabled: str = ""
+
+
+
+@dataclass
+class AppTitleStyle(LabelStyle):
+    font: FontConfig = field(
+        default_factory=lambda: FontConfig(size=11, weight=QFont.Weight.Bold)
+    )
 
 
 @dataclass
@@ -400,6 +408,7 @@ class Theme:
     scrollbar: ScrollBarStyle = field(default_factory=ScrollBarStyle)
 
     label: LabelStyle = field(default_factory=LabelStyle)
+    app_title: AppTitleStyle = field(default_factory=AppTitleStyle)
     title: TitleStyle = field(default_factory=TitleStyle)
     subtitle: SubtitleStyle = field(default_factory=SubtitleStyle)
     description: DescriptionStyle = field(default_factory=DescriptionStyle)

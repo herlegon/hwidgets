@@ -44,6 +44,7 @@ if __name__ == "__main__":
         "vdivider": "HVerticalDivider",
         "hdivider": "HHorizontalDivider",
 
+        "apptitle": "HAppTitle",
         "title": "HTitle",
         "subtitle": "HSubtitle",
         "comment": "HComment",

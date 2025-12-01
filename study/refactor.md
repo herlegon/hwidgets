@@ -6,6 +6,7 @@
         (VerticalDivider)
     ✅ Overlay Vertical Scrollbar
 
+    ✅ AppTitle
     ✅ Label
     ✅ Title
     ✅ subtitle
