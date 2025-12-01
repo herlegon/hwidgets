@@ -14,6 +14,7 @@ from PySide6.QtCore import (
     QPointF,
     QPoint,
     QRect,
+    Property,
 )
 from PySide6.QtGui import (
     QPolygonF,
@@ -81,7 +82,7 @@ class HCheckBox(QCheckBox):
         self.setMinimumSize(self.sizeHint())
 
 
-    def spacing(self) -> None:
+    def spacing(self) -> int:
         return self._spacing
 
 

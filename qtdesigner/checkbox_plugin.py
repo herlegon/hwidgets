@@ -1,37 +1,37 @@
 from __future__ import annotations
 
-from hwidgets import HProgressBar
+from hwidgets import HCheckBox, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HProgress' name='h_progress'>
+    <widget class='HCheckBox' name='h_check_box'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>200</width>
+                <width>100</width>
                 <height>24</height>
             </rect>
         </property>
-        <property name='value'>
-            <number>0</number>
+        <property name='text'>
+            <string>CheckBox</string>
         </property>
     </widget>
 </ui>
 """
 
 
-class HProgressPlugin(QDesignerCustomWidgetInterface):
+class HCheckBoxPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HProgressBar(parent, theme=Theme())
+        from hwidgets import StyleManager, HCheckBox
+        t = HCheckBox(parent, theme=StyleManager().get_theme())
         return t
 
     def domXml(self):
@@ -56,10 +56,10 @@ class HProgressPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HProgress'
+        return 'HCheckBox'
 
     def toolTip(self):
-        return 'HProgress widget'
+        return 'HCheckBox widget'
 
     def whatsThis(self):
         return self.toolTip()

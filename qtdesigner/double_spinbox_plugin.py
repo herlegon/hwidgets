@@ -1,18 +1,18 @@
 from __future__ import annotations
 
-from hwidgets import HSwitch
+from hwidgets import HDoubleSpinBox, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HSwitch' name='h_switch'>
+    <widget class='HDoubleSpinBox' name='h_double_spin_box'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>50</width>
+                <width>100</width>
                 <height>24</height>
             </rect>
         </property>
@@ -21,14 +21,13 @@ DOM_XML = """
 """
 
 
-class HSwitchPlugin(QDesignerCustomWidgetInterface):
+class HDoubleSpinBoxPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HSwitch(parent, theme=Theme())
+        t = HDoubleSpinBox(parent, theme=StyleManager().get_theme())
         return t
 
     def domXml(self):
@@ -53,10 +52,10 @@ class HSwitchPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HSwitch'
+        return 'HDoubleSpinBox'
 
     def toolTip(self):
-        return 'HSwitch widget'
+        return 'HDoubleSpinBox widget'
 
     def whatsThis(self):
         return self.toolTip()

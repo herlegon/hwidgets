@@ -1,7 +1,7 @@
 from __future__ import annotations
 
-from hwidgets import HButtonGroup
-from .buttongroup_taskmenu import HButtonGroupTaskMenuFactory
+from hwidgets import HButtonGroup, StyleManager
+from buttongroup_taskmenu import HButtonGroupTaskMenuFactory
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
@@ -29,8 +29,7 @@ class HButtonGroupPlugin(QDesignerCustomWidgetInterface):
         self._task_menus = []  # Keep a reference
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HButtonGroup(parent, theme=Theme())
+        t = HButtonGroup(parent, theme=StyleManager().get_theme())
         t.set_buttons([
             'button1', 'button2', 'button3'
         ])

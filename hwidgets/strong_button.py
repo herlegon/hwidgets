@@ -54,6 +54,7 @@ class HStrongButton(QPushButton):
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
         self.setCursor(Qt.CursorShape.PointingHandCursor)
 
+        self._cached_size = None
         self.theme = theme
         self.default_style = theme.default
         self.useGreyscale(False)
@@ -87,6 +88,7 @@ class HStrongButton(QPushButton):
             self.btn_style = self.theme.strong_grey_button
         else:
             self.btn_style = self.theme.strong_button
+        self._update_stylesheet()
 
 
     def _recalculate_size(self) -> None:

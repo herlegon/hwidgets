@@ -38,42 +38,44 @@ if __name__ == "__main__":
     }
 
     WIDGET_NAME_MAP = {
-        "h_card": "HCard",
+        "card": "HCard",
 
-        "h_divider": "HDivider",
-        "h_vertical_divider": "HVerticalDivider",
-        "h_horizontal_divider": "HHorizontalDivider",
+        "divider": "HDivider",
+        "vdivider": "HVerticalDivider",
+        "hdivider": "HHorizontalDivider",
 
-        "h_title": "HTitle",
-        "h_subtitle": "HSubtitle",
-        "h_comment": "HComment",
-        "h_description": "HDescription",
+        "title": "HTitle",
+        "subtitle": "HSubtitle",
+        "comment": "HComment",
+        "description": "HDescription",
 
-        "h_switch": "HSwitch",
+        "switch": "HSwitch",
 
-        "h_log_viewer": "HLogViewer",
+        "log_viewer": "HLogViewer",
 
-        "h_strong_button": "HStrongButton",
-        "h_strong_grey_button": "HStrongGreyButton",
-        "h_outlined_button": "HOutlinedButton",
-        "h_strong_grey_button": "HStrongGreyButton",
+        "strong_button": "HStrongButton",
+        "strong_grey_button": "HStrongGreyButton",
+        "outlined_button": "HOutlinedButton",
+        "strong_grey_button": "HStrongGreyButton",
 
-        "h_toggle_button": "HToggleButton",
-        "h_toggle_grey_button": "HToggleGreyButton",
+        "toggle_button": "HToggleButton",
+        "toggle_grey_button": "HToggleGreyButton",
 
-        "h_frameless_button": "HFramelessButton",
+        "frameless_button": "HFramelessButton",
 
-        "h_button_group": "HButtonGroup",
-        "h_grey_button_group": "HGreyButtonGroup",
+        "button_group": "HButtonGroup",
+        "grey_button_group": "HGreyButtonGroup",
 
-        "h_progress_bar_m3": "HProgressBarM3",
-        "h_progress_bar": "HProgressBar",
-        "h_radial_progress": "HRadialProgress",
-        "h_step_indicator": "HStepIndicator",
+        "progress_bar_m3": "HProgressBarM3",
+        "progress_bar": "HProgressBar",
+        "radial_progress": "HRadialProgress",
+        "step_indicator": "HStepIndicator",
 
-        "h_indet_progress_bar": "HIndetProgressBar",
-        "h_indet_progress_bar_m2": "HIndetProgressBarM2",
-        "h_indet_progress_bar_r": "HIndetProgressBarR",
+        "icon_button": "HToggleButton",
+
+        "indet_progress_bar": "HIndetProgressBar",
+        "indet_progress_bar_m2": "HIndetProgressBarM2",
+        "indet_progress_bar_r": "HIndetProgressBarR",
 
         # "h_indeterminate_circular_progress": "HIndeterminateCircularProgress",
     }

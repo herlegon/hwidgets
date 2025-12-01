@@ -103,32 +103,32 @@ class StyleManager:
             theme.window_bgd = config["window"]["window"]
 
         # Common widget colors
-        if "common" in config:
-            common_cfg = config["common"]
+        if "default" in config:
+            default_style = config["default"]
 
             # Font parsing
             font = theme.default.font
             if (
-                "font_family" in common_cfg
-                or "font_size" in common_cfg
-                or "font_weight" in common_cfg
+                "font_family" in default_style
+                or "font_size" in default_style
+                or "font_weight" in default_style
             ):
                 font = FontConfig(
-                    family=common_cfg.get("font_family", font.family),
-                    size=common_cfg.get("font_size", font.size),
-                    weight=weight_from_css(common_cfg.get("font_weight", font.weight)),
+                    family=default_style.get("font_family", font.family),
+                    size=default_style.get("font_size", font.size),
+                    weight=weight_from_css(default_style.get("font_weight", font.weight)),
                 )
 
             theme.default = replace(theme.default, **{
-                "bgd":                  common_cfg.get("bgd", theme.default.bgd),
-                "hover":                common_cfg.get("hover", theme.default.hover),
-                "selection":            common_cfg.get("selection", theme.default.selection),
-                "pressed":              common_cfg.get("pressed", theme.default.pressed),
-                "disabled":             common_cfg.get("disabled_bgd", theme.default.disabled),
-                "border":               common_cfg.get("border", theme.default.border),
-                "font_color":           common_cfg.get("font_color", theme.default.font_color),
-                "font_color_disabled":  common_cfg.get("font_color_disabled", theme.default.font_color_disabled),
-                "font_color_checked":   common_cfg.get("font_color_checked", theme.default.font_color_checked),
+                "bgd":                  default_style.get("bgd", theme.default.bgd),
+                "hover":                default_style.get("hover", theme.default.hover),
+                "selection":            default_style.get("selection", theme.default.selection),
+                "pressed":              default_style.get("pressed", theme.default.pressed),
+                "disabled":             default_style.get("disabled_bgd", theme.default.disabled),
+                "border":               default_style.get("border", theme.default.border),
+                "font_color":           default_style.get("font_color", theme.default.font_color),
+                "font_color_disabled":  default_style.get("font_color_disabled", theme.default.font_color_disabled),
+                "font_color_checked":   default_style.get("font_color_checked", theme.default.font_color_checked),
                 "font":                 font,
             })
 
@@ -227,28 +227,32 @@ class StyleManager:
             widget = getattr(theme, attr)
 
             # Font override
+            # not working
             font_args = {}
-            if hasattr(widget, "font"):
-                if (
-                    "font_family" in widget_cfg
-                    or "font_size" in widget_cfg
-                    or "font_weight" in widget_cfg
-                ):
-                    font = widget.font
-                    font = FontConfig(
-                        family = widget_cfg.pop("font_family", font.family),
-                        size   = widget_cfg.pop("font_size",  font.size),
-                        weight = weight_from_css(widget_cfg.pop("font_weight", font.weight)),
-                    )
-                    font_args = {"font": font}
+            for variant in ('_upcoming', '_completed', '_current', ''):
+                if hasattr(widget, "font"):
+                    if (
+                        f"font{variant}_family" in widget_cfg
+                        or f"font{variant}_size" in widget_cfg
+                        or f"font{variant}_weight" in widget_cfg
+                    ):
+                        font = widget.font
+                        font = FontConfig(
+                            family = widget_cfg.pop(f"font{variant}_family", font.family),
+                            size   = widget_cfg.pop(f"font{variant}_size",  font.size),
+                            weight = weight_from_css(widget_cfg.pop(f"font{variant}_weight", font.weight)),
+                        )
+                        font_args[f"font{variant}"] = font
+                    else:
+                        # Keep existing font (redundant for replace but safe)
+                        pass
+
                 else:
-                    # Keep existing font (redundant for replace but safe)
-                    pass
-            else:
-                # Remove font keys if present to avoid error in replace
-                widget_cfg.pop("font_family", None)
-                widget_cfg.pop("font_size", None)
-                widget_cfg.pop("font_weight", None)
+                    # Remove font keys if present to avoid error in replace
+                    widget_cfg.pop(f"font{variant}_family", None)
+                    widget_cfg.pop(f"font{variant}_size", None)
+                    widget_cfg.pop(f"font{variant}_weight", None)
+
 
             # Fill missing colors from common
             common_fields = [f.name for f in fields(DefaultStyle)]

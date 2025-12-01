@@ -1,37 +1,33 @@
 from __future__ import annotations
 
-from hwidgets import HTitle
+from hwidgets import HSpinBox, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HTitle1' name='h_title1'>
+    <widget class='HSpinBox' name='h_spin_box'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>200</width>
+                <width>100</width>
                 <height>24</height>
             </rect>
-        </property>
-        <property name='text'>
-            <string>Title1</string>
         </property>
     </widget>
 </ui>
 """
 
 
-class HTitlePlugin(QDesignerCustomWidgetInterface):
+class HSpinBoxPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HTitle(parent, theme=Theme(), text="Title1")
+        t = HSpinBox(parent, theme=StyleManager().get_theme())
         return t
 
     def domXml(self):
@@ -56,10 +52,10 @@ class HTitlePlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HTitle1'
+        return 'HSpinBox'
 
     def toolTip(self):
-        return 'HTitle1 widget'
+        return 'HSpinBox widget'
 
     def whatsThis(self):
         return self.toolTip()

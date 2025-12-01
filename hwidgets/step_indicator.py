@@ -100,10 +100,11 @@ class HStep(QLabel):
             font_upcoming_color=f"{step_style.font_upcoming_color}",
         )
         self.setStyleSheet(qss)
+        self.setFont(self.fonts['upcoming'])
 
 
     def setState(self, state: Literal['completed', 'current', 'upcoming']) -> None:
-        font = self.fonts.get(state, self.fonts['upcoming'])
+        font = self.fonts.get(state, self.fonts[state])
         self.setFont(font)
         self.setProperty("state", state)
         self.update_style()
@@ -126,6 +127,8 @@ class HStepIndicator(QWidget):
         theme: type[Theme]
     ):
         super().__init__(parent)
+        self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground)
+
         self._steps: list[HStep] = []
         self.step_style = theme.step_indicator
         self.current_step: int = 0

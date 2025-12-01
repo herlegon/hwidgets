@@ -1,37 +1,33 @@
 from __future__ import annotations
 
-from hwidgets import HCheckBox
+from hwidgets import HSwitch, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HCheckBox' name='h_check_box'>
+    <widget class='HSwitch' name='h_switch'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>100</width>
+                <width>50</width>
                 <height>24</height>
             </rect>
-        </property>
-        <property name='text'>
-            <string>CheckBox</string>
         </property>
     </widget>
 </ui>
 """
 
 
-class HCheckBoxPlugin(QDesignerCustomWidgetInterface):
+class HSwitchPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HCheckBox(parent, theme=Theme())
+        t = HSwitch(parent, theme=StyleManager().get_theme())
         return t
 
     def domXml(self):
@@ -56,10 +52,10 @@ class HCheckBoxPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HCheckBox'
+        return 'HSwitch'
 
     def toolTip(self):
-        return 'HCheckBox widget'
+        return 'HSwitch widget'
 
     def whatsThis(self):
         return self.toolTip()

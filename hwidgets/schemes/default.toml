@@ -45,13 +45,13 @@ font_color = "#d4d4d4"
 [title]
 font_family = "Inter"
 font_size = 16
-font_weight = 600
+font_weight = 800
 font_color = "#5e7ce0"
 
 
 [subtitle]
-font_size = 14
-font_weight = 600
+font_size = 11
+font_weight = 500
 font_color = "#d4d4d8"
 
 
@@ -173,6 +173,8 @@ font_color_disabled = "#666667"
 bgd = "#424242"
 hover = "#3a3a3a"
 pressed = "#424242"
+font_color = "#d4d4d4"
+
 
 
 [outlined_button]
@@ -252,6 +254,11 @@ bar = "#5e7ce0"
 
 [step_indicator]
 font_completed_color = "#c2c2c7"
-font_current_color = "#5e7ce0"
+font_current_color = "#d4d4d4"
 font_upcoming_color = "#6a6a6a"
+font_completed_size = 9
+font_current_size = 10
+# bug: the default weight is not correct if not specified here
+font_current_weight = 700
+font_upcoming_size = 9
 

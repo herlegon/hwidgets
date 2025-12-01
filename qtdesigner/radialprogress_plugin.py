@@ -1,37 +1,36 @@
 from __future__ import annotations
 
-from hwidgets import HPlainTextEdit
+from hwidgets import HRadialProgress, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HPlainTextEdit' name='h_plain_text_edit'>
+    <widget class='HRadialProgress' name='h_radial_progress'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
                 <y>0</y>
-                <width>200</width>
+                <width>100</width>
                 <height>100</height>
             </rect>
         </property>
-        <property name='plainText'>
-            <string>PlainTextEdit</string>
+        <property name='value'>
+            <number>0</number>
         </property>
     </widget>
 </ui>
 """
 
 
-class HPlainTextEditPlugin(QDesignerCustomWidgetInterface):
+class HRadialProgressPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HPlainTextEdit("PlainTextEdit", parent, theme=Theme())
+        t = HRadialProgress(parent, theme=StyleManager().get_theme())
         return t
 
     def domXml(self):
@@ -56,10 +55,10 @@ class HPlainTextEditPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HPlainTextEdit'
+        return 'HRadialProgress'
 
     def toolTip(self):
-        return 'HPlainTextEdit widget'
+        return 'HRadialProgress widget'
 
     def whatsThis(self):
         return self.toolTip()

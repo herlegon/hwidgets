@@ -1,3 +1,4 @@
+from pprint import pprint
 from string import Template
 import numpy as np
 from pathlib import Path
@@ -139,6 +140,8 @@ class HTitle(QWidget):
             QSizePolicy(QSizePolicy.Policy.Maximum, QSizePolicy.Policy.Fixed)
         )
         self.theme = theme
+        self.title_style = self.theme.title
+
 
         self._layout = QHBoxLayout()
         # M3 margins: https://m3.material.io/components/top-app-bar/specs
@@ -151,7 +154,7 @@ class HTitle(QWidget):
         if icon is not None:
             icon_path = str(icon) if isinstance(icon, Path) else icon
             self._icon = QLabel(self)
-            pixmap = load_png_icon(icon_path, theme.font_color)
+            pixmap = load_png_icon(icon_path, self.title_style.font_color)
             self._icon.setPixmap(pixmap)
             self._icon.setFixedSize(pixmap.size())
             self._layout.addWidget(self._icon)
@@ -161,9 +164,24 @@ class HTitle(QWidget):
         self._layout.addWidget(
             self._title, 1, Qt.AlignmentFlag.AlignLeft | Qt.AlignmentFlag.AlignVCenter
         )
+        self._update_style()
+
+        self._title.setSizePolicy(
+            QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+        )
+        self._title.setFixedHeight(self.title_style.height)
 
 
-        self.title_style = self.theme.title
+    def update_style(self):
+        style = self.style()
+        style.unpolish(self)
+        style.polish(self)
+        # Force geometry recalculation
+        self.updateGeometry()
+        self.update()
+
+
+    def _update_style(self) -> None:
         qss_template = Template(load_qss("label.css"))
         qss = qss_template.substitute(
             font_color=f"{self.title_style.font_color}",
@@ -172,21 +190,13 @@ class HTitle(QWidget):
         qss += " padding-bottom: 10px;"
         self.setStyleSheet(qss)
         self.setFont(self.title_style.font.make_font())
-
-        self._title.setSizePolicy(
-            QSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-        )
-        self._title.setFixedHeight(self.title_style.height)
-        self.adjustSize()
-
-
-    # def sizeHint(self) -> QSize:
-    #     return QSize(self.width(), TITLE_1_HEIGHT)
+        self._title.setFont(self.title_style.font.make_font())
+        self.update_style()
 
 
     def setText(self, text: str) -> None:
         self._title.setText(text)
-        self.adjustSize()
+
 
     def text(self) -> str:
         return self._title.text()
@@ -218,10 +228,10 @@ class HTitle(QWidget):
         self._layout.setSpacing(8)
 
 
-    def paintEvent(self, event: QPaintEvent) -> None:
-        super().paintEvent(event)
-        painter = QPainter(self)
-        if DEBUG_GEOMETRY:
-            draw_widget_rect(self, painter)
-        painter.end()
+    # def paintEvent(self, event: QPaintEvent) -> None:
+    #     super().paintEvent(event)
+    #     painter = QPainter(self)
+    #     if DEBUG_GEOMETRY:
+    #         draw_widget_rect(self, painter)
+    #     painter.end()
 

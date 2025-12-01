@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hwidgets import HButtonGroup
+from hwidgets import HButtonGroup, StyleManager
 
 from PySide6.QtCore import (
     Slot,

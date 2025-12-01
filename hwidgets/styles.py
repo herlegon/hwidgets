@@ -343,21 +343,21 @@ class ProgressBarStyle:
 
 @dataclass
 class StepIndicatorStyle(LabelStyle):
-    height: int = 64
+    height: int = 32
     spacing: int = BORDER_RADIUS * 2
 
     font_completed: FontConfig = field(
-        default_factory=lambda: FontConfig(size=11, weight=QFont.Weight.Normal)
+        default_factory=lambda: FontConfig(size=9, weight=QFont.Weight.Normal)
     )
     font_completed_color: str = ""
 
     font_current: FontConfig = field(
-        default_factory=lambda: FontConfig(size=13, weight=QFont.Weight.ExtraBold)
+        default_factory=lambda: FontConfig(size=11, weight=QFont.Weight.Bold)
     )
     font_current_color: str = ""
 
     font_upcoming: FontConfig = field(
-        default_factory=lambda: FontConfig(size=11, weight=QFont.Weight.Normal)
+        default_factory=lambda: FontConfig(size=9, weight=QFont.Weight.Normal)
     )
     font_upcoming_color: str = ""
 

@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from hwidgets import (
-    Theme,
     StyleManager,
     HLineEdit
 )
@@ -32,7 +31,7 @@ DOM_XML = """
 class HLineEditPlugin(QDesignerCustomWidgetInterface):
     def __init__(self, parent=None):
         super().__init__(parent)
-        self.initialized = False
+        self._form_editor = None
 
 
     def initialize(self, core: QDesignerFormEditorInterface):
@@ -44,8 +43,7 @@ class HLineEditPlugin(QDesignerCustomWidgetInterface):
 
 
     def createWidget(self, parent):
-        theme = StyleManager().get_theme()
-        t = HLineEdit(parent, theme=theme)
+        t = HLineEdit(parent, theme=StyleManager().get_theme())
         return t
 
 

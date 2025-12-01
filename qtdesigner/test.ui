@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Form</class>
+ <widget class="QWidget" name="Form">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>776</width>
+    <height>609</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <widget class="HCheckBox" name="h_check_box">
+   <property name="geometry">
+    <rect>
+     <x>40</x>
+     <y>130</y>
+     <width>100</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>CheckBox</string>
+   </property>
+  </widget>
+  <widget class="HDivider" name="h_divider">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>260</y>
+     <width>100</width>
+     <height>1</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="HDoubleSpinBox" name="h_double_spin_box">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>150</y>
+     <width>100</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="HLabel" name="h_label">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>310</y>
+     <width>100</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Label</string>
+   </property>
+  </widget>
+  <widget class="HLineEdit" name="h_line_edit">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>430</y>
+     <width>100</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="HIndetProgressBarM2" name="h_indet_progress_bar_m2">
+   <property name="geometry">
+    <rect>
+     <x>450</x>
+     <y>390</y>
+     <width>200</width>
+     <height>8</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="HIndetProgressBarM2" name="h_indet_progress_bar_m2_2">
+   <property name="geometry">
+    <rect>
+     <x>410</x>
+     <y>470</y>
+     <width>200</width>
+     <height>8</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="HRadialProgress" name="h_radial_progress">
+   <property name="geometry">
+    <rect>
+     <x>530</x>
+     <y>150</y>
+     <width>32</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="value">
+    <number>0</number>
+   </property>
+  </widget>
+  <widget class="HRadioButton" name="h_radio_button">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>200</y>
+     <width>100</width>
+     <height>24</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>RadioButton</string>
+   </property>
+  </widget>
+  <widget class="HSpinBox" name="h_spin_box">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>270</y>
+     <width>100</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="HSwitch" name="h_switch">
+   <property name="geometry">
+    <rect>
+     <x>160</x>
+     <y>550</y>
+     <width>40</width>
+     <height>24</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="HTitle" name="h_title">
+   <property name="geometry">
+    <rect>
+     <x>470</x>
+     <y>90</y>
+     <width>200</width>
+     <height>36</height>
+    </rect>
+   </property>
+   <property name="text" stdset="0">
+    <string>Title1</string>
+   </property>
+  </widget>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>HCheckBox</class>
+   <extends>QCheckBox</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HDivider</class>
+   <extends>QFrame</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HDoubleSpinBox</class>
+   <extends>QDoubleSpinBox</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HLabel</class>
+   <extends>QLabel</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HLineEdit</class>
+   <extends>QLineEdit</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HIndetProgressBarM2</class>
+   <extends>QWidget</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HRadialProgress</class>
+   <extends>QProgressBar</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HRadioButton</class>
+   <extends>QRadioButton</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HSpinBox</class>
+   <extends>QSpinBox</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HSwitch</class>
+   <extends>QCheckBox</extends>
+   <header>hwidgets</header>
+  </customwidget>
+  <customwidget>
+   <class>HTitle</class>
+   <extends>QWidget</extends>
+   <header>hwidgets</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

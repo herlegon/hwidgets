@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from hwidgets import HSpinBox
+from hwidgets import HRadioButton, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HSpinBox' name='h_spin_box'>
+    <widget class='HRadioButton' name='h_radio_button'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
@@ -16,19 +16,25 @@ DOM_XML = """
                 <height>24</height>
             </rect>
         </property>
+        <property name='text'>
+            <string>RadioButton</string>
+        </property>
     </widget>
 </ui>
 """
 
 
-class HSpinBoxPlugin(QDesignerCustomWidgetInterface):
+class HRadioButtonPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HSpinBox(parent, theme=Theme())
+        t = HRadioButton(
+            "RadioButton",
+            parent,
+            theme=StyleManager().get_theme()
+        )
         return t
 
     def domXml(self):
@@ -53,10 +59,10 @@ class HSpinBoxPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HSpinBox'
+        return 'HRadioButton'
 
     def toolTip(self):
-        return 'HSpinBox widget'
+        return 'HRadioButton widget'
 
     def whatsThis(self):
         return self.toolTip()

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from hwidgets import HLabel
+from hwidgets import HLabel, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
@@ -30,11 +30,8 @@ class HLabelPlugin(QDesignerCustomWidgetInterface):
         self._form_editor = None
 
     def createWidget(self, parent):
-        return None
-        # from hwidgets import HLabel, StyleManager
-        # theme = StyleManager().get_theme()
-        # t = HLabel(parent, theme=theme)
-        # return t
+        t = HLabel(parent, theme=StyleManager().get_theme())
+        return t
 
     def domXml(self):
         return DOM_XML

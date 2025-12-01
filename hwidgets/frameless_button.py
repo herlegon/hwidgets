@@ -138,6 +138,16 @@ class HFramelessButton(QPushButton):
 
     def populate_pixmaps(self) -> None:
         # Create tinted icons for each state
+        self._pixmaps: dict[str, QPixmap] = {
+            "normal": None,
+            "hover": None,
+            "pressed": None,
+            "checked": None,
+            "disabled": None,
+            "disabled_checked": None,
+        }
+
+
         icon = self._icon
         if not icon:
             return
@@ -150,13 +160,13 @@ class HFramelessButton(QPushButton):
         pixmap = icon.pixmap(self.pixmap_size, QIcon.Mode.Normal, QIcon.State.Off)
 
         self._pixmaps: dict[str, QPixmap] = {
-            "normal" : make_tinted_pixmap(pixmap, QColor(self.btn_style.active)),
-            "hover" : make_tinted_pixmap(pixmap, QColor(self.btn_style.hover)),
-            # "normal" : make_tinted_pixmap(pixmap, hstyle.widget_bgd),
-            # "hover" : make_tinted_pixmap(pixmap, hstyle.hover_bgd),
-            "pressed" : make_tinted_pixmap(pixmap, QColor(self.btn_style.pressed)),
-            "checked" : make_tinted_pixmap(pixmap, QColor(self.btn_style.checked)),
-            "disabled" : make_tinted_pixmap(pixmap, QColor(self.btn_style.disabled)),
+            "normal": make_tinted_pixmap(pixmap, QColor(self.btn_style.active)),
+            "hover": make_tinted_pixmap(pixmap, QColor(self.btn_style.hover)),
+            # "normal": make_tinted_pixmap(pixmap, hstyle.widget_bgd),
+            # "hover": make_tinted_pixmap(pixmap, hstyle.hover_bgd),
+            "pressed": make_tinted_pixmap(pixmap, QColor(self.btn_style.pressed)),
+            "checked": make_tinted_pixmap(pixmap, QColor(self.btn_style.checked)),
+            "disabled": make_tinted_pixmap(pixmap, QColor(self.btn_style.disabled)),
             # Disabled + check should never occurs. bad UI
             "disabled_checked": make_tinted_pixmap(pixmap, QColor(self.btn_style.disabled)),
         }
@@ -193,31 +203,33 @@ class HFramelessButton(QPushButton):
         radius = self.theme.default.radius
         state = option.state
 
-        if self._icon is not None:
-            # This button has an icon
-            if not (state & QStyle.StateFlag.State_Enabled):
-                pen_color = self.btn_style.disabled
-                if state & QStyle.StateFlag.State_On:
-                    pixmap = self._pixmaps["disabled_checked"]
-                else:
-                    pixmap = self._pixmaps["disabled"]
-
-            elif state & QStyle.StateFlag.State_Sunken:
-                pixmap = self._pixmaps["pressed"]
-                pen_color = self.btn_style.pressed
-
-            elif state & QStyle.StateFlag.State_On:
-                pixmap = self._pixmaps["checked"]
-                pen_color = self.btn_style.checked
-
-            elif state & QStyle.StateFlag.State_MouseOver:
-                pixmap = self._pixmaps["hover"]
-                pen_color = self.btn_style.hover
-
+        pixmap = None
+        pen_color = self.btn_style.disabled
+        if not (state & QStyle.StateFlag.State_Enabled):
+            pen_color = self.btn_style.disabled
+            if state & QStyle.StateFlag.State_On:
+                pixmap = self._pixmaps["disabled_checked"]
             else:
-                pixmap = self._pixmaps["normal"]
-                pen_color = self.btn_style.active
+                pixmap = self._pixmaps["disabled"]
 
+        elif state & QStyle.StateFlag.State_Sunken:
+            pixmap = self._pixmaps["pressed"]
+            pen_color = self.btn_style.pressed
+
+        elif state & QStyle.StateFlag.State_On:
+            pixmap = self._pixmaps["checked"]
+            pen_color = self.btn_style.checked
+
+        elif state & QStyle.StateFlag.State_MouseOver:
+            pixmap = self._pixmaps["hover"]
+            pen_color = self.btn_style.hover
+
+        else:
+            pixmap = self._pixmaps["normal"]
+            pen_color = self.btn_style.active
+
+        # This button has an icon
+        if self._icon is not None and pixmap is not None:
             if not self.text():
                 x = (self.width() - self.pixmap_size.width()) // 2
 

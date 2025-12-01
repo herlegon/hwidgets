@@ -1,37 +1,26 @@
 from __future__ import annotations
 
-from hwidgets import HScrollBar
+from hwidgets import HDivider, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HScrollBar' name='h_scroll_bar'>
-        <property name='geometry'>
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>12</width>
-                <height>100</height>
-            </rect>
-        </property>
-        <property name='orientation'>
-            <enum>Qt::Vertical</enum>
-        </property>
+    <widget class='HDivider' name='h_divider'>
     </widget>
 </ui>
 """
 
 
-class HScrollBarPlugin(QDesignerCustomWidgetInterface):
+class HDividerPlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HScrollBar(parent, theme=Theme())
+        from hwidgets import StyleManager, HDivider
+        t = HDivider(parent, theme=StyleManager().get_theme())
         return t
 
     def domXml(self):
@@ -56,10 +45,10 @@ class HScrollBarPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HScrollBar'
+        return 'HDivider'
 
     def toolTip(self):
-        return 'HScrollBar widget'
+        return 'HDivider widget'
 
     def whatsThis(self):
         return self.toolTip()

@@ -1,13 +1,13 @@
 from __future__ import annotations
 
-from hwidgets import HIndetProgressBar
+from hwidgets import HTitle, StyleManager
 
 from PySide6.QtDesigner import QDesignerCustomWidgetInterface
 from PySide6.QtGui import QIcon
 
 DOM_XML = """
 <ui language='c++'>
-    <widget class='HIndeterminateProgress' name='h_indeterminate_progress'>
+    <widget class='HTitle' name='h_title'>
         <property name='geometry'>
             <rect>
                 <x>0</x>
@@ -16,19 +16,25 @@ DOM_XML = """
                 <height>24</height>
             </rect>
         </property>
+        <property name='text'>
+            <string>Title1</string>
+        </property>
     </widget>
 </ui>
 """
 
 
-class HIndetProgressPlugin(QDesignerCustomWidgetInterface):
+class HTitlePlugin(QDesignerCustomWidgetInterface):
     def __init__(self):
         super().__init__()
         self._form_editor = None
 
     def createWidget(self, parent):
-        from hwidgets import Theme
-        t = HIndetProgressBar(parent, Theme=Theme())
+        t = HTitle(
+            parent,
+            theme=StyleManager().get_theme(),
+            text="Title"
+        )
         return t
 
     def domXml(self):
@@ -53,10 +59,10 @@ class HIndetProgressPlugin(QDesignerCustomWidgetInterface):
         return self._form_editor is not None
 
     def name(self):
-        return 'HIndeterminateProgress'
+        return 'HTitle'
 
     def toolTip(self):
-        return 'HIndeterminateProgress widget'
+        return 'HTitle widget'
 
     def whatsThis(self):
         return self.toolTip()
