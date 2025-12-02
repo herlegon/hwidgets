@@ -12,9 +12,9 @@ border_radius = 8
 height = 40
 
 font_family = "Inter"
-font_size = 10
+font_size = 12
 font_weight = 400
-font_color = "#d4d4d4"
+font_color = "#d4d4d8"
 font_color_disabled = "#666667"
 font_color_selected = "#ffffff"
 font_color_checked = "#ffffff"
@@ -36,7 +36,7 @@ pressed = "#5e5e5e"
 
 
 [label]
-font_size = 10
+font_size = 11
 font_weight = 400
 font_color = "#d4d4d4"
 
@@ -66,8 +66,8 @@ font_color = "#d4d4d8"
 
 
 [comment]
-font_size = 9
-font_color = "#cfcfcf"
+font_size = 11
+font_color = "#a0a0a0"
 
 
 [switch]
@@ -86,7 +86,7 @@ pressed = "#666667"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
 font_color_disabled = "#666667"
-font_size = 10
+# font_size = 11
 font_weight = 400
 
 [radio_button]
@@ -96,7 +96,7 @@ pressed = "#5e5e5e"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
 font_color_disabled = "#666667"
-font_size = 10
+# font_size = 11
 font_weight = 600
 
 
@@ -116,7 +116,7 @@ button = "#666667"
 button_hover = "#5e7ce0"
 button_disabled = "#666667"
 
-font_size = 10
+# font_size = 11
 font_color = "#d4d4d4"
 font_color_read_only = "#666667"
 font_color_disabled = "#666667"
@@ -131,7 +131,7 @@ bgd = "#111111"
 border = "#3a3a3a"
 border_read_only = "#3a3a3a"
 font_family = "JetBrains Mono"
-font_size = 10
+font_size = 11
 font_color = "#6a6a6a"
 font_color_read_only = "#6a6a6a"
 
@@ -141,7 +141,7 @@ font_color_read_only = "#6a6a6a"
 
 
 [spinbox]
-font_size = 10
+font_size = 11
 button_hover = "#3a3a3a"
 button_pressed = "#5e5e5e"
 button_disabled = "#2a2a2a"
@@ -192,8 +192,8 @@ disabled = "#2a2a2a"
 border = "#424242"
 border_disabled = "#3a3a3a"
 
-font_size = 11
-font_weight = 400
+# font_size = 11
+# font_weight = 400
 font_color = "#d4d4d4"
 font_color_disabled = "#666667"
 
@@ -203,7 +203,7 @@ bgd = "#2a2a2a"
 hover = "#3a3a3a"
 pressed = "#354185"
 checked = "#3d4a99"
-font_size = 9
+# font_size = 9
 font_weight = 400
 font_color = "#d4d4d4"
 font_color_disabled = "#666667"
@@ -241,8 +241,8 @@ hover = "#d4d4d4"
 pressed = "#5e7ce0"
 checked = "#5e7ce0"
 disabled = "#3a3a3a"
-font_size = 9
-font_weight = 400
+# font_size = 9
+# font_weight = 400
 
 
 [progress_bar]
@@ -265,9 +265,10 @@ bar = "#5e7ce0"
 font_completed_color = "#c2c2c7"
 font_current_color = "#d4d4d4"
 font_upcoming_color = "#6a6a6a"
-font_completed_size = 9
-font_current_size = 10
+font_completed_size = 12
+font_current_size = 11
 # bug: the default weight is not correct if not specified here
 font_current_weight = 700
-font_upcoming_size = 9
+font_upcoming_size = 11
+spacing = 16
 

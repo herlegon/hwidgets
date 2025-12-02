@@ -89,10 +89,11 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         # self.h_radial_progress_1.setFixedSize(QSize(100,100))
         # self.h_radial_progress_1.set_thickness(8)
 
-        button_list = ["btn1_size 1", "btn1_size usieghsegiuyfzd", "btn3", "btn1_sizegyud"]
+        button_list = ["Safetensors", "ONNX", "NCNN", "TensorRT"]
         self.button_group.set_buttons(button_list)
         self.button_group.get_button(2).setEnabled(False)
         self.button_group_disabled.set_buttons(button_list)
+        print(self.button_group.current_button().font())
 
         self.grey_button_group.set_buttons(button_list)
         self.grey_button_group.get_button(2).setEnabled(False)

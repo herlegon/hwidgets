@@ -50,7 +50,7 @@ class HRadioButton(QRadioButton):
 
         self.rb_style = theme.radio_button
         self.rb_height = theme.default.height
-        self._spacing: int = 8
+        self._spacing: int = 12
         self._cached_size: QSize = None
 
         self.text_rect: QRect = QRect()

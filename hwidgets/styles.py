@@ -125,21 +125,21 @@ class TitleStyle(LabelStyle):
 @dataclass
 class SubtitleStyle(LabelStyle):
     font: FontConfig = field(
-        default_factory=lambda: FontConfig(size=12)
+        default_factory=lambda: FontConfig(size=11)
     )
 
 
 @dataclass
 class DescriptionStyle(LabelStyle):
     font: FontConfig = field(
-        default_factory=lambda: FontConfig(size=12)
+        default_factory=lambda: FontConfig(size=11)
     )
 
 
 @dataclass
 class CommentStyle(LabelStyle):
     font: FontConfig = field(
-        default_factory=lambda: FontConfig(size=10)
+        default_factory=lambda: FontConfig(size=11)
     )
 
 
@@ -278,9 +278,7 @@ class OutlinedButtonStyle:
     border: str = ""
     border_disabled: str = ""
 
-    font: FontConfig = field(
-        default_factory=lambda: FontConfig(size=16, weight=QFont.Weight.Bold)
-    )
+    font: FontConfig = field(default_factory=FontConfig)
     font_color: str = ""
     font_color_disabled: str = ""
 
@@ -331,7 +329,7 @@ class ButtonGroupStyle:
     border: str = ""
 
     font: FontConfig = field(
-        default_factory=lambda: FontConfig(size=10, weight=QFont.Weight.DemiBold)
+        default_factory=lambda: FontConfig(size=11, weight=QFont.Weight.Normal)
     )
     font_color: str = ""
     # font_color_checked: str = ""

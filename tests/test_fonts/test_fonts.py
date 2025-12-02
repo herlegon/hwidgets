@@ -5,12 +5,12 @@ import sys
 from PySide6.QtGui import QGuiApplication
 from PySide6.QtCore import Qt
 
-
-# Environment fixes
 os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
 os.environ["QT_FONT_DPI"] = "96"
-os.environ["QT_QPA_PLATFORM"] = "xcb"
-os.environ["QT_SCALE_FACTOR_ROUNDING_POLICY"] = "RoundPreferFloor"
+if sys.platform == 'linux':
+    # Environment fixes
+    os.environ["QT_QPA_PLATFORM"] = "xcb"
+    os.environ["QT_SCALE_FACTOR_ROUNDING_POLICY"] = "RoundPreferFloor"
 
 # os.environ["QT_DEBUG_FONTS"] = "1"
 

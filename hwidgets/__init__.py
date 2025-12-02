@@ -52,6 +52,13 @@ from .indet_progress_bar_m2 import HIndetProgressBarM2
 # from .indeterminate_circular_progress import HIndeterminateCircularProgress
 # from .groupbox import HGroupBox
 
+HProgressBarType = (
+    HIndetProgressBar
+    | HIndetProgressBarR
+    | HProgressBar
+    | HProgressBarM3
+)
+
 
 __all__ = [
     "hlogger",
@@ -105,6 +112,7 @@ __all__ = [
     "HIndetProgressBar",
     "HIndetProgressBarR",
     "HIndetProgressBarM2",
+    "HProgressBarType",
 
     "load_png_image",
 
