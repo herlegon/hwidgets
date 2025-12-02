@@ -1,8 +1,11 @@
 from dataclasses import replace, fields
 from pathlib import Path
 import tomllib
-from PySide6.QtGui import QFont
+
+from .fonts import load_fonts
 from .styles import (
+    FONT_VARIANTS,
+
     Theme,
     FontConfig,
     weight_from_css,
@@ -49,6 +52,8 @@ from .styles import (
 )
 
 
+
+
 def hex_to_rgba(hex_str: str, alpha: float = 1.0) -> str:
     # Do not use rn because the colors are also used for QColor
     # find a way to use it only for stylesheets
@@ -83,6 +88,8 @@ class StyleManager:
 
     @staticmethod
     def get_theme(scheme: str = "default") -> Theme:
+        load_fonts()
+
         scheme_path = StyleManager.SCHEMES_DIR / f"{scheme}.toml"
         if not scheme_path.exists():
             raise ValueError(
@@ -229,6 +236,7 @@ class StyleManager:
 
             widget = getattr(theme, attr)
 
+
             # Font override
             # not working
             font_args = {}
@@ -272,6 +280,7 @@ class StyleManager:
             setattr(theme, attr, replace(widget, **widget_cfg, **font_args))
 
         return theme
+
 
 
     @staticmethod

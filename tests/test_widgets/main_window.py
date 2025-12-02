@@ -94,9 +94,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.button_group.get_button(2).setEnabled(False)
         self.button_group_disabled.set_buttons(button_list)
 
-        # self.h_grey_button_group.set_buttons(button_list)
-        # self.h_grey_button_group.get_button(2).setEnabled(False)
-        # self.h_grey_button_group_disabled.set_buttons(button_list)
+        self.grey_button_group.set_buttons(button_list)
+        self.grey_button_group.get_button(2).setEnabled(False)
+        self.grey_button_group_disabled.set_buttons(button_list)
 
         # self.setMinimumWidth(800)
         if sys.platform == 'linux':
@@ -168,7 +168,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         slider.setSnapThreshold(1)
 
 
-        self.h_log_viewer.setPlainText("Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
+        self.log_viewer.setPlainText("Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.")
 
         # Timer to append text
         self.timer = QTimer(self)
@@ -198,4 +198,4 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             "[pip] Installing scikit-learn...",
             "[pip] ✓ Successfully installed scikit-learn",
         ]
-        self.h_log_viewer.appendPlainText(random.choice(messages))
+        self.log_viewer.appendPlainText(random.choice(messages))

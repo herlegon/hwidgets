@@ -1,12 +1,35 @@
+import os
 from PySide6.QtWidgets import QApplication, QMainWindow, QLabel, QVBoxLayout, QHBoxLayout, QWidget
 from PySide6.QtGui import QFontDatabase, QFont
 import sys
+from PySide6.QtGui import QGuiApplication
+from PySide6.QtCore import Qt
+
+
+# Environment fixes
+os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
+os.environ["QT_FONT_DPI"] = "96"
+os.environ["QT_QPA_PLATFORM"] = "xcb"
+os.environ["QT_SCALE_FACTOR_ROUNDING_POLICY"] = "RoundPreferFloor"
+
+# os.environ["QT_DEBUG_FONTS"] = "1"
 
 app = QApplication(sys.argv)
 
+default_font = app.font()
+default_font.setStyleStrategy(QFont.PreferAntialias)
+default_font.setHintingPreference(QFont.PreferNoHinting)   # or PreferFullHinting
+app.setFont(default_font)
+
+# default_font = app.font()
+# default_font.setStyleStrategy(QFont.PreferAntialias)
+# default_font.setHintingPreference(QFont.PreferNoHinting)
+# app.setFont(default_font)
+
+
 # Load Roboto fonts
 font_id_roboto = QFontDatabase.addApplicationFont("Roboto-VariableFont_wdth,wght.ttf")
-font_id_roboto_italic = QFontDatabase.addApplicationFont("Roboto-Italic-VariableFont_wdth,wght.ttf")
+font_id_italic = QFontDatabase.addApplicationFont("Roboto-Italic-VariableFont_wdth,wght.ttf")
 
 # Load Inter fonts
 font_id_inter = QFontDatabase.addApplicationFont("Inter-VariableFont_opsz,wght.ttf")
@@ -19,8 +42,12 @@ font_id_open_sans_italic = QFontDatabase.addApplicationFont("OpenSans-Italic-Var
 font_id_noto = QFontDatabase.addApplicationFont("NotoSans-VariableFont_wdth,wght.ttf")
 font_id_noto_italic = QFontDatabase.addApplicationFont("NotoSans-Italic-VariableFont_wdth,wght.ttf")
 
+font_id_dejavu = QFontDatabase.addApplicationFont("DejaVuSans.ttf")
 
-
+font_id_plex_mono_regular = QFontDatabase.addApplicationFont("IBMPlexMono-Regular.ttf")
+font_id_plex_mono_semi_bold = QFontDatabase.addApplicationFont("IBMPlexMono-SemiBold.ttf")
+font_id_JetBrainsMono = QFontDatabase.addApplicationFont("JetBrainsMono[wght].ttf")
+font_id_JetBrainsMono_italic = QFontDatabase.addApplicationFont("JetBrainsMono-Italic[wght].ttf")
 
 
 
@@ -33,10 +60,12 @@ else:
     families_inter = QFontDatabase.applicationFontFamilies(font_id_inter)
     families_open_sans = QFontDatabase.applicationFontFamilies(font_id_open_sans)
     families_noto = QFontDatabase.applicationFontFamilies(font_id_noto)
+    families_dejavu = QFontDatabase.applicationFontFamilies(font_id_dejavu)
     print(f"Roboto families: {families_roboto}")
     print(f"Inter families: {families_inter}")
     print(f"open sans families: {families_open_sans}")
     print(f"Noto families: {families_noto}")
+    print(f"DejaVu families: {families_dejavu}")
 
 # Create main window
 window = QMainWindow()
@@ -45,82 +74,54 @@ window.resize(800, 400)
 
 # Create central widget and main horizontal layout
 central_widget = QWidget()
-main_layout = QHBoxLayout(central_widget)
-
-# Left column - Roboto
-roboto_layout = QVBoxLayout()
-roboto_title = QLabel("Roboto Font")
-roboto_title.setFont(QFont("Roboto", 18, QFont.Bold))
-roboto_layout.addWidget(roboto_title)
-
-roboto_regular = QLabel("The quick brown fox jumps over the lazy dog")
-roboto_regular.setFont(QFont("Roboto", 14))
-roboto_layout.addWidget(roboto_regular)
-
-roboto_bold = QLabel("The quick brown fox jumps over the lazy dog")
-roboto_bold.setFont(QFont("Roboto", 14, QFont.Bold))
-roboto_layout.addWidget(roboto_bold)
-
-roboto_italic = QLabel("The quick brown fox jumps over the lazy dog")
-font_roboto_italic = QFont("Roboto", 14)
-font_roboto_italic.setItalic(True)
-roboto_italic.setFont(font_roboto_italic)
-roboto_layout.addWidget(roboto_italic)
-
-roboto_sample = QLabel("FFmpeg ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
-roboto_sample.setFont(QFont("Roboto", 12))
-roboto_layout.addWidget(roboto_sample)
-
-roboto_layout.addStretch()
-
-# Right column - Noto Sans
-noto_sans_layout = QVBoxLayout()
-noto_sans_title = QLabel("Noto Sans")
-noto_sans_title.setFont(QFont("NotoSans", 18, QFont.Bold))
-noto_sans_layout.addWidget(noto_sans_title)
-noto_sans_regular = QLabel("The quick brown fox jumps over the lazy dog")
-noto_sans_regular.setFont(QFont("NotoSans", 14))
-noto_sans_layout.addWidget(noto_sans_regular)
-noto_sans_bold = QLabel("The quick brown fox jumps over the lazy dog")
-noto_sans_bold.setFont(QFont("NotoSans", 14, QFont.Bold))
-noto_sans_layout.addWidget(noto_sans_bold)
-noto_sans_italic = QLabel("The quick brown fox jumps over the lazy dog")
-font_noto_sans_italic = QFont("NotoSans", 14)
-font_noto_sans_italic.setItalic(True)
-noto_sans_italic.setFont(font_noto_sans_italic)
-noto_sans_layout.addWidget(noto_sans_italic)
-noto_sans_sample = QLabel("FFmpeg ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
-noto_sans_sample.setFont(QFont("NotoSans", 12))
-noto_sans_layout.addWidget(noto_sans_sample)
-noto_sans_layout.addStretch()
+main_layout = QVBoxLayout(central_widget)
 
 
-# Right column - Inter
-open_sans_layout = QVBoxLayout()
-open_sans_title = QLabel("Open Sans")
-open_sans_title.setFont(QFont("Open Sans", 18, QFont.Bold))
-open_sans_layout.addWidget(open_sans_title)
-open_sans_regular = QLabel("The quick brown fox jumps over the lazy dog")
-open_sans_regular.setFont(QFont("Open Sans", 14))
-open_sans_layout.addWidget(open_sans_regular)
-open_sans_bold = QLabel("The quick brown fox jumps over the lazy dog")
-open_sans_bold.setFont(QFont("Open Sans", 14, QFont.Bold))
-open_sans_layout.addWidget(open_sans_bold)
-open_sans_italic = QLabel("The quick brown fox jumps over the lazy dog")
-font_open_sans_italic = QFont("Open Sans", 14)
-font_open_sans_italic.setItalic(True)
-open_sans_italic.setFont(font_open_sans_italic)
-open_sans_layout.addWidget(open_sans_italic)
-open_sans_sample = QLabel("FFmpeg ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
-open_sans_sample.setFont(QFont("Open Sans", 12))
-open_sans_layout.addWidget(open_sans_sample)
-open_sans_layout.addStretch()
+layouts: list[QVBoxLayout] = []
+for f_name in (
+    "Roboto",
+    "Inter",
+    "Noto Sans",
+    # "DejaVu Sans",
+    # "Open Sans",
 
+    "JetBrains Mono",
+    "IBM Plex Mono",
+):
+    layout = QVBoxLayout()
+    title = QLabel(f_name)
+    title.setFont(QFont(f_name, 16, QFont.Bold))
+    layout.addWidget(title)
 
-# Add both columns to main layout
-main_layout.addLayout(roboto_layout)
-main_layout.addLayout(noto_sans_layout)
-main_layout.addLayout(open_sans_layout)
+    regular = QLabel("The quick brown fox jumps over the lazy dog")
+    regular.setFont(QFont(f_name, 14))
+    layout.addWidget(regular)
+
+    bold = QLabel("The quick brown fox jumps over the lazy dog")
+    bold.setFont(QFont(f_name, 14, QFont.Bold))
+    layout.addWidget(bold)
+
+    italic = QLabel("The quick brown fox jumps over the lazy dog")
+    font_italic = QFont(f_name, 14)
+    font_italic.setItalic(True)
+    italic.setFont(font_italic)
+    layout.addWidget(italic)
+
+    sample = QLabel("[pip] FFmpeg ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+    sample.setFont(QFont(f_name, 12))
+    layout.addWidget(sample)
+
+    sample = QLabel("[pip] FFmpeg ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789")
+    sample.setFont(QFont(f_name, 10))
+    layout.addWidget(sample)
+
+    layout.addStretch()
+    layouts.append(layout)
+
+central_widget.font().setStyleStrategy(QFont.StyleStrategy.PreferQuality)
+central_widget.font().setHintingPreference(QFont.HintingPreference.PreferNoHinting)
+for l in layouts:
+    main_layout.addLayout(l)
 
 window.setCentralWidget(central_widget)
 window.show()

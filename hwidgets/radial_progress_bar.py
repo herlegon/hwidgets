@@ -6,7 +6,10 @@ from .debug import (
     DEBUG_GEOMETRY,
     draw_widget_rect,
 )
-from .style_manager import Theme
+from .styles import (
+    RadialProgressBarStyle,
+    Theme,
+)
 
 from PySide6.QtCore import (
     Qt,
@@ -62,7 +65,7 @@ class RadialProgressTriggerStyle:
 # @dataclass
 class RpText:
     text: str = ""
-    font: QFont = QFont("Roboto-Bold", pointSize=8)
+    font: QFont = QFont("Inter", 8, QFont.Weight.Bold)
     color: QColor = QColor("#9E9E9E")
 
 
@@ -105,6 +108,7 @@ class HRadialProgress(QProgressBar):
         self.span = (2 * angle_start - 360) * 16
         self.angle = angle_start
 
+        rpb: RadialProgressBarStyle = theme.radial_progress_bar
         trigger_style: RadialProgressTriggerStyle = RadialProgressTriggerStyle()
         if standard_triggers:
             # 800
@@ -114,14 +118,13 @@ class HRadialProgress(QProgressBar):
         self.setTriggerStyle(trigger_style)
 
         self.legend: RpText = RpText()
-        self.legend.font = QFont("Inter", pointSize=10)
-        self.legend.font.setBold(False)
-        self.legend.text = ""
+        self.legend.font = theme.radial_progress_bar
+
+        self.legend.font = rpb.font_legend.make_font()
         self.legend_fh = QFontMetrics(self.legend.font).boundingRect('[g|$§').height()
 
         self.label: RpText = RpText()
-        self.label.font = QFont("Inter", pointSize=10)
-        self.label.font.setBold(False)
+        self.label.font = rpb.font_label.make_font()
         self.label.text = ""
         self._display_value: bool = False
 

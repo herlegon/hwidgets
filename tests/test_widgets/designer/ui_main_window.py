@@ -70,7 +70,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow, theme: Type[Theme]):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(1441, 937)
+        MainWindow.resize(1476, 1052)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.horizontalLayout = QHBoxLayout(self.centralwidget)
@@ -483,37 +483,37 @@ class Ui_MainWindow(object):
 
         self.horizontalLayout_18 = QHBoxLayout()
         self.horizontalLayout_18.setObjectName(u"horizontalLayout_18")
-        self.h_outlined_button = HOutlinedButton(self.h_frame, theme=theme)
-        self.h_outlined_button.setObjectName(u"h_outlined_button")
-        self.h_outlined_button.setFlat(True)
+        self.outlined_button = HOutlinedButton(self.h_frame, theme=theme)
+        self.outlined_button.setObjectName(u"outlined_button")
+        self.outlined_button.setFlat(True)
 
-        self.horizontalLayout_18.addWidget(self.h_outlined_button)
+        self.horizontalLayout_18.addWidget(self.outlined_button)
 
-        self.h_outlined_button_icon = HOutlinedButton(self.h_frame, theme=theme)
-        self.h_outlined_button_icon.setObjectName(u"h_outlined_button_icon")
+        self.outlined_button_icon = HOutlinedButton(self.h_frame, theme=theme)
+        self.outlined_button_icon.setObjectName(u"outlined_button_icon")
         icon2 = QIcon()
         icon2.addFile(u"../../hwidgets/icons/gpu.png", QSize(), QIcon.Mode.Normal, QIcon.State.Off)
-        self.h_outlined_button_icon.setIcon(icon2)
-        self.h_outlined_button_icon.setCheckable(False)
-        self.h_outlined_button_icon.setChecked(False)
+        self.outlined_button_icon.setIcon(icon2)
+        self.outlined_button_icon.setCheckable(False)
+        self.outlined_button_icon.setChecked(False)
 
-        self.horizontalLayout_18.addWidget(self.h_outlined_button_icon)
+        self.horizontalLayout_18.addWidget(self.outlined_button_icon)
 
-        self.h_outlined_button_icon_r = HOutlinedButton(self.h_frame, theme=theme)
-        self.h_outlined_button_icon_r.setObjectName(u"h_outlined_button_icon_r")
-        self.h_outlined_button_icon_r.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
-        self.h_outlined_button_icon_r.setIcon(icon2)
-        self.h_outlined_button_icon_r.setCheckable(False)
-        self.h_outlined_button_icon_r.setChecked(False)
+        self.outlined_button_icon_r = HOutlinedButton(self.h_frame, theme=theme)
+        self.outlined_button_icon_r.setObjectName(u"outlined_button_icon_r")
+        self.outlined_button_icon_r.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+        self.outlined_button_icon_r.setIcon(icon2)
+        self.outlined_button_icon_r.setCheckable(False)
+        self.outlined_button_icon_r.setChecked(False)
 
-        self.horizontalLayout_18.addWidget(self.h_outlined_button_icon_r)
+        self.horizontalLayout_18.addWidget(self.outlined_button_icon_r)
 
-        self.h_outlined_button_disabled = HOutlinedButton(self.h_frame, theme=theme)
-        self.h_outlined_button_disabled.setObjectName(u"h_outlined_button_disabled")
-        self.h_outlined_button_disabled.setEnabled(False)
-        self.h_outlined_button_disabled.setIcon(icon2)
+        self.outlined_button_disabled = HOutlinedButton(self.h_frame, theme=theme)
+        self.outlined_button_disabled.setObjectName(u"outlined_button_disabled")
+        self.outlined_button_disabled.setEnabled(False)
+        self.outlined_button_disabled.setIcon(icon2)
 
-        self.horizontalLayout_18.addWidget(self.h_outlined_button_disabled)
+        self.horizontalLayout_18.addWidget(self.outlined_button_disabled)
 
         self.horizontalSpacer_3 = QSpacerItem(40, 20, QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Minimum)
 
@@ -808,10 +808,10 @@ class Ui_MainWindow(object):
 
         self.greybutton_group = QHBoxLayout()
         self.greybutton_group.setObjectName(u"greybutton_group")
-        self.grey_button_group_2 = HGreyButtonGroup(self.h_frame, theme=theme)
-        self.grey_button_group_2.setObjectName(u"grey_button_group_2")
+        self.grey_button_group = HGreyButtonGroup(self.h_frame, theme=theme)
+        self.grey_button_group.setObjectName(u"grey_button_group")
 
-        self.greybutton_group.addWidget(self.grey_button_group_2)
+        self.greybutton_group.addWidget(self.grey_button_group)
 
         self.grey_button_group_disabled = HGreyButtonGroup(self.h_frame, theme=theme)
         self.grey_button_group_disabled.setObjectName(u"grey_button_group_disabled")
@@ -1332,14 +1332,14 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_3.addWidget(self.card_consumption)
 
-        self.h_log_viewer = HPlainTextEdit(self.h_frame, theme=theme)
-        self.h_log_viewer.setObjectName(u"h_log_viewer")
-        self.h_log_viewer.setMaximumSize(QSize(16777215, 200))
-        self.h_log_viewer.setTabChangesFocus(True)
-        self.h_log_viewer.setReadOnly(True)
-        self.h_log_viewer.setPlaceholderText(u"")
+        self.log_viewer = HLogViewer(self.h_frame, theme=theme)
+        self.log_viewer.setObjectName(u"log_viewer")
+        self.log_viewer.setMaximumSize(QSize(16777215, 200))
+        self.log_viewer.setTabChangesFocus(True)
+        self.log_viewer.setReadOnly(True)
+        self.log_viewer.setPlaceholderText(u"")
 
-        self.verticalLayout_3.addWidget(self.h_log_viewer)
+        self.verticalLayout_3.addWidget(self.log_viewer)
 
         self.verticalSpacer_3 = QSpacerItem(20, 5, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
@@ -1405,10 +1405,10 @@ class Ui_MainWindow(object):
         self.toggle_grey_button_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (checked)", None))
         self.toggle_grey_button_disabled_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (disabled)", None))
         self.toggle_grey_button_disabled_checked_2.setText(QCoreApplication.translate("MainWindow", u"toggle grey (Checked Disabled) Never use that!", None))
-        self.h_outlined_button.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
-        self.h_outlined_button_icon.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
-        self.h_outlined_button_icon_r.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
-        self.h_outlined_button_disabled.setText(QCoreApplication.translate("MainWindow", u"outlined (disabled)", None))
+        self.outlined_button.setText(QCoreApplication.translate("MainWindow", u"outlined", None))
+        self.outlined_button_icon.setText(QCoreApplication.translate("MainWindow", u"outlinedI", None))
+        self.outlined_button_icon_r.setText(QCoreApplication.translate("MainWindow", u"outlinedI2", None))
+        self.outlined_button_disabled.setText(QCoreApplication.translate("MainWindow", u"outlined (disabled)", None))
         self.h_frameless_button.setText("")
         self.frameless_button_checked.setText("")
         self.frameless_button_disabled.setText("")
@@ -1452,14 +1452,7 @@ class Ui_MainWindow(object):
 "for scrollbar\n"
 "with test\n"
 "", None))
-        self.h_plaintextedit_editable_scrollbars_2.setPlainText(QCoreApplication.translate("MainWindow", u"editable\n"
-"multiple lines with very large text for hscrollbar\n"
-"for scrollbar \n"
-"with test\n"
-"and\n"
-"a lot\n"
-"of vertical text\n"
-"", None))
+        self.h_plaintextedit_editable_scrollbars_2.setPlainText(QCoreApplication.translate("MainWindow", u"Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.", None))
         self.h_plaintextedit_readonly_2.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
         self.h_plaintextedit_disabled_2.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
@@ -1483,8 +1476,8 @@ class Ui_MainWindow(object):
 "", None))
         self.h_plaintextedit_disabled.setPlainText(QCoreApplication.translate("MainWindow", u"disabled\n"
 "", None))
-        self.h_log_viewer.setDocumentTitle("")
-        self.h_log_viewer.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
+        self.log_viewer.setDocumentTitle("")
+        self.log_viewer.setPlainText(QCoreApplication.translate("MainWindow", u"read only\n"
 "", None))
     # retranslateUi
 

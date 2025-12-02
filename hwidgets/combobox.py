@@ -197,6 +197,7 @@ class HComboBox(QComboBox):
         line_edit = self.lineEdit()
         if line_edit and editable:
             line_edit.setReadOnly(False)
+            line_edit.setFont(self.cb_style.font.make_font())
 
 
     def setMinimumSize(self, size: QSize) -> None:
@@ -248,13 +249,15 @@ class HComboBox(QComboBox):
         qss = qss_template.substitute(**template_subst)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.setStyleSheet(qss)
-        self.setFont(cb_style.font.make_font())
+
+        cb_font = cb_style.font.make_font()
+        self.setFont(cb_font)
 
         qss_template = Template(load_qss("combobox_lineedit.qss", variant=self.variant))
         qss = qss_template.substitute(**template_subst)
         self.setAttribute(Qt.WidgetAttribute.WA_StyledBackground, True)
         self.lineEdit().setStyleSheet(qss)
-        self.lineEdit().setFont(cb_style.font.make_font())
+        self.lineEdit().setFont(cb_font)
 
         qss_template = Template(load_qss("combobox_abstractitemview.qss", variant=self.variant))
         self.popup_qss = qss_template.substitute(**template_subst)
@@ -269,7 +272,7 @@ class HComboBox(QComboBox):
             self.view().setWindowFlags(Qt.WindowType.Widget)
         else:
             self.view().setStyleSheet(self.popup_qss)
-            self.view().setFont(cb_style.font.make_font())
+        self.view().setFont(cb_font)
 
 
     def _pixmap_rect(self) -> QRect:

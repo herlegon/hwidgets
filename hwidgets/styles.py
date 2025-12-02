@@ -8,11 +8,12 @@ DEFAULT_HEIGHT: int = 24
 PROGRESS_TRACK_THICKNESS: int = 12
 BUTTON_SIDE_PADDING: int = BORDER_RADIUS + 12
 
+FONT_VARIANTS = ["current", "upcoming", "completed"]
 
 @dataclass
 class FontConfig:
-    family: str = "Roboto"
-    size: int = 12
+    family: str = "Inter"
+    size: int = 10
     weight: QFont.Weight = QFont.Weight.Normal
     style: QFont.Style = QFont.Style.StyleNormal
 
@@ -330,7 +331,7 @@ class ButtonGroupStyle:
     border: str = ""
 
     font: FontConfig = field(
-        default_factory=lambda: FontConfig(size=14, weight=QFont.Weight.DemiBold)
+        default_factory=lambda: FontConfig(size=10, weight=QFont.Weight.DemiBold)
     )
     font_color: str = ""
     # font_color_checked: str = ""
@@ -347,6 +348,16 @@ class ProgressBarStyle:
     thickness: int = PROGRESS_TRACK_THICKNESS
     track: str = ""
     bar: str = ""
+
+
+@dataclass
+class RadialProgressBarStyle:
+    font_label: FontConfig = field(
+        default_factory=lambda: FontConfig(size=10)
+    )
+    font_legend: FontConfig = field(
+        default_factory=lambda: FontConfig(size=10)
+    )
 
 
 @dataclass
@@ -439,6 +450,7 @@ class Theme:
     grey_button_group: GreyButtonGroupStyle = field(default_factory=GreyButtonGroupStyle)
 
     progress_bar: ProgressBarStyle = field(default_factory=ProgressBarStyle)
+    radial_progress_bar: RadialProgressBarStyle = field(default_factory=RadialProgressBarStyle)
     step_indicator: StepIndicatorStyle = field(default_factory=StepIndicatorStyle)
 
     indet_progress_bar: IndetProgressBarStyle = field(default_factory=IndetProgressBarStyle)

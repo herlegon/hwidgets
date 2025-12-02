@@ -1,4 +1,5 @@
 from argparse import ArgumentParser
+from pathlib import Path
 from hytils import parent_directory
 import os
 import signal
@@ -7,6 +8,7 @@ sys.path.append(os.path.join(parent_directory(__file__), "hwidgets"))
 
 from PySide6.QtGui import (
     QFontDatabase,
+    QFont,
 )
 from PySide6.QtWidgets import (
     QApplication,
@@ -32,23 +34,20 @@ def main():
         logging.disable(logging.NOTSET)
         hlogger.setLevel("DEBUG")
 
+    # Environment fixes
+    if sys.platform == 'linux':
+        os.environ["QT_ENABLE_HIGHDPI_SCALING"] = "1"
+        os.environ["QT_FONT_DPI"] = "96"
+        os.environ["QT_QPA_PLATFORM"] = "xcb"
+        os.environ["QT_SCALE_FACTOR_ROUNDING_POLICY"] = "RoundPreferFloor"
 
     QApplication.setStyle("Fusion")
     application = QApplication(sys.argv)
 
-    # Instead of instantiating QFontDatabase, we use its static methods directly.
-    # Load the font file into the application font database
-    font_id = QFontDatabase.addApplicationFont("Roboto-Regular.ttf")
-
-    _FONT_PATH: tuple[tuple[str]] = (
-    ("Roboto/Roboto-Regular.ttf", "Roboto/Roboto-Italic.ttf"),
-    ("Roboto/Roboto-Bold.ttf", "Roboto/Roboto-BoldItalic.ttf")
-    )
-
-    # You can retrieve the font family name by querying the font ID
-    font_family = QFontDatabase.applicationFontFamilies(font_id)[0]
-    print(font_id)
-    print(font_family)
+    default_font = application.font()
+    default_font.setStyleStrategy(QFont.PreferAntialias)
+    default_font.setHintingPreference(QFont.PreferNoHinting)
+    application.setFont(default_font)
 
     main_window = MainWindow()
     main_window.show()

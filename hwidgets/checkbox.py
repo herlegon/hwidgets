@@ -78,7 +78,8 @@ class HCheckBox(QCheckBox):
             Qt.PenJoinStyle.RoundJoin
         )
 
-        self.setFont(self.cb_style.font.make_font())
+        self.cb_font = self.cb_style.font.make_font()
+        self.setFont(self.cb_font)
         self.setMinimumSize(self.sizeHint())
 
 
@@ -227,6 +228,7 @@ class HCheckBox(QCheckBox):
             else:
                 text_color = self.font_disabled
             painter.setPen(text_color)
+            painter.setFont(self.cb_font)
             painter.drawText(self.text_rect, alignment, self.text())
 
         painter.end()

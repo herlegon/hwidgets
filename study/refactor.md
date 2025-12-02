@@ -44,6 +44,12 @@
 
     ✅ IndeterminateProgress M2
 
+    ✅ fonts
+
+
+# Fonts
+    Ubuntu: Inter, Roboto, DejaVu Sans, Open Sans
+
 
 
 # todo

@@ -19,6 +19,7 @@ from PySide6.QtCore import (
 )
 from PySide6.QtGui import (
     QPainter,
+    QFont,
 )
 from PySide6.QtWidgets import (
     QWidget,
@@ -66,6 +67,7 @@ class HButtonGroup(QWidget):
         self._button_keys: list[str] = []
         self._current_index = -1
 
+        self.setFont(theme.button_group.font.make_font())
         if buttons is not None and buttons:
             self.set_buttons(buttons)
 
@@ -78,6 +80,12 @@ class HButtonGroup(QWidget):
             self.btn_group_style = self.theme.grey_button_group
         else:
             self.btn_group_style = self.theme.button_group
+
+
+    def setFont(self, font: QFont):
+        super().setFont(font)
+        for b in self._buttons:
+            b.setFont(font)
 
 
     def sizeHint(self) -> QSize:
@@ -164,6 +172,7 @@ class HButtonGroup(QWidget):
         else:
             self._button_keys = list(buttons)
 
+        btn_font = self.theme.button_group.font.make_font()
         for i, k in enumerate(self._button_keys):
             button = QToolButton(self)
             if is_dict:
@@ -175,6 +184,7 @@ class HButtonGroup(QWidget):
             button.key = k
             button.setCheckable(True)
             button.setFixedHeight(self.height())
+            button.setFont(btn_font)
 
             if i == 0:
                 button.setObjectName("segment-left")

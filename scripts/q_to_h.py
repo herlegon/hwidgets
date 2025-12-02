@@ -57,7 +57,6 @@ if __name__ == "__main__":
         "strong_button": "HStrongButton",
         "strong_grey_button": "HStrongGreyButton",
         "outlined_button": "HOutlinedButton",
-        "strong_grey_button": "HStrongGreyButton",
 
         "toggle_button": "HToggleButton",
         "toggle_grey_button": "HToggleGreyButton",

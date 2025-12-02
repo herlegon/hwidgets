@@ -65,17 +65,18 @@ class HOutlinedButton(QPushButton):
         self._spacing: int = 12
         self._cached_size: QSize = None
 
-        self.setFont(self.btn_style.font.make_font())
+        self.btn_font = self.btn_style.font.make_font()
+        self.setFont(self.btn_font)
 
-        if text is not None:
-            self.setText(text)
         if icon is not None:
             self.setIcon(icon)
-        self._pixmaps = {}
 
+        self._pixmaps = {}
         self.populate_pixmaps()
         self._update_stylesheet()
 
+        if text is not None:
+            self.setText(text)
 
     def spacing(self) -> None:
         return self._spacing
@@ -91,11 +92,14 @@ class HOutlinedButton(QPushButton):
         height: int = self.btn_style.height
 
         if self.text():
-            text_width = self.fontMetrics().horizontalAdvance(self.text())
+            font = QFont(self.btn_style.font.family, self.btn_style.font.size)
+            font.setWeight(QFont.Weight(self.btn_style.font.weight))
+            font_metrics = QFontMetrics(font)
+            text_width = font_metrics.horizontalAdvance(self.text())
 
             if self._icon:
                 icon_width = height
-                total_width = radius + icon_width + self._spacing + text_width + radius
+                total_width = 2 * radius + icon_width + self._spacing + text_width + radius
             else:
                 total_width = 2 * radius + text_width + self._spacing
 
@@ -195,7 +199,7 @@ class HOutlinedButton(QPushButton):
             font_color_disabled=f"{btn_style.font_color_disabled}",
         )
         self.setStyleSheet(qss)
-        self.setFont(self.btn_style.font.make_font())
+        self.setFont(self.btn_font)
         self.text_width = self.fontMetrics().horizontalAdvance(self.text())
 
         self.border_color = QColor(btn_style.border)
@@ -272,7 +276,7 @@ class HOutlinedButton(QPushButton):
             if self._icon:
                 if self.layoutDirection() == Qt.LayoutDirection.RightToLeft:
                     alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
-                    left = radius + (self.width() - self.text_width - self._spacing - pixmap.width()) // 2
+                    left = (self.width() - self.text_width - self._spacing - pixmap.width()) // 2
                     right = left + self.text_width
                     width = right - left
 
@@ -282,15 +286,17 @@ class HOutlinedButton(QPushButton):
                     alignment = Qt.AlignmentFlag.AlignVCenter | Qt.AlignmentFlag.AlignLeft
 
             else:
-                left = self.btn_style.padding
+                left = 0
+                right = self.width()
                 alignment = Qt.AlignmentFlag.AlignCenter
 
-            text_rect = QRect(left, 0, width, self.height())
+            text_rect = QRect(left, 0, right - left, self.height())
             painter.setPen(
                 self.font_color
                 if state & QStyle.StateFlag.State_Enabled
                 else self.font_color_disabled
             )
+            painter.setFont(self.btn_font)
             painter.drawText(text_rect, alignment, self.text())
 
         painter.end()

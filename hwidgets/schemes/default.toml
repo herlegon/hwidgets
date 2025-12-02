@@ -11,7 +11,7 @@ border = "#4a4a4a"
 border_radius = 8
 height = 40
 
-font_family = "Roboto Regular"
+font_family = "Inter"
 font_size = 10
 font_weight = 400
 font_color = "#d4d4d4"
@@ -36,21 +36,18 @@ pressed = "#5e5e5e"
 
 
 [label]
-font_family = "Inter"
 font_size = 10
 font_weight = 400
 font_color = "#d4d4d4"
 
 
 [app_title]
-font_family = "Inter"
 font_size = 11
 font_weight = 600
 font_color = "#d4d4d4"
 
 
 [title]
-font_family = "Inter"
 font_size = 16
 font_weight = 800
 font_color = "#5e7ce0"
@@ -89,8 +86,8 @@ pressed = "#666667"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
 font_color_disabled = "#666667"
-font_size = 11
-font_weight = 600
+font_size = 10
+font_weight = 400
 
 [radio_button]
 circle_size = 14
@@ -99,7 +96,7 @@ pressed = "#5e5e5e"
 checked = "#5e7ce0"
 disabled = "#4a4a4a"
 font_color_disabled = "#666667"
-font_size = 11
+font_size = 10
 font_weight = 600
 
 
@@ -119,7 +116,6 @@ button = "#666667"
 button_hover = "#5e7ce0"
 button_disabled = "#666667"
 
-font_family = "Inter"
 font_size = 10
 font_color = "#d4d4d4"
 font_color_read_only = "#666667"
@@ -134,8 +130,8 @@ font_color_disabled = "#666667"
 bgd = "#111111"
 border = "#3a3a3a"
 border_read_only = "#3a3a3a"
-font_family = "Consolas, monospace"
-font_size = 11
+font_family = "JetBrains Mono"
+font_size = 10
 font_color = "#6a6a6a"
 font_color_read_only = "#6a6a6a"
 
@@ -145,6 +141,7 @@ font_color_read_only = "#6a6a6a"
 
 
 [spinbox]
+font_size = 10
 button_hover = "#3a3a3a"
 button_pressed = "#5e5e5e"
 button_disabled = "#2a2a2a"
@@ -172,7 +169,6 @@ hover = "#4c60b9"
 pressed = "#5e7ce0"
 disabled = "#2a2a2a"
 
-font_family = "Inter"
 font_size = 11
 font_weight = 500
 font_color = "#FFFFFF"
@@ -196,7 +192,6 @@ disabled = "#2a2a2a"
 border = "#424242"
 border_disabled = "#3a3a3a"
 
-font_family = "Inter"
 font_size = 11
 font_weight = 400
 font_color = "#d4d4d4"
@@ -254,6 +249,10 @@ font_weight = 400
 thickness = 8
 track = "#3a3a3a"
 bar = "#5e7ce0"
+
+[radial_progress_bar]
+font_family = "Inter"
+size = 10
 
 
 [indet_progress_bar]

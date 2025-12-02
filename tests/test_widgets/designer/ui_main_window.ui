@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1441</width>
-    <height>937</height>
+    <width>1476</width>
+    <height>1052</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -697,7 +697,7 @@
          <item>
           <layout class="QHBoxLayout" name="horizontalLayout_18">
            <item>
-            <widget class="QPushButton" name="h_outlined_button">
+            <widget class="QPushButton" name="outlined_button">
              <property name="text">
               <string>outlined</string>
              </property>
@@ -707,9 +707,9 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_outlined_button_icon">
+            <widget class="QPushButton" name="outlined_button_icon">
              <property name="text">
-              <string>outlined</string>
+              <string>outlinedI</string>
              </property>
              <property name="icon">
               <iconset>
@@ -724,12 +724,12 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_outlined_button_icon_r">
+            <widget class="QPushButton" name="outlined_button_icon_r">
              <property name="layoutDirection">
               <enum>Qt::LayoutDirection::RightToLeft</enum>
              </property>
              <property name="text">
-              <string>outlined</string>
+              <string>outlinedI2</string>
              </property>
              <property name="icon">
               <iconset>
@@ -744,7 +744,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPushButton" name="h_outlined_button_disabled">
+            <widget class="QPushButton" name="outlined_button_disabled">
              <property name="enabled">
               <bool>false</bool>
              </property>
@@ -1376,7 +1376,7 @@
          <item>
           <layout class="QHBoxLayout" name="greybutton_group">
            <item>
-            <widget class="QWidget" name="grey_button_group_2" native="true"/>
+            <widget class="QWidget" name="grey_button_group" native="true"/>
            </item>
            <item>
             <widget class="QWidget" name="grey_button_group_disabled" native="true">
@@ -1918,14 +1918,7 @@ with test
                  <enum>QPlainTextEdit::LineWrapMode::WidgetWidth</enum>
                 </property>
                 <property name="plainText">
-                 <string>editable
-multiple lines with very large text for hscrollbar
-for scrollbar 
-with test
-and
-a lot
-of vertical text
-</string>
+                 <string>Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</string>
                 </property>
                </widget>
               </item>
@@ -2271,7 +2264,7 @@ of vertical text
           </widget>
          </item>
          <item>
-          <widget class="QPlainTextEdit" name="h_log_viewer">
+          <widget class="QPlainTextEdit" name="log_viewer">
            <property name="maximumSize">
             <size>
              <width>16777215</width>
@@ -2320,7 +2313,7 @@ of vertical text
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="radioButtonGroup_disabled"/>
   <buttongroup name="radioButtonGroup"/>
+  <buttongroup name="radioButtonGroup_disabled"/>
  </buttongroups>
 </ui>
