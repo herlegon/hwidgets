@@ -77,6 +77,25 @@ class HProgressBar(QProgressBar):
         self.bar_color: QColor = QColor(bar)
 
 
+    def setValue(self, value, no_animation: bool = False) -> None:
+        if no_animation:
+            self.blockSignals(True)
+            self._progress = 0
+            super().setValue(value)
+            self.repaint()
+            self.blockSignals(False)
+            return
+        return super().setValue(value)
+
+
+    def reset(self) -> None:
+        self._progress = 0
+        self.animation.stop()
+        self.animation.setEndValue(0)
+        super().reset()
+        self.repaint()
+
+
     @Property(int)
     def progress(self) -> int:
         return self._progress
