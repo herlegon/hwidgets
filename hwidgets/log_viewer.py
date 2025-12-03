@@ -131,7 +131,7 @@ class HLogViewer(HPlainTextEdit):
             plainText=plainText,
             clearButtonEnabled=False,
         )
-        self.setContentsMargins(20, 0, 20, 10)
+        # self.setContentsMargins(20, 0, 20, 10)
         self._update_stylesheet()
 
         # --- GUI Log Handler ---
