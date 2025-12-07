@@ -72,6 +72,16 @@ class HProgressBar(QProgressBar):
         self.valueChanged.connect(self.value_changed)
 
 
+    def getAnimationDuration(self) -> int:
+        """Return the animation duration in ms"""
+        return self.animation.duration()
+
+
+    def setAnimationDuration(self, duration: int) -> None:
+        """Set the animation duration in ms"""
+        self.animation.setDuration(duration)
+
+
     def set_colors(self, track: str, bar: str) -> None:
         self.track_color: QColor = QColor(track)
         self.bar_color: QColor = QColor(bar)
