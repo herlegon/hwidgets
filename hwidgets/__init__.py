@@ -4,6 +4,7 @@ from .logger import hlogger
 from .utils import load_png_image
 from .style_manager import StyleManager, Theme
 
+from .message_box import HMessageBox
 from .frame import HFrame, HCard
 from .divider import (
     HDivider,
@@ -64,6 +65,8 @@ __all__ = [
     "hlogger",
     "StyleManager",
     "Theme",
+
+    "HMessageBox",
 
     "HFrame",
     "HCard",
